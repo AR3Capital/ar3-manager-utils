@@ -1,0 +1,274 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../@generated/prisma/clientMysql"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("MYSQL_URL")
+}
+
+model auditoria {
+  action                     String?   @db.VarChar(250)
+  usuario                    Int?
+  data                       DateTime? @db.DateTime(0)
+  modulo                     String?   @db.VarChar(100)
+  id                         Int       @id @default(autoincrement())
+  usuario_auditoriaTousuario usuario?  @relation(fields: [usuario], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "auditoria_FK")
+
+  @@index([usuario], map: "auditoria_FK")
+}
+
+model bordero {
+  id                Int                 @id @default(autoincrement())
+  carteira_id       Int
+  titulo            titulo[]
+  titulos_x_usuario titulos_x_usuario[]
+}
+
+model carteira {
+  id             Int         @id @default(autoincrement())
+  fiduc_fundo_id Int
+  fidic_fundo    fidic_fundo @relation(fields: [fiduc_fundo_id], references: [id], onUpdate: Restrict, map: "carteira_FK")
+
+  @@index([fiduc_fundo_id], map: "carteira_FK")
+}
+
+model cedente {
+  id                Int                 @id @default(autoincrement())
+  pessoa_id         Int
+  razao_social      String              @db.VarChar(120)
+  nome_fantasia     String?             @db.Char(1)
+  abertura          DateTime?           @db.Date
+  cnpj              String?             @db.VarChar(14)
+  endereco          String?             @db.VarChar(150)
+  numero            String?             @db.VarChar(20)
+  cep               String?             @db.VarChar(10)
+  bairro            String?             @db.VarChar(100)
+  cidade            String?             @db.VarChar(100)
+  uf                String?             @db.VarChar(2)
+  telefone          String?             @db.VarChar(15)
+  cedente_analise   cedente_analise[]
+  cedente_n_sacados cedente_n_sacados[]
+  titulo_x_cedente  titulo_x_cedente[]
+}
+
+model cedente_analise {
+  id                               Int      @id @default(autoincrement())
+  status                           String?  @db.VarChar(100)
+  cedente                          Int?
+  cedente_cedenteTocedente_analise cedente? @relation(fields: [cedente], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "cedente_analise_FK")
+
+  @@index([cedente], map: "cedente_analise_FK")
+}
+
+model cedente_n_sacados {
+  id                                 Int      @id @default(autoincrement())
+  cedente                            Int?
+  sacado                             Int?
+  cedente_cedenteTocedente_n_sacados cedente? @relation(fields: [cedente], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "cedente_n_sacados_FK")
+  sacado_cedente_n_sacadosTosacado   sacado?  @relation(fields: [sacado], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "cedente_n_sacados_FK_1")
+
+  @@index([cedente], map: "cedente_n_sacados_FK")
+  @@index([sacado], map: "cedente_n_sacados_FK_1")
+}
+
+model checagem {
+  id                        Int      @id @default(autoincrement())
+  nf                        String?  @db.VarChar(100)
+  status                    String?  @db.VarChar(100)
+  usuario                   Int?
+  titulos                   String?  @db.VarChar(150)
+  usuario_checagemTousuario usuario? @relation(fields: [usuario], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "checagem_FK")
+
+  @@index([usuario], map: "checagem_FK")
+}
+
+model fidic_fundo {
+  id                    Int                     @id @default(autoincrement())
+  pessoa_id             Int
+  razao_social          String                  @db.VarChar(120)
+  nome_fantasia         String?                 @db.Char(1)
+  abertura              DateTime?               @db.Date
+  cnpj                  String?                 @db.VarChar(14)
+  carteira              carteira[]
+  fidic_fundo_x_usuario fidic_fundo_x_usuario[]
+}
+
+model fidic_fundo_carteira_n_cedentes {
+  id Int @id @default(autoincrement())
+}
+
+model fidic_fundo_x_usuario {
+  id                                     Int         @id @default(autoincrement())
+  usuario                                Int?
+  fidic                                  Int
+  fidic_fundo                            fidic_fundo @relation(fields: [fidic], references: [id], onUpdate: Restrict, map: "fidic_fundo_x_usuario_FK")
+  usuario_fidic_fundo_x_usuarioTousuario usuario?    @relation(fields: [usuario], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fidic_fundo_x_usuario_FK_1")
+
+  @@index([fidic], map: "fidic_fundo_x_usuario_FK")
+  @@index([usuario], map: "fidic_fundo_x_usuario_FK_1")
+}
+
+model organograma {
+  id Int @id @default(autoincrement())
+}
+
+model organograma_tipo {
+  id   Int    @id @default(autoincrement())
+  nome String @db.VarChar(120)
+}
+
+model organograma_x_regiao {
+  id             Int @id @default(autoincrement())
+  organograma_id Int
+  regiao_id      Int
+}
+
+model organograma_x_regiao_atuacao {
+  id             Int @id @default(autoincrement())
+  organograma_id Int
+  regiao_id      Int
+}
+
+model pessoa {
+  id         Int       @id @default(autoincrement())
+  nome       String    @db.VarChar(120)
+  sexo       String?   @db.Char(1)
+  nascimento DateTime? @db.Date
+  cpf        String?   @db.VarChar(11)
+  rg         String?   @db.VarChar(11)
+  usuario    usuario?
+}
+
+model plataforma {
+  id   Int     @id @default(autoincrement())
+  nome String? @db.VarChar(100)
+}
+
+model plataforma_n_borderos {
+  id Int @id @default(autoincrement())
+}
+
+model plataforma_papel_tipo {
+  id Int @id @default(autoincrement())
+}
+
+model plataforma_papel_x_pessoa {
+  id Int @id @default(autoincrement())
+}
+
+model plataforma_x_regiao_atuacao {
+  id Int @id @default(autoincrement())
+}
+
+model regiao_atuacao {
+  id   Int    @id @default(autoincrement())
+  nome String @db.VarChar(120)
+}
+
+model regiao_atuacao_tipo {
+  id   Int    @id @default(autoincrement())
+  nome String @db.VarChar(120)
+}
+
+model sacado {
+  id                Int                 @id @default(autoincrement())
+  pessoa_id         Int
+  razao_social      String              @db.VarChar(120)
+  nome_fantasia     String?             @db.Char(1)
+  abertura          DateTime?           @db.Date
+  cnpj              String?             @db.VarChar(14)
+  cedente_n_sacados cedente_n_sacados[]
+}
+
+model titulo {
+  id             Int         @id @default(autoincrement())
+  titulo_tipo_id Int
+  bordero_id     Int
+  nf             String?     @db.VarChar(100)
+  valor          Float?
+  vencimento     DateTime?   @db.DateTime(0)
+  numero         String?     @db.VarChar(100)
+  emissao        DateTime?   @db.DateTime(0)
+  parcela        String?     @db.VarChar(100)
+  titulo_tipo    titulo_tipo @relation(fields: [titulo_tipo_id], references: [id], onUpdate: Restrict, map: "titulo_FK")
+  bordero        bordero     @relation(fields: [bordero_id], references: [id], onUpdate: Restrict, map: "titulo_FK_1")
+
+  @@index([titulo_tipo_id], map: "titulo_FK")
+  @@index([bordero_id], map: "titulo_FK_1")
+}
+
+model titulo_tipo {
+  id     Int      @id @default(autoincrement())
+  nome   String?  @db.VarChar(100)
+  titulo titulo[]
+}
+
+model titulo_x_cedente {
+  id                                Int     @id @default(autoincrement())
+  cedente                           Int
+  cedente_cedenteTotitulo_x_cedente cedente @relation(fields: [cedente], references: [id], onUpdate: Restrict, map: "titulo_x_cedente_FK")
+
+  @@index([cedente], map: "titulo_x_cedente_FK")
+}
+
+model titulo_x_empresa {
+  id Int @id @default(autoincrement())
+}
+
+model titulo_x_plataforma {
+  id Int @id @default(autoincrement())
+}
+
+model titulos_x_usuario {
+  id                                 Int      @id @default(autoincrement())
+  usuario                            Int?
+  bordero                            Int?
+  status                             String?  @db.VarChar(100)
+  bordero_borderoTotitulos_x_usuario bordero? @relation(fields: [bordero], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "titulos_x_usuario_FK")
+  usuario_titulos_x_usuarioTousuario usuario? @relation(fields: [usuario], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "titulos_x_usuario_FK_1")
+
+  @@index([bordero], map: "titulos_x_usuario_FK")
+  @@index([usuario], map: "titulos_x_usuario_FK_1")
+}
+
+model usuario {
+  id                    Int                     @id @default(autoincrement())
+  email                 String                  @db.VarChar(180)
+  senha                 String                  @db.VarChar(180)
+  pessoa_id             Int
+  status                String?                 @db.VarChar(100)
+  pessoa                pessoa                  @relation(fields: [id], references: [id], onUpdate: Restrict, map: "usuario_FK")
+  auditoria             auditoria[]
+  checagem              checagem[]
+  fidic_fundo_x_usuario fidic_fundo_x_usuario[]
+  titulos_x_usuario     titulos_x_usuario[]
+  usuario_x_perfil      usuario_x_perfil[]
+}
+
+model usuario__pessoa {
+  id Int @id @default(autoincrement())
+}
+
+model usuario_n_borderos {
+  id Int @id @default(autoincrement())
+}
+
+model usuario_perfil_tipo {
+  id               Int                @id @default(autoincrement())
+  nome             String             @db.VarChar(100)
+  usuario_x_perfil usuario_x_perfil[]
+}
+
+model usuario_x_perfil {
+  id                  Int                 @id @default(autoincrement())
+  senha               String              @db.VarChar(240)
+  usuario_id          Int
+  usuario_perfil_id   Int
+  usuario             usuario             @relation(fields: [usuario_id], references: [id], onUpdate: Restrict, map: "usuario_x_perfil_FK")
+  usuario_perfil_tipo usuario_perfil_tipo @relation(fields: [usuario_perfil_id], references: [id], onUpdate: Restrict, map: "usuario_x_perfil_FK_1")
+
+  @@index([usuario_id], map: "usuario_x_perfil_FK")
+  @@index([usuario_perfil_id], map: "usuario_x_perfil_FK_1")
+}

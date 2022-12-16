@@ -1,0 +1,60 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js prisma:generateMY
+
+PATH: 
+  C:\Program Files\Common Files\Oracle\Java\javapath;E:\VMware\VMware Player\bin\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Python27\;C:\Python27\Scripts;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\OpenJDK\openjdk-11.0.10_9\bin;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Users\Isaac\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\dotnet\;E:\Program Files\Amazon\AWSSAMCLI\bin\;E:\Isaac\Downloads\mongodb-database-tools-windows-x86_64-100.5.2\mongodb-database-tools-windows-x86_64-100.5.2\bin;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\nodejs\;E:\Program Files\GitHub CLI\;C:\Users\Isaac\AppData\Local\Yarn\bin;C:\Users\Isaac\AppData\Local\Microsoft\WindowsApps;E:\Isaac\Downloads\mongodb-database-tools-windows-x86_64-100.5.2\mongodb-database-tools-windows-x86_64-100.5.2\bin;C:\Users\Isaac\AppData\Roaming\npm;C:\Users\Isaac\.dotnet\tools
+
+Yarn version: 
+  1.22.4
+
+Node version: 
+  16.15.1
+
+Platform: 
+  win32 x64
+
+Trace: 
+  SyntaxError: E:\Trabalho\AR3\ar3-manager-bd-utils\package.json: Unexpected token } in JSON at position 890
+      at JSON.parse (<anonymous>)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (C:\Program Files (x86)\Yarn\lib\cli.js:310:30)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "ar3-manager-bd-utils",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "prisma:generateMY": "npx prisma generate --schema prismaMysql/schema.prisma",
+      "prisma:format_MY": "prisma format --schema prismaMysql/schema.prisma",
+      "prisma:pull_MY": "prisma db pull --schema prismaMysql/schema.prisma",
+      "prisma:push_MY": "prisma db push --schema prismaMysql/schema.prisma",
+      "prisma:migrate_MY": "npx prisma migrate dev --schema prismaMysql/schema.prisma",
+      "prisma:generate_MDB": "prisma generate --schema prismaMongodb/schema.prisma",
+      "prisma:format_MDB": "prisma format --schema prismaMongodb/schema.prisma",
+      "prisma:pull_MDB": "prisma db pull --schema prismaMongodb/schema.prisma",
+      "prisma:push_MDB": "prisma db push --schema prismaMongodb/schema.prisma",
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+      "@types/node": "^18.11.15",
+      "prisma": "^4.7.1",
+      "ts-node": "^10.9.1",
+      "typescript": "^4.9.4"
+    },
+    "dependencies": {
+      "@prisma/client": "^4.6.1"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
