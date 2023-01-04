@@ -1,30 +1,33 @@
 {
   "name": "ar3-manager-bd-utils",
-  "version": "1.0.00014",
+  "version": "1.0.00016",
   "description": "Repositorio do banco de dados",
   "author": "ARE Devs",
   "license": "MIT",
   "main": "index.js",
   "files": [
-    "@generated",
-    "mysql",
-    "mongodb",
+    "prisma",
+    "src",
     "index.js"
   ],
   "scripts": {
-    "prisma:generate_my": "prisma generate --schema prismaMysql/schema.prisma",
-    "prisma:format_my": "prisma format --schema prismaMysql/schema.prisma",
-    "prisma:pull_my": "prisma db pull --schema prismaMysql/schema.prisma",
-    "prisma:push_my": "prisma db push --schema prismaMysql/schema.prisma",
-    "prisma:migrate_my": "npx prisma migrate dev --schema prismaMysql/schema.prisma",
-    "prisma:generate_mdb": "prisma generate --schema prismaMongodb/schema.prisma",
-    "prisma:format_mdb": "prisma format --schema prismaMongodb/schema.prisma",
-    "prisma:pull_mdb": "prisma db pull --schema prismaMongodb/schema.prisma",
-    "prisma:push_mdb": "prisma db push --schema prismaMongodb/schema.prisma",
+    "prisma:generate_my": "prisma generate --schema prisma/prismaMysql/schema.prisma",
+    "prisma:format_my": "prisma format --schema prisma/prismaMysql/schema.prisma",
+    "prisma:pull_my": "prisma db pull --schema prisma/prismaMysql/schema.prisma",
+    "prisma:push_my": "prisma db push --schema prisma/prismaMysql/schema.prisma",
+    "prisma:migrate_my": "npx prisma migrate dev --schema prisma/prismaMysql/schema.prisma",
+    "prisma:generate_mdb": "prisma generate --schema prisma/prismaMongodb/schema.prisma",
+    "prisma:format_mdb": "prisma format --schema prisma/prismaMongodb/schema.prisma",
+    "prisma:pull_mdb": "prisma db pull --schema prisma/prismaMongodb/schema.prisma",
+    "prisma:push_mdb": "prisma db push --schema prisma/prismaMongodb/schema.prisma",
+    "publish": "npm publish",
     "test": "node test"
   },
   "devDependencies": {
-    "prisma": "^4.7.1"
+    "prisma": "^4.7.1",
+    "ajv": "6.12.0",
+    "ajv-errors": "1.0.1",
+    "ajv-keywords": "^3.4.0"
   },
   "dependencies": {
     "@prisma/client": "^4.6.1"

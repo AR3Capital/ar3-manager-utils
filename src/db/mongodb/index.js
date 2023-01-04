@@ -1,4 +1,4 @@
-const { PrismaClient } = require("../@generated/prisma/clientMongodb")
+const { PrismaClient } = require("../../../prisma/@generated/prisma/clientMongodb")
 
 const prismaClient = new PrismaClient()
 

@@ -1,4 +1,4 @@
-const { PrismaClient } = require("../@generated/prisma/clientMysql")
+const { PrismaClient } = require("../../../prisma/@generated/prisma/clientMysql")
 
 const prismaClient = new PrismaClient()
 

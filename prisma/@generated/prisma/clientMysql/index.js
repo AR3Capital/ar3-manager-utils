@@ -80,8 +80,8 @@ const regularDirname = hasDirname && fs.existsSync(path.join(__dirname, 'schema.
 
 // if the client has been bundled, we need to look for the folders
 const foundDirname = !regularDirname && findSync(process.cwd(), [
+    "prisma\\@generated\\prisma\\clientMysql",
     "@generated\\prisma\\clientMysql",
-    "prisma\\clientMysql",
 ], ['d'], ['d'], 1)[0]
 
 const dirname = regularDirname || foundDirname || __dirname
@@ -366,7 +366,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "E:\\Trabalho\\AR3\\ar3-manager-bd-utils\\@generated\\prisma\\clientMysql",
+      "value": "E:\\Trabalho\\AR3\\ar3-manager-bd-utils\\prisma\\@generated\\prisma\\clientMysql",
       "fromEnvVar": null
     },
     "config": {
@@ -377,8 +377,8 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "..\\..\\..\\.env",
-    "schemaEnvPath": "..\\..\\..\\.env"
+    "rootEnvPath": "..\\..\\..\\..\\.env",
+    "schemaEnvPath": "..\\..\\..\\..\\.env"
   },
   "relativePath": "..\\..\\..\\prismaMysql",
   "clientVersion": "4.7.1",
@@ -407,6 +407,6 @@ exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
 path.join(__dirname, "query_engine-windows.dll.node");
-path.join(process.cwd(), "@generated\\prisma\\clientMysql\\query_engine-windows.dll.node")
+path.join(process.cwd(), "prisma\\@generated\\prisma\\clientMysql\\query_engine-windows.dll.node")
 path.join(__dirname, "schema.prisma");
-path.join(process.cwd(), "@generated\\prisma\\clientMysql\\schema.prisma")
+path.join(process.cwd(), "prisma\\@generated\\prisma\\clientMysql\\schema.prisma")
