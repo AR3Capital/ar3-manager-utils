@@ -1,8 +1,8 @@
 {
-  "name": "ar3-manager-bd-utils",
-  "version": "1.0.00016",
-  "description": "Repositorio do banco de dados",
-  "author": "ARE Devs",
+  "name": "@AR3Capital/ar3-manager-utils",
+  "version": "0.0.1",
+  "description": "Repositorio do utils",
+  "author": "AR3 Devs",
   "license": "MIT",
   "main": "index.js",
   "files": [
@@ -20,6 +20,7 @@
     "prisma:format_mdb": "prisma format --schema prisma/prismaMongodb/schema.prisma",
     "prisma:pull_mdb": "prisma db pull --schema prisma/prismaMongodb/schema.prisma",
     "prisma:push_mdb": "prisma db push --schema prisma/prismaMongodb/schema.prisma",
+    "npmlogin": "npm login --scope=@AR3Capital --registry=https://npm.pkg.github.com",
     "publish": "npm publish",
     "test": "node test"
   },
@@ -31,5 +32,16 @@
   },
   "dependencies": {
     "@prisma/client": "^4.6.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AR3Capital/ar3-manager-utils.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AR3Capital/ar3-manager-utils/issues"
+  },
+  "homepage": "https://github.com/AR3Capital/ar3-manager-utils#readme",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }
