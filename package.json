@@ -1,6 +1,6 @@
 {
   "name": "@AR3Capital/ar3-manager-utils",
-  "version": "0.0.1",
+  "version": "0.0.11",
   "description": "Repositorio do utils",
   "author": "AR3 Devs",
   "license": "MIT",
@@ -21,7 +21,7 @@
     "prisma:pull_mdb": "prisma db pull --schema prisma/prismaMongodb/schema.prisma",
     "prisma:push_mdb": "prisma db push --schema prisma/prismaMongodb/schema.prisma",
     "npmlogin": "npm login --scope=@AR3Capital --registry=https://npm.pkg.github.com",
-    "publish": "npm publish",
+    "publish_npm": "npm publish",
     "test": "node test"
   },
   "devDependencies": {

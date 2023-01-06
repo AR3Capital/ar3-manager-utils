@@ -13,11 +13,11 @@ const Prisma = {}
 exports.Prisma = Prisma
 
 /**
- * Prisma Client JS version: 4.7.1
+ * Prisma Client JS version: 4.6.1
  * Query Engine version: 272861e07ab64f234d3ffc4094e32bd61775599c
  */
 Prisma.prismaVersion = {
-  client: "4.7.1",
+  client: "4.6.1",
   engine: "272861e07ab64f234d3ffc4094e32bd61775599c"
 }
 
@@ -186,6 +186,7 @@ exports.Prisma.Organograma_x_regiao_atuacaoScalarFieldEnum = makeEnum({
 exports.Prisma.PessoaScalarFieldEnum = makeEnum({
   id: 'id',
   nome: 'nome',
+  sobrenome: 'sobrenome',
   sexo: 'sexo',
   nascimento: 'nascimento',
   cpf: 'cpf',
