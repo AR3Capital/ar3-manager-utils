@@ -134,6 +134,7 @@ model organograma_x_regiao_atuacao {
 model pessoa {
   id         Int       @id @default(autoincrement())
   nome       String    @db.VarChar(120)
+  sobrenome  String    @db.VarChar(120)
   sexo       String?   @db.Char(1)
   nascimento DateTime? @db.Date
   cpf        String?   @db.VarChar(11)
@@ -239,11 +240,11 @@ model usuario {
   senha                 String                  @db.VarChar(180)
   pessoa_id             Int
   status                String?                 @db.VarChar(100)
-  pessoa                pessoa                  @relation(fields: [id], references: [id], onUpdate: Restrict, map: "usuario_FK")
   auditoria             auditoria[]
   checagem              checagem[]
   fidic_fundo_x_usuario fidic_fundo_x_usuario[]
   titulos_x_usuario     titulos_x_usuario[]
+  pessoa                pessoa                  @relation(fields: [id], references: [id], onUpdate: Restrict, map: "usuario_FK")
   usuario_x_perfil      usuario_x_perfil[]
 }
 
