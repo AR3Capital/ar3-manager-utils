@@ -1,11 +1,12 @@
 {
   "name": "@AR3Capital/ar3-manager-utils",
-  "version": "0.0.11",
+  "version": "0.0.13",
   "description": "Repositorio do utils",
   "author": "AR3 Devs",
   "license": "MIT",
   "main": "index.js",
   "files": [
+    "node_modules/ajv",
     "prisma",
     "src",
     "index.js"
@@ -25,13 +26,17 @@
     "test": "node test"
   },
   "devDependencies": {
-    "prisma": "^4.7.1",
     "ajv": "6.12.0",
     "ajv-errors": "1.0.1",
-    "ajv-keywords": "^3.4.0"
+    "ajv-keywords": "^3.4.0",
+    "prisma": "^4.7.1"
   },
   "dependencies": {
-    "@prisma/client": "^4.6.1"
+    "@prisma/client": "^4.6.1",
+    "dotenv": "^16.0.3",
+    "express-handlebars": "^6.0.6",
+    "nodemailer": "^6.8.0",
+    "nodemailer-express-handlebars": "^6.0.0"
   },
   "repository": {
     "type": "git",
