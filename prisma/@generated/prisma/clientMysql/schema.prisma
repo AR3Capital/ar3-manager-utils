@@ -139,7 +139,7 @@ model pessoa {
   nascimento DateTime? @db.Date
   cpf        String?   @db.VarChar(11)
   rg         String?   @db.VarChar(11)
-  usuario    usuario?
+  usuario    usuario[]
 }
 
 model plataforma {
@@ -236,16 +236,24 @@ model titulos_x_usuario {
 
 model usuario {
   id                    Int                     @id @default(autoincrement())
-  email                 String                  @db.VarChar(180)
+  email                 String                  @unique(map: "usuario_un") @db.VarChar(180)
   senha                 String                  @db.VarChar(180)
   pessoa_id             Int
   status                String?                 @db.VarChar(100)
+  primeiro_acesso       Boolean?                @default(true)
+  confirmou_email       Boolean?                @default(false)
+  codigo_reset_senha    String?                 @db.Char(6)
+  codigo_data_expiracao DateTime?               @db.DateTime(0)
+  created_at            DateTime                @default(now()) @db.DateTime(0)
+  updated_at            DateTime?               @map("updated-at") @db.DateTime(0)
   auditoria             auditoria[]
   checagem              checagem[]
   fidic_fundo_x_usuario fidic_fundo_x_usuario[]
   titulos_x_usuario     titulos_x_usuario[]
-  pessoa                pessoa                  @relation(fields: [id], references: [id], onUpdate: Restrict, map: "usuario_FK")
+  pessoa                pessoa                  @relation(fields: [pessoa_id], references: [id], onUpdate: Restrict, map: "usuario_FK_1")
   usuario_x_perfil      usuario_x_perfil[]
+
+  @@index([pessoa_id], map: "usuario_FK_1")
 }
 
 model usuario__pessoa {

@@ -240,6 +240,12 @@ model usuario {
   senha                 String                  @db.VarChar(180)
   pessoa_id             Int
   status                String?                 @db.VarChar(100)
+  primeiro_acesso       Boolean?                @default(true)
+  confirmou_email       Boolean?                @default(false)
+  codigo_reset_senha    String?                 @db.Char(6)
+  codigo_data_expiracao DateTime?               @db.DateTime(0)
+  created_at            DateTime                @default(now()) @db.DateTime(0)
+  updated_at            DateTime?               @map("updated-at") @db.DateTime(0)
   auditoria             auditoria[]
   checagem              checagem[]
   fidic_fundo_x_usuario fidic_fundo_x_usuario[]

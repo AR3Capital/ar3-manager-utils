@@ -287,7 +287,13 @@ exports.Prisma.UsuarioScalarFieldEnum = makeEnum({
   email: 'email',
   senha: 'senha',
   pessoa_id: 'pessoa_id',
-  status: 'status'
+  status: 'status',
+  primeiro_acesso: 'primeiro_acesso',
+  confirmou_email: 'confirmou_email',
+  codigo_reset_senha: 'codigo_reset_senha',
+  codigo_data_expiracao: 'codigo_data_expiracao',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 });
 
 exports.Prisma.Usuario__pessoaScalarFieldEnum = makeEnum({
