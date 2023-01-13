@@ -319,6 +319,12 @@ export type usuario = {
   senha: string
   pessoa_id: number
   status: string | null
+  primeiro_acesso: boolean | null
+  confirmou_email: boolean | null
+  codigo_reset_senha: string | null
+  codigo_data_expiracao: Date | null
+  created_at: Date
+  updated_at: Date | null
 }
 
 /**
@@ -1649,6 +1655,50 @@ export namespace Prisma {
      * 
     **/
     select?: Fidic_fundoCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type PessoaCountOutputType
+   */
+
+
+  export type PessoaCountOutputType = {
+    usuario: number
+  }
+
+  export type PessoaCountOutputTypeSelect = {
+    usuario?: boolean
+  }
+
+  export type PessoaCountOutputTypeGetPayload<S extends boolean | null | undefined | PessoaCountOutputTypeArgs, U = keyof S> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? PessoaCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (PessoaCountOutputTypeArgs)
+    ? PessoaCountOutputType 
+    : S extends { select: any } & (PessoaCountOutputTypeArgs)
+      ? {
+    [P in TrueKeys<S['select']>]:
+    P extends keyof PessoaCountOutputType ? PessoaCountOutputType[P] : never
+  } 
+      : PessoaCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * PessoaCountOutputType without action
+   */
+  export type PessoaCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the PessoaCountOutputType
+     * 
+    **/
+    select?: PessoaCountOutputTypeSelect | null
   }
 
 
@@ -15151,12 +15201,14 @@ export namespace Prisma {
     nascimento?: boolean
     cpf?: boolean
     rg?: boolean
-    usuario?: boolean | usuarioArgs
+    usuario?: boolean | usuarioFindManyArgs
+    _count?: boolean | PessoaCountOutputTypeArgs
   }
 
 
   export type pessoaInclude = {
-    usuario?: boolean | usuarioArgs
+    usuario?: boolean | usuarioFindManyArgs
+    _count?: boolean | PessoaCountOutputTypeArgs
   } 
 
   export type pessoaGetPayload<S extends boolean | null | undefined | pessoaArgs, U = keyof S> =
@@ -15166,12 +15218,14 @@ export namespace Prisma {
     S extends { include: any } & (pessoaArgs | pessoaFindManyArgs)
     ? pessoa  & {
     [P in TrueKeys<S['include']>]:
-        P extends 'usuario' ? usuarioGetPayload<Exclude<S['include'], undefined | null>[P]> | null :  never
+        P extends 'usuario' ? Array < usuarioGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
+        P extends '_count' ? PessoaCountOutputTypeGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
   } 
     : S extends { select: any } & (pessoaArgs | pessoaFindManyArgs)
       ? {
     [P in TrueKeys<S['select']>]:
-        P extends 'usuario' ? usuarioGetPayload<Exclude<S['select'], undefined | null>[P]> | null :  P extends keyof pessoa ? pessoa[P] : never
+        P extends 'usuario' ? Array < usuarioGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
+        P extends '_count' ? PessoaCountOutputTypeGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof pessoa ? pessoa[P] : never
   } 
       : pessoa
 
@@ -15545,7 +15599,7 @@ export namespace Prisma {
     constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
 
-    usuario<T extends usuarioArgs= {}>(args?: Subset<T, usuarioArgs>): Prisma__usuarioClient<usuarioGetPayload<T> | Null>;
+    usuario<T extends usuarioFindManyArgs= {}>(args?: Subset<T, usuarioFindManyArgs>): PrismaPromise<Array<usuarioGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -28627,6 +28681,12 @@ export namespace Prisma {
     senha: string | null
     pessoa_id: number | null
     status: string | null
+    primeiro_acesso: boolean | null
+    confirmou_email: boolean | null
+    codigo_reset_senha: string | null
+    codigo_data_expiracao: Date | null
+    created_at: Date | null
+    updated_at: Date | null
   }
 
   export type UsuarioMaxAggregateOutputType = {
@@ -28635,6 +28695,12 @@ export namespace Prisma {
     senha: string | null
     pessoa_id: number | null
     status: string | null
+    primeiro_acesso: boolean | null
+    confirmou_email: boolean | null
+    codigo_reset_senha: string | null
+    codigo_data_expiracao: Date | null
+    created_at: Date | null
+    updated_at: Date | null
   }
 
   export type UsuarioCountAggregateOutputType = {
@@ -28643,6 +28709,12 @@ export namespace Prisma {
     senha: number
     pessoa_id: number
     status: number
+    primeiro_acesso: number
+    confirmou_email: number
+    codigo_reset_senha: number
+    codigo_data_expiracao: number
+    created_at: number
+    updated_at: number
     _all: number
   }
 
@@ -28663,6 +28735,12 @@ export namespace Prisma {
     senha?: true
     pessoa_id?: true
     status?: true
+    primeiro_acesso?: true
+    confirmou_email?: true
+    codigo_reset_senha?: true
+    codigo_data_expiracao?: true
+    created_at?: true
+    updated_at?: true
   }
 
   export type UsuarioMaxAggregateInputType = {
@@ -28671,6 +28749,12 @@ export namespace Prisma {
     senha?: true
     pessoa_id?: true
     status?: true
+    primeiro_acesso?: true
+    confirmou_email?: true
+    codigo_reset_senha?: true
+    codigo_data_expiracao?: true
+    created_at?: true
+    updated_at?: true
   }
 
   export type UsuarioCountAggregateInputType = {
@@ -28679,6 +28763,12 @@ export namespace Prisma {
     senha?: true
     pessoa_id?: true
     status?: true
+    primeiro_acesso?: true
+    confirmou_email?: true
+    codigo_reset_senha?: true
+    codigo_data_expiracao?: true
+    created_at?: true
+    updated_at?: true
     _all?: true
   }
 
@@ -28780,6 +28870,12 @@ export namespace Prisma {
     senha: string
     pessoa_id: number
     status: string | null
+    primeiro_acesso: boolean | null
+    confirmou_email: boolean | null
+    codigo_reset_senha: string | null
+    codigo_data_expiracao: Date | null
+    created_at: Date
+    updated_at: Date | null
     _count: UsuarioCountAggregateOutputType | null
     _avg: UsuarioAvgAggregateOutputType | null
     _sum: UsuarioSumAggregateOutputType | null
@@ -28807,6 +28903,12 @@ export namespace Prisma {
     senha?: boolean
     pessoa_id?: boolean
     status?: boolean
+    primeiro_acesso?: boolean
+    confirmou_email?: boolean
+    codigo_reset_senha?: boolean
+    codigo_data_expiracao?: boolean
+    created_at?: boolean
+    updated_at?: boolean
     auditoria?: boolean | auditoriaFindManyArgs
     checagem?: boolean | checagemFindManyArgs
     fidic_fundo_x_usuario?: boolean | fidic_fundo_x_usuarioFindManyArgs
@@ -33533,7 +33635,13 @@ export namespace Prisma {
     email: 'email',
     senha: 'senha',
     pessoa_id: 'pessoa_id',
-    status: 'status'
+    status: 'status',
+    primeiro_acesso: 'primeiro_acesso',
+    confirmou_email: 'confirmou_email',
+    codigo_reset_senha: 'codigo_reset_senha',
+    codigo_data_expiracao: 'codigo_data_expiracao',
+    created_at: 'created_at',
+    updated_at: 'updated_at'
   };
 
   export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeof UsuarioScalarFieldEnum]
@@ -34203,7 +34311,7 @@ export namespace Prisma {
     nascimento?: DateTimeNullableFilter | Date | string | null
     cpf?: StringNullableFilter | string | null
     rg?: StringNullableFilter | string | null
-    usuario?: XOR<UsuarioRelationFilter, usuarioWhereInput> | null
+    usuario?: UsuarioListRelationFilter
   }
 
   export type pessoaOrderByWithRelationInput = {
@@ -34214,7 +34322,7 @@ export namespace Prisma {
     nascimento?: SortOrder
     cpf?: SortOrder
     rg?: SortOrder
-    usuario?: usuarioOrderByWithRelationInput
+    usuario?: usuarioOrderByRelationAggregateInput
   }
 
   export type pessoaWhereUniqueInput = {
@@ -34790,6 +34898,12 @@ export namespace Prisma {
     senha?: StringFilter | string
     pessoa_id?: IntFilter | number
     status?: StringNullableFilter | string | null
+    primeiro_acesso?: BoolNullableFilter | boolean | null
+    confirmou_email?: BoolNullableFilter | boolean | null
+    codigo_reset_senha?: StringNullableFilter | string | null
+    codigo_data_expiracao?: DateTimeNullableFilter | Date | string | null
+    created_at?: DateTimeFilter | Date | string
+    updated_at?: DateTimeNullableFilter | Date | string | null
     auditoria?: AuditoriaListRelationFilter
     checagem?: ChecagemListRelationFilter
     fidic_fundo_x_usuario?: Fidic_fundo_x_usuarioListRelationFilter
@@ -34804,6 +34918,12 @@ export namespace Prisma {
     senha?: SortOrder
     pessoa_id?: SortOrder
     status?: SortOrder
+    primeiro_acesso?: SortOrder
+    confirmou_email?: SortOrder
+    codigo_reset_senha?: SortOrder
+    codigo_data_expiracao?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
     auditoria?: auditoriaOrderByRelationAggregateInput
     checagem?: checagemOrderByRelationAggregateInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioOrderByRelationAggregateInput
@@ -34814,6 +34934,7 @@ export namespace Prisma {
 
   export type usuarioWhereUniqueInput = {
     id?: number
+    email?: string
   }
 
   export type usuarioOrderByWithAggregationInput = {
@@ -34822,6 +34943,12 @@ export namespace Prisma {
     senha?: SortOrder
     pessoa_id?: SortOrder
     status?: SortOrder
+    primeiro_acesso?: SortOrder
+    confirmou_email?: SortOrder
+    codigo_reset_senha?: SortOrder
+    codigo_data_expiracao?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
     _count?: usuarioCountOrderByAggregateInput
     _avg?: usuarioAvgOrderByAggregateInput
     _max?: usuarioMaxOrderByAggregateInput
@@ -34838,6 +34965,12 @@ export namespace Prisma {
     senha?: StringWithAggregatesFilter | string
     pessoa_id?: IntWithAggregatesFilter | number
     status?: StringNullableWithAggregatesFilter | string | null
+    primeiro_acesso?: BoolNullableWithAggregatesFilter | boolean | null
+    confirmou_email?: BoolNullableWithAggregatesFilter | boolean | null
+    codigo_reset_senha?: StringNullableWithAggregatesFilter | string | null
+    codigo_data_expiracao?: DateTimeNullableWithAggregatesFilter | Date | string | null
+    created_at?: DateTimeWithAggregatesFilter | Date | string
+    updated_at?: DateTimeNullableWithAggregatesFilter | Date | string | null
   }
 
   export type usuario__pessoaWhereInput = {
@@ -35638,7 +35771,7 @@ export namespace Prisma {
     nascimento?: Date | string | null
     cpf?: string | null
     rg?: string | null
-    usuario?: usuarioCreateNestedOneWithoutPessoaInput
+    usuario?: usuarioCreateNestedManyWithoutPessoaInput
   }
 
   export type pessoaUncheckedCreateInput = {
@@ -35649,7 +35782,7 @@ export namespace Prisma {
     nascimento?: Date | string | null
     cpf?: string | null
     rg?: string | null
-    usuario?: usuarioUncheckedCreateNestedOneWithoutPessoaInput
+    usuario?: usuarioUncheckedCreateNestedManyWithoutPessoaInput
   }
 
   export type pessoaUpdateInput = {
@@ -35659,7 +35792,7 @@ export namespace Prisma {
     nascimento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cpf?: NullableStringFieldUpdateOperationsInput | string | null
     rg?: NullableStringFieldUpdateOperationsInput | string | null
-    usuario?: usuarioUpdateOneWithoutPessoaNestedInput
+    usuario?: usuarioUpdateManyWithoutPessoaNestedInput
   }
 
   export type pessoaUncheckedUpdateInput = {
@@ -35670,7 +35803,7 @@ export namespace Prisma {
     nascimento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cpf?: NullableStringFieldUpdateOperationsInput | string | null
     rg?: NullableStringFieldUpdateOperationsInput | string | null
-    usuario?: usuarioUncheckedUpdateOneWithoutPessoaNestedInput
+    usuario?: usuarioUncheckedUpdateManyWithoutPessoaNestedInput
   }
 
   export type pessoaCreateManyInput = {
@@ -36224,13 +36357,18 @@ export namespace Prisma {
   export type usuarioCreateInput = {
     email: string
     senha: string
-    pessoa_id: number
     status?: string | null
+    primeiro_acesso?: boolean | null
+    confirmou_email?: boolean | null
+    codigo_reset_senha?: string | null
+    codigo_data_expiracao?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string | null
     auditoria?: auditoriaCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
     checagem?: checagemCreateNestedManyWithoutUsuario_checagemTousuarioInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
     titulos_x_usuario?: titulos_x_usuarioCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput
-    pessoa?: pessoaCreateNestedOneWithoutUsuarioInput
+    pessoa: pessoaCreateNestedOneWithoutUsuarioInput
     usuario_x_perfil?: usuario_x_perfilCreateNestedManyWithoutUsuarioInput
   }
 
@@ -36240,6 +36378,12 @@ export namespace Prisma {
     senha: string
     pessoa_id: number
     status?: string | null
+    primeiro_acesso?: boolean | null
+    confirmou_email?: boolean | null
+    codigo_reset_senha?: string | null
+    codigo_data_expiracao?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string | null
     auditoria?: auditoriaUncheckedCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
     checagem?: checagemUncheckedCreateNestedManyWithoutUsuario_checagemTousuarioInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
@@ -36250,8 +36394,13 @@ export namespace Prisma {
   export type usuarioUpdateInput = {
     email?: StringFieldUpdateOperationsInput | string
     senha?: StringFieldUpdateOperationsInput | string
-    pessoa_id?: IntFieldUpdateOperationsInput | number
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     auditoria?: auditoriaUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
     checagem?: checagemUpdateManyWithoutUsuario_checagemTousuarioNestedInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
@@ -36266,6 +36415,12 @@ export namespace Prisma {
     senha?: StringFieldUpdateOperationsInput | string
     pessoa_id?: IntFieldUpdateOperationsInput | number
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     auditoria?: auditoriaUncheckedUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
     checagem?: checagemUncheckedUpdateManyWithoutUsuario_checagemTousuarioNestedInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
@@ -36279,13 +36434,24 @@ export namespace Prisma {
     senha: string
     pessoa_id: number
     status?: string | null
+    primeiro_acesso?: boolean | null
+    confirmou_email?: boolean | null
+    codigo_reset_senha?: string | null
+    codigo_data_expiracao?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string | null
   }
 
   export type usuarioUpdateManyMutationInput = {
     email?: StringFieldUpdateOperationsInput | string
     senha?: StringFieldUpdateOperationsInput | string
-    pessoa_id?: IntFieldUpdateOperationsInput | number
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type usuarioUncheckedUpdateManyInput = {
@@ -36294,6 +36460,12 @@ export namespace Prisma {
     senha?: StringFieldUpdateOperationsInput | string
     pessoa_id?: IntFieldUpdateOperationsInput | number
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type usuario__pessoaCreateInput = {
@@ -37087,6 +37259,16 @@ export namespace Prisma {
     regiao_id?: SortOrder
   }
 
+  export type UsuarioListRelationFilter = {
+    every?: usuarioWhereInput
+    some?: usuarioWhereInput
+    none?: usuarioWhereInput
+  }
+
+  export type usuarioOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type pessoaCountOrderByAggregateInput = {
     id?: SortOrder
     nome?: SortOrder
@@ -37519,6 +37701,22 @@ export namespace Prisma {
     bordero?: SortOrder
   }
 
+  export type BoolNullableFilter = {
+    equals?: boolean | null
+    not?: NestedBoolNullableFilter | boolean | null
+  }
+
+  export type DateTimeFilter = {
+    equals?: Date | string
+    in?: Enumerable<Date> | Enumerable<string>
+    notIn?: Enumerable<Date> | Enumerable<string>
+    lt?: Date | string
+    lte?: Date | string
+    gt?: Date | string
+    gte?: Date | string
+    not?: NestedDateTimeFilter | Date | string
+  }
+
   export type AuditoriaListRelationFilter = {
     every?: auditoriaWhereInput
     some?: auditoriaWhereInput
@@ -37560,6 +37758,12 @@ export namespace Prisma {
     senha?: SortOrder
     pessoa_id?: SortOrder
     status?: SortOrder
+    primeiro_acesso?: SortOrder
+    confirmou_email?: SortOrder
+    codigo_reset_senha?: SortOrder
+    codigo_data_expiracao?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type usuarioAvgOrderByAggregateInput = {
@@ -37573,6 +37777,12 @@ export namespace Prisma {
     senha?: SortOrder
     pessoa_id?: SortOrder
     status?: SortOrder
+    primeiro_acesso?: SortOrder
+    confirmou_email?: SortOrder
+    codigo_reset_senha?: SortOrder
+    codigo_data_expiracao?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type usuarioMinOrderByAggregateInput = {
@@ -37581,11 +37791,39 @@ export namespace Prisma {
     senha?: SortOrder
     pessoa_id?: SortOrder
     status?: SortOrder
+    primeiro_acesso?: SortOrder
+    confirmou_email?: SortOrder
+    codigo_reset_senha?: SortOrder
+    codigo_data_expiracao?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type usuarioSumOrderByAggregateInput = {
     id?: SortOrder
     pessoa_id?: SortOrder
+  }
+
+  export type BoolNullableWithAggregatesFilter = {
+    equals?: boolean | null
+    not?: NestedBoolNullableWithAggregatesFilter | boolean | null
+    _count?: NestedIntNullableFilter
+    _min?: NestedBoolNullableFilter
+    _max?: NestedBoolNullableFilter
+  }
+
+  export type DateTimeWithAggregatesFilter = {
+    equals?: Date | string
+    in?: Enumerable<Date> | Enumerable<string>
+    notIn?: Enumerable<Date> | Enumerable<string>
+    lt?: Date | string
+    lte?: Date | string
+    gt?: Date | string
+    gte?: Date | string
+    not?: NestedDateTimeWithAggregatesFilter | Date | string
+    _count?: NestedIntFilter
+    _min?: NestedDateTimeFilter
+    _max?: NestedDateTimeFilter
   }
 
   export type usuario__pessoaCountOrderByAggregateInput = {
@@ -38135,36 +38373,46 @@ export namespace Prisma {
     update?: XOR<usuarioUpdateWithoutFidic_fundo_x_usuarioInput, usuarioUncheckedUpdateWithoutFidic_fundo_x_usuarioInput>
   }
 
-  export type usuarioCreateNestedOneWithoutPessoaInput = {
-    create?: XOR<usuarioCreateWithoutPessoaInput, usuarioUncheckedCreateWithoutPessoaInput>
-    connectOrCreate?: usuarioCreateOrConnectWithoutPessoaInput
-    connect?: usuarioWhereUniqueInput
+  export type usuarioCreateNestedManyWithoutPessoaInput = {
+    create?: XOR<Enumerable<usuarioCreateWithoutPessoaInput>, Enumerable<usuarioUncheckedCreateWithoutPessoaInput>>
+    connectOrCreate?: Enumerable<usuarioCreateOrConnectWithoutPessoaInput>
+    createMany?: usuarioCreateManyPessoaInputEnvelope
+    connect?: Enumerable<usuarioWhereUniqueInput>
   }
 
-  export type usuarioUncheckedCreateNestedOneWithoutPessoaInput = {
-    create?: XOR<usuarioCreateWithoutPessoaInput, usuarioUncheckedCreateWithoutPessoaInput>
-    connectOrCreate?: usuarioCreateOrConnectWithoutPessoaInput
-    connect?: usuarioWhereUniqueInput
+  export type usuarioUncheckedCreateNestedManyWithoutPessoaInput = {
+    create?: XOR<Enumerable<usuarioCreateWithoutPessoaInput>, Enumerable<usuarioUncheckedCreateWithoutPessoaInput>>
+    connectOrCreate?: Enumerable<usuarioCreateOrConnectWithoutPessoaInput>
+    createMany?: usuarioCreateManyPessoaInputEnvelope
+    connect?: Enumerable<usuarioWhereUniqueInput>
   }
 
-  export type usuarioUpdateOneWithoutPessoaNestedInput = {
-    create?: XOR<usuarioCreateWithoutPessoaInput, usuarioUncheckedCreateWithoutPessoaInput>
-    connectOrCreate?: usuarioCreateOrConnectWithoutPessoaInput
-    upsert?: usuarioUpsertWithoutPessoaInput
-    disconnect?: boolean
-    delete?: boolean
-    connect?: usuarioWhereUniqueInput
-    update?: XOR<usuarioUpdateWithoutPessoaInput, usuarioUncheckedUpdateWithoutPessoaInput>
+  export type usuarioUpdateManyWithoutPessoaNestedInput = {
+    create?: XOR<Enumerable<usuarioCreateWithoutPessoaInput>, Enumerable<usuarioUncheckedCreateWithoutPessoaInput>>
+    connectOrCreate?: Enumerable<usuarioCreateOrConnectWithoutPessoaInput>
+    upsert?: Enumerable<usuarioUpsertWithWhereUniqueWithoutPessoaInput>
+    createMany?: usuarioCreateManyPessoaInputEnvelope
+    set?: Enumerable<usuarioWhereUniqueInput>
+    disconnect?: Enumerable<usuarioWhereUniqueInput>
+    delete?: Enumerable<usuarioWhereUniqueInput>
+    connect?: Enumerable<usuarioWhereUniqueInput>
+    update?: Enumerable<usuarioUpdateWithWhereUniqueWithoutPessoaInput>
+    updateMany?: Enumerable<usuarioUpdateManyWithWhereWithoutPessoaInput>
+    deleteMany?: Enumerable<usuarioScalarWhereInput>
   }
 
-  export type usuarioUncheckedUpdateOneWithoutPessoaNestedInput = {
-    create?: XOR<usuarioCreateWithoutPessoaInput, usuarioUncheckedCreateWithoutPessoaInput>
-    connectOrCreate?: usuarioCreateOrConnectWithoutPessoaInput
-    upsert?: usuarioUpsertWithoutPessoaInput
-    disconnect?: boolean
-    delete?: boolean
-    connect?: usuarioWhereUniqueInput
-    update?: XOR<usuarioUpdateWithoutPessoaInput, usuarioUncheckedUpdateWithoutPessoaInput>
+  export type usuarioUncheckedUpdateManyWithoutPessoaNestedInput = {
+    create?: XOR<Enumerable<usuarioCreateWithoutPessoaInput>, Enumerable<usuarioUncheckedCreateWithoutPessoaInput>>
+    connectOrCreate?: Enumerable<usuarioCreateOrConnectWithoutPessoaInput>
+    upsert?: Enumerable<usuarioUpsertWithWhereUniqueWithoutPessoaInput>
+    createMany?: usuarioCreateManyPessoaInputEnvelope
+    set?: Enumerable<usuarioWhereUniqueInput>
+    disconnect?: Enumerable<usuarioWhereUniqueInput>
+    delete?: Enumerable<usuarioWhereUniqueInput>
+    connect?: Enumerable<usuarioWhereUniqueInput>
+    update?: Enumerable<usuarioUpdateWithWhereUniqueWithoutPessoaInput>
+    updateMany?: Enumerable<usuarioUpdateManyWithWhereWithoutPessoaInput>
+    deleteMany?: Enumerable<usuarioScalarWhereInput>
   }
 
   export type cedente_n_sacadosCreateNestedManyWithoutSacado_cedente_n_sacadosTosacadoInput = {
@@ -38407,6 +38655,14 @@ export namespace Prisma {
     connectOrCreate?: Enumerable<usuario_x_perfilCreateOrConnectWithoutUsuarioInput>
     createMany?: usuario_x_perfilCreateManyUsuarioInputEnvelope
     connect?: Enumerable<usuario_x_perfilWhereUniqueInput>
+  }
+
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
   }
 
   export type auditoriaUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput = {
@@ -38806,15 +39062,58 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter
   }
 
+  export type NestedBoolNullableFilter = {
+    equals?: boolean | null
+    not?: NestedBoolNullableFilter | boolean | null
+  }
+
+  export type NestedDateTimeFilter = {
+    equals?: Date | string
+    in?: Enumerable<Date> | Enumerable<string>
+    notIn?: Enumerable<Date> | Enumerable<string>
+    lt?: Date | string
+    lte?: Date | string
+    gt?: Date | string
+    gte?: Date | string
+    not?: NestedDateTimeFilter | Date | string
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter = {
+    equals?: boolean | null
+    not?: NestedBoolNullableWithAggregatesFilter | boolean | null
+    _count?: NestedIntNullableFilter
+    _min?: NestedBoolNullableFilter
+    _max?: NestedBoolNullableFilter
+  }
+
+  export type NestedDateTimeWithAggregatesFilter = {
+    equals?: Date | string
+    in?: Enumerable<Date> | Enumerable<string>
+    notIn?: Enumerable<Date> | Enumerable<string>
+    lt?: Date | string
+    lte?: Date | string
+    gt?: Date | string
+    gte?: Date | string
+    not?: NestedDateTimeWithAggregatesFilter | Date | string
+    _count?: NestedIntFilter
+    _min?: NestedDateTimeFilter
+    _max?: NestedDateTimeFilter
+  }
+
   export type usuarioCreateWithoutAuditoriaInput = {
     email: string
     senha: string
-    pessoa_id: number
     status?: string | null
+    primeiro_acesso?: boolean | null
+    confirmou_email?: boolean | null
+    codigo_reset_senha?: string | null
+    codigo_data_expiracao?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string | null
     checagem?: checagemCreateNestedManyWithoutUsuario_checagemTousuarioInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
     titulos_x_usuario?: titulos_x_usuarioCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput
-    pessoa?: pessoaCreateNestedOneWithoutUsuarioInput
+    pessoa: pessoaCreateNestedOneWithoutUsuarioInput
     usuario_x_perfil?: usuario_x_perfilCreateNestedManyWithoutUsuarioInput
   }
 
@@ -38824,6 +39123,12 @@ export namespace Prisma {
     senha: string
     pessoa_id: number
     status?: string | null
+    primeiro_acesso?: boolean | null
+    confirmou_email?: boolean | null
+    codigo_reset_senha?: string | null
+    codigo_data_expiracao?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string | null
     checagem?: checagemUncheckedCreateNestedManyWithoutUsuario_checagemTousuarioInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
     titulos_x_usuario?: titulos_x_usuarioUncheckedCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput
@@ -38843,8 +39148,13 @@ export namespace Prisma {
   export type usuarioUpdateWithoutAuditoriaInput = {
     email?: StringFieldUpdateOperationsInput | string
     senha?: StringFieldUpdateOperationsInput | string
-    pessoa_id?: IntFieldUpdateOperationsInput | number
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     checagem?: checagemUpdateManyWithoutUsuario_checagemTousuarioNestedInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
     titulos_x_usuario?: titulos_x_usuarioUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
@@ -38858,6 +39168,12 @@ export namespace Prisma {
     senha?: StringFieldUpdateOperationsInput | string
     pessoa_id?: IntFieldUpdateOperationsInput | number
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     checagem?: checagemUncheckedUpdateManyWithoutUsuario_checagemTousuarioNestedInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
     titulos_x_usuario?: titulos_x_usuarioUncheckedUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
@@ -39358,12 +39674,17 @@ export namespace Prisma {
   export type usuarioCreateWithoutChecagemInput = {
     email: string
     senha: string
-    pessoa_id: number
     status?: string | null
+    primeiro_acesso?: boolean | null
+    confirmou_email?: boolean | null
+    codigo_reset_senha?: string | null
+    codigo_data_expiracao?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string | null
     auditoria?: auditoriaCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
     titulos_x_usuario?: titulos_x_usuarioCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput
-    pessoa?: pessoaCreateNestedOneWithoutUsuarioInput
+    pessoa: pessoaCreateNestedOneWithoutUsuarioInput
     usuario_x_perfil?: usuario_x_perfilCreateNestedManyWithoutUsuarioInput
   }
 
@@ -39373,6 +39694,12 @@ export namespace Prisma {
     senha: string
     pessoa_id: number
     status?: string | null
+    primeiro_acesso?: boolean | null
+    confirmou_email?: boolean | null
+    codigo_reset_senha?: string | null
+    codigo_data_expiracao?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string | null
     auditoria?: auditoriaUncheckedCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
     titulos_x_usuario?: titulos_x_usuarioUncheckedCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput
@@ -39392,8 +39719,13 @@ export namespace Prisma {
   export type usuarioUpdateWithoutChecagemInput = {
     email?: StringFieldUpdateOperationsInput | string
     senha?: StringFieldUpdateOperationsInput | string
-    pessoa_id?: IntFieldUpdateOperationsInput | number
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     auditoria?: auditoriaUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
     titulos_x_usuario?: titulos_x_usuarioUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
@@ -39407,6 +39739,12 @@ export namespace Prisma {
     senha?: StringFieldUpdateOperationsInput | string
     pessoa_id?: IntFieldUpdateOperationsInput | number
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     auditoria?: auditoriaUncheckedUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
     titulos_x_usuario?: titulos_x_usuarioUncheckedUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
@@ -39526,12 +39864,17 @@ export namespace Prisma {
   export type usuarioCreateWithoutFidic_fundo_x_usuarioInput = {
     email: string
     senha: string
-    pessoa_id: number
     status?: string | null
+    primeiro_acesso?: boolean | null
+    confirmou_email?: boolean | null
+    codigo_reset_senha?: string | null
+    codigo_data_expiracao?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string | null
     auditoria?: auditoriaCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
     checagem?: checagemCreateNestedManyWithoutUsuario_checagemTousuarioInput
     titulos_x_usuario?: titulos_x_usuarioCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput
-    pessoa?: pessoaCreateNestedOneWithoutUsuarioInput
+    pessoa: pessoaCreateNestedOneWithoutUsuarioInput
     usuario_x_perfil?: usuario_x_perfilCreateNestedManyWithoutUsuarioInput
   }
 
@@ -39541,6 +39884,12 @@ export namespace Prisma {
     senha: string
     pessoa_id: number
     status?: string | null
+    primeiro_acesso?: boolean | null
+    confirmou_email?: boolean | null
+    codigo_reset_senha?: string | null
+    codigo_data_expiracao?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string | null
     auditoria?: auditoriaUncheckedCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
     checagem?: checagemUncheckedCreateNestedManyWithoutUsuario_checagemTousuarioInput
     titulos_x_usuario?: titulos_x_usuarioUncheckedCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput
@@ -39584,8 +39933,13 @@ export namespace Prisma {
   export type usuarioUpdateWithoutFidic_fundo_x_usuarioInput = {
     email?: StringFieldUpdateOperationsInput | string
     senha?: StringFieldUpdateOperationsInput | string
-    pessoa_id?: IntFieldUpdateOperationsInput | number
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     auditoria?: auditoriaUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
     checagem?: checagemUpdateManyWithoutUsuario_checagemTousuarioNestedInput
     titulos_x_usuario?: titulos_x_usuarioUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
@@ -39599,6 +39953,12 @@ export namespace Prisma {
     senha?: StringFieldUpdateOperationsInput | string
     pessoa_id?: IntFieldUpdateOperationsInput | number
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     auditoria?: auditoriaUncheckedUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
     checagem?: checagemUncheckedUpdateManyWithoutUsuario_checagemTousuarioNestedInput
     titulos_x_usuario?: titulos_x_usuarioUncheckedUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
@@ -39608,8 +39968,13 @@ export namespace Prisma {
   export type usuarioCreateWithoutPessoaInput = {
     email: string
     senha: string
-    pessoa_id: number
     status?: string | null
+    primeiro_acesso?: boolean | null
+    confirmou_email?: boolean | null
+    codigo_reset_senha?: string | null
+    codigo_data_expiracao?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string | null
     auditoria?: auditoriaCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
     checagem?: checagemCreateNestedManyWithoutUsuario_checagemTousuarioInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
@@ -39618,10 +39983,16 @@ export namespace Prisma {
   }
 
   export type usuarioUncheckedCreateWithoutPessoaInput = {
+    id?: number
     email: string
     senha: string
-    pessoa_id: number
     status?: string | null
+    primeiro_acesso?: boolean | null
+    confirmou_email?: boolean | null
+    codigo_reset_senha?: string | null
+    codigo_data_expiracao?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string | null
     auditoria?: auditoriaUncheckedCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
     checagem?: checagemUncheckedCreateNestedManyWithoutUsuario_checagemTousuarioInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
@@ -39634,33 +40005,42 @@ export namespace Prisma {
     create: XOR<usuarioCreateWithoutPessoaInput, usuarioUncheckedCreateWithoutPessoaInput>
   }
 
-  export type usuarioUpsertWithoutPessoaInput = {
+  export type usuarioCreateManyPessoaInputEnvelope = {
+    data: Enumerable<usuarioCreateManyPessoaInput>
+    skipDuplicates?: boolean
+  }
+
+  export type usuarioUpsertWithWhereUniqueWithoutPessoaInput = {
+    where: usuarioWhereUniqueInput
     update: XOR<usuarioUpdateWithoutPessoaInput, usuarioUncheckedUpdateWithoutPessoaInput>
     create: XOR<usuarioCreateWithoutPessoaInput, usuarioUncheckedCreateWithoutPessoaInput>
   }
 
-  export type usuarioUpdateWithoutPessoaInput = {
-    email?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
-    pessoa_id?: IntFieldUpdateOperationsInput | number
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    auditoria?: auditoriaUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
-    checagem?: checagemUpdateManyWithoutUsuario_checagemTousuarioNestedInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
-    titulos_x_usuario?: titulos_x_usuarioUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
-    usuario_x_perfil?: usuario_x_perfilUpdateManyWithoutUsuarioNestedInput
+  export type usuarioUpdateWithWhereUniqueWithoutPessoaInput = {
+    where: usuarioWhereUniqueInput
+    data: XOR<usuarioUpdateWithoutPessoaInput, usuarioUncheckedUpdateWithoutPessoaInput>
   }
 
-  export type usuarioUncheckedUpdateWithoutPessoaInput = {
-    email?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
-    pessoa_id?: IntFieldUpdateOperationsInput | number
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    auditoria?: auditoriaUncheckedUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
-    checagem?: checagemUncheckedUpdateManyWithoutUsuario_checagemTousuarioNestedInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
-    titulos_x_usuario?: titulos_x_usuarioUncheckedUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
-    usuario_x_perfil?: usuario_x_perfilUncheckedUpdateManyWithoutUsuarioNestedInput
+  export type usuarioUpdateManyWithWhereWithoutPessoaInput = {
+    where: usuarioScalarWhereInput
+    data: XOR<usuarioUpdateManyMutationInput, usuarioUncheckedUpdateManyWithoutUsuarioInput>
+  }
+
+  export type usuarioScalarWhereInput = {
+    AND?: Enumerable<usuarioScalarWhereInput>
+    OR?: Enumerable<usuarioScalarWhereInput>
+    NOT?: Enumerable<usuarioScalarWhereInput>
+    id?: IntFilter | number
+    email?: StringFilter | string
+    senha?: StringFilter | string
+    pessoa_id?: IntFilter | number
+    status?: StringNullableFilter | string | null
+    primeiro_acesso?: BoolNullableFilter | boolean | null
+    confirmou_email?: BoolNullableFilter | boolean | null
+    codigo_reset_senha?: StringNullableFilter | string | null
+    codigo_data_expiracao?: DateTimeNullableFilter | Date | string | null
+    created_at?: DateTimeFilter | Date | string
+    updated_at?: DateTimeNullableFilter | Date | string | null
   }
 
   export type cedente_n_sacadosCreateWithoutSacado_cedente_n_sacadosTosacadoInput = {
@@ -39904,12 +40284,17 @@ export namespace Prisma {
   export type usuarioCreateWithoutTitulos_x_usuarioInput = {
     email: string
     senha: string
-    pessoa_id: number
     status?: string | null
+    primeiro_acesso?: boolean | null
+    confirmou_email?: boolean | null
+    codigo_reset_senha?: string | null
+    codigo_data_expiracao?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string | null
     auditoria?: auditoriaCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
     checagem?: checagemCreateNestedManyWithoutUsuario_checagemTousuarioInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
-    pessoa?: pessoaCreateNestedOneWithoutUsuarioInput
+    pessoa: pessoaCreateNestedOneWithoutUsuarioInput
     usuario_x_perfil?: usuario_x_perfilCreateNestedManyWithoutUsuarioInput
   }
 
@@ -39919,6 +40304,12 @@ export namespace Prisma {
     senha: string
     pessoa_id: number
     status?: string | null
+    primeiro_acesso?: boolean | null
+    confirmou_email?: boolean | null
+    codigo_reset_senha?: string | null
+    codigo_data_expiracao?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string | null
     auditoria?: auditoriaUncheckedCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
     checagem?: checagemUncheckedCreateNestedManyWithoutUsuario_checagemTousuarioInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
@@ -39954,8 +40345,13 @@ export namespace Prisma {
   export type usuarioUpdateWithoutTitulos_x_usuarioInput = {
     email?: StringFieldUpdateOperationsInput | string
     senha?: StringFieldUpdateOperationsInput | string
-    pessoa_id?: IntFieldUpdateOperationsInput | number
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     auditoria?: auditoriaUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
     checagem?: checagemUpdateManyWithoutUsuario_checagemTousuarioNestedInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
@@ -39969,6 +40365,12 @@ export namespace Prisma {
     senha?: StringFieldUpdateOperationsInput | string
     pessoa_id?: IntFieldUpdateOperationsInput | number
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     auditoria?: auditoriaUncheckedUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
     checagem?: checagemUncheckedUpdateManyWithoutUsuario_checagemTousuarioNestedInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
@@ -40282,13 +40684,18 @@ export namespace Prisma {
   export type usuarioCreateWithoutUsuario_x_perfilInput = {
     email: string
     senha: string
-    pessoa_id: number
     status?: string | null
+    primeiro_acesso?: boolean | null
+    confirmou_email?: boolean | null
+    codigo_reset_senha?: string | null
+    codigo_data_expiracao?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string | null
     auditoria?: auditoriaCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
     checagem?: checagemCreateNestedManyWithoutUsuario_checagemTousuarioInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
     titulos_x_usuario?: titulos_x_usuarioCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput
-    pessoa?: pessoaCreateNestedOneWithoutUsuarioInput
+    pessoa: pessoaCreateNestedOneWithoutUsuarioInput
   }
 
   export type usuarioUncheckedCreateWithoutUsuario_x_perfilInput = {
@@ -40297,6 +40704,12 @@ export namespace Prisma {
     senha: string
     pessoa_id: number
     status?: string | null
+    primeiro_acesso?: boolean | null
+    confirmou_email?: boolean | null
+    codigo_reset_senha?: string | null
+    codigo_data_expiracao?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string | null
     auditoria?: auditoriaUncheckedCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
     checagem?: checagemUncheckedCreateNestedManyWithoutUsuario_checagemTousuarioInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
@@ -40330,8 +40743,13 @@ export namespace Prisma {
   export type usuarioUpdateWithoutUsuario_x_perfilInput = {
     email?: StringFieldUpdateOperationsInput | string
     senha?: StringFieldUpdateOperationsInput | string
-    pessoa_id?: IntFieldUpdateOperationsInput | number
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     auditoria?: auditoriaUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
     checagem?: checagemUpdateManyWithoutUsuario_checagemTousuarioNestedInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
@@ -40345,6 +40763,12 @@ export namespace Prisma {
     senha?: StringFieldUpdateOperationsInput | string
     pessoa_id?: IntFieldUpdateOperationsInput | number
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     auditoria?: auditoriaUncheckedUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
     checagem?: checagemUncheckedUpdateManyWithoutUsuario_checagemTousuarioNestedInput
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
@@ -40518,6 +40942,67 @@ export namespace Prisma {
   export type fidic_fundo_x_usuarioUncheckedUpdateManyWithoutFidic_fundo_x_usuarioInput = {
     id?: IntFieldUpdateOperationsInput | number
     usuario?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type usuarioCreateManyPessoaInput = {
+    id?: number
+    email: string
+    senha: string
+    status?: string | null
+    primeiro_acesso?: boolean | null
+    confirmou_email?: boolean | null
+    codigo_reset_senha?: string | null
+    codigo_data_expiracao?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string | null
+  }
+
+  export type usuarioUpdateWithoutPessoaInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    senha?: StringFieldUpdateOperationsInput | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditoria?: auditoriaUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
+    checagem?: checagemUpdateManyWithoutUsuario_checagemTousuarioNestedInput
+    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
+    titulos_x_usuario?: titulos_x_usuarioUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
+    usuario_x_perfil?: usuario_x_perfilUpdateManyWithoutUsuarioNestedInput
+  }
+
+  export type usuarioUncheckedUpdateWithoutPessoaInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    senha?: StringFieldUpdateOperationsInput | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditoria?: auditoriaUncheckedUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
+    checagem?: checagemUncheckedUpdateManyWithoutUsuario_checagemTousuarioNestedInput
+    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
+    titulos_x_usuario?: titulos_x_usuarioUncheckedUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
+    usuario_x_perfil?: usuario_x_perfilUncheckedUpdateManyWithoutUsuarioNestedInput
+  }
+
+  export type usuarioUncheckedUpdateManyWithoutUsuarioInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    senha?: StringFieldUpdateOperationsInput | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type cedente_n_sacadosCreateManySacado_cedente_n_sacadosTosacadoInput = {

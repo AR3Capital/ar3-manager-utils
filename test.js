@@ -41,7 +41,26 @@ const testSendMail = () => {
     });
 }
 
-testSendMail();
+const generatePass = () => {
+    const stringUtils = require('./index').stringUtils;
+    const pass = stringUtils.password.cryptMD5('minhasenha');
+    const passConfirm = stringUtils.password.cryptMD5('minhasenha');
+    console.log('senha ', {
+        pass,
+        passConfirm,
+        isEquals: pass === passConfirm
+    });
+}
+
+const generateCode = () => {
+    const stringUtils = require('./index').stringUtils;
+    const code = stringUtils.code.generateCodeSixLetterNumber();
+    console.log('code ', code);
+}
+
+generatePass();
+generateCode();
+//testSendMail();
 //testMysql();
 //testMongodb();
 //test();

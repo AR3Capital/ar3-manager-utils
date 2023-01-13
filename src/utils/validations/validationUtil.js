@@ -1,8 +1,9 @@
 const Ajv = require('ajv');
 const ajvErrors = require('ajv-errors');
-
 const ajvValidator = new Ajv({ allErrors: true, jsonPointers: true, $data: true });
 require("ajv-keywords")(ajvValidator);
+
+const schemaValidations = require('./schemaValidations');
 
 const validateSchema = (schema, body) => {
     if (!schema) return;
@@ -26,5 +27,6 @@ const validateSchema = (schema, body) => {
 module.exports = {
     validateSchema,
     ajvValidator,
-    ajvErrors
+    ajvErrors,
+    schemaValidations
 }
