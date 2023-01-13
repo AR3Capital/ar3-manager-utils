@@ -1,7 +1,7 @@
-const generatePassword = require('./generatePassword');
-const generateCode = require('./generateCode');
+const password = require('./password');
+const code = require('./code');
 
 module.exports = {
-    generatePassword,
-    generateCode
+    password,
+    code
 }

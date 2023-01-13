@@ -43,8 +43,8 @@ const testSendMail = () => {
 
 const generatePass = () => {
     const stringUtils = require('./index').stringUtils;
-    const pass = stringUtils.generatePassword.generate('minhasenha');
-    const passConfirm = stringUtils.generatePassword.generate('minhasenha');
+    const pass = stringUtils.password.cryptMD5('minhasenha');
+    const passConfirm = stringUtils.password.cryptMD5('minhasenha');
     console.log('senha ', {
         pass,
         passConfirm,
@@ -54,7 +54,7 @@ const generatePass = () => {
 
 const generateCode = () => {
     const stringUtils = require('./index').stringUtils;
-    const code = stringUtils.generateCode.generateCodeSixLetterNumber();
+    const code = stringUtils.code.generateCodeSixLetterNumber();
     console.log('code ', code);
 }
 

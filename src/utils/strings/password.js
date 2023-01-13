@@ -1,9 +1,9 @@
 const crypto = require('crypto');
 
-const generate = (password) => {
+const cryptMD5 = (password) => {
     return crypto.createHash('md5').update(password).digest('hex');
 }
 
 module.exports = {
-    generate
+    cryptMD5
 }
