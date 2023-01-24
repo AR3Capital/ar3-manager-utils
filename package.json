@@ -1,6 +1,7 @@
 {
   "name": "@AR3Capital/ar3-manager-utils",
-  "version": "0.0.15",
+  "version": "0.0.17",
+  "private": false,
   "description": "Repositorio do utils",
   "author": "AR3 Devs",
   "license": "MIT",
@@ -11,6 +12,9 @@
     "src",
     "index.js"
   ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
     "prisma:generate_my": "prisma generate --schema prisma/prismaMysql/schema.prisma",
     "prisma:format_my": "prisma format --schema prisma/prismaMysql/schema.prisma",
@@ -45,8 +49,5 @@
   "bugs": {
     "url": "https://github.com/AR3Capital/ar3-manager-utils/issues"
   },
-  "homepage": "https://github.com/AR3Capital/ar3-manager-utils#readme",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  }
+  "homepage": "https://github.com/AR3Capital/ar3-manager-utils#readme"
 }
