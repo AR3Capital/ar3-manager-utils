@@ -1,6 +1,6 @@
 {
   "name": "@AR3Capital/ar3-manager-utils",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "description": "Repositorio do utils",
   "author": "AR3 Devs",
   "license": "MIT",
@@ -29,7 +29,7 @@
     "ajv": "6.12.0",
     "ajv-errors": "1.0.1",
     "ajv-keywords": "^3.4.0",
-    "prisma": "^4.7.1"
+    "prisma": "^4.6.1"
   },
   "dependencies": {
     "@prisma/client": "^4.6.1",

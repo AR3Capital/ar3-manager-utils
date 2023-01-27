@@ -9,48 +9,51 @@ datasource db {
 }
 
 model auditoria {
-  action                     String?   @db.VarChar(250)
-  usuario                    Int?
-  data                       DateTime? @db.DateTime(0)
-  modulo                     String?   @db.VarChar(100)
-  id                         Int       @id @default(autoincrement())
-  usuario_auditoriaTousuario usuario?  @relation(fields: [usuario], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "auditoria_FK")
+  action  String?   @db.VarChar(250)
+  usuario Int?
+  data    DateTime? @db.DateTime(0)
+  modulo  String?   @db.VarChar(100)
+  id      Int       @id @default(autoincrement())
 
   @@index([usuario], map: "auditoria_FK")
 }
 
 model bordero {
-  id                Int                 @id @default(autoincrement())
-  carteira_id       Int
-  titulo            titulo[]
-  titulos_x_usuario titulos_x_usuario[]
+  id          Int      @id @default(autoincrement())
+  carteira_id Int
+  carteira    carteira @relation(fields: [carteira_id], references: [id], onUpdate: Restrict, map: "bordero_FK")
+  titulo      titulo[]
+
+  @@index([carteira_id], map: "bordero_FK")
 }
 
 model carteira {
-  id             Int         @id @default(autoincrement())
-  fiduc_fundo_id Int
-  fidic_fundo    fidic_fundo @relation(fields: [fiduc_fundo_id], references: [id], onUpdate: Restrict, map: "carteira_FK")
+  id                  Int                   @id @default(autoincrement())
+  fiduc_fundo_id      Int
+  fidic_fundo         fidic_fundo           @relation(fields: [fiduc_fundo_id], references: [id], onUpdate: Restrict, map: "carteira_FK")
+  bordero             bordero[]
+  carteira_n_cedentes carteira_n_cedentes[]
 
   @@index([fiduc_fundo_id], map: "carteira_FK")
 }
 
 model cedente {
-  id                Int                 @id @default(autoincrement())
-  pessoa_id         Int
-  razao_social      String              @db.VarChar(120)
-  nome_fantasia     String?             @db.Char(1)
-  abertura          DateTime?           @db.Date
-  cnpj              String?             @db.VarChar(14)
-  endereco          String?             @db.VarChar(150)
-  numero            String?             @db.VarChar(20)
-  cep               String?             @db.VarChar(10)
-  bairro            String?             @db.VarChar(100)
-  cidade            String?             @db.VarChar(100)
-  uf                String?             @db.VarChar(2)
-  telefone          String?             @db.VarChar(15)
-  cedente_analise   cedente_analise[]
-  cedente_n_sacados cedente_n_sacados[]
-  titulo_x_cedente  titulo_x_cedente[]
+  id                  Int                   @id @default(autoincrement())
+  pessoa_id           Int
+  razao_social        String                @db.VarChar(120)
+  nome_fantasia       String?               @db.Char(1)
+  abertura            DateTime?             @db.Date
+  cnpj                String?               @db.VarChar(14)
+  endereco            String?               @db.VarChar(150)
+  numero              String?               @db.VarChar(20)
+  cep                 String?               @db.VarChar(10)
+  bairro              String?               @db.VarChar(100)
+  cidade              String?               @db.VarChar(100)
+  uf                  String?               @db.VarChar(2)
+  telefone            String?               @db.VarChar(15)
+  carteira_n_cedentes carteira_n_cedentes[]
+  cedente_analise     cedente_analise[]
+  cedente_n_sacados   cedente_n_sacados[]
 }
 
 model cedente_analise {
@@ -74,12 +77,11 @@ model cedente_n_sacados {
 }
 
 model checagem {
-  id                        Int      @id @default(autoincrement())
-  nf                        String?  @db.VarChar(100)
-  status                    String?  @db.VarChar(100)
-  usuario                   Int?
-  titulos                   String?  @db.VarChar(150)
-  usuario_checagemTousuario usuario? @relation(fields: [usuario], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "checagem_FK")
+  id      Int     @id @default(autoincrement())
+  nf      String? @db.VarChar(100)
+  status  String? @db.VarChar(100)
+  usuario Int?
+  titulos String? @db.VarChar(150)
 
   @@index([usuario], map: "checagem_FK")
 }
@@ -95,40 +97,41 @@ model fidic_fundo {
   fidic_fundo_x_usuario fidic_fundo_x_usuario[]
 }
 
-model fidic_fundo_carteira_n_cedentes {
-  id Int @id @default(autoincrement())
-}
-
 model fidic_fundo_x_usuario {
-  id                                     Int         @id @default(autoincrement())
-  usuario                                Int?
-  fidic                                  Int
-  fidic_fundo                            fidic_fundo @relation(fields: [fidic], references: [id], onUpdate: Restrict, map: "fidic_fundo_x_usuario_FK")
-  usuario_fidic_fundo_x_usuarioTousuario usuario?    @relation(fields: [usuario], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fidic_fundo_x_usuario_FK_1")
+  id          Int         @id @default(autoincrement())
+  usuario     Int?
+  fidic       Int
+  fidic_fundo fidic_fundo @relation(fields: [fidic], references: [id], onUpdate: Restrict, map: "fidic_fundo_x_usuario_FK")
 
   @@index([fidic], map: "fidic_fundo_x_usuario_FK")
   @@index([usuario], map: "fidic_fundo_x_usuario_FK_1")
 }
 
 model organograma {
-  id Int @id @default(autoincrement())
+  id                           Int                            @id @default(autoincrement())
+  organograma_id               Int
+  organograma_tipo             organograma_tipo               @relation(fields: [organograma_id], references: [id], onUpdate: Restrict, map: "organograma_FK")
+  organograma_x_regiao_atuacao organograma_x_regiao_atuacao[]
+  organograma_x_usuario        organograma_x_usuario[]
+
+  @@index([organograma_id], map: "organograma_FK")
 }
 
 model organograma_tipo {
-  id   Int    @id @default(autoincrement())
-  nome String @db.VarChar(120)
-}
-
-model organograma_x_regiao {
-  id             Int @id @default(autoincrement())
-  organograma_id Int
-  regiao_id      Int
+  id          Int           @id @default(autoincrement())
+  nome        String        @db.VarChar(120)
+  organograma organograma[]
 }
 
 model organograma_x_regiao_atuacao {
-  id             Int @id @default(autoincrement())
-  organograma_id Int
-  regiao_id      Int
+  id                Int            @id @default(autoincrement())
+  organograma_id    Int
+  regiao_atuacao_id Int
+  organograma       organograma    @relation(fields: [organograma_id], references: [id], onUpdate: Restrict, map: "organograma_x_regiao_atuacao_FK")
+  regiao_atuacao    regiao_atuacao @relation(fields: [regiao_atuacao_id], references: [id], onUpdate: Restrict, map: "organograma_x_regiao_atuacao_FK_1")
+
+  @@index([organograma_id], map: "organograma_x_regiao_atuacao_FK")
+  @@index([regiao_atuacao_id], map: "organograma_x_regiao_atuacao_FK_1")
 }
 
 model pessoa {
@@ -143,34 +146,47 @@ model pessoa {
 }
 
 model plataforma {
-  id   Int     @id @default(autoincrement())
-  nome String? @db.VarChar(100)
-}
+  id                          Int                           @id @default(autoincrement())
+  nome                        String?                       @db.VarChar(100)
+  plataforma_papel_tipo_id    Int
+  plataforma_papel_tipo       plataforma_papel_tipo         @relation(fields: [plataforma_papel_tipo_id], references: [id], onUpdate: Restrict, map: "plataforma_FK")
+  plataforma_x_regiao_atuacao plataforma_x_regiao_atuacao[]
+  plataforma_x_usuario        plataforma_x_usuario[]
 
-model plataforma_n_borderos {
-  id Int @id @default(autoincrement())
+  @@index([plataforma_papel_tipo_id], map: "plataforma_FK")
 }
 
 model plataforma_papel_tipo {
-  id Int @id @default(autoincrement())
-}
-
-model plataforma_papel_x_pessoa {
-  id Int @id @default(autoincrement())
+  id         Int          @id @default(autoincrement())
+  plataforma plataforma[]
 }
 
 model plataforma_x_regiao_atuacao {
-  id Int @id @default(autoincrement())
+  id                Int            @id @default(autoincrement())
+  plataforma_id     Int
+  regiao_atuacao_id Int
+  plataforma        plataforma     @relation(fields: [plataforma_id], references: [id], onUpdate: Restrict, map: "plataforma_x_regiao_atuacao_FK")
+  regiao_atuacao    regiao_atuacao @relation(fields: [regiao_atuacao_id], references: [id], onUpdate: Restrict, map: "plataforma_x_regiao_atuacao_FK_1")
+
+  @@index([plataforma_id], map: "plataforma_x_regiao_atuacao_FK")
+  @@index([regiao_atuacao_id], map: "plataforma_x_regiao_atuacao_FK_1")
 }
 
 model regiao_atuacao {
-  id   Int    @id @default(autoincrement())
-  nome String @db.VarChar(120)
+  id                           Int                            @id @default(autoincrement())
+  nome                         String                         @db.VarChar(120)
+  regiao_atuacao_tipo_id       Int
+  regiao_atuacao_tipo          regiao_atuacao_tipo            @relation(fields: [regiao_atuacao_tipo_id], references: [id], onUpdate: Restrict, map: "regiao_atuacao_FK")
+  organograma_x_regiao_atuacao organograma_x_regiao_atuacao[]
+  plataforma_x_regiao_atuacao  plataforma_x_regiao_atuacao[]
+
+  @@index([regiao_atuacao_tipo_id], map: "regiao_atuacao_FK")
 }
 
 model regiao_atuacao_tipo {
-  id   Int    @id @default(autoincrement())
-  nome String @db.VarChar(120)
+  id             Int              @id @default(autoincrement())
+  nome           String           @db.VarChar(120)
+  regiao_atuacao regiao_atuacao[]
 }
 
 model sacado {
@@ -184,17 +200,18 @@ model sacado {
 }
 
 model titulo {
-  id             Int         @id @default(autoincrement())
+  id             Int            @id @default(autoincrement())
   titulo_tipo_id Int
   bordero_id     Int
-  nf             String?     @db.VarChar(100)
+  nf             String?        @db.VarChar(100)
   valor          Float?
-  vencimento     DateTime?   @db.DateTime(0)
-  numero         String?     @db.VarChar(100)
-  emissao        DateTime?   @db.DateTime(0)
-  parcela        String?     @db.VarChar(100)
-  titulo_tipo    titulo_tipo @relation(fields: [titulo_tipo_id], references: [id], onUpdate: Restrict, map: "titulo_FK")
-  bordero        bordero     @relation(fields: [bordero_id], references: [id], onUpdate: Restrict, map: "titulo_FK_1")
+  vencimento     DateTime?      @db.DateTime(0)
+  numero         String?        @db.VarChar(100)
+  emissao        DateTime?      @db.DateTime(0)
+  parcela        String?        @db.VarChar(100)
+  titulo_tipo    titulo_tipo    @relation(fields: [titulo_tipo_id], references: [id], onUpdate: Restrict, map: "titulo_FK")
+  bordero        bordero        @relation(fields: [bordero_id], references: [id], onUpdate: Restrict, map: "titulo_FK_1")
+  titulo_itens   titulo_itens[]
 
   @@index([titulo_tipo_id], map: "titulo_FK")
   @@index([bordero_id], map: "titulo_FK_1")
@@ -206,79 +223,76 @@ model titulo_tipo {
   titulo titulo[]
 }
 
-model titulo_x_cedente {
-  id                                Int     @id @default(autoincrement())
-  cedente                           Int
-  cedente_cedenteTotitulo_x_cedente cedente @relation(fields: [cedente], references: [id], onUpdate: Restrict, map: "titulo_x_cedente_FK")
-
-  @@index([cedente], map: "titulo_x_cedente_FK")
-}
-
-model titulo_x_empresa {
-  id Int @id @default(autoincrement())
-}
-
-model titulo_x_plataforma {
-  id Int @id @default(autoincrement())
-}
-
-model titulos_x_usuario {
-  id                                 Int      @id @default(autoincrement())
-  usuario                            Int?
-  bordero                            Int?
-  status                             String?  @db.VarChar(100)
-  bordero_borderoTotitulos_x_usuario bordero? @relation(fields: [bordero], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "titulos_x_usuario_FK")
-  usuario_titulos_x_usuarioTousuario usuario? @relation(fields: [usuario], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "titulos_x_usuario_FK_1")
-
-  @@index([bordero], map: "titulos_x_usuario_FK")
-  @@index([usuario], map: "titulos_x_usuario_FK_1")
-}
-
 model usuario {
-  id                       Int                     @id @default(autoincrement())
-  email                    String                  @unique(map: "usuario_un") @db.VarChar(180)
-  senha                    String                  @db.VarChar(180)
+  id                       Int       @id @default(autoincrement())
+  email                    String    @unique(map: "usuario_un") @db.VarChar(180)
+  senha                    String    @db.VarChar(180)
   pessoa_id                Int
-  status                   String?                 @db.VarChar(100)
-  primeiro_acesso          Boolean?                @default(true)
-  confirmou_cadastro       Boolean?                @default(false)
-  codigo_confirma_cadastro String?                 @db.Char(6)
-  codigo_reset_senha       String?                 @db.Char(6)
-  codigo_data_expiracao    DateTime?               @db.DateTime(0)
-  created_at               DateTime                @default(now()) @db.DateTime(0)
-  updated_at               DateTime?               @map("updated-at") @db.DateTime(0)
-  auditoria                auditoria[]
-  checagem                 checagem[]
-  fidic_fundo_x_usuario    fidic_fundo_x_usuario[]
-  titulos_x_usuario        titulos_x_usuario[]
-  pessoa                   pessoa                  @relation(fields: [pessoa_id], references: [id], onUpdate: Restrict, map: "usuario_FK_1")
-  usuario_x_perfil         usuario_x_perfil[]
+  status                   String?   @db.VarChar(100)
+  primeiro_acesso          Boolean?  @default(true)
+  confirmou_cadastro       Boolean?  @default(false)
+  codigo_confirma_cadastro String?   @db.Char(6)
+  codigo_reset_senha       String?   @db.Char(6)
+  codigo_data_expiracao    DateTime? @db.DateTime(0)
+  created_at               DateTime  @default(now()) @db.DateTime(0)
+  updated_at               DateTime? @map("updated-at") @db.DateTime(0)
+  pessoa                   pessoa    @relation(fields: [pessoa_id], references: [id], onUpdate: Restrict, map: "usuario_FK_1")
 
   @@index([pessoa_id], map: "usuario_FK_1")
 }
 
-model usuario__pessoa {
-  id Int @id @default(autoincrement())
-}
-
-model usuario_n_borderos {
-  id Int @id @default(autoincrement())
-}
-
 model usuario_perfil_tipo {
-  id               Int                @id @default(autoincrement())
-  nome             String             @db.VarChar(100)
-  usuario_x_perfil usuario_x_perfil[]
+  id             Int              @id @default(autoincrement())
+  nome           String           @db.VarChar(100)
+  usuario_perfil usuario_perfil[]
 }
 
-model usuario_x_perfil {
-  id                  Int                 @id @default(autoincrement())
-  senha               String              @db.VarChar(240)
-  usuario_id          Int
-  usuario_perfil_id   Int
-  usuario             usuario             @relation(fields: [usuario_id], references: [id], onUpdate: Restrict, map: "usuario_x_perfil_FK")
-  usuario_perfil_tipo usuario_perfil_tipo @relation(fields: [usuario_perfil_id], references: [id], onUpdate: Restrict, map: "usuario_x_perfil_FK_1")
+model carteira_n_cedentes {
+  id          Int      @id @default(autoincrement())
+  carteira_id Int
+  cedente_id  Int
+  carteira    carteira @relation(fields: [carteira_id], references: [id], onUpdate: Restrict, map: "carteira_n_cedentes_FK")
+  cedente     cedente  @relation(fields: [cedente_id], references: [id], onUpdate: Restrict, map: "carteira_n_cedentes_FK_1")
+
+  @@index([carteira_id], map: "carteira_n_cedentes_FK")
+  @@index([cedente_id], map: "carteira_n_cedentes_FK_1")
+}
+
+model organograma_x_usuario {
+  id             Int         @id @default(autoincrement())
+  organograma_id Int
+  usuario_id     Int
+  organograma    organograma @relation(fields: [organograma_id], references: [id], onUpdate: Restrict, map: "organograma_x_usuario_FK")
+
+  @@index([organograma_id], map: "organograma_x_usuario_FK")
+  @@index([usuario_id], map: "organograma_x_usuario_FK_1")
+}
+
+model plataforma_x_usuario {
+  id            Int        @id @default(autoincrement())
+  plataforma_id Int
+  usuario_id    Int
+  plataforma    plataforma @relation(fields: [plataforma_id], references: [id], onUpdate: Restrict, map: "plataforma_x_usuario_FK")
+
+  @@index([plataforma_id], map: "plataforma_x_usuario_FK")
+  @@index([usuario_id], map: "plataforma_x_usuario_FK_1")
+}
+
+model titulo_itens {
+  id        Int    @id @default(autoincrement())
+  titulo_id Int
+  titulo    titulo @relation(fields: [titulo_id], references: [id], onUpdate: Restrict, map: "titulo_itens_FK")
+
+  @@index([titulo_id], map: "titulo_itens_FK")
+}
+
+model usuario_perfil {
+  id                     Int                 @id @default(autoincrement())
+  senha                  String              @db.VarChar(240)
+  usuario_id             Int
+  usuario_perfil_tipo_id Int
+  usuario_perfil_tipo    usuario_perfil_tipo @relation(fields: [usuario_perfil_tipo_id], references: [id], onUpdate: Restrict, map: "usuario_x_perfil_FK_1")
 
   @@index([usuario_id], map: "usuario_x_perfil_FK")
-  @@index([usuario_perfil_id], map: "usuario_x_perfil_FK_1")
+  @@index([usuario_perfil_tipo_id], map: "usuario_x_perfil_FK_1")
 }

@@ -108,14 +108,6 @@ export type fidic_fundo = {
 }
 
 /**
- * Model fidic_fundo_carteira_n_cedentes
- * 
- */
-export type fidic_fundo_carteira_n_cedentes = {
-  id: number
-}
-
-/**
  * Model fidic_fundo_x_usuario
  * 
  */
@@ -131,6 +123,7 @@ export type fidic_fundo_x_usuario = {
  */
 export type organograma = {
   id: number
+  organograma_id: number
 }
 
 /**
@@ -143,23 +136,13 @@ export type organograma_tipo = {
 }
 
 /**
- * Model organograma_x_regiao
- * 
- */
-export type organograma_x_regiao = {
-  id: number
-  organograma_id: number
-  regiao_id: number
-}
-
-/**
  * Model organograma_x_regiao_atuacao
  * 
  */
 export type organograma_x_regiao_atuacao = {
   id: number
   organograma_id: number
-  regiao_id: number
+  regiao_atuacao_id: number
 }
 
 /**
@@ -183,14 +166,7 @@ export type pessoa = {
 export type plataforma = {
   id: number
   nome: string | null
-}
-
-/**
- * Model plataforma_n_borderos
- * 
- */
-export type plataforma_n_borderos = {
-  id: number
+  plataforma_papel_tipo_id: number
 }
 
 /**
@@ -202,19 +178,13 @@ export type plataforma_papel_tipo = {
 }
 
 /**
- * Model plataforma_papel_x_pessoa
- * 
- */
-export type plataforma_papel_x_pessoa = {
-  id: number
-}
-
-/**
  * Model plataforma_x_regiao_atuacao
  * 
  */
 export type plataforma_x_regiao_atuacao = {
   id: number
+  plataforma_id: number
+  regiao_atuacao_id: number
 }
 
 /**
@@ -224,6 +194,7 @@ export type plataforma_x_regiao_atuacao = {
 export type regiao_atuacao = {
   id: number
   nome: string
+  regiao_atuacao_tipo_id: number
 }
 
 /**
@@ -274,42 +245,6 @@ export type titulo_tipo = {
 }
 
 /**
- * Model titulo_x_cedente
- * 
- */
-export type titulo_x_cedente = {
-  id: number
-  cedente: number
-}
-
-/**
- * Model titulo_x_empresa
- * 
- */
-export type titulo_x_empresa = {
-  id: number
-}
-
-/**
- * Model titulo_x_plataforma
- * 
- */
-export type titulo_x_plataforma = {
-  id: number
-}
-
-/**
- * Model titulos_x_usuario
- * 
- */
-export type titulos_x_usuario = {
-  id: number
-  usuario: number | null
-  bordero: number | null
-  status: string | null
-}
-
-/**
  * Model usuario
  * 
  */
@@ -329,22 +264,6 @@ export type usuario = {
 }
 
 /**
- * Model usuario__pessoa
- * 
- */
-export type usuario__pessoa = {
-  id: number
-}
-
-/**
- * Model usuario_n_borderos
- * 
- */
-export type usuario_n_borderos = {
-  id: number
-}
-
-/**
  * Model usuario_perfil_tipo
  * 
  */
@@ -354,14 +273,53 @@ export type usuario_perfil_tipo = {
 }
 
 /**
- * Model usuario_x_perfil
+ * Model carteira_n_cedentes
  * 
  */
-export type usuario_x_perfil = {
+export type carteira_n_cedentes = {
+  id: number
+  carteira_id: number
+  cedente_id: number
+}
+
+/**
+ * Model organograma_x_usuario
+ * 
+ */
+export type organograma_x_usuario = {
+  id: number
+  organograma_id: number
+  usuario_id: number
+}
+
+/**
+ * Model plataforma_x_usuario
+ * 
+ */
+export type plataforma_x_usuario = {
+  id: number
+  plataforma_id: number
+  usuario_id: number
+}
+
+/**
+ * Model titulo_itens
+ * 
+ */
+export type titulo_itens = {
+  id: number
+  titulo_id: number
+}
+
+/**
+ * Model usuario_perfil
+ * 
+ */
+export type usuario_perfil = {
   id: number
   senha: string
   usuario_id: number
-  usuario_perfil_id: number
+  usuario_perfil_tipo_id: number
 }
 
 
@@ -586,16 +544,6 @@ export class PrismaClient<
   get fidic_fundo(): Prisma.fidic_fundoDelegate<GlobalReject>;
 
   /**
-   * `prisma.fidic_fundo_carteira_n_cedentes`: Exposes CRUD operations for the **fidic_fundo_carteira_n_cedentes** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Fidic_fundo_carteira_n_cedentes
-    * const fidic_fundo_carteira_n_cedentes = await prisma.fidic_fundo_carteira_n_cedentes.findMany()
-    * ```
-    */
-  get fidic_fundo_carteira_n_cedentes(): Prisma.fidic_fundo_carteira_n_cedentesDelegate<GlobalReject>;
-
-  /**
    * `prisma.fidic_fundo_x_usuario`: Exposes CRUD operations for the **fidic_fundo_x_usuario** model.
     * Example usage:
     * ```ts
@@ -624,16 +572,6 @@ export class PrismaClient<
     * ```
     */
   get organograma_tipo(): Prisma.organograma_tipoDelegate<GlobalReject>;
-
-  /**
-   * `prisma.organograma_x_regiao`: Exposes CRUD operations for the **organograma_x_regiao** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Organograma_x_regiaos
-    * const organograma_x_regiaos = await prisma.organograma_x_regiao.findMany()
-    * ```
-    */
-  get organograma_x_regiao(): Prisma.organograma_x_regiaoDelegate<GlobalReject>;
 
   /**
    * `prisma.organograma_x_regiao_atuacao`: Exposes CRUD operations for the **organograma_x_regiao_atuacao** model.
@@ -666,16 +604,6 @@ export class PrismaClient<
   get plataforma(): Prisma.plataformaDelegate<GlobalReject>;
 
   /**
-   * `prisma.plataforma_n_borderos`: Exposes CRUD operations for the **plataforma_n_borderos** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Plataforma_n_borderos
-    * const plataforma_n_borderos = await prisma.plataforma_n_borderos.findMany()
-    * ```
-    */
-  get plataforma_n_borderos(): Prisma.plataforma_n_borderosDelegate<GlobalReject>;
-
-  /**
    * `prisma.plataforma_papel_tipo`: Exposes CRUD operations for the **plataforma_papel_tipo** model.
     * Example usage:
     * ```ts
@@ -684,16 +612,6 @@ export class PrismaClient<
     * ```
     */
   get plataforma_papel_tipo(): Prisma.plataforma_papel_tipoDelegate<GlobalReject>;
-
-  /**
-   * `prisma.plataforma_papel_x_pessoa`: Exposes CRUD operations for the **plataforma_papel_x_pessoa** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Plataforma_papel_x_pessoas
-    * const plataforma_papel_x_pessoas = await prisma.plataforma_papel_x_pessoa.findMany()
-    * ```
-    */
-  get plataforma_papel_x_pessoa(): Prisma.plataforma_papel_x_pessoaDelegate<GlobalReject>;
 
   /**
    * `prisma.plataforma_x_regiao_atuacao`: Exposes CRUD operations for the **plataforma_x_regiao_atuacao** model.
@@ -756,46 +674,6 @@ export class PrismaClient<
   get titulo_tipo(): Prisma.titulo_tipoDelegate<GlobalReject>;
 
   /**
-   * `prisma.titulo_x_cedente`: Exposes CRUD operations for the **titulo_x_cedente** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Titulo_x_cedentes
-    * const titulo_x_cedentes = await prisma.titulo_x_cedente.findMany()
-    * ```
-    */
-  get titulo_x_cedente(): Prisma.titulo_x_cedenteDelegate<GlobalReject>;
-
-  /**
-   * `prisma.titulo_x_empresa`: Exposes CRUD operations for the **titulo_x_empresa** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Titulo_x_empresas
-    * const titulo_x_empresas = await prisma.titulo_x_empresa.findMany()
-    * ```
-    */
-  get titulo_x_empresa(): Prisma.titulo_x_empresaDelegate<GlobalReject>;
-
-  /**
-   * `prisma.titulo_x_plataforma`: Exposes CRUD operations for the **titulo_x_plataforma** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Titulo_x_plataformas
-    * const titulo_x_plataformas = await prisma.titulo_x_plataforma.findMany()
-    * ```
-    */
-  get titulo_x_plataforma(): Prisma.titulo_x_plataformaDelegate<GlobalReject>;
-
-  /**
-   * `prisma.titulos_x_usuario`: Exposes CRUD operations for the **titulos_x_usuario** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Titulos_x_usuarios
-    * const titulos_x_usuarios = await prisma.titulos_x_usuario.findMany()
-    * ```
-    */
-  get titulos_x_usuario(): Prisma.titulos_x_usuarioDelegate<GlobalReject>;
-
-  /**
    * `prisma.usuario`: Exposes CRUD operations for the **usuario** model.
     * Example usage:
     * ```ts
@@ -804,26 +682,6 @@ export class PrismaClient<
     * ```
     */
   get usuario(): Prisma.usuarioDelegate<GlobalReject>;
-
-  /**
-   * `prisma.usuario__pessoa`: Exposes CRUD operations for the **usuario__pessoa** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Usuario__pessoas
-    * const usuario__pessoas = await prisma.usuario__pessoa.findMany()
-    * ```
-    */
-  get usuario__pessoa(): Prisma.usuario__pessoaDelegate<GlobalReject>;
-
-  /**
-   * `prisma.usuario_n_borderos`: Exposes CRUD operations for the **usuario_n_borderos** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Usuario_n_borderos
-    * const usuario_n_borderos = await prisma.usuario_n_borderos.findMany()
-    * ```
-    */
-  get usuario_n_borderos(): Prisma.usuario_n_borderosDelegate<GlobalReject>;
 
   /**
    * `prisma.usuario_perfil_tipo`: Exposes CRUD operations for the **usuario_perfil_tipo** model.
@@ -836,14 +694,54 @@ export class PrismaClient<
   get usuario_perfil_tipo(): Prisma.usuario_perfil_tipoDelegate<GlobalReject>;
 
   /**
-   * `prisma.usuario_x_perfil`: Exposes CRUD operations for the **usuario_x_perfil** model.
+   * `prisma.carteira_n_cedentes`: Exposes CRUD operations for the **carteira_n_cedentes** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Usuario_x_perfils
-    * const usuario_x_perfils = await prisma.usuario_x_perfil.findMany()
+    * // Fetch zero or more Carteira_n_cedentes
+    * const carteira_n_cedentes = await prisma.carteira_n_cedentes.findMany()
     * ```
     */
-  get usuario_x_perfil(): Prisma.usuario_x_perfilDelegate<GlobalReject>;
+  get carteira_n_cedentes(): Prisma.carteira_n_cedentesDelegate<GlobalReject>;
+
+  /**
+   * `prisma.organograma_x_usuario`: Exposes CRUD operations for the **organograma_x_usuario** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Organograma_x_usuarios
+    * const organograma_x_usuarios = await prisma.organograma_x_usuario.findMany()
+    * ```
+    */
+  get organograma_x_usuario(): Prisma.organograma_x_usuarioDelegate<GlobalReject>;
+
+  /**
+   * `prisma.plataforma_x_usuario`: Exposes CRUD operations for the **plataforma_x_usuario** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Plataforma_x_usuarios
+    * const plataforma_x_usuarios = await prisma.plataforma_x_usuario.findMany()
+    * ```
+    */
+  get plataforma_x_usuario(): Prisma.plataforma_x_usuarioDelegate<GlobalReject>;
+
+  /**
+   * `prisma.titulo_itens`: Exposes CRUD operations for the **titulo_itens** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Titulo_itens
+    * const titulo_itens = await prisma.titulo_itens.findMany()
+    * ```
+    */
+  get titulo_itens(): Prisma.titulo_itensDelegate<GlobalReject>;
+
+  /**
+   * `prisma.usuario_perfil`: Exposes CRUD operations for the **usuario_perfil** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Usuario_perfils
+    * const usuario_perfils = await prisma.usuario_perfil.findMany()
+    * ```
+    */
+  get usuario_perfil(): Prisma.usuario_perfilDelegate<GlobalReject>;
 }
 
 export namespace Prisma {
@@ -886,7 +784,7 @@ export namespace Prisma {
 
   /**
    * Prisma Client JS version: 4.6.1
-   * Query Engine version: 272861e07ab64f234d3ffc4094e32bd61775599c
+   * Query Engine version: 694eea289a8462c80264df36757e4fdc129b1b32
    */
   export type PrismaVersion = {
     client: string
@@ -1336,32 +1234,26 @@ export namespace Prisma {
     cedente_n_sacados: 'cedente_n_sacados',
     checagem: 'checagem',
     fidic_fundo: 'fidic_fundo',
-    fidic_fundo_carteira_n_cedentes: 'fidic_fundo_carteira_n_cedentes',
     fidic_fundo_x_usuario: 'fidic_fundo_x_usuario',
     organograma: 'organograma',
     organograma_tipo: 'organograma_tipo',
-    organograma_x_regiao: 'organograma_x_regiao',
     organograma_x_regiao_atuacao: 'organograma_x_regiao_atuacao',
     pessoa: 'pessoa',
     plataforma: 'plataforma',
-    plataforma_n_borderos: 'plataforma_n_borderos',
     plataforma_papel_tipo: 'plataforma_papel_tipo',
-    plataforma_papel_x_pessoa: 'plataforma_papel_x_pessoa',
     plataforma_x_regiao_atuacao: 'plataforma_x_regiao_atuacao',
     regiao_atuacao: 'regiao_atuacao',
     regiao_atuacao_tipo: 'regiao_atuacao_tipo',
     sacado: 'sacado',
     titulo: 'titulo',
     titulo_tipo: 'titulo_tipo',
-    titulo_x_cedente: 'titulo_x_cedente',
-    titulo_x_empresa: 'titulo_x_empresa',
-    titulo_x_plataforma: 'titulo_x_plataforma',
-    titulos_x_usuario: 'titulos_x_usuario',
     usuario: 'usuario',
-    usuario__pessoa: 'usuario__pessoa',
-    usuario_n_borderos: 'usuario_n_borderos',
     usuario_perfil_tipo: 'usuario_perfil_tipo',
-    usuario_x_perfil: 'usuario_x_perfil'
+    carteira_n_cedentes: 'carteira_n_cedentes',
+    organograma_x_usuario: 'organograma_x_usuario',
+    plataforma_x_usuario: 'plataforma_x_usuario',
+    titulo_itens: 'titulo_itens',
+    usuario_perfil: 'usuario_perfil'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1527,12 +1419,10 @@ export namespace Prisma {
 
   export type BorderoCountOutputType = {
     titulo: number
-    titulos_x_usuario: number
   }
 
   export type BorderoCountOutputTypeSelect = {
     titulo?: boolean
-    titulos_x_usuario?: boolean
   }
 
   export type BorderoCountOutputTypeGetPayload<S extends boolean | null | undefined | BorderoCountOutputTypeArgs, U = keyof S> =
@@ -1567,20 +1457,66 @@ export namespace Prisma {
 
 
   /**
+   * Count Type CarteiraCountOutputType
+   */
+
+
+  export type CarteiraCountOutputType = {
+    bordero: number
+    carteira_n_cedentes: number
+  }
+
+  export type CarteiraCountOutputTypeSelect = {
+    bordero?: boolean
+    carteira_n_cedentes?: boolean
+  }
+
+  export type CarteiraCountOutputTypeGetPayload<S extends boolean | null | undefined | CarteiraCountOutputTypeArgs, U = keyof S> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? CarteiraCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (CarteiraCountOutputTypeArgs)
+    ? CarteiraCountOutputType 
+    : S extends { select: any } & (CarteiraCountOutputTypeArgs)
+      ? {
+    [P in TrueKeys<S['select']>]:
+    P extends keyof CarteiraCountOutputType ? CarteiraCountOutputType[P] : never
+  } 
+      : CarteiraCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * CarteiraCountOutputType without action
+   */
+  export type CarteiraCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the CarteiraCountOutputType
+     * 
+    **/
+    select?: CarteiraCountOutputTypeSelect | null
+  }
+
+
+
+  /**
    * Count Type CedenteCountOutputType
    */
 
 
   export type CedenteCountOutputType = {
+    carteira_n_cedentes: number
     cedente_analise: number
     cedente_n_sacados: number
-    titulo_x_cedente: number
   }
 
   export type CedenteCountOutputTypeSelect = {
+    carteira_n_cedentes?: boolean
     cedente_analise?: boolean
     cedente_n_sacados?: boolean
-    titulo_x_cedente?: boolean
   }
 
   export type CedenteCountOutputTypeGetPayload<S extends boolean | null | undefined | CedenteCountOutputTypeArgs, U = keyof S> =
@@ -1661,6 +1597,96 @@ export namespace Prisma {
 
 
   /**
+   * Count Type OrganogramaCountOutputType
+   */
+
+
+  export type OrganogramaCountOutputType = {
+    organograma_x_regiao_atuacao: number
+    organograma_x_usuario: number
+  }
+
+  export type OrganogramaCountOutputTypeSelect = {
+    organograma_x_regiao_atuacao?: boolean
+    organograma_x_usuario?: boolean
+  }
+
+  export type OrganogramaCountOutputTypeGetPayload<S extends boolean | null | undefined | OrganogramaCountOutputTypeArgs, U = keyof S> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? OrganogramaCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (OrganogramaCountOutputTypeArgs)
+    ? OrganogramaCountOutputType 
+    : S extends { select: any } & (OrganogramaCountOutputTypeArgs)
+      ? {
+    [P in TrueKeys<S['select']>]:
+    P extends keyof OrganogramaCountOutputType ? OrganogramaCountOutputType[P] : never
+  } 
+      : OrganogramaCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * OrganogramaCountOutputType without action
+   */
+  export type OrganogramaCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the OrganogramaCountOutputType
+     * 
+    **/
+    select?: OrganogramaCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type Organograma_tipoCountOutputType
+   */
+
+
+  export type Organograma_tipoCountOutputType = {
+    organograma: number
+  }
+
+  export type Organograma_tipoCountOutputTypeSelect = {
+    organograma?: boolean
+  }
+
+  export type Organograma_tipoCountOutputTypeGetPayload<S extends boolean | null | undefined | Organograma_tipoCountOutputTypeArgs, U = keyof S> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Organograma_tipoCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (Organograma_tipoCountOutputTypeArgs)
+    ? Organograma_tipoCountOutputType 
+    : S extends { select: any } & (Organograma_tipoCountOutputTypeArgs)
+      ? {
+    [P in TrueKeys<S['select']>]:
+    P extends keyof Organograma_tipoCountOutputType ? Organograma_tipoCountOutputType[P] : never
+  } 
+      : Organograma_tipoCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Organograma_tipoCountOutputType without action
+   */
+  export type Organograma_tipoCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the Organograma_tipoCountOutputType
+     * 
+    **/
+    select?: Organograma_tipoCountOutputTypeSelect | null
+  }
+
+
+
+  /**
    * Count Type PessoaCountOutputType
    */
 
@@ -1700,6 +1726,186 @@ export namespace Prisma {
      * 
     **/
     select?: PessoaCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type PlataformaCountOutputType
+   */
+
+
+  export type PlataformaCountOutputType = {
+    plataforma_x_regiao_atuacao: number
+    plataforma_x_usuario: number
+  }
+
+  export type PlataformaCountOutputTypeSelect = {
+    plataforma_x_regiao_atuacao?: boolean
+    plataforma_x_usuario?: boolean
+  }
+
+  export type PlataformaCountOutputTypeGetPayload<S extends boolean | null | undefined | PlataformaCountOutputTypeArgs, U = keyof S> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? PlataformaCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (PlataformaCountOutputTypeArgs)
+    ? PlataformaCountOutputType 
+    : S extends { select: any } & (PlataformaCountOutputTypeArgs)
+      ? {
+    [P in TrueKeys<S['select']>]:
+    P extends keyof PlataformaCountOutputType ? PlataformaCountOutputType[P] : never
+  } 
+      : PlataformaCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * PlataformaCountOutputType without action
+   */
+  export type PlataformaCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the PlataformaCountOutputType
+     * 
+    **/
+    select?: PlataformaCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type Plataforma_papel_tipoCountOutputType
+   */
+
+
+  export type Plataforma_papel_tipoCountOutputType = {
+    plataforma: number
+  }
+
+  export type Plataforma_papel_tipoCountOutputTypeSelect = {
+    plataforma?: boolean
+  }
+
+  export type Plataforma_papel_tipoCountOutputTypeGetPayload<S extends boolean | null | undefined | Plataforma_papel_tipoCountOutputTypeArgs, U = keyof S> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Plataforma_papel_tipoCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (Plataforma_papel_tipoCountOutputTypeArgs)
+    ? Plataforma_papel_tipoCountOutputType 
+    : S extends { select: any } & (Plataforma_papel_tipoCountOutputTypeArgs)
+      ? {
+    [P in TrueKeys<S['select']>]:
+    P extends keyof Plataforma_papel_tipoCountOutputType ? Plataforma_papel_tipoCountOutputType[P] : never
+  } 
+      : Plataforma_papel_tipoCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Plataforma_papel_tipoCountOutputType without action
+   */
+  export type Plataforma_papel_tipoCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the Plataforma_papel_tipoCountOutputType
+     * 
+    **/
+    select?: Plataforma_papel_tipoCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type Regiao_atuacaoCountOutputType
+   */
+
+
+  export type Regiao_atuacaoCountOutputType = {
+    organograma_x_regiao_atuacao: number
+    plataforma_x_regiao_atuacao: number
+  }
+
+  export type Regiao_atuacaoCountOutputTypeSelect = {
+    organograma_x_regiao_atuacao?: boolean
+    plataforma_x_regiao_atuacao?: boolean
+  }
+
+  export type Regiao_atuacaoCountOutputTypeGetPayload<S extends boolean | null | undefined | Regiao_atuacaoCountOutputTypeArgs, U = keyof S> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Regiao_atuacaoCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (Regiao_atuacaoCountOutputTypeArgs)
+    ? Regiao_atuacaoCountOutputType 
+    : S extends { select: any } & (Regiao_atuacaoCountOutputTypeArgs)
+      ? {
+    [P in TrueKeys<S['select']>]:
+    P extends keyof Regiao_atuacaoCountOutputType ? Regiao_atuacaoCountOutputType[P] : never
+  } 
+      : Regiao_atuacaoCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Regiao_atuacaoCountOutputType without action
+   */
+  export type Regiao_atuacaoCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the Regiao_atuacaoCountOutputType
+     * 
+    **/
+    select?: Regiao_atuacaoCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type Regiao_atuacao_tipoCountOutputType
+   */
+
+
+  export type Regiao_atuacao_tipoCountOutputType = {
+    regiao_atuacao: number
+  }
+
+  export type Regiao_atuacao_tipoCountOutputTypeSelect = {
+    regiao_atuacao?: boolean
+  }
+
+  export type Regiao_atuacao_tipoCountOutputTypeGetPayload<S extends boolean | null | undefined | Regiao_atuacao_tipoCountOutputTypeArgs, U = keyof S> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Regiao_atuacao_tipoCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (Regiao_atuacao_tipoCountOutputTypeArgs)
+    ? Regiao_atuacao_tipoCountOutputType 
+    : S extends { select: any } & (Regiao_atuacao_tipoCountOutputTypeArgs)
+      ? {
+    [P in TrueKeys<S['select']>]:
+    P extends keyof Regiao_atuacao_tipoCountOutputType ? Regiao_atuacao_tipoCountOutputType[P] : never
+  } 
+      : Regiao_atuacao_tipoCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Regiao_atuacao_tipoCountOutputType without action
+   */
+  export type Regiao_atuacao_tipoCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the Regiao_atuacao_tipoCountOutputType
+     * 
+    **/
+    select?: Regiao_atuacao_tipoCountOutputTypeSelect | null
   }
 
 
@@ -1749,6 +1955,50 @@ export namespace Prisma {
 
 
   /**
+   * Count Type TituloCountOutputType
+   */
+
+
+  export type TituloCountOutputType = {
+    titulo_itens: number
+  }
+
+  export type TituloCountOutputTypeSelect = {
+    titulo_itens?: boolean
+  }
+
+  export type TituloCountOutputTypeGetPayload<S extends boolean | null | undefined | TituloCountOutputTypeArgs, U = keyof S> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? TituloCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (TituloCountOutputTypeArgs)
+    ? TituloCountOutputType 
+    : S extends { select: any } & (TituloCountOutputTypeArgs)
+      ? {
+    [P in TrueKeys<S['select']>]:
+    P extends keyof TituloCountOutputType ? TituloCountOutputType[P] : never
+  } 
+      : TituloCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * TituloCountOutputType without action
+   */
+  export type TituloCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the TituloCountOutputType
+     * 
+    **/
+    select?: TituloCountOutputTypeSelect | null
+  }
+
+
+
+  /**
    * Count Type Titulo_tipoCountOutputType
    */
 
@@ -1793,68 +2043,16 @@ export namespace Prisma {
 
 
   /**
-   * Count Type UsuarioCountOutputType
-   */
-
-
-  export type UsuarioCountOutputType = {
-    auditoria: number
-    checagem: number
-    fidic_fundo_x_usuario: number
-    titulos_x_usuario: number
-    usuario_x_perfil: number
-  }
-
-  export type UsuarioCountOutputTypeSelect = {
-    auditoria?: boolean
-    checagem?: boolean
-    fidic_fundo_x_usuario?: boolean
-    titulos_x_usuario?: boolean
-    usuario_x_perfil?: boolean
-  }
-
-  export type UsuarioCountOutputTypeGetPayload<S extends boolean | null | undefined | UsuarioCountOutputTypeArgs, U = keyof S> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? UsuarioCountOutputType :
-    S extends undefined ? never :
-    S extends { include: any } & (UsuarioCountOutputTypeArgs)
-    ? UsuarioCountOutputType 
-    : S extends { select: any } & (UsuarioCountOutputTypeArgs)
-      ? {
-    [P in TrueKeys<S['select']>]:
-    P extends keyof UsuarioCountOutputType ? UsuarioCountOutputType[P] : never
-  } 
-      : UsuarioCountOutputType
-
-
-
-
-  // Custom InputTypes
-
-  /**
-   * UsuarioCountOutputType without action
-   */
-  export type UsuarioCountOutputTypeArgs = {
-    /**
-     * Select specific fields to fetch from the UsuarioCountOutputType
-     * 
-    **/
-    select?: UsuarioCountOutputTypeSelect | null
-  }
-
-
-
-  /**
    * Count Type Usuario_perfil_tipoCountOutputType
    */
 
 
   export type Usuario_perfil_tipoCountOutputType = {
-    usuario_x_perfil: number
+    usuario_perfil: number
   }
 
   export type Usuario_perfil_tipoCountOutputTypeSelect = {
-    usuario_x_perfil?: boolean
+    usuario_perfil?: boolean
   }
 
   export type Usuario_perfil_tipoCountOutputTypeGetPayload<S extends boolean | null | undefined | Usuario_perfil_tipoCountOutputTypeArgs, U = keyof S> =
@@ -2101,27 +2299,19 @@ export namespace Prisma {
     data?: boolean
     modulo?: boolean
     id?: boolean
-    usuario_auditoriaTousuario?: boolean | usuarioArgs
   }
 
-
-  export type auditoriaInclude = {
-    usuario_auditoriaTousuario?: boolean | usuarioArgs
-  } 
 
   export type auditoriaGetPayload<S extends boolean | null | undefined | auditoriaArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? auditoria :
     S extends undefined ? never :
     S extends { include: any } & (auditoriaArgs | auditoriaFindManyArgs)
-    ? auditoria  & {
-    [P in TrueKeys<S['include']>]:
-        P extends 'usuario_auditoriaTousuario' ? usuarioGetPayload<Exclude<S['include'], undefined | null>[P]> | null :  never
-  } 
+    ? auditoria 
     : S extends { select: any } & (auditoriaArgs | auditoriaFindManyArgs)
       ? {
     [P in TrueKeys<S['select']>]:
-        P extends 'usuario_auditoriaTousuario' ? usuarioGetPayload<Exclude<S['select'], undefined | null>[P]> | null :  P extends keyof auditoria ? auditoria[P] : never
+    P extends keyof auditoria ? auditoria[P] : never
   } 
       : auditoria
 
@@ -2495,7 +2685,6 @@ export namespace Prisma {
     constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
 
-    usuario_auditoriaTousuario<T extends usuarioArgs= {}>(args?: Subset<T, usuarioArgs>): Prisma__usuarioClient<usuarioGetPayload<T> | Null>;
 
     private get _document();
     /**
@@ -2534,11 +2723,6 @@ export namespace Prisma {
     **/
     select?: auditoriaSelect | null
     /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: auditoriaInclude | null
-    /**
      * Filter, which auditoria to fetch.
      * 
     **/
@@ -2566,11 +2750,6 @@ export namespace Prisma {
      * 
     **/
     select?: auditoriaSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: auditoriaInclude | null
     /**
      * Filter, which auditoria to fetch.
      * 
@@ -2635,11 +2814,6 @@ export namespace Prisma {
     **/
     select?: auditoriaSelect | null
     /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: auditoriaInclude | null
-    /**
      * Filter, which auditorias to fetch.
      * 
     **/
@@ -2686,11 +2860,6 @@ export namespace Prisma {
     **/
     select?: auditoriaSelect | null
     /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: auditoriaInclude | null
-    /**
      * The data needed to create a auditoria.
      * 
     **/
@@ -2720,11 +2889,6 @@ export namespace Prisma {
      * 
     **/
     select?: auditoriaSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: auditoriaInclude | null
     /**
      * The data needed to update a auditoria.
      * 
@@ -2765,11 +2929,6 @@ export namespace Prisma {
     **/
     select?: auditoriaSelect | null
     /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: auditoriaInclude | null
-    /**
      * The filter to search for the auditoria to update in case it exists.
      * 
     **/
@@ -2796,11 +2955,6 @@ export namespace Prisma {
      * 
     **/
     select?: auditoriaSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: auditoriaInclude | null
     /**
      * Filter which auditoria to delete.
      * 
@@ -2842,11 +2996,6 @@ export namespace Prisma {
      * 
     **/
     select?: auditoriaSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: auditoriaInclude | null
   }
 
 
@@ -3036,15 +3185,15 @@ export namespace Prisma {
   export type borderoSelect = {
     id?: boolean
     carteira_id?: boolean
+    carteira?: boolean | carteiraArgs
     titulo?: boolean | tituloFindManyArgs
-    titulos_x_usuario?: boolean | titulos_x_usuarioFindManyArgs
     _count?: boolean | BorderoCountOutputTypeArgs
   }
 
 
   export type borderoInclude = {
+    carteira?: boolean | carteiraArgs
     titulo?: boolean | tituloFindManyArgs
-    titulos_x_usuario?: boolean | titulos_x_usuarioFindManyArgs
     _count?: boolean | BorderoCountOutputTypeArgs
   } 
 
@@ -3055,15 +3204,15 @@ export namespace Prisma {
     S extends { include: any } & (borderoArgs | borderoFindManyArgs)
     ? bordero  & {
     [P in TrueKeys<S['include']>]:
+        P extends 'carteira' ? carteiraGetPayload<Exclude<S['include'], undefined | null>[P]> :
         P extends 'titulo' ? Array < tituloGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
-        P extends 'titulos_x_usuario' ? Array < titulos_x_usuarioGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
         P extends '_count' ? BorderoCountOutputTypeGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
   } 
     : S extends { select: any } & (borderoArgs | borderoFindManyArgs)
       ? {
     [P in TrueKeys<S['select']>]:
+        P extends 'carteira' ? carteiraGetPayload<Exclude<S['select'], undefined | null>[P]> :
         P extends 'titulo' ? Array < tituloGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
-        P extends 'titulos_x_usuario' ? Array < titulos_x_usuarioGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
         P extends '_count' ? BorderoCountOutputTypeGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof bordero ? bordero[P] : never
   } 
       : bordero
@@ -3438,9 +3587,9 @@ export namespace Prisma {
     constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
 
-    titulo<T extends tituloFindManyArgs= {}>(args?: Subset<T, tituloFindManyArgs>): PrismaPromise<Array<tituloGetPayload<T>>| Null>;
+    carteira<T extends carteiraArgs= {}>(args?: Subset<T, carteiraArgs>): Prisma__carteiraClient<carteiraGetPayload<T> | Null>;
 
-    titulos_x_usuario<T extends titulos_x_usuarioFindManyArgs= {}>(args?: Subset<T, titulos_x_usuarioFindManyArgs>): PrismaPromise<Array<titulos_x_usuarioGetPayload<T>>| Null>;
+    titulo<T extends tituloFindManyArgs= {}>(args?: Subset<T, tituloFindManyArgs>): PrismaPromise<Array<tituloGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -3982,11 +4131,17 @@ export namespace Prisma {
     id?: boolean
     fiduc_fundo_id?: boolean
     fidic_fundo?: boolean | fidic_fundoArgs
+    bordero?: boolean | borderoFindManyArgs
+    carteira_n_cedentes?: boolean | carteira_n_cedentesFindManyArgs
+    _count?: boolean | CarteiraCountOutputTypeArgs
   }
 
 
   export type carteiraInclude = {
     fidic_fundo?: boolean | fidic_fundoArgs
+    bordero?: boolean | borderoFindManyArgs
+    carteira_n_cedentes?: boolean | carteira_n_cedentesFindManyArgs
+    _count?: boolean | CarteiraCountOutputTypeArgs
   } 
 
   export type carteiraGetPayload<S extends boolean | null | undefined | carteiraArgs, U = keyof S> =
@@ -3996,12 +4151,18 @@ export namespace Prisma {
     S extends { include: any } & (carteiraArgs | carteiraFindManyArgs)
     ? carteira  & {
     [P in TrueKeys<S['include']>]:
-        P extends 'fidic_fundo' ? fidic_fundoGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
+        P extends 'fidic_fundo' ? fidic_fundoGetPayload<Exclude<S['include'], undefined | null>[P]> :
+        P extends 'bordero' ? Array < borderoGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
+        P extends 'carteira_n_cedentes' ? Array < carteira_n_cedentesGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
+        P extends '_count' ? CarteiraCountOutputTypeGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
   } 
     : S extends { select: any } & (carteiraArgs | carteiraFindManyArgs)
       ? {
     [P in TrueKeys<S['select']>]:
-        P extends 'fidic_fundo' ? fidic_fundoGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof carteira ? carteira[P] : never
+        P extends 'fidic_fundo' ? fidic_fundoGetPayload<Exclude<S['select'], undefined | null>[P]> :
+        P extends 'bordero' ? Array < borderoGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
+        P extends 'carteira_n_cedentes' ? Array < carteira_n_cedentesGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
+        P extends '_count' ? CarteiraCountOutputTypeGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof carteira ? carteira[P] : never
   } 
       : carteira
 
@@ -4376,6 +4537,10 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
 
     fidic_fundo<T extends fidic_fundoArgs= {}>(args?: Subset<T, fidic_fundoArgs>): Prisma__fidic_fundoClient<fidic_fundoGetPayload<T> | Null>;
+
+    bordero<T extends borderoFindManyArgs= {}>(args?: Subset<T, borderoFindManyArgs>): PrismaPromise<Array<borderoGetPayload<T>>| Null>;
+
+    carteira_n_cedentes<T extends carteira_n_cedentesFindManyArgs= {}>(args?: Subset<T, carteira_n_cedentesFindManyArgs>): PrismaPromise<Array<carteira_n_cedentesGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -5004,17 +5169,17 @@ export namespace Prisma {
     cidade?: boolean
     uf?: boolean
     telefone?: boolean
+    carteira_n_cedentes?: boolean | carteira_n_cedentesFindManyArgs
     cedente_analise?: boolean | cedente_analiseFindManyArgs
     cedente_n_sacados?: boolean | cedente_n_sacadosFindManyArgs
-    titulo_x_cedente?: boolean | titulo_x_cedenteFindManyArgs
     _count?: boolean | CedenteCountOutputTypeArgs
   }
 
 
   export type cedenteInclude = {
+    carteira_n_cedentes?: boolean | carteira_n_cedentesFindManyArgs
     cedente_analise?: boolean | cedente_analiseFindManyArgs
     cedente_n_sacados?: boolean | cedente_n_sacadosFindManyArgs
-    titulo_x_cedente?: boolean | titulo_x_cedenteFindManyArgs
     _count?: boolean | CedenteCountOutputTypeArgs
   } 
 
@@ -5025,17 +5190,17 @@ export namespace Prisma {
     S extends { include: any } & (cedenteArgs | cedenteFindManyArgs)
     ? cedente  & {
     [P in TrueKeys<S['include']>]:
+        P extends 'carteira_n_cedentes' ? Array < carteira_n_cedentesGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
         P extends 'cedente_analise' ? Array < cedente_analiseGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
         P extends 'cedente_n_sacados' ? Array < cedente_n_sacadosGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
-        P extends 'titulo_x_cedente' ? Array < titulo_x_cedenteGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
         P extends '_count' ? CedenteCountOutputTypeGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
   } 
     : S extends { select: any } & (cedenteArgs | cedenteFindManyArgs)
       ? {
     [P in TrueKeys<S['select']>]:
+        P extends 'carteira_n_cedentes' ? Array < carteira_n_cedentesGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
         P extends 'cedente_analise' ? Array < cedente_analiseGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
         P extends 'cedente_n_sacados' ? Array < cedente_n_sacadosGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
-        P extends 'titulo_x_cedente' ? Array < titulo_x_cedenteGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
         P extends '_count' ? CedenteCountOutputTypeGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof cedente ? cedente[P] : never
   } 
       : cedente
@@ -5410,11 +5575,11 @@ export namespace Prisma {
     constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
 
+    carteira_n_cedentes<T extends carteira_n_cedentesFindManyArgs= {}>(args?: Subset<T, carteira_n_cedentesFindManyArgs>): PrismaPromise<Array<carteira_n_cedentesGetPayload<T>>| Null>;
+
     cedente_analise<T extends cedente_analiseFindManyArgs= {}>(args?: Subset<T, cedente_analiseFindManyArgs>): PrismaPromise<Array<cedente_analiseGetPayload<T>>| Null>;
 
     cedente_n_sacados<T extends cedente_n_sacadosFindManyArgs= {}>(args?: Subset<T, cedente_n_sacadosFindManyArgs>): PrismaPromise<Array<cedente_n_sacadosGetPayload<T>>| Null>;
-
-    titulo_x_cedente<T extends titulo_x_cedenteFindManyArgs= {}>(args?: Subset<T, titulo_x_cedenteFindManyArgs>): PrismaPromise<Array<titulo_x_cedenteGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -7875,27 +8040,19 @@ export namespace Prisma {
     status?: boolean
     usuario?: boolean
     titulos?: boolean
-    usuario_checagemTousuario?: boolean | usuarioArgs
   }
 
-
-  export type checagemInclude = {
-    usuario_checagemTousuario?: boolean | usuarioArgs
-  } 
 
   export type checagemGetPayload<S extends boolean | null | undefined | checagemArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? checagem :
     S extends undefined ? never :
     S extends { include: any } & (checagemArgs | checagemFindManyArgs)
-    ? checagem  & {
-    [P in TrueKeys<S['include']>]:
-        P extends 'usuario_checagemTousuario' ? usuarioGetPayload<Exclude<S['include'], undefined | null>[P]> | null :  never
-  } 
+    ? checagem 
     : S extends { select: any } & (checagemArgs | checagemFindManyArgs)
       ? {
     [P in TrueKeys<S['select']>]:
-        P extends 'usuario_checagemTousuario' ? usuarioGetPayload<Exclude<S['select'], undefined | null>[P]> | null :  P extends keyof checagem ? checagem[P] : never
+    P extends keyof checagem ? checagem[P] : never
   } 
       : checagem
 
@@ -8269,7 +8426,6 @@ export namespace Prisma {
     constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
 
-    usuario_checagemTousuario<T extends usuarioArgs= {}>(args?: Subset<T, usuarioArgs>): Prisma__usuarioClient<usuarioGetPayload<T> | Null>;
 
     private get _document();
     /**
@@ -8308,11 +8464,6 @@ export namespace Prisma {
     **/
     select?: checagemSelect | null
     /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: checagemInclude | null
-    /**
      * Filter, which checagem to fetch.
      * 
     **/
@@ -8340,11 +8491,6 @@ export namespace Prisma {
      * 
     **/
     select?: checagemSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: checagemInclude | null
     /**
      * Filter, which checagem to fetch.
      * 
@@ -8409,11 +8555,6 @@ export namespace Prisma {
     **/
     select?: checagemSelect | null
     /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: checagemInclude | null
-    /**
      * Filter, which checagems to fetch.
      * 
     **/
@@ -8460,11 +8601,6 @@ export namespace Prisma {
     **/
     select?: checagemSelect | null
     /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: checagemInclude | null
-    /**
      * The data needed to create a checagem.
      * 
     **/
@@ -8494,11 +8630,6 @@ export namespace Prisma {
      * 
     **/
     select?: checagemSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: checagemInclude | null
     /**
      * The data needed to update a checagem.
      * 
@@ -8539,11 +8670,6 @@ export namespace Prisma {
     **/
     select?: checagemSelect | null
     /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: checagemInclude | null
-    /**
      * The filter to search for the checagem to update in case it exists.
      * 
     **/
@@ -8570,11 +8696,6 @@ export namespace Prisma {
      * 
     **/
     select?: checagemSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: checagemInclude | null
     /**
      * Filter which checagem to delete.
      * 
@@ -8616,11 +8737,6 @@ export namespace Prisma {
      * 
     **/
     select?: checagemSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: checagemInclude | null
   }
 
 
@@ -9603,880 +9719,6 @@ export namespace Prisma {
 
 
   /**
-   * Model fidic_fundo_carteira_n_cedentes
-   */
-
-
-  export type AggregateFidic_fundo_carteira_n_cedentes = {
-    _count: Fidic_fundo_carteira_n_cedentesCountAggregateOutputType | null
-    _avg: Fidic_fundo_carteira_n_cedentesAvgAggregateOutputType | null
-    _sum: Fidic_fundo_carteira_n_cedentesSumAggregateOutputType | null
-    _min: Fidic_fundo_carteira_n_cedentesMinAggregateOutputType | null
-    _max: Fidic_fundo_carteira_n_cedentesMaxAggregateOutputType | null
-  }
-
-  export type Fidic_fundo_carteira_n_cedentesAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Fidic_fundo_carteira_n_cedentesSumAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Fidic_fundo_carteira_n_cedentesMinAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Fidic_fundo_carteira_n_cedentesMaxAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Fidic_fundo_carteira_n_cedentesCountAggregateOutputType = {
-    id: number
-    _all: number
-  }
-
-
-  export type Fidic_fundo_carteira_n_cedentesAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type Fidic_fundo_carteira_n_cedentesSumAggregateInputType = {
-    id?: true
-  }
-
-  export type Fidic_fundo_carteira_n_cedentesMinAggregateInputType = {
-    id?: true
-  }
-
-  export type Fidic_fundo_carteira_n_cedentesMaxAggregateInputType = {
-    id?: true
-  }
-
-  export type Fidic_fundo_carteira_n_cedentesCountAggregateInputType = {
-    id?: true
-    _all?: true
-  }
-
-  export type Fidic_fundo_carteira_n_cedentesAggregateArgs = {
-    /**
-     * Filter which fidic_fundo_carteira_n_cedentes to aggregate.
-     * 
-    **/
-    where?: fidic_fundo_carteira_n_cedentesWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of fidic_fundo_carteira_n_cedentes to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<fidic_fundo_carteira_n_cedentesOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     * 
-    **/
-    cursor?: fidic_fundo_carteira_n_cedentesWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` fidic_fundo_carteira_n_cedentes from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` fidic_fundo_carteira_n_cedentes.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned fidic_fundo_carteira_n_cedentes
-    **/
-    _count?: true | Fidic_fundo_carteira_n_cedentesCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Fidic_fundo_carteira_n_cedentesAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Fidic_fundo_carteira_n_cedentesSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: Fidic_fundo_carteira_n_cedentesMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: Fidic_fundo_carteira_n_cedentesMaxAggregateInputType
-  }
-
-  export type GetFidic_fundo_carteira_n_cedentesAggregateType<T extends Fidic_fundo_carteira_n_cedentesAggregateArgs> = {
-        [P in keyof T & keyof AggregateFidic_fundo_carteira_n_cedentes]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateFidic_fundo_carteira_n_cedentes[P]>
-      : GetScalarType<T[P], AggregateFidic_fundo_carteira_n_cedentes[P]>
-  }
-
-
-
-
-  export type Fidic_fundo_carteira_n_cedentesGroupByArgs = {
-    where?: fidic_fundo_carteira_n_cedentesWhereInput
-    orderBy?: Enumerable<fidic_fundo_carteira_n_cedentesOrderByWithAggregationInput>
-    by: Array<Fidic_fundo_carteira_n_cedentesScalarFieldEnum>
-    having?: fidic_fundo_carteira_n_cedentesScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: Fidic_fundo_carteira_n_cedentesCountAggregateInputType | true
-    _avg?: Fidic_fundo_carteira_n_cedentesAvgAggregateInputType
-    _sum?: Fidic_fundo_carteira_n_cedentesSumAggregateInputType
-    _min?: Fidic_fundo_carteira_n_cedentesMinAggregateInputType
-    _max?: Fidic_fundo_carteira_n_cedentesMaxAggregateInputType
-  }
-
-
-  export type Fidic_fundo_carteira_n_cedentesGroupByOutputType = {
-    id: number
-    _count: Fidic_fundo_carteira_n_cedentesCountAggregateOutputType | null
-    _avg: Fidic_fundo_carteira_n_cedentesAvgAggregateOutputType | null
-    _sum: Fidic_fundo_carteira_n_cedentesSumAggregateOutputType | null
-    _min: Fidic_fundo_carteira_n_cedentesMinAggregateOutputType | null
-    _max: Fidic_fundo_carteira_n_cedentesMaxAggregateOutputType | null
-  }
-
-  type GetFidic_fundo_carteira_n_cedentesGroupByPayload<T extends Fidic_fundo_carteira_n_cedentesGroupByArgs> = PrismaPromise<
-    Array<
-      PickArray<Fidic_fundo_carteira_n_cedentesGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof Fidic_fundo_carteira_n_cedentesGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], Fidic_fundo_carteira_n_cedentesGroupByOutputType[P]>
-            : GetScalarType<T[P], Fidic_fundo_carteira_n_cedentesGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type fidic_fundo_carteira_n_cedentesSelect = {
-    id?: boolean
-  }
-
-
-  export type fidic_fundo_carteira_n_cedentesGetPayload<S extends boolean | null | undefined | fidic_fundo_carteira_n_cedentesArgs, U = keyof S> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? fidic_fundo_carteira_n_cedentes :
-    S extends undefined ? never :
-    S extends { include: any } & (fidic_fundo_carteira_n_cedentesArgs | fidic_fundo_carteira_n_cedentesFindManyArgs)
-    ? fidic_fundo_carteira_n_cedentes 
-    : S extends { select: any } & (fidic_fundo_carteira_n_cedentesArgs | fidic_fundo_carteira_n_cedentesFindManyArgs)
-      ? {
-    [P in TrueKeys<S['select']>]:
-    P extends keyof fidic_fundo_carteira_n_cedentes ? fidic_fundo_carteira_n_cedentes[P] : never
-  } 
-      : fidic_fundo_carteira_n_cedentes
-
-
-  type fidic_fundo_carteira_n_cedentesCountArgs = Merge<
-    Omit<fidic_fundo_carteira_n_cedentesFindManyArgs, 'select' | 'include'> & {
-      select?: Fidic_fundo_carteira_n_cedentesCountAggregateInputType | true
-    }
-  >
-
-  export interface fidic_fundo_carteira_n_cedentesDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-    /**
-     * Find zero or one Fidic_fundo_carteira_n_cedentes that matches the filter.
-     * @param {fidic_fundo_carteira_n_cedentesFindUniqueArgs} args - Arguments to find a Fidic_fundo_carteira_n_cedentes
-     * @example
-     * // Get one Fidic_fundo_carteira_n_cedentes
-     * const fidic_fundo_carteira_n_cedentes = await prisma.fidic_fundo_carteira_n_cedentes.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends fidic_fundo_carteira_n_cedentesFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, fidic_fundo_carteira_n_cedentesFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'fidic_fundo_carteira_n_cedentes'> extends True ? Prisma__fidic_fundo_carteira_n_cedentesClient<fidic_fundo_carteira_n_cedentesGetPayload<T>> : Prisma__fidic_fundo_carteira_n_cedentesClient<fidic_fundo_carteira_n_cedentesGetPayload<T> | null, null>
-
-    /**
-     * Find the first Fidic_fundo_carteira_n_cedentes that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {fidic_fundo_carteira_n_cedentesFindFirstArgs} args - Arguments to find a Fidic_fundo_carteira_n_cedentes
-     * @example
-     * // Get one Fidic_fundo_carteira_n_cedentes
-     * const fidic_fundo_carteira_n_cedentes = await prisma.fidic_fundo_carteira_n_cedentes.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends fidic_fundo_carteira_n_cedentesFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, fidic_fundo_carteira_n_cedentesFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'fidic_fundo_carteira_n_cedentes'> extends True ? Prisma__fidic_fundo_carteira_n_cedentesClient<fidic_fundo_carteira_n_cedentesGetPayload<T>> : Prisma__fidic_fundo_carteira_n_cedentesClient<fidic_fundo_carteira_n_cedentesGetPayload<T> | null, null>
-
-    /**
-     * Find zero or more Fidic_fundo_carteira_n_cedentes that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {fidic_fundo_carteira_n_cedentesFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Fidic_fundo_carteira_n_cedentes
-     * const fidic_fundo_carteira_n_cedentes = await prisma.fidic_fundo_carteira_n_cedentes.findMany()
-     * 
-     * // Get first 10 Fidic_fundo_carteira_n_cedentes
-     * const fidic_fundo_carteira_n_cedentes = await prisma.fidic_fundo_carteira_n_cedentes.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const fidic_fundo_carteira_n_cedentesWithIdOnly = await prisma.fidic_fundo_carteira_n_cedentes.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends fidic_fundo_carteira_n_cedentesFindManyArgs>(
-      args?: SelectSubset<T, fidic_fundo_carteira_n_cedentesFindManyArgs>
-    ): PrismaPromise<Array<fidic_fundo_carteira_n_cedentesGetPayload<T>>>
-
-    /**
-     * Create a Fidic_fundo_carteira_n_cedentes.
-     * @param {fidic_fundo_carteira_n_cedentesCreateArgs} args - Arguments to create a Fidic_fundo_carteira_n_cedentes.
-     * @example
-     * // Create one Fidic_fundo_carteira_n_cedentes
-     * const Fidic_fundo_carteira_n_cedentes = await prisma.fidic_fundo_carteira_n_cedentes.create({
-     *   data: {
-     *     // ... data to create a Fidic_fundo_carteira_n_cedentes
-     *   }
-     * })
-     * 
-    **/
-    create<T extends fidic_fundo_carteira_n_cedentesCreateArgs>(
-      args: SelectSubset<T, fidic_fundo_carteira_n_cedentesCreateArgs>
-    ): Prisma__fidic_fundo_carteira_n_cedentesClient<fidic_fundo_carteira_n_cedentesGetPayload<T>>
-
-    /**
-     * Create many Fidic_fundo_carteira_n_cedentes.
-     *     @param {fidic_fundo_carteira_n_cedentesCreateManyArgs} args - Arguments to create many Fidic_fundo_carteira_n_cedentes.
-     *     @example
-     *     // Create many Fidic_fundo_carteira_n_cedentes
-     *     const fidic_fundo_carteira_n_cedentes = await prisma.fidic_fundo_carteira_n_cedentes.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends fidic_fundo_carteira_n_cedentesCreateManyArgs>(
-      args?: SelectSubset<T, fidic_fundo_carteira_n_cedentesCreateManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a Fidic_fundo_carteira_n_cedentes.
-     * @param {fidic_fundo_carteira_n_cedentesDeleteArgs} args - Arguments to delete one Fidic_fundo_carteira_n_cedentes.
-     * @example
-     * // Delete one Fidic_fundo_carteira_n_cedentes
-     * const Fidic_fundo_carteira_n_cedentes = await prisma.fidic_fundo_carteira_n_cedentes.delete({
-     *   where: {
-     *     // ... filter to delete one Fidic_fundo_carteira_n_cedentes
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends fidic_fundo_carteira_n_cedentesDeleteArgs>(
-      args: SelectSubset<T, fidic_fundo_carteira_n_cedentesDeleteArgs>
-    ): Prisma__fidic_fundo_carteira_n_cedentesClient<fidic_fundo_carteira_n_cedentesGetPayload<T>>
-
-    /**
-     * Update one Fidic_fundo_carteira_n_cedentes.
-     * @param {fidic_fundo_carteira_n_cedentesUpdateArgs} args - Arguments to update one Fidic_fundo_carteira_n_cedentes.
-     * @example
-     * // Update one Fidic_fundo_carteira_n_cedentes
-     * const fidic_fundo_carteira_n_cedentes = await prisma.fidic_fundo_carteira_n_cedentes.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends fidic_fundo_carteira_n_cedentesUpdateArgs>(
-      args: SelectSubset<T, fidic_fundo_carteira_n_cedentesUpdateArgs>
-    ): Prisma__fidic_fundo_carteira_n_cedentesClient<fidic_fundo_carteira_n_cedentesGetPayload<T>>
-
-    /**
-     * Delete zero or more Fidic_fundo_carteira_n_cedentes.
-     * @param {fidic_fundo_carteira_n_cedentesDeleteManyArgs} args - Arguments to filter Fidic_fundo_carteira_n_cedentes to delete.
-     * @example
-     * // Delete a few Fidic_fundo_carteira_n_cedentes
-     * const { count } = await prisma.fidic_fundo_carteira_n_cedentes.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends fidic_fundo_carteira_n_cedentesDeleteManyArgs>(
-      args?: SelectSubset<T, fidic_fundo_carteira_n_cedentesDeleteManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Fidic_fundo_carteira_n_cedentes.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {fidic_fundo_carteira_n_cedentesUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Fidic_fundo_carteira_n_cedentes
-     * const fidic_fundo_carteira_n_cedentes = await prisma.fidic_fundo_carteira_n_cedentes.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends fidic_fundo_carteira_n_cedentesUpdateManyArgs>(
-      args: SelectSubset<T, fidic_fundo_carteira_n_cedentesUpdateManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one Fidic_fundo_carteira_n_cedentes.
-     * @param {fidic_fundo_carteira_n_cedentesUpsertArgs} args - Arguments to update or create a Fidic_fundo_carteira_n_cedentes.
-     * @example
-     * // Update or create a Fidic_fundo_carteira_n_cedentes
-     * const fidic_fundo_carteira_n_cedentes = await prisma.fidic_fundo_carteira_n_cedentes.upsert({
-     *   create: {
-     *     // ... data to create a Fidic_fundo_carteira_n_cedentes
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Fidic_fundo_carteira_n_cedentes we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends fidic_fundo_carteira_n_cedentesUpsertArgs>(
-      args: SelectSubset<T, fidic_fundo_carteira_n_cedentesUpsertArgs>
-    ): Prisma__fidic_fundo_carteira_n_cedentesClient<fidic_fundo_carteira_n_cedentesGetPayload<T>>
-
-    /**
-     * Find one Fidic_fundo_carteira_n_cedentes that matches the filter or throw
-     * `NotFoundError` if no matches were found.
-     * @param {fidic_fundo_carteira_n_cedentesFindUniqueOrThrowArgs} args - Arguments to find a Fidic_fundo_carteira_n_cedentes
-     * @example
-     * // Get one Fidic_fundo_carteira_n_cedentes
-     * const fidic_fundo_carteira_n_cedentes = await prisma.fidic_fundo_carteira_n_cedentes.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends fidic_fundo_carteira_n_cedentesFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, fidic_fundo_carteira_n_cedentesFindUniqueOrThrowArgs>
-    ): Prisma__fidic_fundo_carteira_n_cedentesClient<fidic_fundo_carteira_n_cedentesGetPayload<T>>
-
-    /**
-     * Find the first Fidic_fundo_carteira_n_cedentes that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {fidic_fundo_carteira_n_cedentesFindFirstOrThrowArgs} args - Arguments to find a Fidic_fundo_carteira_n_cedentes
-     * @example
-     * // Get one Fidic_fundo_carteira_n_cedentes
-     * const fidic_fundo_carteira_n_cedentes = await prisma.fidic_fundo_carteira_n_cedentes.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends fidic_fundo_carteira_n_cedentesFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, fidic_fundo_carteira_n_cedentesFindFirstOrThrowArgs>
-    ): Prisma__fidic_fundo_carteira_n_cedentesClient<fidic_fundo_carteira_n_cedentesGetPayload<T>>
-
-    /**
-     * Count the number of Fidic_fundo_carteira_n_cedentes.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {fidic_fundo_carteira_n_cedentesCountArgs} args - Arguments to filter Fidic_fundo_carteira_n_cedentes to count.
-     * @example
-     * // Count the number of Fidic_fundo_carteira_n_cedentes
-     * const count = await prisma.fidic_fundo_carteira_n_cedentes.count({
-     *   where: {
-     *     // ... the filter for the Fidic_fundo_carteira_n_cedentes we want to count
-     *   }
-     * })
-    **/
-    count<T extends fidic_fundo_carteira_n_cedentesCountArgs>(
-      args?: Subset<T, fidic_fundo_carteira_n_cedentesCountArgs>,
-    ): PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], Fidic_fundo_carteira_n_cedentesCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Fidic_fundo_carteira_n_cedentes.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Fidic_fundo_carteira_n_cedentesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends Fidic_fundo_carteira_n_cedentesAggregateArgs>(args: Subset<T, Fidic_fundo_carteira_n_cedentesAggregateArgs>): PrismaPromise<GetFidic_fundo_carteira_n_cedentesAggregateType<T>>
-
-    /**
-     * Group by Fidic_fundo_carteira_n_cedentes.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Fidic_fundo_carteira_n_cedentesGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends Fidic_fundo_carteira_n_cedentesGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: Fidic_fundo_carteira_n_cedentesGroupByArgs['orderBy'] }
-        : { orderBy?: Fidic_fundo_carteira_n_cedentesGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, Fidic_fundo_carteira_n_cedentesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFidic_fundo_carteira_n_cedentesGroupByPayload<T> : PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for fidic_fundo_carteira_n_cedentes.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__fidic_fundo_carteira_n_cedentesClient<T, Null = never> implements PrismaPromise<T> {
-    [prisma]: true;
-    private readonly _dmmf;
-    private readonly _fetcher;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-    readonly [Symbol.toStringTag]: 'PrismaClientPromise';
-
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * fidic_fundo_carteira_n_cedentes base type for findUnique actions
-   */
-  export type fidic_fundo_carteira_n_cedentesFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the fidic_fundo_carteira_n_cedentes
-     * 
-    **/
-    select?: fidic_fundo_carteira_n_cedentesSelect | null
-    /**
-     * Filter, which fidic_fundo_carteira_n_cedentes to fetch.
-     * 
-    **/
-    where: fidic_fundo_carteira_n_cedentesWhereUniqueInput
-  }
-
-  /**
-   * fidic_fundo_carteira_n_cedentes: findUnique
-   */
-  export interface fidic_fundo_carteira_n_cedentesFindUniqueArgs extends fidic_fundo_carteira_n_cedentesFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * fidic_fundo_carteira_n_cedentes base type for findFirst actions
-   */
-  export type fidic_fundo_carteira_n_cedentesFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the fidic_fundo_carteira_n_cedentes
-     * 
-    **/
-    select?: fidic_fundo_carteira_n_cedentesSelect | null
-    /**
-     * Filter, which fidic_fundo_carteira_n_cedentes to fetch.
-     * 
-    **/
-    where?: fidic_fundo_carteira_n_cedentesWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of fidic_fundo_carteira_n_cedentes to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<fidic_fundo_carteira_n_cedentesOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for fidic_fundo_carteira_n_cedentes.
-     * 
-    **/
-    cursor?: fidic_fundo_carteira_n_cedentesWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` fidic_fundo_carteira_n_cedentes from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` fidic_fundo_carteira_n_cedentes.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of fidic_fundo_carteira_n_cedentes.
-     * 
-    **/
-    distinct?: Enumerable<Fidic_fundo_carteira_n_cedentesScalarFieldEnum>
-  }
-
-  /**
-   * fidic_fundo_carteira_n_cedentes: findFirst
-   */
-  export interface fidic_fundo_carteira_n_cedentesFindFirstArgs extends fidic_fundo_carteira_n_cedentesFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * fidic_fundo_carteira_n_cedentes findMany
-   */
-  export type fidic_fundo_carteira_n_cedentesFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the fidic_fundo_carteira_n_cedentes
-     * 
-    **/
-    select?: fidic_fundo_carteira_n_cedentesSelect | null
-    /**
-     * Filter, which fidic_fundo_carteira_n_cedentes to fetch.
-     * 
-    **/
-    where?: fidic_fundo_carteira_n_cedentesWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of fidic_fundo_carteira_n_cedentes to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<fidic_fundo_carteira_n_cedentesOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing fidic_fundo_carteira_n_cedentes.
-     * 
-    **/
-    cursor?: fidic_fundo_carteira_n_cedentesWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` fidic_fundo_carteira_n_cedentes from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` fidic_fundo_carteira_n_cedentes.
-     * 
-    **/
-    skip?: number
-    distinct?: Enumerable<Fidic_fundo_carteira_n_cedentesScalarFieldEnum>
-  }
-
-
-  /**
-   * fidic_fundo_carteira_n_cedentes create
-   */
-  export type fidic_fundo_carteira_n_cedentesCreateArgs = {
-    /**
-     * Select specific fields to fetch from the fidic_fundo_carteira_n_cedentes
-     * 
-    **/
-    select?: fidic_fundo_carteira_n_cedentesSelect | null
-    /**
-     * The data needed to create a fidic_fundo_carteira_n_cedentes.
-     * 
-    **/
-    data?: XOR<fidic_fundo_carteira_n_cedentesCreateInput, fidic_fundo_carteira_n_cedentesUncheckedCreateInput>
-  }
-
-
-  /**
-   * fidic_fundo_carteira_n_cedentes createMany
-   */
-  export type fidic_fundo_carteira_n_cedentesCreateManyArgs = {
-    /**
-     * The data used to create many fidic_fundo_carteira_n_cedentes.
-     * 
-    **/
-    data: Enumerable<fidic_fundo_carteira_n_cedentesCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * fidic_fundo_carteira_n_cedentes update
-   */
-  export type fidic_fundo_carteira_n_cedentesUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the fidic_fundo_carteira_n_cedentes
-     * 
-    **/
-    select?: fidic_fundo_carteira_n_cedentesSelect | null
-    /**
-     * The data needed to update a fidic_fundo_carteira_n_cedentes.
-     * 
-    **/
-    data: XOR<fidic_fundo_carteira_n_cedentesUpdateInput, fidic_fundo_carteira_n_cedentesUncheckedUpdateInput>
-    /**
-     * Choose, which fidic_fundo_carteira_n_cedentes to update.
-     * 
-    **/
-    where: fidic_fundo_carteira_n_cedentesWhereUniqueInput
-  }
-
-
-  /**
-   * fidic_fundo_carteira_n_cedentes updateMany
-   */
-  export type fidic_fundo_carteira_n_cedentesUpdateManyArgs = {
-    /**
-     * The data used to update fidic_fundo_carteira_n_cedentes.
-     * 
-    **/
-    data: XOR<fidic_fundo_carteira_n_cedentesUpdateManyMutationInput, fidic_fundo_carteira_n_cedentesUncheckedUpdateManyInput>
-    /**
-     * Filter which fidic_fundo_carteira_n_cedentes to update
-     * 
-    **/
-    where?: fidic_fundo_carteira_n_cedentesWhereInput
-  }
-
-
-  /**
-   * fidic_fundo_carteira_n_cedentes upsert
-   */
-  export type fidic_fundo_carteira_n_cedentesUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the fidic_fundo_carteira_n_cedentes
-     * 
-    **/
-    select?: fidic_fundo_carteira_n_cedentesSelect | null
-    /**
-     * The filter to search for the fidic_fundo_carteira_n_cedentes to update in case it exists.
-     * 
-    **/
-    where: fidic_fundo_carteira_n_cedentesWhereUniqueInput
-    /**
-     * In case the fidic_fundo_carteira_n_cedentes found by the `where` argument doesn't exist, create a new fidic_fundo_carteira_n_cedentes with this data.
-     * 
-    **/
-    create: XOR<fidic_fundo_carteira_n_cedentesCreateInput, fidic_fundo_carteira_n_cedentesUncheckedCreateInput>
-    /**
-     * In case the fidic_fundo_carteira_n_cedentes was found with the provided `where` argument, update it with this data.
-     * 
-    **/
-    update: XOR<fidic_fundo_carteira_n_cedentesUpdateInput, fidic_fundo_carteira_n_cedentesUncheckedUpdateInput>
-  }
-
-
-  /**
-   * fidic_fundo_carteira_n_cedentes delete
-   */
-  export type fidic_fundo_carteira_n_cedentesDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the fidic_fundo_carteira_n_cedentes
-     * 
-    **/
-    select?: fidic_fundo_carteira_n_cedentesSelect | null
-    /**
-     * Filter which fidic_fundo_carteira_n_cedentes to delete.
-     * 
-    **/
-    where: fidic_fundo_carteira_n_cedentesWhereUniqueInput
-  }
-
-
-  /**
-   * fidic_fundo_carteira_n_cedentes deleteMany
-   */
-  export type fidic_fundo_carteira_n_cedentesDeleteManyArgs = {
-    /**
-     * Filter which fidic_fundo_carteira_n_cedentes to delete
-     * 
-    **/
-    where?: fidic_fundo_carteira_n_cedentesWhereInput
-  }
-
-
-  /**
-   * fidic_fundo_carteira_n_cedentes: findUniqueOrThrow
-   */
-  export type fidic_fundo_carteira_n_cedentesFindUniqueOrThrowArgs = fidic_fundo_carteira_n_cedentesFindUniqueArgsBase
-      
-
-  /**
-   * fidic_fundo_carteira_n_cedentes: findFirstOrThrow
-   */
-  export type fidic_fundo_carteira_n_cedentesFindFirstOrThrowArgs = fidic_fundo_carteira_n_cedentesFindFirstArgsBase
-      
-
-  /**
-   * fidic_fundo_carteira_n_cedentes without action
-   */
-  export type fidic_fundo_carteira_n_cedentesArgs = {
-    /**
-     * Select specific fields to fetch from the fidic_fundo_carteira_n_cedentes
-     * 
-    **/
-    select?: fidic_fundo_carteira_n_cedentesSelect | null
-  }
-
-
-
-  /**
    * Model fidic_fundo_x_usuario
    */
 
@@ -10674,13 +9916,11 @@ export namespace Prisma {
     usuario?: boolean
     fidic?: boolean
     fidic_fundo?: boolean | fidic_fundoArgs
-    usuario_fidic_fundo_x_usuarioTousuario?: boolean | usuarioArgs
   }
 
 
   export type fidic_fundo_x_usuarioInclude = {
     fidic_fundo?: boolean | fidic_fundoArgs
-    usuario_fidic_fundo_x_usuarioTousuario?: boolean | usuarioArgs
   } 
 
   export type fidic_fundo_x_usuarioGetPayload<S extends boolean | null | undefined | fidic_fundo_x_usuarioArgs, U = keyof S> =
@@ -10690,14 +9930,12 @@ export namespace Prisma {
     S extends { include: any } & (fidic_fundo_x_usuarioArgs | fidic_fundo_x_usuarioFindManyArgs)
     ? fidic_fundo_x_usuario  & {
     [P in TrueKeys<S['include']>]:
-        P extends 'fidic_fundo' ? fidic_fundoGetPayload<Exclude<S['include'], undefined | null>[P]> :
-        P extends 'usuario_fidic_fundo_x_usuarioTousuario' ? usuarioGetPayload<Exclude<S['include'], undefined | null>[P]> | null :  never
+        P extends 'fidic_fundo' ? fidic_fundoGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
   } 
     : S extends { select: any } & (fidic_fundo_x_usuarioArgs | fidic_fundo_x_usuarioFindManyArgs)
       ? {
     [P in TrueKeys<S['select']>]:
-        P extends 'fidic_fundo' ? fidic_fundoGetPayload<Exclude<S['select'], undefined | null>[P]> :
-        P extends 'usuario_fidic_fundo_x_usuarioTousuario' ? usuarioGetPayload<Exclude<S['select'], undefined | null>[P]> | null :  P extends keyof fidic_fundo_x_usuario ? fidic_fundo_x_usuario[P] : never
+        P extends 'fidic_fundo' ? fidic_fundoGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof fidic_fundo_x_usuario ? fidic_fundo_x_usuario[P] : never
   } 
       : fidic_fundo_x_usuario
 
@@ -11073,8 +10311,6 @@ export namespace Prisma {
 
     fidic_fundo<T extends fidic_fundoArgs= {}>(args?: Subset<T, fidic_fundoArgs>): Prisma__fidic_fundoClient<fidic_fundoGetPayload<T> | Null>;
 
-    usuario_fidic_fundo_x_usuarioTousuario<T extends usuarioArgs= {}>(args?: Subset<T, usuarioArgs>): Prisma__usuarioClient<usuarioGetPayload<T> | Null>;
-
     private get _document();
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -11444,44 +10680,54 @@ export namespace Prisma {
 
   export type OrganogramaAvgAggregateOutputType = {
     id: number | null
+    organograma_id: number | null
   }
 
   export type OrganogramaSumAggregateOutputType = {
     id: number | null
+    organograma_id: number | null
   }
 
   export type OrganogramaMinAggregateOutputType = {
     id: number | null
+    organograma_id: number | null
   }
 
   export type OrganogramaMaxAggregateOutputType = {
     id: number | null
+    organograma_id: number | null
   }
 
   export type OrganogramaCountAggregateOutputType = {
     id: number
+    organograma_id: number
     _all: number
   }
 
 
   export type OrganogramaAvgAggregateInputType = {
     id?: true
+    organograma_id?: true
   }
 
   export type OrganogramaSumAggregateInputType = {
     id?: true
+    organograma_id?: true
   }
 
   export type OrganogramaMinAggregateInputType = {
     id?: true
+    organograma_id?: true
   }
 
   export type OrganogramaMaxAggregateInputType = {
     id?: true
+    organograma_id?: true
   }
 
   export type OrganogramaCountAggregateInputType = {
     id?: true
+    organograma_id?: true
     _all?: true
   }
 
@@ -11579,6 +10825,7 @@ export namespace Prisma {
 
   export type OrganogramaGroupByOutputType = {
     id: number
+    organograma_id: number
     _count: OrganogramaCountAggregateOutputType | null
     _avg: OrganogramaAvgAggregateOutputType | null
     _sum: OrganogramaSumAggregateOutputType | null
@@ -11602,19 +10849,40 @@ export namespace Prisma {
 
   export type organogramaSelect = {
     id?: boolean
+    organograma_id?: boolean
+    organograma_tipo?: boolean | organograma_tipoArgs
+    organograma_x_regiao_atuacao?: boolean | organograma_x_regiao_atuacaoFindManyArgs
+    organograma_x_usuario?: boolean | organograma_x_usuarioFindManyArgs
+    _count?: boolean | OrganogramaCountOutputTypeArgs
   }
 
+
+  export type organogramaInclude = {
+    organograma_tipo?: boolean | organograma_tipoArgs
+    organograma_x_regiao_atuacao?: boolean | organograma_x_regiao_atuacaoFindManyArgs
+    organograma_x_usuario?: boolean | organograma_x_usuarioFindManyArgs
+    _count?: boolean | OrganogramaCountOutputTypeArgs
+  } 
 
   export type organogramaGetPayload<S extends boolean | null | undefined | organogramaArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? organograma :
     S extends undefined ? never :
     S extends { include: any } & (organogramaArgs | organogramaFindManyArgs)
-    ? organograma 
+    ? organograma  & {
+    [P in TrueKeys<S['include']>]:
+        P extends 'organograma_tipo' ? organograma_tipoGetPayload<Exclude<S['include'], undefined | null>[P]> :
+        P extends 'organograma_x_regiao_atuacao' ? Array < organograma_x_regiao_atuacaoGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
+        P extends 'organograma_x_usuario' ? Array < organograma_x_usuarioGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
+        P extends '_count' ? OrganogramaCountOutputTypeGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
+  } 
     : S extends { select: any } & (organogramaArgs | organogramaFindManyArgs)
       ? {
     [P in TrueKeys<S['select']>]:
-    P extends keyof organograma ? organograma[P] : never
+        P extends 'organograma_tipo' ? organograma_tipoGetPayload<Exclude<S['select'], undefined | null>[P]> :
+        P extends 'organograma_x_regiao_atuacao' ? Array < organograma_x_regiao_atuacaoGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
+        P extends 'organograma_x_usuario' ? Array < organograma_x_usuarioGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
+        P extends '_count' ? OrganogramaCountOutputTypeGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof organograma ? organograma[P] : never
   } 
       : organograma
 
@@ -11988,6 +11256,11 @@ export namespace Prisma {
     constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
 
+    organograma_tipo<T extends organograma_tipoArgs= {}>(args?: Subset<T, organograma_tipoArgs>): Prisma__organograma_tipoClient<organograma_tipoGetPayload<T> | Null>;
+
+    organograma_x_regiao_atuacao<T extends organograma_x_regiao_atuacaoFindManyArgs= {}>(args?: Subset<T, organograma_x_regiao_atuacaoFindManyArgs>): PrismaPromise<Array<organograma_x_regiao_atuacaoGetPayload<T>>| Null>;
+
+    organograma_x_usuario<T extends organograma_x_usuarioFindManyArgs= {}>(args?: Subset<T, organograma_x_usuarioFindManyArgs>): PrismaPromise<Array<organograma_x_usuarioGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -12026,6 +11299,11 @@ export namespace Prisma {
     **/
     select?: organogramaSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organogramaInclude | null
+    /**
      * Filter, which organograma to fetch.
      * 
     **/
@@ -12053,6 +11331,11 @@ export namespace Prisma {
      * 
     **/
     select?: organogramaSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organogramaInclude | null
     /**
      * Filter, which organograma to fetch.
      * 
@@ -12117,6 +11400,11 @@ export namespace Prisma {
     **/
     select?: organogramaSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organogramaInclude | null
+    /**
      * Filter, which organogramas to fetch.
      * 
     **/
@@ -12163,10 +11451,15 @@ export namespace Prisma {
     **/
     select?: organogramaSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organogramaInclude | null
+    /**
      * The data needed to create a organograma.
      * 
     **/
-    data?: XOR<organogramaCreateInput, organogramaUncheckedCreateInput>
+    data: XOR<organogramaCreateInput, organogramaUncheckedCreateInput>
   }
 
 
@@ -12192,6 +11485,11 @@ export namespace Prisma {
      * 
     **/
     select?: organogramaSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organogramaInclude | null
     /**
      * The data needed to update a organograma.
      * 
@@ -12232,6 +11530,11 @@ export namespace Prisma {
     **/
     select?: organogramaSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organogramaInclude | null
+    /**
      * The filter to search for the organograma to update in case it exists.
      * 
     **/
@@ -12258,6 +11561,11 @@ export namespace Prisma {
      * 
     **/
     select?: organogramaSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organogramaInclude | null
     /**
      * Filter which organograma to delete.
      * 
@@ -12299,6 +11607,11 @@ export namespace Prisma {
      * 
     **/
     select?: organogramaSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organogramaInclude | null
   }
 
 
@@ -12484,19 +11797,31 @@ export namespace Prisma {
   export type organograma_tipoSelect = {
     id?: boolean
     nome?: boolean
+    organograma?: boolean | organogramaFindManyArgs
+    _count?: boolean | Organograma_tipoCountOutputTypeArgs
   }
 
+
+  export type organograma_tipoInclude = {
+    organograma?: boolean | organogramaFindManyArgs
+    _count?: boolean | Organograma_tipoCountOutputTypeArgs
+  } 
 
   export type organograma_tipoGetPayload<S extends boolean | null | undefined | organograma_tipoArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? organograma_tipo :
     S extends undefined ? never :
     S extends { include: any } & (organograma_tipoArgs | organograma_tipoFindManyArgs)
-    ? organograma_tipo 
+    ? organograma_tipo  & {
+    [P in TrueKeys<S['include']>]:
+        P extends 'organograma' ? Array < organogramaGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
+        P extends '_count' ? Organograma_tipoCountOutputTypeGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
+  } 
     : S extends { select: any } & (organograma_tipoArgs | organograma_tipoFindManyArgs)
       ? {
     [P in TrueKeys<S['select']>]:
-    P extends keyof organograma_tipo ? organograma_tipo[P] : never
+        P extends 'organograma' ? Array < organogramaGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
+        P extends '_count' ? Organograma_tipoCountOutputTypeGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof organograma_tipo ? organograma_tipo[P] : never
   } 
       : organograma_tipo
 
@@ -12870,6 +12195,7 @@ export namespace Prisma {
     constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
 
+    organograma<T extends organogramaFindManyArgs= {}>(args?: Subset<T, organogramaFindManyArgs>): PrismaPromise<Array<organogramaGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -12908,6 +12234,11 @@ export namespace Prisma {
     **/
     select?: organograma_tipoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_tipoInclude | null
+    /**
      * Filter, which organograma_tipo to fetch.
      * 
     **/
@@ -12935,6 +12266,11 @@ export namespace Prisma {
      * 
     **/
     select?: organograma_tipoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_tipoInclude | null
     /**
      * Filter, which organograma_tipo to fetch.
      * 
@@ -12999,6 +12335,11 @@ export namespace Prisma {
     **/
     select?: organograma_tipoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_tipoInclude | null
+    /**
      * Filter, which organograma_tipos to fetch.
      * 
     **/
@@ -13045,6 +12386,11 @@ export namespace Prisma {
     **/
     select?: organograma_tipoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_tipoInclude | null
+    /**
      * The data needed to create a organograma_tipo.
      * 
     **/
@@ -13074,6 +12420,11 @@ export namespace Prisma {
      * 
     **/
     select?: organograma_tipoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_tipoInclude | null
     /**
      * The data needed to update a organograma_tipo.
      * 
@@ -13114,6 +12465,11 @@ export namespace Prisma {
     **/
     select?: organograma_tipoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_tipoInclude | null
+    /**
      * The filter to search for the organograma_tipo to update in case it exists.
      * 
     **/
@@ -13140,6 +12496,11 @@ export namespace Prisma {
      * 
     **/
     select?: organograma_tipoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_tipoInclude | null
     /**
      * Filter which organograma_tipo to delete.
      * 
@@ -13181,904 +12542,11 @@ export namespace Prisma {
      * 
     **/
     select?: organograma_tipoSelect | null
-  }
-
-
-
-  /**
-   * Model organograma_x_regiao
-   */
-
-
-  export type AggregateOrganograma_x_regiao = {
-    _count: Organograma_x_regiaoCountAggregateOutputType | null
-    _avg: Organograma_x_regiaoAvgAggregateOutputType | null
-    _sum: Organograma_x_regiaoSumAggregateOutputType | null
-    _min: Organograma_x_regiaoMinAggregateOutputType | null
-    _max: Organograma_x_regiaoMaxAggregateOutputType | null
-  }
-
-  export type Organograma_x_regiaoAvgAggregateOutputType = {
-    id: number | null
-    organograma_id: number | null
-    regiao_id: number | null
-  }
-
-  export type Organograma_x_regiaoSumAggregateOutputType = {
-    id: number | null
-    organograma_id: number | null
-    regiao_id: number | null
-  }
-
-  export type Organograma_x_regiaoMinAggregateOutputType = {
-    id: number | null
-    organograma_id: number | null
-    regiao_id: number | null
-  }
-
-  export type Organograma_x_regiaoMaxAggregateOutputType = {
-    id: number | null
-    organograma_id: number | null
-    regiao_id: number | null
-  }
-
-  export type Organograma_x_regiaoCountAggregateOutputType = {
-    id: number
-    organograma_id: number
-    regiao_id: number
-    _all: number
-  }
-
-
-  export type Organograma_x_regiaoAvgAggregateInputType = {
-    id?: true
-    organograma_id?: true
-    regiao_id?: true
-  }
-
-  export type Organograma_x_regiaoSumAggregateInputType = {
-    id?: true
-    organograma_id?: true
-    regiao_id?: true
-  }
-
-  export type Organograma_x_regiaoMinAggregateInputType = {
-    id?: true
-    organograma_id?: true
-    regiao_id?: true
-  }
-
-  export type Organograma_x_regiaoMaxAggregateInputType = {
-    id?: true
-    organograma_id?: true
-    regiao_id?: true
-  }
-
-  export type Organograma_x_regiaoCountAggregateInputType = {
-    id?: true
-    organograma_id?: true
-    regiao_id?: true
-    _all?: true
-  }
-
-  export type Organograma_x_regiaoAggregateArgs = {
     /**
-     * Filter which organograma_x_regiao to aggregate.
+     * Choose, which related nodes to fetch as well.
      * 
     **/
-    where?: organograma_x_regiaoWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of organograma_x_regiaos to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<organograma_x_regiaoOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     * 
-    **/
-    cursor?: organograma_x_regiaoWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` organograma_x_regiaos from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` organograma_x_regiaos.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned organograma_x_regiaos
-    **/
-    _count?: true | Organograma_x_regiaoCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Organograma_x_regiaoAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Organograma_x_regiaoSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: Organograma_x_regiaoMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: Organograma_x_regiaoMaxAggregateInputType
-  }
-
-  export type GetOrganograma_x_regiaoAggregateType<T extends Organograma_x_regiaoAggregateArgs> = {
-        [P in keyof T & keyof AggregateOrganograma_x_regiao]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateOrganograma_x_regiao[P]>
-      : GetScalarType<T[P], AggregateOrganograma_x_regiao[P]>
-  }
-
-
-
-
-  export type Organograma_x_regiaoGroupByArgs = {
-    where?: organograma_x_regiaoWhereInput
-    orderBy?: Enumerable<organograma_x_regiaoOrderByWithAggregationInput>
-    by: Array<Organograma_x_regiaoScalarFieldEnum>
-    having?: organograma_x_regiaoScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: Organograma_x_regiaoCountAggregateInputType | true
-    _avg?: Organograma_x_regiaoAvgAggregateInputType
-    _sum?: Organograma_x_regiaoSumAggregateInputType
-    _min?: Organograma_x_regiaoMinAggregateInputType
-    _max?: Organograma_x_regiaoMaxAggregateInputType
-  }
-
-
-  export type Organograma_x_regiaoGroupByOutputType = {
-    id: number
-    organograma_id: number
-    regiao_id: number
-    _count: Organograma_x_regiaoCountAggregateOutputType | null
-    _avg: Organograma_x_regiaoAvgAggregateOutputType | null
-    _sum: Organograma_x_regiaoSumAggregateOutputType | null
-    _min: Organograma_x_regiaoMinAggregateOutputType | null
-    _max: Organograma_x_regiaoMaxAggregateOutputType | null
-  }
-
-  type GetOrganograma_x_regiaoGroupByPayload<T extends Organograma_x_regiaoGroupByArgs> = PrismaPromise<
-    Array<
-      PickArray<Organograma_x_regiaoGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof Organograma_x_regiaoGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], Organograma_x_regiaoGroupByOutputType[P]>
-            : GetScalarType<T[P], Organograma_x_regiaoGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type organograma_x_regiaoSelect = {
-    id?: boolean
-    organograma_id?: boolean
-    regiao_id?: boolean
-  }
-
-
-  export type organograma_x_regiaoGetPayload<S extends boolean | null | undefined | organograma_x_regiaoArgs, U = keyof S> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? organograma_x_regiao :
-    S extends undefined ? never :
-    S extends { include: any } & (organograma_x_regiaoArgs | organograma_x_regiaoFindManyArgs)
-    ? organograma_x_regiao 
-    : S extends { select: any } & (organograma_x_regiaoArgs | organograma_x_regiaoFindManyArgs)
-      ? {
-    [P in TrueKeys<S['select']>]:
-    P extends keyof organograma_x_regiao ? organograma_x_regiao[P] : never
-  } 
-      : organograma_x_regiao
-
-
-  type organograma_x_regiaoCountArgs = Merge<
-    Omit<organograma_x_regiaoFindManyArgs, 'select' | 'include'> & {
-      select?: Organograma_x_regiaoCountAggregateInputType | true
-    }
-  >
-
-  export interface organograma_x_regiaoDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-    /**
-     * Find zero or one Organograma_x_regiao that matches the filter.
-     * @param {organograma_x_regiaoFindUniqueArgs} args - Arguments to find a Organograma_x_regiao
-     * @example
-     * // Get one Organograma_x_regiao
-     * const organograma_x_regiao = await prisma.organograma_x_regiao.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends organograma_x_regiaoFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, organograma_x_regiaoFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'organograma_x_regiao'> extends True ? Prisma__organograma_x_regiaoClient<organograma_x_regiaoGetPayload<T>> : Prisma__organograma_x_regiaoClient<organograma_x_regiaoGetPayload<T> | null, null>
-
-    /**
-     * Find the first Organograma_x_regiao that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {organograma_x_regiaoFindFirstArgs} args - Arguments to find a Organograma_x_regiao
-     * @example
-     * // Get one Organograma_x_regiao
-     * const organograma_x_regiao = await prisma.organograma_x_regiao.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends organograma_x_regiaoFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, organograma_x_regiaoFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'organograma_x_regiao'> extends True ? Prisma__organograma_x_regiaoClient<organograma_x_regiaoGetPayload<T>> : Prisma__organograma_x_regiaoClient<organograma_x_regiaoGetPayload<T> | null, null>
-
-    /**
-     * Find zero or more Organograma_x_regiaos that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {organograma_x_regiaoFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Organograma_x_regiaos
-     * const organograma_x_regiaos = await prisma.organograma_x_regiao.findMany()
-     * 
-     * // Get first 10 Organograma_x_regiaos
-     * const organograma_x_regiaos = await prisma.organograma_x_regiao.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const organograma_x_regiaoWithIdOnly = await prisma.organograma_x_regiao.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends organograma_x_regiaoFindManyArgs>(
-      args?: SelectSubset<T, organograma_x_regiaoFindManyArgs>
-    ): PrismaPromise<Array<organograma_x_regiaoGetPayload<T>>>
-
-    /**
-     * Create a Organograma_x_regiao.
-     * @param {organograma_x_regiaoCreateArgs} args - Arguments to create a Organograma_x_regiao.
-     * @example
-     * // Create one Organograma_x_regiao
-     * const Organograma_x_regiao = await prisma.organograma_x_regiao.create({
-     *   data: {
-     *     // ... data to create a Organograma_x_regiao
-     *   }
-     * })
-     * 
-    **/
-    create<T extends organograma_x_regiaoCreateArgs>(
-      args: SelectSubset<T, organograma_x_regiaoCreateArgs>
-    ): Prisma__organograma_x_regiaoClient<organograma_x_regiaoGetPayload<T>>
-
-    /**
-     * Create many Organograma_x_regiaos.
-     *     @param {organograma_x_regiaoCreateManyArgs} args - Arguments to create many Organograma_x_regiaos.
-     *     @example
-     *     // Create many Organograma_x_regiaos
-     *     const organograma_x_regiao = await prisma.organograma_x_regiao.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends organograma_x_regiaoCreateManyArgs>(
-      args?: SelectSubset<T, organograma_x_regiaoCreateManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a Organograma_x_regiao.
-     * @param {organograma_x_regiaoDeleteArgs} args - Arguments to delete one Organograma_x_regiao.
-     * @example
-     * // Delete one Organograma_x_regiao
-     * const Organograma_x_regiao = await prisma.organograma_x_regiao.delete({
-     *   where: {
-     *     // ... filter to delete one Organograma_x_regiao
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends organograma_x_regiaoDeleteArgs>(
-      args: SelectSubset<T, organograma_x_regiaoDeleteArgs>
-    ): Prisma__organograma_x_regiaoClient<organograma_x_regiaoGetPayload<T>>
-
-    /**
-     * Update one Organograma_x_regiao.
-     * @param {organograma_x_regiaoUpdateArgs} args - Arguments to update one Organograma_x_regiao.
-     * @example
-     * // Update one Organograma_x_regiao
-     * const organograma_x_regiao = await prisma.organograma_x_regiao.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends organograma_x_regiaoUpdateArgs>(
-      args: SelectSubset<T, organograma_x_regiaoUpdateArgs>
-    ): Prisma__organograma_x_regiaoClient<organograma_x_regiaoGetPayload<T>>
-
-    /**
-     * Delete zero or more Organograma_x_regiaos.
-     * @param {organograma_x_regiaoDeleteManyArgs} args - Arguments to filter Organograma_x_regiaos to delete.
-     * @example
-     * // Delete a few Organograma_x_regiaos
-     * const { count } = await prisma.organograma_x_regiao.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends organograma_x_regiaoDeleteManyArgs>(
-      args?: SelectSubset<T, organograma_x_regiaoDeleteManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Organograma_x_regiaos.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {organograma_x_regiaoUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Organograma_x_regiaos
-     * const organograma_x_regiao = await prisma.organograma_x_regiao.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends organograma_x_regiaoUpdateManyArgs>(
-      args: SelectSubset<T, organograma_x_regiaoUpdateManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one Organograma_x_regiao.
-     * @param {organograma_x_regiaoUpsertArgs} args - Arguments to update or create a Organograma_x_regiao.
-     * @example
-     * // Update or create a Organograma_x_regiao
-     * const organograma_x_regiao = await prisma.organograma_x_regiao.upsert({
-     *   create: {
-     *     // ... data to create a Organograma_x_regiao
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Organograma_x_regiao we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends organograma_x_regiaoUpsertArgs>(
-      args: SelectSubset<T, organograma_x_regiaoUpsertArgs>
-    ): Prisma__organograma_x_regiaoClient<organograma_x_regiaoGetPayload<T>>
-
-    /**
-     * Find one Organograma_x_regiao that matches the filter or throw
-     * `NotFoundError` if no matches were found.
-     * @param {organograma_x_regiaoFindUniqueOrThrowArgs} args - Arguments to find a Organograma_x_regiao
-     * @example
-     * // Get one Organograma_x_regiao
-     * const organograma_x_regiao = await prisma.organograma_x_regiao.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends organograma_x_regiaoFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, organograma_x_regiaoFindUniqueOrThrowArgs>
-    ): Prisma__organograma_x_regiaoClient<organograma_x_regiaoGetPayload<T>>
-
-    /**
-     * Find the first Organograma_x_regiao that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {organograma_x_regiaoFindFirstOrThrowArgs} args - Arguments to find a Organograma_x_regiao
-     * @example
-     * // Get one Organograma_x_regiao
-     * const organograma_x_regiao = await prisma.organograma_x_regiao.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends organograma_x_regiaoFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, organograma_x_regiaoFindFirstOrThrowArgs>
-    ): Prisma__organograma_x_regiaoClient<organograma_x_regiaoGetPayload<T>>
-
-    /**
-     * Count the number of Organograma_x_regiaos.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {organograma_x_regiaoCountArgs} args - Arguments to filter Organograma_x_regiaos to count.
-     * @example
-     * // Count the number of Organograma_x_regiaos
-     * const count = await prisma.organograma_x_regiao.count({
-     *   where: {
-     *     // ... the filter for the Organograma_x_regiaos we want to count
-     *   }
-     * })
-    **/
-    count<T extends organograma_x_regiaoCountArgs>(
-      args?: Subset<T, organograma_x_regiaoCountArgs>,
-    ): PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], Organograma_x_regiaoCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Organograma_x_regiao.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Organograma_x_regiaoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends Organograma_x_regiaoAggregateArgs>(args: Subset<T, Organograma_x_regiaoAggregateArgs>): PrismaPromise<GetOrganograma_x_regiaoAggregateType<T>>
-
-    /**
-     * Group by Organograma_x_regiao.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Organograma_x_regiaoGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends Organograma_x_regiaoGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: Organograma_x_regiaoGroupByArgs['orderBy'] }
-        : { orderBy?: Organograma_x_regiaoGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, Organograma_x_regiaoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOrganograma_x_regiaoGroupByPayload<T> : PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for organograma_x_regiao.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__organograma_x_regiaoClient<T, Null = never> implements PrismaPromise<T> {
-    [prisma]: true;
-    private readonly _dmmf;
-    private readonly _fetcher;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-    readonly [Symbol.toStringTag]: 'PrismaClientPromise';
-
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * organograma_x_regiao base type for findUnique actions
-   */
-  export type organograma_x_regiaoFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the organograma_x_regiao
-     * 
-    **/
-    select?: organograma_x_regiaoSelect | null
-    /**
-     * Filter, which organograma_x_regiao to fetch.
-     * 
-    **/
-    where: organograma_x_regiaoWhereUniqueInput
-  }
-
-  /**
-   * organograma_x_regiao: findUnique
-   */
-  export interface organograma_x_regiaoFindUniqueArgs extends organograma_x_regiaoFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * organograma_x_regiao base type for findFirst actions
-   */
-  export type organograma_x_regiaoFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the organograma_x_regiao
-     * 
-    **/
-    select?: organograma_x_regiaoSelect | null
-    /**
-     * Filter, which organograma_x_regiao to fetch.
-     * 
-    **/
-    where?: organograma_x_regiaoWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of organograma_x_regiaos to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<organograma_x_regiaoOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for organograma_x_regiaos.
-     * 
-    **/
-    cursor?: organograma_x_regiaoWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` organograma_x_regiaos from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` organograma_x_regiaos.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of organograma_x_regiaos.
-     * 
-    **/
-    distinct?: Enumerable<Organograma_x_regiaoScalarFieldEnum>
-  }
-
-  /**
-   * organograma_x_regiao: findFirst
-   */
-  export interface organograma_x_regiaoFindFirstArgs extends organograma_x_regiaoFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * organograma_x_regiao findMany
-   */
-  export type organograma_x_regiaoFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the organograma_x_regiao
-     * 
-    **/
-    select?: organograma_x_regiaoSelect | null
-    /**
-     * Filter, which organograma_x_regiaos to fetch.
-     * 
-    **/
-    where?: organograma_x_regiaoWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of organograma_x_regiaos to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<organograma_x_regiaoOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing organograma_x_regiaos.
-     * 
-    **/
-    cursor?: organograma_x_regiaoWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` organograma_x_regiaos from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` organograma_x_regiaos.
-     * 
-    **/
-    skip?: number
-    distinct?: Enumerable<Organograma_x_regiaoScalarFieldEnum>
-  }
-
-
-  /**
-   * organograma_x_regiao create
-   */
-  export type organograma_x_regiaoCreateArgs = {
-    /**
-     * Select specific fields to fetch from the organograma_x_regiao
-     * 
-    **/
-    select?: organograma_x_regiaoSelect | null
-    /**
-     * The data needed to create a organograma_x_regiao.
-     * 
-    **/
-    data: XOR<organograma_x_regiaoCreateInput, organograma_x_regiaoUncheckedCreateInput>
-  }
-
-
-  /**
-   * organograma_x_regiao createMany
-   */
-  export type organograma_x_regiaoCreateManyArgs = {
-    /**
-     * The data used to create many organograma_x_regiaos.
-     * 
-    **/
-    data: Enumerable<organograma_x_regiaoCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * organograma_x_regiao update
-   */
-  export type organograma_x_regiaoUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the organograma_x_regiao
-     * 
-    **/
-    select?: organograma_x_regiaoSelect | null
-    /**
-     * The data needed to update a organograma_x_regiao.
-     * 
-    **/
-    data: XOR<organograma_x_regiaoUpdateInput, organograma_x_regiaoUncheckedUpdateInput>
-    /**
-     * Choose, which organograma_x_regiao to update.
-     * 
-    **/
-    where: organograma_x_regiaoWhereUniqueInput
-  }
-
-
-  /**
-   * organograma_x_regiao updateMany
-   */
-  export type organograma_x_regiaoUpdateManyArgs = {
-    /**
-     * The data used to update organograma_x_regiaos.
-     * 
-    **/
-    data: XOR<organograma_x_regiaoUpdateManyMutationInput, organograma_x_regiaoUncheckedUpdateManyInput>
-    /**
-     * Filter which organograma_x_regiaos to update
-     * 
-    **/
-    where?: organograma_x_regiaoWhereInput
-  }
-
-
-  /**
-   * organograma_x_regiao upsert
-   */
-  export type organograma_x_regiaoUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the organograma_x_regiao
-     * 
-    **/
-    select?: organograma_x_regiaoSelect | null
-    /**
-     * The filter to search for the organograma_x_regiao to update in case it exists.
-     * 
-    **/
-    where: organograma_x_regiaoWhereUniqueInput
-    /**
-     * In case the organograma_x_regiao found by the `where` argument doesn't exist, create a new organograma_x_regiao with this data.
-     * 
-    **/
-    create: XOR<organograma_x_regiaoCreateInput, organograma_x_regiaoUncheckedCreateInput>
-    /**
-     * In case the organograma_x_regiao was found with the provided `where` argument, update it with this data.
-     * 
-    **/
-    update: XOR<organograma_x_regiaoUpdateInput, organograma_x_regiaoUncheckedUpdateInput>
-  }
-
-
-  /**
-   * organograma_x_regiao delete
-   */
-  export type organograma_x_regiaoDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the organograma_x_regiao
-     * 
-    **/
-    select?: organograma_x_regiaoSelect | null
-    /**
-     * Filter which organograma_x_regiao to delete.
-     * 
-    **/
-    where: organograma_x_regiaoWhereUniqueInput
-  }
-
-
-  /**
-   * organograma_x_regiao deleteMany
-   */
-  export type organograma_x_regiaoDeleteManyArgs = {
-    /**
-     * Filter which organograma_x_regiaos to delete
-     * 
-    **/
-    where?: organograma_x_regiaoWhereInput
-  }
-
-
-  /**
-   * organograma_x_regiao: findUniqueOrThrow
-   */
-  export type organograma_x_regiaoFindUniqueOrThrowArgs = organograma_x_regiaoFindUniqueArgsBase
-      
-
-  /**
-   * organograma_x_regiao: findFirstOrThrow
-   */
-  export type organograma_x_regiaoFindFirstOrThrowArgs = organograma_x_regiaoFindFirstArgsBase
-      
-
-  /**
-   * organograma_x_regiao without action
-   */
-  export type organograma_x_regiaoArgs = {
-    /**
-     * Select specific fields to fetch from the organograma_x_regiao
-     * 
-    **/
-    select?: organograma_x_regiaoSelect | null
+    include?: organograma_tipoInclude | null
   }
 
 
@@ -14099,31 +12567,31 @@ export namespace Prisma {
   export type Organograma_x_regiao_atuacaoAvgAggregateOutputType = {
     id: number | null
     organograma_id: number | null
-    regiao_id: number | null
+    regiao_atuacao_id: number | null
   }
 
   export type Organograma_x_regiao_atuacaoSumAggregateOutputType = {
     id: number | null
     organograma_id: number | null
-    regiao_id: number | null
+    regiao_atuacao_id: number | null
   }
 
   export type Organograma_x_regiao_atuacaoMinAggregateOutputType = {
     id: number | null
     organograma_id: number | null
-    regiao_id: number | null
+    regiao_atuacao_id: number | null
   }
 
   export type Organograma_x_regiao_atuacaoMaxAggregateOutputType = {
     id: number | null
     organograma_id: number | null
-    regiao_id: number | null
+    regiao_atuacao_id: number | null
   }
 
   export type Organograma_x_regiao_atuacaoCountAggregateOutputType = {
     id: number
     organograma_id: number
-    regiao_id: number
+    regiao_atuacao_id: number
     _all: number
   }
 
@@ -14131,31 +12599,31 @@ export namespace Prisma {
   export type Organograma_x_regiao_atuacaoAvgAggregateInputType = {
     id?: true
     organograma_id?: true
-    regiao_id?: true
+    regiao_atuacao_id?: true
   }
 
   export type Organograma_x_regiao_atuacaoSumAggregateInputType = {
     id?: true
     organograma_id?: true
-    regiao_id?: true
+    regiao_atuacao_id?: true
   }
 
   export type Organograma_x_regiao_atuacaoMinAggregateInputType = {
     id?: true
     organograma_id?: true
-    regiao_id?: true
+    regiao_atuacao_id?: true
   }
 
   export type Organograma_x_regiao_atuacaoMaxAggregateInputType = {
     id?: true
     organograma_id?: true
-    regiao_id?: true
+    regiao_atuacao_id?: true
   }
 
   export type Organograma_x_regiao_atuacaoCountAggregateInputType = {
     id?: true
     organograma_id?: true
-    regiao_id?: true
+    regiao_atuacao_id?: true
     _all?: true
   }
 
@@ -14254,7 +12722,7 @@ export namespace Prisma {
   export type Organograma_x_regiao_atuacaoGroupByOutputType = {
     id: number
     organograma_id: number
-    regiao_id: number
+    regiao_atuacao_id: number
     _count: Organograma_x_regiao_atuacaoCountAggregateOutputType | null
     _avg: Organograma_x_regiao_atuacaoAvgAggregateOutputType | null
     _sum: Organograma_x_regiao_atuacaoSumAggregateOutputType | null
@@ -14279,20 +12747,32 @@ export namespace Prisma {
   export type organograma_x_regiao_atuacaoSelect = {
     id?: boolean
     organograma_id?: boolean
-    regiao_id?: boolean
+    regiao_atuacao_id?: boolean
+    organograma?: boolean | organogramaArgs
+    regiao_atuacao?: boolean | regiao_atuacaoArgs
   }
 
+
+  export type organograma_x_regiao_atuacaoInclude = {
+    organograma?: boolean | organogramaArgs
+    regiao_atuacao?: boolean | regiao_atuacaoArgs
+  } 
 
   export type organograma_x_regiao_atuacaoGetPayload<S extends boolean | null | undefined | organograma_x_regiao_atuacaoArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? organograma_x_regiao_atuacao :
     S extends undefined ? never :
     S extends { include: any } & (organograma_x_regiao_atuacaoArgs | organograma_x_regiao_atuacaoFindManyArgs)
-    ? organograma_x_regiao_atuacao 
+    ? organograma_x_regiao_atuacao  & {
+    [P in TrueKeys<S['include']>]:
+        P extends 'organograma' ? organogramaGetPayload<Exclude<S['include'], undefined | null>[P]> :
+        P extends 'regiao_atuacao' ? regiao_atuacaoGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
+  } 
     : S extends { select: any } & (organograma_x_regiao_atuacaoArgs | organograma_x_regiao_atuacaoFindManyArgs)
       ? {
     [P in TrueKeys<S['select']>]:
-    P extends keyof organograma_x_regiao_atuacao ? organograma_x_regiao_atuacao[P] : never
+        P extends 'organograma' ? organogramaGetPayload<Exclude<S['select'], undefined | null>[P]> :
+        P extends 'regiao_atuacao' ? regiao_atuacaoGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof organograma_x_regiao_atuacao ? organograma_x_regiao_atuacao[P] : never
   } 
       : organograma_x_regiao_atuacao
 
@@ -14666,6 +13146,9 @@ export namespace Prisma {
     constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
 
+    organograma<T extends organogramaArgs= {}>(args?: Subset<T, organogramaArgs>): Prisma__organogramaClient<organogramaGetPayload<T> | Null>;
+
+    regiao_atuacao<T extends regiao_atuacaoArgs= {}>(args?: Subset<T, regiao_atuacaoArgs>): Prisma__regiao_atuacaoClient<regiao_atuacaoGetPayload<T> | Null>;
 
     private get _document();
     /**
@@ -14704,6 +13187,11 @@ export namespace Prisma {
     **/
     select?: organograma_x_regiao_atuacaoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_x_regiao_atuacaoInclude | null
+    /**
      * Filter, which organograma_x_regiao_atuacao to fetch.
      * 
     **/
@@ -14731,6 +13219,11 @@ export namespace Prisma {
      * 
     **/
     select?: organograma_x_regiao_atuacaoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_x_regiao_atuacaoInclude | null
     /**
      * Filter, which organograma_x_regiao_atuacao to fetch.
      * 
@@ -14795,6 +13288,11 @@ export namespace Prisma {
     **/
     select?: organograma_x_regiao_atuacaoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_x_regiao_atuacaoInclude | null
+    /**
      * Filter, which organograma_x_regiao_atuacaos to fetch.
      * 
     **/
@@ -14841,6 +13339,11 @@ export namespace Prisma {
     **/
     select?: organograma_x_regiao_atuacaoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_x_regiao_atuacaoInclude | null
+    /**
      * The data needed to create a organograma_x_regiao_atuacao.
      * 
     **/
@@ -14870,6 +13373,11 @@ export namespace Prisma {
      * 
     **/
     select?: organograma_x_regiao_atuacaoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_x_regiao_atuacaoInclude | null
     /**
      * The data needed to update a organograma_x_regiao_atuacao.
      * 
@@ -14910,6 +13418,11 @@ export namespace Prisma {
     **/
     select?: organograma_x_regiao_atuacaoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_x_regiao_atuacaoInclude | null
+    /**
      * The filter to search for the organograma_x_regiao_atuacao to update in case it exists.
      * 
     **/
@@ -14936,6 +13449,11 @@ export namespace Prisma {
      * 
     **/
     select?: organograma_x_regiao_atuacaoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_x_regiao_atuacaoInclude | null
     /**
      * Filter which organograma_x_regiao_atuacao to delete.
      * 
@@ -14977,6 +13495,11 @@ export namespace Prisma {
      * 
     **/
     select?: organograma_x_regiao_atuacaoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_x_regiao_atuacaoInclude | null
   }
 
 
@@ -15971,50 +14494,60 @@ export namespace Prisma {
 
   export type PlataformaAvgAggregateOutputType = {
     id: number | null
+    plataforma_papel_tipo_id: number | null
   }
 
   export type PlataformaSumAggregateOutputType = {
     id: number | null
+    plataforma_papel_tipo_id: number | null
   }
 
   export type PlataformaMinAggregateOutputType = {
     id: number | null
     nome: string | null
+    plataforma_papel_tipo_id: number | null
   }
 
   export type PlataformaMaxAggregateOutputType = {
     id: number | null
     nome: string | null
+    plataforma_papel_tipo_id: number | null
   }
 
   export type PlataformaCountAggregateOutputType = {
     id: number
     nome: number
+    plataforma_papel_tipo_id: number
     _all: number
   }
 
 
   export type PlataformaAvgAggregateInputType = {
     id?: true
+    plataforma_papel_tipo_id?: true
   }
 
   export type PlataformaSumAggregateInputType = {
     id?: true
+    plataforma_papel_tipo_id?: true
   }
 
   export type PlataformaMinAggregateInputType = {
     id?: true
     nome?: true
+    plataforma_papel_tipo_id?: true
   }
 
   export type PlataformaMaxAggregateInputType = {
     id?: true
     nome?: true
+    plataforma_papel_tipo_id?: true
   }
 
   export type PlataformaCountAggregateInputType = {
     id?: true
     nome?: true
+    plataforma_papel_tipo_id?: true
     _all?: true
   }
 
@@ -16113,6 +14646,7 @@ export namespace Prisma {
   export type PlataformaGroupByOutputType = {
     id: number
     nome: string | null
+    plataforma_papel_tipo_id: number
     _count: PlataformaCountAggregateOutputType | null
     _avg: PlataformaAvgAggregateOutputType | null
     _sum: PlataformaSumAggregateOutputType | null
@@ -16137,19 +14671,40 @@ export namespace Prisma {
   export type plataformaSelect = {
     id?: boolean
     nome?: boolean
+    plataforma_papel_tipo_id?: boolean
+    plataforma_papel_tipo?: boolean | plataforma_papel_tipoArgs
+    plataforma_x_regiao_atuacao?: boolean | plataforma_x_regiao_atuacaoFindManyArgs
+    plataforma_x_usuario?: boolean | plataforma_x_usuarioFindManyArgs
+    _count?: boolean | PlataformaCountOutputTypeArgs
   }
 
+
+  export type plataformaInclude = {
+    plataforma_papel_tipo?: boolean | plataforma_papel_tipoArgs
+    plataforma_x_regiao_atuacao?: boolean | plataforma_x_regiao_atuacaoFindManyArgs
+    plataforma_x_usuario?: boolean | plataforma_x_usuarioFindManyArgs
+    _count?: boolean | PlataformaCountOutputTypeArgs
+  } 
 
   export type plataformaGetPayload<S extends boolean | null | undefined | plataformaArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? plataforma :
     S extends undefined ? never :
     S extends { include: any } & (plataformaArgs | plataformaFindManyArgs)
-    ? plataforma 
+    ? plataforma  & {
+    [P in TrueKeys<S['include']>]:
+        P extends 'plataforma_papel_tipo' ? plataforma_papel_tipoGetPayload<Exclude<S['include'], undefined | null>[P]> :
+        P extends 'plataforma_x_regiao_atuacao' ? Array < plataforma_x_regiao_atuacaoGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
+        P extends 'plataforma_x_usuario' ? Array < plataforma_x_usuarioGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
+        P extends '_count' ? PlataformaCountOutputTypeGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
+  } 
     : S extends { select: any } & (plataformaArgs | plataformaFindManyArgs)
       ? {
     [P in TrueKeys<S['select']>]:
-    P extends keyof plataforma ? plataforma[P] : never
+        P extends 'plataforma_papel_tipo' ? plataforma_papel_tipoGetPayload<Exclude<S['select'], undefined | null>[P]> :
+        P extends 'plataforma_x_regiao_atuacao' ? Array < plataforma_x_regiao_atuacaoGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
+        P extends 'plataforma_x_usuario' ? Array < plataforma_x_usuarioGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
+        P extends '_count' ? PlataformaCountOutputTypeGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof plataforma ? plataforma[P] : never
   } 
       : plataforma
 
@@ -16523,6 +15078,11 @@ export namespace Prisma {
     constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
 
+    plataforma_papel_tipo<T extends plataforma_papel_tipoArgs= {}>(args?: Subset<T, plataforma_papel_tipoArgs>): Prisma__plataforma_papel_tipoClient<plataforma_papel_tipoGetPayload<T> | Null>;
+
+    plataforma_x_regiao_atuacao<T extends plataforma_x_regiao_atuacaoFindManyArgs= {}>(args?: Subset<T, plataforma_x_regiao_atuacaoFindManyArgs>): PrismaPromise<Array<plataforma_x_regiao_atuacaoGetPayload<T>>| Null>;
+
+    plataforma_x_usuario<T extends plataforma_x_usuarioFindManyArgs= {}>(args?: Subset<T, plataforma_x_usuarioFindManyArgs>): PrismaPromise<Array<plataforma_x_usuarioGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -16561,6 +15121,11 @@ export namespace Prisma {
     **/
     select?: plataformaSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataformaInclude | null
+    /**
      * Filter, which plataforma to fetch.
      * 
     **/
@@ -16588,6 +15153,11 @@ export namespace Prisma {
      * 
     **/
     select?: plataformaSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataformaInclude | null
     /**
      * Filter, which plataforma to fetch.
      * 
@@ -16652,6 +15222,11 @@ export namespace Prisma {
     **/
     select?: plataformaSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataformaInclude | null
+    /**
      * Filter, which plataformas to fetch.
      * 
     **/
@@ -16698,6 +15273,11 @@ export namespace Prisma {
     **/
     select?: plataformaSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataformaInclude | null
+    /**
      * The data needed to create a plataforma.
      * 
     **/
@@ -16727,6 +15307,11 @@ export namespace Prisma {
      * 
     **/
     select?: plataformaSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataformaInclude | null
     /**
      * The data needed to update a plataforma.
      * 
@@ -16767,6 +15352,11 @@ export namespace Prisma {
     **/
     select?: plataformaSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataformaInclude | null
+    /**
      * The filter to search for the plataforma to update in case it exists.
      * 
     **/
@@ -16793,6 +15383,11 @@ export namespace Prisma {
      * 
     **/
     select?: plataformaSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataformaInclude | null
     /**
      * Filter which plataforma to delete.
      * 
@@ -16834,880 +15429,11 @@ export namespace Prisma {
      * 
     **/
     select?: plataformaSelect | null
-  }
-
-
-
-  /**
-   * Model plataforma_n_borderos
-   */
-
-
-  export type AggregatePlataforma_n_borderos = {
-    _count: Plataforma_n_borderosCountAggregateOutputType | null
-    _avg: Plataforma_n_borderosAvgAggregateOutputType | null
-    _sum: Plataforma_n_borderosSumAggregateOutputType | null
-    _min: Plataforma_n_borderosMinAggregateOutputType | null
-    _max: Plataforma_n_borderosMaxAggregateOutputType | null
-  }
-
-  export type Plataforma_n_borderosAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Plataforma_n_borderosSumAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Plataforma_n_borderosMinAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Plataforma_n_borderosMaxAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Plataforma_n_borderosCountAggregateOutputType = {
-    id: number
-    _all: number
-  }
-
-
-  export type Plataforma_n_borderosAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type Plataforma_n_borderosSumAggregateInputType = {
-    id?: true
-  }
-
-  export type Plataforma_n_borderosMinAggregateInputType = {
-    id?: true
-  }
-
-  export type Plataforma_n_borderosMaxAggregateInputType = {
-    id?: true
-  }
-
-  export type Plataforma_n_borderosCountAggregateInputType = {
-    id?: true
-    _all?: true
-  }
-
-  export type Plataforma_n_borderosAggregateArgs = {
     /**
-     * Filter which plataforma_n_borderos to aggregate.
+     * Choose, which related nodes to fetch as well.
      * 
     **/
-    where?: plataforma_n_borderosWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of plataforma_n_borderos to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<plataforma_n_borderosOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     * 
-    **/
-    cursor?: plataforma_n_borderosWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` plataforma_n_borderos from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` plataforma_n_borderos.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned plataforma_n_borderos
-    **/
-    _count?: true | Plataforma_n_borderosCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Plataforma_n_borderosAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Plataforma_n_borderosSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: Plataforma_n_borderosMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: Plataforma_n_borderosMaxAggregateInputType
-  }
-
-  export type GetPlataforma_n_borderosAggregateType<T extends Plataforma_n_borderosAggregateArgs> = {
-        [P in keyof T & keyof AggregatePlataforma_n_borderos]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregatePlataforma_n_borderos[P]>
-      : GetScalarType<T[P], AggregatePlataforma_n_borderos[P]>
-  }
-
-
-
-
-  export type Plataforma_n_borderosGroupByArgs = {
-    where?: plataforma_n_borderosWhereInput
-    orderBy?: Enumerable<plataforma_n_borderosOrderByWithAggregationInput>
-    by: Array<Plataforma_n_borderosScalarFieldEnum>
-    having?: plataforma_n_borderosScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: Plataforma_n_borderosCountAggregateInputType | true
-    _avg?: Plataforma_n_borderosAvgAggregateInputType
-    _sum?: Plataforma_n_borderosSumAggregateInputType
-    _min?: Plataforma_n_borderosMinAggregateInputType
-    _max?: Plataforma_n_borderosMaxAggregateInputType
-  }
-
-
-  export type Plataforma_n_borderosGroupByOutputType = {
-    id: number
-    _count: Plataforma_n_borderosCountAggregateOutputType | null
-    _avg: Plataforma_n_borderosAvgAggregateOutputType | null
-    _sum: Plataforma_n_borderosSumAggregateOutputType | null
-    _min: Plataforma_n_borderosMinAggregateOutputType | null
-    _max: Plataforma_n_borderosMaxAggregateOutputType | null
-  }
-
-  type GetPlataforma_n_borderosGroupByPayload<T extends Plataforma_n_borderosGroupByArgs> = PrismaPromise<
-    Array<
-      PickArray<Plataforma_n_borderosGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof Plataforma_n_borderosGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], Plataforma_n_borderosGroupByOutputType[P]>
-            : GetScalarType<T[P], Plataforma_n_borderosGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type plataforma_n_borderosSelect = {
-    id?: boolean
-  }
-
-
-  export type plataforma_n_borderosGetPayload<S extends boolean | null | undefined | plataforma_n_borderosArgs, U = keyof S> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? plataforma_n_borderos :
-    S extends undefined ? never :
-    S extends { include: any } & (plataforma_n_borderosArgs | plataforma_n_borderosFindManyArgs)
-    ? plataforma_n_borderos 
-    : S extends { select: any } & (plataforma_n_borderosArgs | plataforma_n_borderosFindManyArgs)
-      ? {
-    [P in TrueKeys<S['select']>]:
-    P extends keyof plataforma_n_borderos ? plataforma_n_borderos[P] : never
-  } 
-      : plataforma_n_borderos
-
-
-  type plataforma_n_borderosCountArgs = Merge<
-    Omit<plataforma_n_borderosFindManyArgs, 'select' | 'include'> & {
-      select?: Plataforma_n_borderosCountAggregateInputType | true
-    }
-  >
-
-  export interface plataforma_n_borderosDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-    /**
-     * Find zero or one Plataforma_n_borderos that matches the filter.
-     * @param {plataforma_n_borderosFindUniqueArgs} args - Arguments to find a Plataforma_n_borderos
-     * @example
-     * // Get one Plataforma_n_borderos
-     * const plataforma_n_borderos = await prisma.plataforma_n_borderos.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends plataforma_n_borderosFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, plataforma_n_borderosFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'plataforma_n_borderos'> extends True ? Prisma__plataforma_n_borderosClient<plataforma_n_borderosGetPayload<T>> : Prisma__plataforma_n_borderosClient<plataforma_n_borderosGetPayload<T> | null, null>
-
-    /**
-     * Find the first Plataforma_n_borderos that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {plataforma_n_borderosFindFirstArgs} args - Arguments to find a Plataforma_n_borderos
-     * @example
-     * // Get one Plataforma_n_borderos
-     * const plataforma_n_borderos = await prisma.plataforma_n_borderos.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends plataforma_n_borderosFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, plataforma_n_borderosFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'plataforma_n_borderos'> extends True ? Prisma__plataforma_n_borderosClient<plataforma_n_borderosGetPayload<T>> : Prisma__plataforma_n_borderosClient<plataforma_n_borderosGetPayload<T> | null, null>
-
-    /**
-     * Find zero or more Plataforma_n_borderos that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {plataforma_n_borderosFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Plataforma_n_borderos
-     * const plataforma_n_borderos = await prisma.plataforma_n_borderos.findMany()
-     * 
-     * // Get first 10 Plataforma_n_borderos
-     * const plataforma_n_borderos = await prisma.plataforma_n_borderos.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const plataforma_n_borderosWithIdOnly = await prisma.plataforma_n_borderos.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends plataforma_n_borderosFindManyArgs>(
-      args?: SelectSubset<T, plataforma_n_borderosFindManyArgs>
-    ): PrismaPromise<Array<plataforma_n_borderosGetPayload<T>>>
-
-    /**
-     * Create a Plataforma_n_borderos.
-     * @param {plataforma_n_borderosCreateArgs} args - Arguments to create a Plataforma_n_borderos.
-     * @example
-     * // Create one Plataforma_n_borderos
-     * const Plataforma_n_borderos = await prisma.plataforma_n_borderos.create({
-     *   data: {
-     *     // ... data to create a Plataforma_n_borderos
-     *   }
-     * })
-     * 
-    **/
-    create<T extends plataforma_n_borderosCreateArgs>(
-      args: SelectSubset<T, plataforma_n_borderosCreateArgs>
-    ): Prisma__plataforma_n_borderosClient<plataforma_n_borderosGetPayload<T>>
-
-    /**
-     * Create many Plataforma_n_borderos.
-     *     @param {plataforma_n_borderosCreateManyArgs} args - Arguments to create many Plataforma_n_borderos.
-     *     @example
-     *     // Create many Plataforma_n_borderos
-     *     const plataforma_n_borderos = await prisma.plataforma_n_borderos.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends plataforma_n_borderosCreateManyArgs>(
-      args?: SelectSubset<T, plataforma_n_borderosCreateManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a Plataforma_n_borderos.
-     * @param {plataforma_n_borderosDeleteArgs} args - Arguments to delete one Plataforma_n_borderos.
-     * @example
-     * // Delete one Plataforma_n_borderos
-     * const Plataforma_n_borderos = await prisma.plataforma_n_borderos.delete({
-     *   where: {
-     *     // ... filter to delete one Plataforma_n_borderos
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends plataforma_n_borderosDeleteArgs>(
-      args: SelectSubset<T, plataforma_n_borderosDeleteArgs>
-    ): Prisma__plataforma_n_borderosClient<plataforma_n_borderosGetPayload<T>>
-
-    /**
-     * Update one Plataforma_n_borderos.
-     * @param {plataforma_n_borderosUpdateArgs} args - Arguments to update one Plataforma_n_borderos.
-     * @example
-     * // Update one Plataforma_n_borderos
-     * const plataforma_n_borderos = await prisma.plataforma_n_borderos.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends plataforma_n_borderosUpdateArgs>(
-      args: SelectSubset<T, plataforma_n_borderosUpdateArgs>
-    ): Prisma__plataforma_n_borderosClient<plataforma_n_borderosGetPayload<T>>
-
-    /**
-     * Delete zero or more Plataforma_n_borderos.
-     * @param {plataforma_n_borderosDeleteManyArgs} args - Arguments to filter Plataforma_n_borderos to delete.
-     * @example
-     * // Delete a few Plataforma_n_borderos
-     * const { count } = await prisma.plataforma_n_borderos.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends plataforma_n_borderosDeleteManyArgs>(
-      args?: SelectSubset<T, plataforma_n_borderosDeleteManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Plataforma_n_borderos.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {plataforma_n_borderosUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Plataforma_n_borderos
-     * const plataforma_n_borderos = await prisma.plataforma_n_borderos.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends plataforma_n_borderosUpdateManyArgs>(
-      args: SelectSubset<T, plataforma_n_borderosUpdateManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one Plataforma_n_borderos.
-     * @param {plataforma_n_borderosUpsertArgs} args - Arguments to update or create a Plataforma_n_borderos.
-     * @example
-     * // Update or create a Plataforma_n_borderos
-     * const plataforma_n_borderos = await prisma.plataforma_n_borderos.upsert({
-     *   create: {
-     *     // ... data to create a Plataforma_n_borderos
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Plataforma_n_borderos we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends plataforma_n_borderosUpsertArgs>(
-      args: SelectSubset<T, plataforma_n_borderosUpsertArgs>
-    ): Prisma__plataforma_n_borderosClient<plataforma_n_borderosGetPayload<T>>
-
-    /**
-     * Find one Plataforma_n_borderos that matches the filter or throw
-     * `NotFoundError` if no matches were found.
-     * @param {plataforma_n_borderosFindUniqueOrThrowArgs} args - Arguments to find a Plataforma_n_borderos
-     * @example
-     * // Get one Plataforma_n_borderos
-     * const plataforma_n_borderos = await prisma.plataforma_n_borderos.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends plataforma_n_borderosFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, plataforma_n_borderosFindUniqueOrThrowArgs>
-    ): Prisma__plataforma_n_borderosClient<plataforma_n_borderosGetPayload<T>>
-
-    /**
-     * Find the first Plataforma_n_borderos that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {plataforma_n_borderosFindFirstOrThrowArgs} args - Arguments to find a Plataforma_n_borderos
-     * @example
-     * // Get one Plataforma_n_borderos
-     * const plataforma_n_borderos = await prisma.plataforma_n_borderos.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends plataforma_n_borderosFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, plataforma_n_borderosFindFirstOrThrowArgs>
-    ): Prisma__plataforma_n_borderosClient<plataforma_n_borderosGetPayload<T>>
-
-    /**
-     * Count the number of Plataforma_n_borderos.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {plataforma_n_borderosCountArgs} args - Arguments to filter Plataforma_n_borderos to count.
-     * @example
-     * // Count the number of Plataforma_n_borderos
-     * const count = await prisma.plataforma_n_borderos.count({
-     *   where: {
-     *     // ... the filter for the Plataforma_n_borderos we want to count
-     *   }
-     * })
-    **/
-    count<T extends plataforma_n_borderosCountArgs>(
-      args?: Subset<T, plataforma_n_borderosCountArgs>,
-    ): PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], Plataforma_n_borderosCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Plataforma_n_borderos.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Plataforma_n_borderosAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends Plataforma_n_borderosAggregateArgs>(args: Subset<T, Plataforma_n_borderosAggregateArgs>): PrismaPromise<GetPlataforma_n_borderosAggregateType<T>>
-
-    /**
-     * Group by Plataforma_n_borderos.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Plataforma_n_borderosGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends Plataforma_n_borderosGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: Plataforma_n_borderosGroupByArgs['orderBy'] }
-        : { orderBy?: Plataforma_n_borderosGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, Plataforma_n_borderosGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPlataforma_n_borderosGroupByPayload<T> : PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for plataforma_n_borderos.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__plataforma_n_borderosClient<T, Null = never> implements PrismaPromise<T> {
-    [prisma]: true;
-    private readonly _dmmf;
-    private readonly _fetcher;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-    readonly [Symbol.toStringTag]: 'PrismaClientPromise';
-
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * plataforma_n_borderos base type for findUnique actions
-   */
-  export type plataforma_n_borderosFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the plataforma_n_borderos
-     * 
-    **/
-    select?: plataforma_n_borderosSelect | null
-    /**
-     * Filter, which plataforma_n_borderos to fetch.
-     * 
-    **/
-    where: plataforma_n_borderosWhereUniqueInput
-  }
-
-  /**
-   * plataforma_n_borderos: findUnique
-   */
-  export interface plataforma_n_borderosFindUniqueArgs extends plataforma_n_borderosFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * plataforma_n_borderos base type for findFirst actions
-   */
-  export type plataforma_n_borderosFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the plataforma_n_borderos
-     * 
-    **/
-    select?: plataforma_n_borderosSelect | null
-    /**
-     * Filter, which plataforma_n_borderos to fetch.
-     * 
-    **/
-    where?: plataforma_n_borderosWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of plataforma_n_borderos to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<plataforma_n_borderosOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for plataforma_n_borderos.
-     * 
-    **/
-    cursor?: plataforma_n_borderosWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` plataforma_n_borderos from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` plataforma_n_borderos.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of plataforma_n_borderos.
-     * 
-    **/
-    distinct?: Enumerable<Plataforma_n_borderosScalarFieldEnum>
-  }
-
-  /**
-   * plataforma_n_borderos: findFirst
-   */
-  export interface plataforma_n_borderosFindFirstArgs extends plataforma_n_borderosFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * plataforma_n_borderos findMany
-   */
-  export type plataforma_n_borderosFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the plataforma_n_borderos
-     * 
-    **/
-    select?: plataforma_n_borderosSelect | null
-    /**
-     * Filter, which plataforma_n_borderos to fetch.
-     * 
-    **/
-    where?: plataforma_n_borderosWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of plataforma_n_borderos to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<plataforma_n_borderosOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing plataforma_n_borderos.
-     * 
-    **/
-    cursor?: plataforma_n_borderosWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` plataforma_n_borderos from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` plataforma_n_borderos.
-     * 
-    **/
-    skip?: number
-    distinct?: Enumerable<Plataforma_n_borderosScalarFieldEnum>
-  }
-
-
-  /**
-   * plataforma_n_borderos create
-   */
-  export type plataforma_n_borderosCreateArgs = {
-    /**
-     * Select specific fields to fetch from the plataforma_n_borderos
-     * 
-    **/
-    select?: plataforma_n_borderosSelect | null
-    /**
-     * The data needed to create a plataforma_n_borderos.
-     * 
-    **/
-    data?: XOR<plataforma_n_borderosCreateInput, plataforma_n_borderosUncheckedCreateInput>
-  }
-
-
-  /**
-   * plataforma_n_borderos createMany
-   */
-  export type plataforma_n_borderosCreateManyArgs = {
-    /**
-     * The data used to create many plataforma_n_borderos.
-     * 
-    **/
-    data: Enumerable<plataforma_n_borderosCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * plataforma_n_borderos update
-   */
-  export type plataforma_n_borderosUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the plataforma_n_borderos
-     * 
-    **/
-    select?: plataforma_n_borderosSelect | null
-    /**
-     * The data needed to update a plataforma_n_borderos.
-     * 
-    **/
-    data: XOR<plataforma_n_borderosUpdateInput, plataforma_n_borderosUncheckedUpdateInput>
-    /**
-     * Choose, which plataforma_n_borderos to update.
-     * 
-    **/
-    where: plataforma_n_borderosWhereUniqueInput
-  }
-
-
-  /**
-   * plataforma_n_borderos updateMany
-   */
-  export type plataforma_n_borderosUpdateManyArgs = {
-    /**
-     * The data used to update plataforma_n_borderos.
-     * 
-    **/
-    data: XOR<plataforma_n_borderosUpdateManyMutationInput, plataforma_n_borderosUncheckedUpdateManyInput>
-    /**
-     * Filter which plataforma_n_borderos to update
-     * 
-    **/
-    where?: plataforma_n_borderosWhereInput
-  }
-
-
-  /**
-   * plataforma_n_borderos upsert
-   */
-  export type plataforma_n_borderosUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the plataforma_n_borderos
-     * 
-    **/
-    select?: plataforma_n_borderosSelect | null
-    /**
-     * The filter to search for the plataforma_n_borderos to update in case it exists.
-     * 
-    **/
-    where: plataforma_n_borderosWhereUniqueInput
-    /**
-     * In case the plataforma_n_borderos found by the `where` argument doesn't exist, create a new plataforma_n_borderos with this data.
-     * 
-    **/
-    create: XOR<plataforma_n_borderosCreateInput, plataforma_n_borderosUncheckedCreateInput>
-    /**
-     * In case the plataforma_n_borderos was found with the provided `where` argument, update it with this data.
-     * 
-    **/
-    update: XOR<plataforma_n_borderosUpdateInput, plataforma_n_borderosUncheckedUpdateInput>
-  }
-
-
-  /**
-   * plataforma_n_borderos delete
-   */
-  export type plataforma_n_borderosDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the plataforma_n_borderos
-     * 
-    **/
-    select?: plataforma_n_borderosSelect | null
-    /**
-     * Filter which plataforma_n_borderos to delete.
-     * 
-    **/
-    where: plataforma_n_borderosWhereUniqueInput
-  }
-
-
-  /**
-   * plataforma_n_borderos deleteMany
-   */
-  export type plataforma_n_borderosDeleteManyArgs = {
-    /**
-     * Filter which plataforma_n_borderos to delete
-     * 
-    **/
-    where?: plataforma_n_borderosWhereInput
-  }
-
-
-  /**
-   * plataforma_n_borderos: findUniqueOrThrow
-   */
-  export type plataforma_n_borderosFindUniqueOrThrowArgs = plataforma_n_borderosFindUniqueArgsBase
-      
-
-  /**
-   * plataforma_n_borderos: findFirstOrThrow
-   */
-  export type plataforma_n_borderosFindFirstOrThrowArgs = plataforma_n_borderosFindFirstArgsBase
-      
-
-  /**
-   * plataforma_n_borderos without action
-   */
-  export type plataforma_n_borderosArgs = {
-    /**
-     * Select specific fields to fetch from the plataforma_n_borderos
-     * 
-    **/
-    select?: plataforma_n_borderosSelect | null
+    include?: plataformaInclude | null
   }
 
 
@@ -17885,19 +15611,31 @@ export namespace Prisma {
 
   export type plataforma_papel_tipoSelect = {
     id?: boolean
+    plataforma?: boolean | plataformaFindManyArgs
+    _count?: boolean | Plataforma_papel_tipoCountOutputTypeArgs
   }
 
+
+  export type plataforma_papel_tipoInclude = {
+    plataforma?: boolean | plataformaFindManyArgs
+    _count?: boolean | Plataforma_papel_tipoCountOutputTypeArgs
+  } 
 
   export type plataforma_papel_tipoGetPayload<S extends boolean | null | undefined | plataforma_papel_tipoArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? plataforma_papel_tipo :
     S extends undefined ? never :
     S extends { include: any } & (plataforma_papel_tipoArgs | plataforma_papel_tipoFindManyArgs)
-    ? plataforma_papel_tipo 
+    ? plataforma_papel_tipo  & {
+    [P in TrueKeys<S['include']>]:
+        P extends 'plataforma' ? Array < plataformaGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
+        P extends '_count' ? Plataforma_papel_tipoCountOutputTypeGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
+  } 
     : S extends { select: any } & (plataforma_papel_tipoArgs | plataforma_papel_tipoFindManyArgs)
       ? {
     [P in TrueKeys<S['select']>]:
-    P extends keyof plataforma_papel_tipo ? plataforma_papel_tipo[P] : never
+        P extends 'plataforma' ? Array < plataformaGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
+        P extends '_count' ? Plataforma_papel_tipoCountOutputTypeGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof plataforma_papel_tipo ? plataforma_papel_tipo[P] : never
   } 
       : plataforma_papel_tipo
 
@@ -18271,6 +16009,7 @@ export namespace Prisma {
     constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
 
+    plataforma<T extends plataformaFindManyArgs= {}>(args?: Subset<T, plataformaFindManyArgs>): PrismaPromise<Array<plataformaGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -18309,6 +16048,11 @@ export namespace Prisma {
     **/
     select?: plataforma_papel_tipoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_papel_tipoInclude | null
+    /**
      * Filter, which plataforma_papel_tipo to fetch.
      * 
     **/
@@ -18336,6 +16080,11 @@ export namespace Prisma {
      * 
     **/
     select?: plataforma_papel_tipoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_papel_tipoInclude | null
     /**
      * Filter, which plataforma_papel_tipo to fetch.
      * 
@@ -18400,6 +16149,11 @@ export namespace Prisma {
     **/
     select?: plataforma_papel_tipoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_papel_tipoInclude | null
+    /**
      * Filter, which plataforma_papel_tipos to fetch.
      * 
     **/
@@ -18446,10 +16200,15 @@ export namespace Prisma {
     **/
     select?: plataforma_papel_tipoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_papel_tipoInclude | null
+    /**
      * The data needed to create a plataforma_papel_tipo.
      * 
     **/
-    data?: XOR<plataforma_papel_tipoCreateInput, plataforma_papel_tipoUncheckedCreateInput>
+    data: XOR<plataforma_papel_tipoCreateInput, plataforma_papel_tipoUncheckedCreateInput>
   }
 
 
@@ -18475,6 +16234,11 @@ export namespace Prisma {
      * 
     **/
     select?: plataforma_papel_tipoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_papel_tipoInclude | null
     /**
      * The data needed to update a plataforma_papel_tipo.
      * 
@@ -18515,6 +16279,11 @@ export namespace Prisma {
     **/
     select?: plataforma_papel_tipoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_papel_tipoInclude | null
+    /**
      * The filter to search for the plataforma_papel_tipo to update in case it exists.
      * 
     **/
@@ -18541,6 +16310,11 @@ export namespace Prisma {
      * 
     **/
     select?: plataforma_papel_tipoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_papel_tipoInclude | null
     /**
      * Filter which plataforma_papel_tipo to delete.
      * 
@@ -18582,880 +16356,11 @@ export namespace Prisma {
      * 
     **/
     select?: plataforma_papel_tipoSelect | null
-  }
-
-
-
-  /**
-   * Model plataforma_papel_x_pessoa
-   */
-
-
-  export type AggregatePlataforma_papel_x_pessoa = {
-    _count: Plataforma_papel_x_pessoaCountAggregateOutputType | null
-    _avg: Plataforma_papel_x_pessoaAvgAggregateOutputType | null
-    _sum: Plataforma_papel_x_pessoaSumAggregateOutputType | null
-    _min: Plataforma_papel_x_pessoaMinAggregateOutputType | null
-    _max: Plataforma_papel_x_pessoaMaxAggregateOutputType | null
-  }
-
-  export type Plataforma_papel_x_pessoaAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Plataforma_papel_x_pessoaSumAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Plataforma_papel_x_pessoaMinAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Plataforma_papel_x_pessoaMaxAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Plataforma_papel_x_pessoaCountAggregateOutputType = {
-    id: number
-    _all: number
-  }
-
-
-  export type Plataforma_papel_x_pessoaAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type Plataforma_papel_x_pessoaSumAggregateInputType = {
-    id?: true
-  }
-
-  export type Plataforma_papel_x_pessoaMinAggregateInputType = {
-    id?: true
-  }
-
-  export type Plataforma_papel_x_pessoaMaxAggregateInputType = {
-    id?: true
-  }
-
-  export type Plataforma_papel_x_pessoaCountAggregateInputType = {
-    id?: true
-    _all?: true
-  }
-
-  export type Plataforma_papel_x_pessoaAggregateArgs = {
     /**
-     * Filter which plataforma_papel_x_pessoa to aggregate.
+     * Choose, which related nodes to fetch as well.
      * 
     **/
-    where?: plataforma_papel_x_pessoaWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of plataforma_papel_x_pessoas to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<plataforma_papel_x_pessoaOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     * 
-    **/
-    cursor?: plataforma_papel_x_pessoaWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` plataforma_papel_x_pessoas from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` plataforma_papel_x_pessoas.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned plataforma_papel_x_pessoas
-    **/
-    _count?: true | Plataforma_papel_x_pessoaCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Plataforma_papel_x_pessoaAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Plataforma_papel_x_pessoaSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: Plataforma_papel_x_pessoaMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: Plataforma_papel_x_pessoaMaxAggregateInputType
-  }
-
-  export type GetPlataforma_papel_x_pessoaAggregateType<T extends Plataforma_papel_x_pessoaAggregateArgs> = {
-        [P in keyof T & keyof AggregatePlataforma_papel_x_pessoa]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregatePlataforma_papel_x_pessoa[P]>
-      : GetScalarType<T[P], AggregatePlataforma_papel_x_pessoa[P]>
-  }
-
-
-
-
-  export type Plataforma_papel_x_pessoaGroupByArgs = {
-    where?: plataforma_papel_x_pessoaWhereInput
-    orderBy?: Enumerable<plataforma_papel_x_pessoaOrderByWithAggregationInput>
-    by: Array<Plataforma_papel_x_pessoaScalarFieldEnum>
-    having?: plataforma_papel_x_pessoaScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: Plataforma_papel_x_pessoaCountAggregateInputType | true
-    _avg?: Plataforma_papel_x_pessoaAvgAggregateInputType
-    _sum?: Plataforma_papel_x_pessoaSumAggregateInputType
-    _min?: Plataforma_papel_x_pessoaMinAggregateInputType
-    _max?: Plataforma_papel_x_pessoaMaxAggregateInputType
-  }
-
-
-  export type Plataforma_papel_x_pessoaGroupByOutputType = {
-    id: number
-    _count: Plataforma_papel_x_pessoaCountAggregateOutputType | null
-    _avg: Plataforma_papel_x_pessoaAvgAggregateOutputType | null
-    _sum: Plataforma_papel_x_pessoaSumAggregateOutputType | null
-    _min: Plataforma_papel_x_pessoaMinAggregateOutputType | null
-    _max: Plataforma_papel_x_pessoaMaxAggregateOutputType | null
-  }
-
-  type GetPlataforma_papel_x_pessoaGroupByPayload<T extends Plataforma_papel_x_pessoaGroupByArgs> = PrismaPromise<
-    Array<
-      PickArray<Plataforma_papel_x_pessoaGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof Plataforma_papel_x_pessoaGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], Plataforma_papel_x_pessoaGroupByOutputType[P]>
-            : GetScalarType<T[P], Plataforma_papel_x_pessoaGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type plataforma_papel_x_pessoaSelect = {
-    id?: boolean
-  }
-
-
-  export type plataforma_papel_x_pessoaGetPayload<S extends boolean | null | undefined | plataforma_papel_x_pessoaArgs, U = keyof S> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? plataforma_papel_x_pessoa :
-    S extends undefined ? never :
-    S extends { include: any } & (plataforma_papel_x_pessoaArgs | plataforma_papel_x_pessoaFindManyArgs)
-    ? plataforma_papel_x_pessoa 
-    : S extends { select: any } & (plataforma_papel_x_pessoaArgs | plataforma_papel_x_pessoaFindManyArgs)
-      ? {
-    [P in TrueKeys<S['select']>]:
-    P extends keyof plataforma_papel_x_pessoa ? plataforma_papel_x_pessoa[P] : never
-  } 
-      : plataforma_papel_x_pessoa
-
-
-  type plataforma_papel_x_pessoaCountArgs = Merge<
-    Omit<plataforma_papel_x_pessoaFindManyArgs, 'select' | 'include'> & {
-      select?: Plataforma_papel_x_pessoaCountAggregateInputType | true
-    }
-  >
-
-  export interface plataforma_papel_x_pessoaDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-    /**
-     * Find zero or one Plataforma_papel_x_pessoa that matches the filter.
-     * @param {plataforma_papel_x_pessoaFindUniqueArgs} args - Arguments to find a Plataforma_papel_x_pessoa
-     * @example
-     * // Get one Plataforma_papel_x_pessoa
-     * const plataforma_papel_x_pessoa = await prisma.plataforma_papel_x_pessoa.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends plataforma_papel_x_pessoaFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, plataforma_papel_x_pessoaFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'plataforma_papel_x_pessoa'> extends True ? Prisma__plataforma_papel_x_pessoaClient<plataforma_papel_x_pessoaGetPayload<T>> : Prisma__plataforma_papel_x_pessoaClient<plataforma_papel_x_pessoaGetPayload<T> | null, null>
-
-    /**
-     * Find the first Plataforma_papel_x_pessoa that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {plataforma_papel_x_pessoaFindFirstArgs} args - Arguments to find a Plataforma_papel_x_pessoa
-     * @example
-     * // Get one Plataforma_papel_x_pessoa
-     * const plataforma_papel_x_pessoa = await prisma.plataforma_papel_x_pessoa.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends plataforma_papel_x_pessoaFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, plataforma_papel_x_pessoaFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'plataforma_papel_x_pessoa'> extends True ? Prisma__plataforma_papel_x_pessoaClient<plataforma_papel_x_pessoaGetPayload<T>> : Prisma__plataforma_papel_x_pessoaClient<plataforma_papel_x_pessoaGetPayload<T> | null, null>
-
-    /**
-     * Find zero or more Plataforma_papel_x_pessoas that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {plataforma_papel_x_pessoaFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Plataforma_papel_x_pessoas
-     * const plataforma_papel_x_pessoas = await prisma.plataforma_papel_x_pessoa.findMany()
-     * 
-     * // Get first 10 Plataforma_papel_x_pessoas
-     * const plataforma_papel_x_pessoas = await prisma.plataforma_papel_x_pessoa.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const plataforma_papel_x_pessoaWithIdOnly = await prisma.plataforma_papel_x_pessoa.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends plataforma_papel_x_pessoaFindManyArgs>(
-      args?: SelectSubset<T, plataforma_papel_x_pessoaFindManyArgs>
-    ): PrismaPromise<Array<plataforma_papel_x_pessoaGetPayload<T>>>
-
-    /**
-     * Create a Plataforma_papel_x_pessoa.
-     * @param {plataforma_papel_x_pessoaCreateArgs} args - Arguments to create a Plataforma_papel_x_pessoa.
-     * @example
-     * // Create one Plataforma_papel_x_pessoa
-     * const Plataforma_papel_x_pessoa = await prisma.plataforma_papel_x_pessoa.create({
-     *   data: {
-     *     // ... data to create a Plataforma_papel_x_pessoa
-     *   }
-     * })
-     * 
-    **/
-    create<T extends plataforma_papel_x_pessoaCreateArgs>(
-      args: SelectSubset<T, plataforma_papel_x_pessoaCreateArgs>
-    ): Prisma__plataforma_papel_x_pessoaClient<plataforma_papel_x_pessoaGetPayload<T>>
-
-    /**
-     * Create many Plataforma_papel_x_pessoas.
-     *     @param {plataforma_papel_x_pessoaCreateManyArgs} args - Arguments to create many Plataforma_papel_x_pessoas.
-     *     @example
-     *     // Create many Plataforma_papel_x_pessoas
-     *     const plataforma_papel_x_pessoa = await prisma.plataforma_papel_x_pessoa.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends plataforma_papel_x_pessoaCreateManyArgs>(
-      args?: SelectSubset<T, plataforma_papel_x_pessoaCreateManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a Plataforma_papel_x_pessoa.
-     * @param {plataforma_papel_x_pessoaDeleteArgs} args - Arguments to delete one Plataforma_papel_x_pessoa.
-     * @example
-     * // Delete one Plataforma_papel_x_pessoa
-     * const Plataforma_papel_x_pessoa = await prisma.plataforma_papel_x_pessoa.delete({
-     *   where: {
-     *     // ... filter to delete one Plataforma_papel_x_pessoa
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends plataforma_papel_x_pessoaDeleteArgs>(
-      args: SelectSubset<T, plataforma_papel_x_pessoaDeleteArgs>
-    ): Prisma__plataforma_papel_x_pessoaClient<plataforma_papel_x_pessoaGetPayload<T>>
-
-    /**
-     * Update one Plataforma_papel_x_pessoa.
-     * @param {plataforma_papel_x_pessoaUpdateArgs} args - Arguments to update one Plataforma_papel_x_pessoa.
-     * @example
-     * // Update one Plataforma_papel_x_pessoa
-     * const plataforma_papel_x_pessoa = await prisma.plataforma_papel_x_pessoa.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends plataforma_papel_x_pessoaUpdateArgs>(
-      args: SelectSubset<T, plataforma_papel_x_pessoaUpdateArgs>
-    ): Prisma__plataforma_papel_x_pessoaClient<plataforma_papel_x_pessoaGetPayload<T>>
-
-    /**
-     * Delete zero or more Plataforma_papel_x_pessoas.
-     * @param {plataforma_papel_x_pessoaDeleteManyArgs} args - Arguments to filter Plataforma_papel_x_pessoas to delete.
-     * @example
-     * // Delete a few Plataforma_papel_x_pessoas
-     * const { count } = await prisma.plataforma_papel_x_pessoa.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends plataforma_papel_x_pessoaDeleteManyArgs>(
-      args?: SelectSubset<T, plataforma_papel_x_pessoaDeleteManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Plataforma_papel_x_pessoas.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {plataforma_papel_x_pessoaUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Plataforma_papel_x_pessoas
-     * const plataforma_papel_x_pessoa = await prisma.plataforma_papel_x_pessoa.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends plataforma_papel_x_pessoaUpdateManyArgs>(
-      args: SelectSubset<T, plataforma_papel_x_pessoaUpdateManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one Plataforma_papel_x_pessoa.
-     * @param {plataforma_papel_x_pessoaUpsertArgs} args - Arguments to update or create a Plataforma_papel_x_pessoa.
-     * @example
-     * // Update or create a Plataforma_papel_x_pessoa
-     * const plataforma_papel_x_pessoa = await prisma.plataforma_papel_x_pessoa.upsert({
-     *   create: {
-     *     // ... data to create a Plataforma_papel_x_pessoa
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Plataforma_papel_x_pessoa we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends plataforma_papel_x_pessoaUpsertArgs>(
-      args: SelectSubset<T, plataforma_papel_x_pessoaUpsertArgs>
-    ): Prisma__plataforma_papel_x_pessoaClient<plataforma_papel_x_pessoaGetPayload<T>>
-
-    /**
-     * Find one Plataforma_papel_x_pessoa that matches the filter or throw
-     * `NotFoundError` if no matches were found.
-     * @param {plataforma_papel_x_pessoaFindUniqueOrThrowArgs} args - Arguments to find a Plataforma_papel_x_pessoa
-     * @example
-     * // Get one Plataforma_papel_x_pessoa
-     * const plataforma_papel_x_pessoa = await prisma.plataforma_papel_x_pessoa.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends plataforma_papel_x_pessoaFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, plataforma_papel_x_pessoaFindUniqueOrThrowArgs>
-    ): Prisma__plataforma_papel_x_pessoaClient<plataforma_papel_x_pessoaGetPayload<T>>
-
-    /**
-     * Find the first Plataforma_papel_x_pessoa that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {plataforma_papel_x_pessoaFindFirstOrThrowArgs} args - Arguments to find a Plataforma_papel_x_pessoa
-     * @example
-     * // Get one Plataforma_papel_x_pessoa
-     * const plataforma_papel_x_pessoa = await prisma.plataforma_papel_x_pessoa.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends plataforma_papel_x_pessoaFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, plataforma_papel_x_pessoaFindFirstOrThrowArgs>
-    ): Prisma__plataforma_papel_x_pessoaClient<plataforma_papel_x_pessoaGetPayload<T>>
-
-    /**
-     * Count the number of Plataforma_papel_x_pessoas.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {plataforma_papel_x_pessoaCountArgs} args - Arguments to filter Plataforma_papel_x_pessoas to count.
-     * @example
-     * // Count the number of Plataforma_papel_x_pessoas
-     * const count = await prisma.plataforma_papel_x_pessoa.count({
-     *   where: {
-     *     // ... the filter for the Plataforma_papel_x_pessoas we want to count
-     *   }
-     * })
-    **/
-    count<T extends plataforma_papel_x_pessoaCountArgs>(
-      args?: Subset<T, plataforma_papel_x_pessoaCountArgs>,
-    ): PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], Plataforma_papel_x_pessoaCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Plataforma_papel_x_pessoa.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Plataforma_papel_x_pessoaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends Plataforma_papel_x_pessoaAggregateArgs>(args: Subset<T, Plataforma_papel_x_pessoaAggregateArgs>): PrismaPromise<GetPlataforma_papel_x_pessoaAggregateType<T>>
-
-    /**
-     * Group by Plataforma_papel_x_pessoa.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Plataforma_papel_x_pessoaGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends Plataforma_papel_x_pessoaGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: Plataforma_papel_x_pessoaGroupByArgs['orderBy'] }
-        : { orderBy?: Plataforma_papel_x_pessoaGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, Plataforma_papel_x_pessoaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPlataforma_papel_x_pessoaGroupByPayload<T> : PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for plataforma_papel_x_pessoa.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__plataforma_papel_x_pessoaClient<T, Null = never> implements PrismaPromise<T> {
-    [prisma]: true;
-    private readonly _dmmf;
-    private readonly _fetcher;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-    readonly [Symbol.toStringTag]: 'PrismaClientPromise';
-
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * plataforma_papel_x_pessoa base type for findUnique actions
-   */
-  export type plataforma_papel_x_pessoaFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the plataforma_papel_x_pessoa
-     * 
-    **/
-    select?: plataforma_papel_x_pessoaSelect | null
-    /**
-     * Filter, which plataforma_papel_x_pessoa to fetch.
-     * 
-    **/
-    where: plataforma_papel_x_pessoaWhereUniqueInput
-  }
-
-  /**
-   * plataforma_papel_x_pessoa: findUnique
-   */
-  export interface plataforma_papel_x_pessoaFindUniqueArgs extends plataforma_papel_x_pessoaFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * plataforma_papel_x_pessoa base type for findFirst actions
-   */
-  export type plataforma_papel_x_pessoaFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the plataforma_papel_x_pessoa
-     * 
-    **/
-    select?: plataforma_papel_x_pessoaSelect | null
-    /**
-     * Filter, which plataforma_papel_x_pessoa to fetch.
-     * 
-    **/
-    where?: plataforma_papel_x_pessoaWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of plataforma_papel_x_pessoas to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<plataforma_papel_x_pessoaOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for plataforma_papel_x_pessoas.
-     * 
-    **/
-    cursor?: plataforma_papel_x_pessoaWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` plataforma_papel_x_pessoas from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` plataforma_papel_x_pessoas.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of plataforma_papel_x_pessoas.
-     * 
-    **/
-    distinct?: Enumerable<Plataforma_papel_x_pessoaScalarFieldEnum>
-  }
-
-  /**
-   * plataforma_papel_x_pessoa: findFirst
-   */
-  export interface plataforma_papel_x_pessoaFindFirstArgs extends plataforma_papel_x_pessoaFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * plataforma_papel_x_pessoa findMany
-   */
-  export type plataforma_papel_x_pessoaFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the plataforma_papel_x_pessoa
-     * 
-    **/
-    select?: plataforma_papel_x_pessoaSelect | null
-    /**
-     * Filter, which plataforma_papel_x_pessoas to fetch.
-     * 
-    **/
-    where?: plataforma_papel_x_pessoaWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of plataforma_papel_x_pessoas to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<plataforma_papel_x_pessoaOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing plataforma_papel_x_pessoas.
-     * 
-    **/
-    cursor?: plataforma_papel_x_pessoaWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` plataforma_papel_x_pessoas from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` plataforma_papel_x_pessoas.
-     * 
-    **/
-    skip?: number
-    distinct?: Enumerable<Plataforma_papel_x_pessoaScalarFieldEnum>
-  }
-
-
-  /**
-   * plataforma_papel_x_pessoa create
-   */
-  export type plataforma_papel_x_pessoaCreateArgs = {
-    /**
-     * Select specific fields to fetch from the plataforma_papel_x_pessoa
-     * 
-    **/
-    select?: plataforma_papel_x_pessoaSelect | null
-    /**
-     * The data needed to create a plataforma_papel_x_pessoa.
-     * 
-    **/
-    data?: XOR<plataforma_papel_x_pessoaCreateInput, plataforma_papel_x_pessoaUncheckedCreateInput>
-  }
-
-
-  /**
-   * plataforma_papel_x_pessoa createMany
-   */
-  export type plataforma_papel_x_pessoaCreateManyArgs = {
-    /**
-     * The data used to create many plataforma_papel_x_pessoas.
-     * 
-    **/
-    data: Enumerable<plataforma_papel_x_pessoaCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * plataforma_papel_x_pessoa update
-   */
-  export type plataforma_papel_x_pessoaUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the plataforma_papel_x_pessoa
-     * 
-    **/
-    select?: plataforma_papel_x_pessoaSelect | null
-    /**
-     * The data needed to update a plataforma_papel_x_pessoa.
-     * 
-    **/
-    data: XOR<plataforma_papel_x_pessoaUpdateInput, plataforma_papel_x_pessoaUncheckedUpdateInput>
-    /**
-     * Choose, which plataforma_papel_x_pessoa to update.
-     * 
-    **/
-    where: plataforma_papel_x_pessoaWhereUniqueInput
-  }
-
-
-  /**
-   * plataforma_papel_x_pessoa updateMany
-   */
-  export type plataforma_papel_x_pessoaUpdateManyArgs = {
-    /**
-     * The data used to update plataforma_papel_x_pessoas.
-     * 
-    **/
-    data: XOR<plataforma_papel_x_pessoaUpdateManyMutationInput, plataforma_papel_x_pessoaUncheckedUpdateManyInput>
-    /**
-     * Filter which plataforma_papel_x_pessoas to update
-     * 
-    **/
-    where?: plataforma_papel_x_pessoaWhereInput
-  }
-
-
-  /**
-   * plataforma_papel_x_pessoa upsert
-   */
-  export type plataforma_papel_x_pessoaUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the plataforma_papel_x_pessoa
-     * 
-    **/
-    select?: plataforma_papel_x_pessoaSelect | null
-    /**
-     * The filter to search for the plataforma_papel_x_pessoa to update in case it exists.
-     * 
-    **/
-    where: plataforma_papel_x_pessoaWhereUniqueInput
-    /**
-     * In case the plataforma_papel_x_pessoa found by the `where` argument doesn't exist, create a new plataforma_papel_x_pessoa with this data.
-     * 
-    **/
-    create: XOR<plataforma_papel_x_pessoaCreateInput, plataforma_papel_x_pessoaUncheckedCreateInput>
-    /**
-     * In case the plataforma_papel_x_pessoa was found with the provided `where` argument, update it with this data.
-     * 
-    **/
-    update: XOR<plataforma_papel_x_pessoaUpdateInput, plataforma_papel_x_pessoaUncheckedUpdateInput>
-  }
-
-
-  /**
-   * plataforma_papel_x_pessoa delete
-   */
-  export type plataforma_papel_x_pessoaDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the plataforma_papel_x_pessoa
-     * 
-    **/
-    select?: plataforma_papel_x_pessoaSelect | null
-    /**
-     * Filter which plataforma_papel_x_pessoa to delete.
-     * 
-    **/
-    where: plataforma_papel_x_pessoaWhereUniqueInput
-  }
-
-
-  /**
-   * plataforma_papel_x_pessoa deleteMany
-   */
-  export type plataforma_papel_x_pessoaDeleteManyArgs = {
-    /**
-     * Filter which plataforma_papel_x_pessoas to delete
-     * 
-    **/
-    where?: plataforma_papel_x_pessoaWhereInput
-  }
-
-
-  /**
-   * plataforma_papel_x_pessoa: findUniqueOrThrow
-   */
-  export type plataforma_papel_x_pessoaFindUniqueOrThrowArgs = plataforma_papel_x_pessoaFindUniqueArgsBase
-      
-
-  /**
-   * plataforma_papel_x_pessoa: findFirstOrThrow
-   */
-  export type plataforma_papel_x_pessoaFindFirstOrThrowArgs = plataforma_papel_x_pessoaFindFirstArgsBase
-      
-
-  /**
-   * plataforma_papel_x_pessoa without action
-   */
-  export type plataforma_papel_x_pessoaArgs = {
-    /**
-     * Select specific fields to fetch from the plataforma_papel_x_pessoa
-     * 
-    **/
-    select?: plataforma_papel_x_pessoaSelect | null
+    include?: plataforma_papel_tipoInclude | null
   }
 
 
@@ -19475,44 +16380,64 @@ export namespace Prisma {
 
   export type Plataforma_x_regiao_atuacaoAvgAggregateOutputType = {
     id: number | null
+    plataforma_id: number | null
+    regiao_atuacao_id: number | null
   }
 
   export type Plataforma_x_regiao_atuacaoSumAggregateOutputType = {
     id: number | null
+    plataforma_id: number | null
+    regiao_atuacao_id: number | null
   }
 
   export type Plataforma_x_regiao_atuacaoMinAggregateOutputType = {
     id: number | null
+    plataforma_id: number | null
+    regiao_atuacao_id: number | null
   }
 
   export type Plataforma_x_regiao_atuacaoMaxAggregateOutputType = {
     id: number | null
+    plataforma_id: number | null
+    regiao_atuacao_id: number | null
   }
 
   export type Plataforma_x_regiao_atuacaoCountAggregateOutputType = {
     id: number
+    plataforma_id: number
+    regiao_atuacao_id: number
     _all: number
   }
 
 
   export type Plataforma_x_regiao_atuacaoAvgAggregateInputType = {
     id?: true
+    plataforma_id?: true
+    regiao_atuacao_id?: true
   }
 
   export type Plataforma_x_regiao_atuacaoSumAggregateInputType = {
     id?: true
+    plataforma_id?: true
+    regiao_atuacao_id?: true
   }
 
   export type Plataforma_x_regiao_atuacaoMinAggregateInputType = {
     id?: true
+    plataforma_id?: true
+    regiao_atuacao_id?: true
   }
 
   export type Plataforma_x_regiao_atuacaoMaxAggregateInputType = {
     id?: true
+    plataforma_id?: true
+    regiao_atuacao_id?: true
   }
 
   export type Plataforma_x_regiao_atuacaoCountAggregateInputType = {
     id?: true
+    plataforma_id?: true
+    regiao_atuacao_id?: true
     _all?: true
   }
 
@@ -19610,6 +16535,8 @@ export namespace Prisma {
 
   export type Plataforma_x_regiao_atuacaoGroupByOutputType = {
     id: number
+    plataforma_id: number
+    regiao_atuacao_id: number
     _count: Plataforma_x_regiao_atuacaoCountAggregateOutputType | null
     _avg: Plataforma_x_regiao_atuacaoAvgAggregateOutputType | null
     _sum: Plataforma_x_regiao_atuacaoSumAggregateOutputType | null
@@ -19633,19 +16560,33 @@ export namespace Prisma {
 
   export type plataforma_x_regiao_atuacaoSelect = {
     id?: boolean
+    plataforma_id?: boolean
+    regiao_atuacao_id?: boolean
+    plataforma?: boolean | plataformaArgs
+    regiao_atuacao?: boolean | regiao_atuacaoArgs
   }
 
+
+  export type plataforma_x_regiao_atuacaoInclude = {
+    plataforma?: boolean | plataformaArgs
+    regiao_atuacao?: boolean | regiao_atuacaoArgs
+  } 
 
   export type plataforma_x_regiao_atuacaoGetPayload<S extends boolean | null | undefined | plataforma_x_regiao_atuacaoArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? plataforma_x_regiao_atuacao :
     S extends undefined ? never :
     S extends { include: any } & (plataforma_x_regiao_atuacaoArgs | plataforma_x_regiao_atuacaoFindManyArgs)
-    ? plataforma_x_regiao_atuacao 
+    ? plataforma_x_regiao_atuacao  & {
+    [P in TrueKeys<S['include']>]:
+        P extends 'plataforma' ? plataformaGetPayload<Exclude<S['include'], undefined | null>[P]> :
+        P extends 'regiao_atuacao' ? regiao_atuacaoGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
+  } 
     : S extends { select: any } & (plataforma_x_regiao_atuacaoArgs | plataforma_x_regiao_atuacaoFindManyArgs)
       ? {
     [P in TrueKeys<S['select']>]:
-    P extends keyof plataforma_x_regiao_atuacao ? plataforma_x_regiao_atuacao[P] : never
+        P extends 'plataforma' ? plataformaGetPayload<Exclude<S['select'], undefined | null>[P]> :
+        P extends 'regiao_atuacao' ? regiao_atuacaoGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof plataforma_x_regiao_atuacao ? plataforma_x_regiao_atuacao[P] : never
   } 
       : plataforma_x_regiao_atuacao
 
@@ -20019,6 +16960,9 @@ export namespace Prisma {
     constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
 
+    plataforma<T extends plataformaArgs= {}>(args?: Subset<T, plataformaArgs>): Prisma__plataformaClient<plataformaGetPayload<T> | Null>;
+
+    regiao_atuacao<T extends regiao_atuacaoArgs= {}>(args?: Subset<T, regiao_atuacaoArgs>): Prisma__regiao_atuacaoClient<regiao_atuacaoGetPayload<T> | Null>;
 
     private get _document();
     /**
@@ -20057,6 +17001,11 @@ export namespace Prisma {
     **/
     select?: plataforma_x_regiao_atuacaoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_x_regiao_atuacaoInclude | null
+    /**
      * Filter, which plataforma_x_regiao_atuacao to fetch.
      * 
     **/
@@ -20084,6 +17033,11 @@ export namespace Prisma {
      * 
     **/
     select?: plataforma_x_regiao_atuacaoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_x_regiao_atuacaoInclude | null
     /**
      * Filter, which plataforma_x_regiao_atuacao to fetch.
      * 
@@ -20148,6 +17102,11 @@ export namespace Prisma {
     **/
     select?: plataforma_x_regiao_atuacaoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_x_regiao_atuacaoInclude | null
+    /**
      * Filter, which plataforma_x_regiao_atuacaos to fetch.
      * 
     **/
@@ -20194,10 +17153,15 @@ export namespace Prisma {
     **/
     select?: plataforma_x_regiao_atuacaoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_x_regiao_atuacaoInclude | null
+    /**
      * The data needed to create a plataforma_x_regiao_atuacao.
      * 
     **/
-    data?: XOR<plataforma_x_regiao_atuacaoCreateInput, plataforma_x_regiao_atuacaoUncheckedCreateInput>
+    data: XOR<plataforma_x_regiao_atuacaoCreateInput, plataforma_x_regiao_atuacaoUncheckedCreateInput>
   }
 
 
@@ -20223,6 +17187,11 @@ export namespace Prisma {
      * 
     **/
     select?: plataforma_x_regiao_atuacaoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_x_regiao_atuacaoInclude | null
     /**
      * The data needed to update a plataforma_x_regiao_atuacao.
      * 
@@ -20263,6 +17232,11 @@ export namespace Prisma {
     **/
     select?: plataforma_x_regiao_atuacaoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_x_regiao_atuacaoInclude | null
+    /**
      * The filter to search for the plataforma_x_regiao_atuacao to update in case it exists.
      * 
     **/
@@ -20289,6 +17263,11 @@ export namespace Prisma {
      * 
     **/
     select?: plataforma_x_regiao_atuacaoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_x_regiao_atuacaoInclude | null
     /**
      * Filter which plataforma_x_regiao_atuacao to delete.
      * 
@@ -20330,6 +17309,11 @@ export namespace Prisma {
      * 
     **/
     select?: plataforma_x_regiao_atuacaoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_x_regiao_atuacaoInclude | null
   }
 
 
@@ -20349,50 +17333,60 @@ export namespace Prisma {
 
   export type Regiao_atuacaoAvgAggregateOutputType = {
     id: number | null
+    regiao_atuacao_tipo_id: number | null
   }
 
   export type Regiao_atuacaoSumAggregateOutputType = {
     id: number | null
+    regiao_atuacao_tipo_id: number | null
   }
 
   export type Regiao_atuacaoMinAggregateOutputType = {
     id: number | null
     nome: string | null
+    regiao_atuacao_tipo_id: number | null
   }
 
   export type Regiao_atuacaoMaxAggregateOutputType = {
     id: number | null
     nome: string | null
+    regiao_atuacao_tipo_id: number | null
   }
 
   export type Regiao_atuacaoCountAggregateOutputType = {
     id: number
     nome: number
+    regiao_atuacao_tipo_id: number
     _all: number
   }
 
 
   export type Regiao_atuacaoAvgAggregateInputType = {
     id?: true
+    regiao_atuacao_tipo_id?: true
   }
 
   export type Regiao_atuacaoSumAggregateInputType = {
     id?: true
+    regiao_atuacao_tipo_id?: true
   }
 
   export type Regiao_atuacaoMinAggregateInputType = {
     id?: true
     nome?: true
+    regiao_atuacao_tipo_id?: true
   }
 
   export type Regiao_atuacaoMaxAggregateInputType = {
     id?: true
     nome?: true
+    regiao_atuacao_tipo_id?: true
   }
 
   export type Regiao_atuacaoCountAggregateInputType = {
     id?: true
     nome?: true
+    regiao_atuacao_tipo_id?: true
     _all?: true
   }
 
@@ -20491,6 +17485,7 @@ export namespace Prisma {
   export type Regiao_atuacaoGroupByOutputType = {
     id: number
     nome: string
+    regiao_atuacao_tipo_id: number
     _count: Regiao_atuacaoCountAggregateOutputType | null
     _avg: Regiao_atuacaoAvgAggregateOutputType | null
     _sum: Regiao_atuacaoSumAggregateOutputType | null
@@ -20515,19 +17510,40 @@ export namespace Prisma {
   export type regiao_atuacaoSelect = {
     id?: boolean
     nome?: boolean
+    regiao_atuacao_tipo_id?: boolean
+    regiao_atuacao_tipo?: boolean | regiao_atuacao_tipoArgs
+    organograma_x_regiao_atuacao?: boolean | organograma_x_regiao_atuacaoFindManyArgs
+    plataforma_x_regiao_atuacao?: boolean | plataforma_x_regiao_atuacaoFindManyArgs
+    _count?: boolean | Regiao_atuacaoCountOutputTypeArgs
   }
 
+
+  export type regiao_atuacaoInclude = {
+    regiao_atuacao_tipo?: boolean | regiao_atuacao_tipoArgs
+    organograma_x_regiao_atuacao?: boolean | organograma_x_regiao_atuacaoFindManyArgs
+    plataforma_x_regiao_atuacao?: boolean | plataforma_x_regiao_atuacaoFindManyArgs
+    _count?: boolean | Regiao_atuacaoCountOutputTypeArgs
+  } 
 
   export type regiao_atuacaoGetPayload<S extends boolean | null | undefined | regiao_atuacaoArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? regiao_atuacao :
     S extends undefined ? never :
     S extends { include: any } & (regiao_atuacaoArgs | regiao_atuacaoFindManyArgs)
-    ? regiao_atuacao 
+    ? regiao_atuacao  & {
+    [P in TrueKeys<S['include']>]:
+        P extends 'regiao_atuacao_tipo' ? regiao_atuacao_tipoGetPayload<Exclude<S['include'], undefined | null>[P]> :
+        P extends 'organograma_x_regiao_atuacao' ? Array < organograma_x_regiao_atuacaoGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
+        P extends 'plataforma_x_regiao_atuacao' ? Array < plataforma_x_regiao_atuacaoGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
+        P extends '_count' ? Regiao_atuacaoCountOutputTypeGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
+  } 
     : S extends { select: any } & (regiao_atuacaoArgs | regiao_atuacaoFindManyArgs)
       ? {
     [P in TrueKeys<S['select']>]:
-    P extends keyof regiao_atuacao ? regiao_atuacao[P] : never
+        P extends 'regiao_atuacao_tipo' ? regiao_atuacao_tipoGetPayload<Exclude<S['select'], undefined | null>[P]> :
+        P extends 'organograma_x_regiao_atuacao' ? Array < organograma_x_regiao_atuacaoGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
+        P extends 'plataforma_x_regiao_atuacao' ? Array < plataforma_x_regiao_atuacaoGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
+        P extends '_count' ? Regiao_atuacaoCountOutputTypeGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof regiao_atuacao ? regiao_atuacao[P] : never
   } 
       : regiao_atuacao
 
@@ -20901,6 +17917,11 @@ export namespace Prisma {
     constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
 
+    regiao_atuacao_tipo<T extends regiao_atuacao_tipoArgs= {}>(args?: Subset<T, regiao_atuacao_tipoArgs>): Prisma__regiao_atuacao_tipoClient<regiao_atuacao_tipoGetPayload<T> | Null>;
+
+    organograma_x_regiao_atuacao<T extends organograma_x_regiao_atuacaoFindManyArgs= {}>(args?: Subset<T, organograma_x_regiao_atuacaoFindManyArgs>): PrismaPromise<Array<organograma_x_regiao_atuacaoGetPayload<T>>| Null>;
+
+    plataforma_x_regiao_atuacao<T extends plataforma_x_regiao_atuacaoFindManyArgs= {}>(args?: Subset<T, plataforma_x_regiao_atuacaoFindManyArgs>): PrismaPromise<Array<plataforma_x_regiao_atuacaoGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -20939,6 +17960,11 @@ export namespace Prisma {
     **/
     select?: regiao_atuacaoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: regiao_atuacaoInclude | null
+    /**
      * Filter, which regiao_atuacao to fetch.
      * 
     **/
@@ -20966,6 +17992,11 @@ export namespace Prisma {
      * 
     **/
     select?: regiao_atuacaoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: regiao_atuacaoInclude | null
     /**
      * Filter, which regiao_atuacao to fetch.
      * 
@@ -21030,6 +18061,11 @@ export namespace Prisma {
     **/
     select?: regiao_atuacaoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: regiao_atuacaoInclude | null
+    /**
      * Filter, which regiao_atuacaos to fetch.
      * 
     **/
@@ -21076,6 +18112,11 @@ export namespace Prisma {
     **/
     select?: regiao_atuacaoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: regiao_atuacaoInclude | null
+    /**
      * The data needed to create a regiao_atuacao.
      * 
     **/
@@ -21105,6 +18146,11 @@ export namespace Prisma {
      * 
     **/
     select?: regiao_atuacaoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: regiao_atuacaoInclude | null
     /**
      * The data needed to update a regiao_atuacao.
      * 
@@ -21145,6 +18191,11 @@ export namespace Prisma {
     **/
     select?: regiao_atuacaoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: regiao_atuacaoInclude | null
+    /**
      * The filter to search for the regiao_atuacao to update in case it exists.
      * 
     **/
@@ -21171,6 +18222,11 @@ export namespace Prisma {
      * 
     **/
     select?: regiao_atuacaoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: regiao_atuacaoInclude | null
     /**
      * Filter which regiao_atuacao to delete.
      * 
@@ -21212,6 +18268,11 @@ export namespace Prisma {
      * 
     **/
     select?: regiao_atuacaoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: regiao_atuacaoInclude | null
   }
 
 
@@ -21397,19 +18458,31 @@ export namespace Prisma {
   export type regiao_atuacao_tipoSelect = {
     id?: boolean
     nome?: boolean
+    regiao_atuacao?: boolean | regiao_atuacaoFindManyArgs
+    _count?: boolean | Regiao_atuacao_tipoCountOutputTypeArgs
   }
 
+
+  export type regiao_atuacao_tipoInclude = {
+    regiao_atuacao?: boolean | regiao_atuacaoFindManyArgs
+    _count?: boolean | Regiao_atuacao_tipoCountOutputTypeArgs
+  } 
 
   export type regiao_atuacao_tipoGetPayload<S extends boolean | null | undefined | regiao_atuacao_tipoArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? regiao_atuacao_tipo :
     S extends undefined ? never :
     S extends { include: any } & (regiao_atuacao_tipoArgs | regiao_atuacao_tipoFindManyArgs)
-    ? regiao_atuacao_tipo 
+    ? regiao_atuacao_tipo  & {
+    [P in TrueKeys<S['include']>]:
+        P extends 'regiao_atuacao' ? Array < regiao_atuacaoGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
+        P extends '_count' ? Regiao_atuacao_tipoCountOutputTypeGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
+  } 
     : S extends { select: any } & (regiao_atuacao_tipoArgs | regiao_atuacao_tipoFindManyArgs)
       ? {
     [P in TrueKeys<S['select']>]:
-    P extends keyof regiao_atuacao_tipo ? regiao_atuacao_tipo[P] : never
+        P extends 'regiao_atuacao' ? Array < regiao_atuacaoGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
+        P extends '_count' ? Regiao_atuacao_tipoCountOutputTypeGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof regiao_atuacao_tipo ? regiao_atuacao_tipo[P] : never
   } 
       : regiao_atuacao_tipo
 
@@ -21783,6 +18856,7 @@ export namespace Prisma {
     constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
 
+    regiao_atuacao<T extends regiao_atuacaoFindManyArgs= {}>(args?: Subset<T, regiao_atuacaoFindManyArgs>): PrismaPromise<Array<regiao_atuacaoGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -21821,6 +18895,11 @@ export namespace Prisma {
     **/
     select?: regiao_atuacao_tipoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: regiao_atuacao_tipoInclude | null
+    /**
      * Filter, which regiao_atuacao_tipo to fetch.
      * 
     **/
@@ -21848,6 +18927,11 @@ export namespace Prisma {
      * 
     **/
     select?: regiao_atuacao_tipoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: regiao_atuacao_tipoInclude | null
     /**
      * Filter, which regiao_atuacao_tipo to fetch.
      * 
@@ -21912,6 +18996,11 @@ export namespace Prisma {
     **/
     select?: regiao_atuacao_tipoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: regiao_atuacao_tipoInclude | null
+    /**
      * Filter, which regiao_atuacao_tipos to fetch.
      * 
     **/
@@ -21958,6 +19047,11 @@ export namespace Prisma {
     **/
     select?: regiao_atuacao_tipoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: regiao_atuacao_tipoInclude | null
+    /**
      * The data needed to create a regiao_atuacao_tipo.
      * 
     **/
@@ -21987,6 +19081,11 @@ export namespace Prisma {
      * 
     **/
     select?: regiao_atuacao_tipoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: regiao_atuacao_tipoInclude | null
     /**
      * The data needed to update a regiao_atuacao_tipo.
      * 
@@ -22027,6 +19126,11 @@ export namespace Prisma {
     **/
     select?: regiao_atuacao_tipoSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: regiao_atuacao_tipoInclude | null
+    /**
      * The filter to search for the regiao_atuacao_tipo to update in case it exists.
      * 
     **/
@@ -22053,6 +19157,11 @@ export namespace Prisma {
      * 
     **/
     select?: regiao_atuacao_tipoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: regiao_atuacao_tipoInclude | null
     /**
      * Filter which regiao_atuacao_tipo to delete.
      * 
@@ -22094,6 +19203,11 @@ export namespace Prisma {
      * 
     **/
     select?: regiao_atuacao_tipoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: regiao_atuacao_tipoInclude | null
   }
 
 
@@ -23320,12 +20434,16 @@ export namespace Prisma {
     parcela?: boolean
     titulo_tipo?: boolean | titulo_tipoArgs
     bordero?: boolean | borderoArgs
+    titulo_itens?: boolean | titulo_itensFindManyArgs
+    _count?: boolean | TituloCountOutputTypeArgs
   }
 
 
   export type tituloInclude = {
     titulo_tipo?: boolean | titulo_tipoArgs
     bordero?: boolean | borderoArgs
+    titulo_itens?: boolean | titulo_itensFindManyArgs
+    _count?: boolean | TituloCountOutputTypeArgs
   } 
 
   export type tituloGetPayload<S extends boolean | null | undefined | tituloArgs, U = keyof S> =
@@ -23336,13 +20454,17 @@ export namespace Prisma {
     ? titulo  & {
     [P in TrueKeys<S['include']>]:
         P extends 'titulo_tipo' ? titulo_tipoGetPayload<Exclude<S['include'], undefined | null>[P]> :
-        P extends 'bordero' ? borderoGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
+        P extends 'bordero' ? borderoGetPayload<Exclude<S['include'], undefined | null>[P]> :
+        P extends 'titulo_itens' ? Array < titulo_itensGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
+        P extends '_count' ? TituloCountOutputTypeGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
   } 
     : S extends { select: any } & (tituloArgs | tituloFindManyArgs)
       ? {
     [P in TrueKeys<S['select']>]:
         P extends 'titulo_tipo' ? titulo_tipoGetPayload<Exclude<S['select'], undefined | null>[P]> :
-        P extends 'bordero' ? borderoGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof titulo ? titulo[P] : never
+        P extends 'bordero' ? borderoGetPayload<Exclude<S['select'], undefined | null>[P]> :
+        P extends 'titulo_itens' ? Array < titulo_itensGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
+        P extends '_count' ? TituloCountOutputTypeGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof titulo ? titulo[P] : never
   } 
       : titulo
 
@@ -23719,6 +20841,8 @@ export namespace Prisma {
     titulo_tipo<T extends titulo_tipoArgs= {}>(args?: Subset<T, titulo_tipoArgs>): Prisma__titulo_tipoClient<titulo_tipoGetPayload<T> | Null>;
 
     bordero<T extends borderoArgs= {}>(args?: Subset<T, borderoArgs>): Prisma__borderoClient<borderoGetPayload<T> | Null>;
+
+    titulo_itens<T extends titulo_itensFindManyArgs= {}>(args?: Subset<T, titulo_itensFindManyArgs>): PrismaPromise<Array<titulo_itensGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -25010,3650 +22134,6 @@ export namespace Prisma {
 
 
   /**
-   * Model titulo_x_cedente
-   */
-
-
-  export type AggregateTitulo_x_cedente = {
-    _count: Titulo_x_cedenteCountAggregateOutputType | null
-    _avg: Titulo_x_cedenteAvgAggregateOutputType | null
-    _sum: Titulo_x_cedenteSumAggregateOutputType | null
-    _min: Titulo_x_cedenteMinAggregateOutputType | null
-    _max: Titulo_x_cedenteMaxAggregateOutputType | null
-  }
-
-  export type Titulo_x_cedenteAvgAggregateOutputType = {
-    id: number | null
-    cedente: number | null
-  }
-
-  export type Titulo_x_cedenteSumAggregateOutputType = {
-    id: number | null
-    cedente: number | null
-  }
-
-  export type Titulo_x_cedenteMinAggregateOutputType = {
-    id: number | null
-    cedente: number | null
-  }
-
-  export type Titulo_x_cedenteMaxAggregateOutputType = {
-    id: number | null
-    cedente: number | null
-  }
-
-  export type Titulo_x_cedenteCountAggregateOutputType = {
-    id: number
-    cedente: number
-    _all: number
-  }
-
-
-  export type Titulo_x_cedenteAvgAggregateInputType = {
-    id?: true
-    cedente?: true
-  }
-
-  export type Titulo_x_cedenteSumAggregateInputType = {
-    id?: true
-    cedente?: true
-  }
-
-  export type Titulo_x_cedenteMinAggregateInputType = {
-    id?: true
-    cedente?: true
-  }
-
-  export type Titulo_x_cedenteMaxAggregateInputType = {
-    id?: true
-    cedente?: true
-  }
-
-  export type Titulo_x_cedenteCountAggregateInputType = {
-    id?: true
-    cedente?: true
-    _all?: true
-  }
-
-  export type Titulo_x_cedenteAggregateArgs = {
-    /**
-     * Filter which titulo_x_cedente to aggregate.
-     * 
-    **/
-    where?: titulo_x_cedenteWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of titulo_x_cedentes to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<titulo_x_cedenteOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     * 
-    **/
-    cursor?: titulo_x_cedenteWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` titulo_x_cedentes from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` titulo_x_cedentes.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned titulo_x_cedentes
-    **/
-    _count?: true | Titulo_x_cedenteCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Titulo_x_cedenteAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Titulo_x_cedenteSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: Titulo_x_cedenteMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: Titulo_x_cedenteMaxAggregateInputType
-  }
-
-  export type GetTitulo_x_cedenteAggregateType<T extends Titulo_x_cedenteAggregateArgs> = {
-        [P in keyof T & keyof AggregateTitulo_x_cedente]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateTitulo_x_cedente[P]>
-      : GetScalarType<T[P], AggregateTitulo_x_cedente[P]>
-  }
-
-
-
-
-  export type Titulo_x_cedenteGroupByArgs = {
-    where?: titulo_x_cedenteWhereInput
-    orderBy?: Enumerable<titulo_x_cedenteOrderByWithAggregationInput>
-    by: Array<Titulo_x_cedenteScalarFieldEnum>
-    having?: titulo_x_cedenteScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: Titulo_x_cedenteCountAggregateInputType | true
-    _avg?: Titulo_x_cedenteAvgAggregateInputType
-    _sum?: Titulo_x_cedenteSumAggregateInputType
-    _min?: Titulo_x_cedenteMinAggregateInputType
-    _max?: Titulo_x_cedenteMaxAggregateInputType
-  }
-
-
-  export type Titulo_x_cedenteGroupByOutputType = {
-    id: number
-    cedente: number
-    _count: Titulo_x_cedenteCountAggregateOutputType | null
-    _avg: Titulo_x_cedenteAvgAggregateOutputType | null
-    _sum: Titulo_x_cedenteSumAggregateOutputType | null
-    _min: Titulo_x_cedenteMinAggregateOutputType | null
-    _max: Titulo_x_cedenteMaxAggregateOutputType | null
-  }
-
-  type GetTitulo_x_cedenteGroupByPayload<T extends Titulo_x_cedenteGroupByArgs> = PrismaPromise<
-    Array<
-      PickArray<Titulo_x_cedenteGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof Titulo_x_cedenteGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], Titulo_x_cedenteGroupByOutputType[P]>
-            : GetScalarType<T[P], Titulo_x_cedenteGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type titulo_x_cedenteSelect = {
-    id?: boolean
-    cedente?: boolean
-    cedente_cedenteTotitulo_x_cedente?: boolean | cedenteArgs
-  }
-
-
-  export type titulo_x_cedenteInclude = {
-    cedente_cedenteTotitulo_x_cedente?: boolean | cedenteArgs
-  } 
-
-  export type titulo_x_cedenteGetPayload<S extends boolean | null | undefined | titulo_x_cedenteArgs, U = keyof S> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? titulo_x_cedente :
-    S extends undefined ? never :
-    S extends { include: any } & (titulo_x_cedenteArgs | titulo_x_cedenteFindManyArgs)
-    ? titulo_x_cedente  & {
-    [P in TrueKeys<S['include']>]:
-        P extends 'cedente_cedenteTotitulo_x_cedente' ? cedenteGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
-  } 
-    : S extends { select: any } & (titulo_x_cedenteArgs | titulo_x_cedenteFindManyArgs)
-      ? {
-    [P in TrueKeys<S['select']>]:
-        P extends 'cedente_cedenteTotitulo_x_cedente' ? cedenteGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof titulo_x_cedente ? titulo_x_cedente[P] : never
-  } 
-      : titulo_x_cedente
-
-
-  type titulo_x_cedenteCountArgs = Merge<
-    Omit<titulo_x_cedenteFindManyArgs, 'select' | 'include'> & {
-      select?: Titulo_x_cedenteCountAggregateInputType | true
-    }
-  >
-
-  export interface titulo_x_cedenteDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-    /**
-     * Find zero or one Titulo_x_cedente that matches the filter.
-     * @param {titulo_x_cedenteFindUniqueArgs} args - Arguments to find a Titulo_x_cedente
-     * @example
-     * // Get one Titulo_x_cedente
-     * const titulo_x_cedente = await prisma.titulo_x_cedente.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends titulo_x_cedenteFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, titulo_x_cedenteFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'titulo_x_cedente'> extends True ? Prisma__titulo_x_cedenteClient<titulo_x_cedenteGetPayload<T>> : Prisma__titulo_x_cedenteClient<titulo_x_cedenteGetPayload<T> | null, null>
-
-    /**
-     * Find the first Titulo_x_cedente that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {titulo_x_cedenteFindFirstArgs} args - Arguments to find a Titulo_x_cedente
-     * @example
-     * // Get one Titulo_x_cedente
-     * const titulo_x_cedente = await prisma.titulo_x_cedente.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends titulo_x_cedenteFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, titulo_x_cedenteFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'titulo_x_cedente'> extends True ? Prisma__titulo_x_cedenteClient<titulo_x_cedenteGetPayload<T>> : Prisma__titulo_x_cedenteClient<titulo_x_cedenteGetPayload<T> | null, null>
-
-    /**
-     * Find zero or more Titulo_x_cedentes that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {titulo_x_cedenteFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Titulo_x_cedentes
-     * const titulo_x_cedentes = await prisma.titulo_x_cedente.findMany()
-     * 
-     * // Get first 10 Titulo_x_cedentes
-     * const titulo_x_cedentes = await prisma.titulo_x_cedente.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const titulo_x_cedenteWithIdOnly = await prisma.titulo_x_cedente.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends titulo_x_cedenteFindManyArgs>(
-      args?: SelectSubset<T, titulo_x_cedenteFindManyArgs>
-    ): PrismaPromise<Array<titulo_x_cedenteGetPayload<T>>>
-
-    /**
-     * Create a Titulo_x_cedente.
-     * @param {titulo_x_cedenteCreateArgs} args - Arguments to create a Titulo_x_cedente.
-     * @example
-     * // Create one Titulo_x_cedente
-     * const Titulo_x_cedente = await prisma.titulo_x_cedente.create({
-     *   data: {
-     *     // ... data to create a Titulo_x_cedente
-     *   }
-     * })
-     * 
-    **/
-    create<T extends titulo_x_cedenteCreateArgs>(
-      args: SelectSubset<T, titulo_x_cedenteCreateArgs>
-    ): Prisma__titulo_x_cedenteClient<titulo_x_cedenteGetPayload<T>>
-
-    /**
-     * Create many Titulo_x_cedentes.
-     *     @param {titulo_x_cedenteCreateManyArgs} args - Arguments to create many Titulo_x_cedentes.
-     *     @example
-     *     // Create many Titulo_x_cedentes
-     *     const titulo_x_cedente = await prisma.titulo_x_cedente.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends titulo_x_cedenteCreateManyArgs>(
-      args?: SelectSubset<T, titulo_x_cedenteCreateManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a Titulo_x_cedente.
-     * @param {titulo_x_cedenteDeleteArgs} args - Arguments to delete one Titulo_x_cedente.
-     * @example
-     * // Delete one Titulo_x_cedente
-     * const Titulo_x_cedente = await prisma.titulo_x_cedente.delete({
-     *   where: {
-     *     // ... filter to delete one Titulo_x_cedente
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends titulo_x_cedenteDeleteArgs>(
-      args: SelectSubset<T, titulo_x_cedenteDeleteArgs>
-    ): Prisma__titulo_x_cedenteClient<titulo_x_cedenteGetPayload<T>>
-
-    /**
-     * Update one Titulo_x_cedente.
-     * @param {titulo_x_cedenteUpdateArgs} args - Arguments to update one Titulo_x_cedente.
-     * @example
-     * // Update one Titulo_x_cedente
-     * const titulo_x_cedente = await prisma.titulo_x_cedente.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends titulo_x_cedenteUpdateArgs>(
-      args: SelectSubset<T, titulo_x_cedenteUpdateArgs>
-    ): Prisma__titulo_x_cedenteClient<titulo_x_cedenteGetPayload<T>>
-
-    /**
-     * Delete zero or more Titulo_x_cedentes.
-     * @param {titulo_x_cedenteDeleteManyArgs} args - Arguments to filter Titulo_x_cedentes to delete.
-     * @example
-     * // Delete a few Titulo_x_cedentes
-     * const { count } = await prisma.titulo_x_cedente.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends titulo_x_cedenteDeleteManyArgs>(
-      args?: SelectSubset<T, titulo_x_cedenteDeleteManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Titulo_x_cedentes.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {titulo_x_cedenteUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Titulo_x_cedentes
-     * const titulo_x_cedente = await prisma.titulo_x_cedente.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends titulo_x_cedenteUpdateManyArgs>(
-      args: SelectSubset<T, titulo_x_cedenteUpdateManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one Titulo_x_cedente.
-     * @param {titulo_x_cedenteUpsertArgs} args - Arguments to update or create a Titulo_x_cedente.
-     * @example
-     * // Update or create a Titulo_x_cedente
-     * const titulo_x_cedente = await prisma.titulo_x_cedente.upsert({
-     *   create: {
-     *     // ... data to create a Titulo_x_cedente
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Titulo_x_cedente we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends titulo_x_cedenteUpsertArgs>(
-      args: SelectSubset<T, titulo_x_cedenteUpsertArgs>
-    ): Prisma__titulo_x_cedenteClient<titulo_x_cedenteGetPayload<T>>
-
-    /**
-     * Find one Titulo_x_cedente that matches the filter or throw
-     * `NotFoundError` if no matches were found.
-     * @param {titulo_x_cedenteFindUniqueOrThrowArgs} args - Arguments to find a Titulo_x_cedente
-     * @example
-     * // Get one Titulo_x_cedente
-     * const titulo_x_cedente = await prisma.titulo_x_cedente.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends titulo_x_cedenteFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, titulo_x_cedenteFindUniqueOrThrowArgs>
-    ): Prisma__titulo_x_cedenteClient<titulo_x_cedenteGetPayload<T>>
-
-    /**
-     * Find the first Titulo_x_cedente that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {titulo_x_cedenteFindFirstOrThrowArgs} args - Arguments to find a Titulo_x_cedente
-     * @example
-     * // Get one Titulo_x_cedente
-     * const titulo_x_cedente = await prisma.titulo_x_cedente.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends titulo_x_cedenteFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, titulo_x_cedenteFindFirstOrThrowArgs>
-    ): Prisma__titulo_x_cedenteClient<titulo_x_cedenteGetPayload<T>>
-
-    /**
-     * Count the number of Titulo_x_cedentes.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {titulo_x_cedenteCountArgs} args - Arguments to filter Titulo_x_cedentes to count.
-     * @example
-     * // Count the number of Titulo_x_cedentes
-     * const count = await prisma.titulo_x_cedente.count({
-     *   where: {
-     *     // ... the filter for the Titulo_x_cedentes we want to count
-     *   }
-     * })
-    **/
-    count<T extends titulo_x_cedenteCountArgs>(
-      args?: Subset<T, titulo_x_cedenteCountArgs>,
-    ): PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], Titulo_x_cedenteCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Titulo_x_cedente.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Titulo_x_cedenteAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends Titulo_x_cedenteAggregateArgs>(args: Subset<T, Titulo_x_cedenteAggregateArgs>): PrismaPromise<GetTitulo_x_cedenteAggregateType<T>>
-
-    /**
-     * Group by Titulo_x_cedente.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Titulo_x_cedenteGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends Titulo_x_cedenteGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: Titulo_x_cedenteGroupByArgs['orderBy'] }
-        : { orderBy?: Titulo_x_cedenteGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, Titulo_x_cedenteGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTitulo_x_cedenteGroupByPayload<T> : PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for titulo_x_cedente.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__titulo_x_cedenteClient<T, Null = never> implements PrismaPromise<T> {
-    [prisma]: true;
-    private readonly _dmmf;
-    private readonly _fetcher;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-    readonly [Symbol.toStringTag]: 'PrismaClientPromise';
-
-    cedente_cedenteTotitulo_x_cedente<T extends cedenteArgs= {}>(args?: Subset<T, cedenteArgs>): Prisma__cedenteClient<cedenteGetPayload<T> | Null>;
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * titulo_x_cedente base type for findUnique actions
-   */
-  export type titulo_x_cedenteFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the titulo_x_cedente
-     * 
-    **/
-    select?: titulo_x_cedenteSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: titulo_x_cedenteInclude | null
-    /**
-     * Filter, which titulo_x_cedente to fetch.
-     * 
-    **/
-    where: titulo_x_cedenteWhereUniqueInput
-  }
-
-  /**
-   * titulo_x_cedente: findUnique
-   */
-  export interface titulo_x_cedenteFindUniqueArgs extends titulo_x_cedenteFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * titulo_x_cedente base type for findFirst actions
-   */
-  export type titulo_x_cedenteFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the titulo_x_cedente
-     * 
-    **/
-    select?: titulo_x_cedenteSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: titulo_x_cedenteInclude | null
-    /**
-     * Filter, which titulo_x_cedente to fetch.
-     * 
-    **/
-    where?: titulo_x_cedenteWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of titulo_x_cedentes to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<titulo_x_cedenteOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for titulo_x_cedentes.
-     * 
-    **/
-    cursor?: titulo_x_cedenteWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` titulo_x_cedentes from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` titulo_x_cedentes.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of titulo_x_cedentes.
-     * 
-    **/
-    distinct?: Enumerable<Titulo_x_cedenteScalarFieldEnum>
-  }
-
-  /**
-   * titulo_x_cedente: findFirst
-   */
-  export interface titulo_x_cedenteFindFirstArgs extends titulo_x_cedenteFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * titulo_x_cedente findMany
-   */
-  export type titulo_x_cedenteFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the titulo_x_cedente
-     * 
-    **/
-    select?: titulo_x_cedenteSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: titulo_x_cedenteInclude | null
-    /**
-     * Filter, which titulo_x_cedentes to fetch.
-     * 
-    **/
-    where?: titulo_x_cedenteWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of titulo_x_cedentes to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<titulo_x_cedenteOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing titulo_x_cedentes.
-     * 
-    **/
-    cursor?: titulo_x_cedenteWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` titulo_x_cedentes from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` titulo_x_cedentes.
-     * 
-    **/
-    skip?: number
-    distinct?: Enumerable<Titulo_x_cedenteScalarFieldEnum>
-  }
-
-
-  /**
-   * titulo_x_cedente create
-   */
-  export type titulo_x_cedenteCreateArgs = {
-    /**
-     * Select specific fields to fetch from the titulo_x_cedente
-     * 
-    **/
-    select?: titulo_x_cedenteSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: titulo_x_cedenteInclude | null
-    /**
-     * The data needed to create a titulo_x_cedente.
-     * 
-    **/
-    data: XOR<titulo_x_cedenteCreateInput, titulo_x_cedenteUncheckedCreateInput>
-  }
-
-
-  /**
-   * titulo_x_cedente createMany
-   */
-  export type titulo_x_cedenteCreateManyArgs = {
-    /**
-     * The data used to create many titulo_x_cedentes.
-     * 
-    **/
-    data: Enumerable<titulo_x_cedenteCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * titulo_x_cedente update
-   */
-  export type titulo_x_cedenteUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the titulo_x_cedente
-     * 
-    **/
-    select?: titulo_x_cedenteSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: titulo_x_cedenteInclude | null
-    /**
-     * The data needed to update a titulo_x_cedente.
-     * 
-    **/
-    data: XOR<titulo_x_cedenteUpdateInput, titulo_x_cedenteUncheckedUpdateInput>
-    /**
-     * Choose, which titulo_x_cedente to update.
-     * 
-    **/
-    where: titulo_x_cedenteWhereUniqueInput
-  }
-
-
-  /**
-   * titulo_x_cedente updateMany
-   */
-  export type titulo_x_cedenteUpdateManyArgs = {
-    /**
-     * The data used to update titulo_x_cedentes.
-     * 
-    **/
-    data: XOR<titulo_x_cedenteUpdateManyMutationInput, titulo_x_cedenteUncheckedUpdateManyInput>
-    /**
-     * Filter which titulo_x_cedentes to update
-     * 
-    **/
-    where?: titulo_x_cedenteWhereInput
-  }
-
-
-  /**
-   * titulo_x_cedente upsert
-   */
-  export type titulo_x_cedenteUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the titulo_x_cedente
-     * 
-    **/
-    select?: titulo_x_cedenteSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: titulo_x_cedenteInclude | null
-    /**
-     * The filter to search for the titulo_x_cedente to update in case it exists.
-     * 
-    **/
-    where: titulo_x_cedenteWhereUniqueInput
-    /**
-     * In case the titulo_x_cedente found by the `where` argument doesn't exist, create a new titulo_x_cedente with this data.
-     * 
-    **/
-    create: XOR<titulo_x_cedenteCreateInput, titulo_x_cedenteUncheckedCreateInput>
-    /**
-     * In case the titulo_x_cedente was found with the provided `where` argument, update it with this data.
-     * 
-    **/
-    update: XOR<titulo_x_cedenteUpdateInput, titulo_x_cedenteUncheckedUpdateInput>
-  }
-
-
-  /**
-   * titulo_x_cedente delete
-   */
-  export type titulo_x_cedenteDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the titulo_x_cedente
-     * 
-    **/
-    select?: titulo_x_cedenteSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: titulo_x_cedenteInclude | null
-    /**
-     * Filter which titulo_x_cedente to delete.
-     * 
-    **/
-    where: titulo_x_cedenteWhereUniqueInput
-  }
-
-
-  /**
-   * titulo_x_cedente deleteMany
-   */
-  export type titulo_x_cedenteDeleteManyArgs = {
-    /**
-     * Filter which titulo_x_cedentes to delete
-     * 
-    **/
-    where?: titulo_x_cedenteWhereInput
-  }
-
-
-  /**
-   * titulo_x_cedente: findUniqueOrThrow
-   */
-  export type titulo_x_cedenteFindUniqueOrThrowArgs = titulo_x_cedenteFindUniqueArgsBase
-      
-
-  /**
-   * titulo_x_cedente: findFirstOrThrow
-   */
-  export type titulo_x_cedenteFindFirstOrThrowArgs = titulo_x_cedenteFindFirstArgsBase
-      
-
-  /**
-   * titulo_x_cedente without action
-   */
-  export type titulo_x_cedenteArgs = {
-    /**
-     * Select specific fields to fetch from the titulo_x_cedente
-     * 
-    **/
-    select?: titulo_x_cedenteSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: titulo_x_cedenteInclude | null
-  }
-
-
-
-  /**
-   * Model titulo_x_empresa
-   */
-
-
-  export type AggregateTitulo_x_empresa = {
-    _count: Titulo_x_empresaCountAggregateOutputType | null
-    _avg: Titulo_x_empresaAvgAggregateOutputType | null
-    _sum: Titulo_x_empresaSumAggregateOutputType | null
-    _min: Titulo_x_empresaMinAggregateOutputType | null
-    _max: Titulo_x_empresaMaxAggregateOutputType | null
-  }
-
-  export type Titulo_x_empresaAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Titulo_x_empresaSumAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Titulo_x_empresaMinAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Titulo_x_empresaMaxAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Titulo_x_empresaCountAggregateOutputType = {
-    id: number
-    _all: number
-  }
-
-
-  export type Titulo_x_empresaAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type Titulo_x_empresaSumAggregateInputType = {
-    id?: true
-  }
-
-  export type Titulo_x_empresaMinAggregateInputType = {
-    id?: true
-  }
-
-  export type Titulo_x_empresaMaxAggregateInputType = {
-    id?: true
-  }
-
-  export type Titulo_x_empresaCountAggregateInputType = {
-    id?: true
-    _all?: true
-  }
-
-  export type Titulo_x_empresaAggregateArgs = {
-    /**
-     * Filter which titulo_x_empresa to aggregate.
-     * 
-    **/
-    where?: titulo_x_empresaWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of titulo_x_empresas to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<titulo_x_empresaOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     * 
-    **/
-    cursor?: titulo_x_empresaWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` titulo_x_empresas from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` titulo_x_empresas.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned titulo_x_empresas
-    **/
-    _count?: true | Titulo_x_empresaCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Titulo_x_empresaAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Titulo_x_empresaSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: Titulo_x_empresaMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: Titulo_x_empresaMaxAggregateInputType
-  }
-
-  export type GetTitulo_x_empresaAggregateType<T extends Titulo_x_empresaAggregateArgs> = {
-        [P in keyof T & keyof AggregateTitulo_x_empresa]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateTitulo_x_empresa[P]>
-      : GetScalarType<T[P], AggregateTitulo_x_empresa[P]>
-  }
-
-
-
-
-  export type Titulo_x_empresaGroupByArgs = {
-    where?: titulo_x_empresaWhereInput
-    orderBy?: Enumerable<titulo_x_empresaOrderByWithAggregationInput>
-    by: Array<Titulo_x_empresaScalarFieldEnum>
-    having?: titulo_x_empresaScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: Titulo_x_empresaCountAggregateInputType | true
-    _avg?: Titulo_x_empresaAvgAggregateInputType
-    _sum?: Titulo_x_empresaSumAggregateInputType
-    _min?: Titulo_x_empresaMinAggregateInputType
-    _max?: Titulo_x_empresaMaxAggregateInputType
-  }
-
-
-  export type Titulo_x_empresaGroupByOutputType = {
-    id: number
-    _count: Titulo_x_empresaCountAggregateOutputType | null
-    _avg: Titulo_x_empresaAvgAggregateOutputType | null
-    _sum: Titulo_x_empresaSumAggregateOutputType | null
-    _min: Titulo_x_empresaMinAggregateOutputType | null
-    _max: Titulo_x_empresaMaxAggregateOutputType | null
-  }
-
-  type GetTitulo_x_empresaGroupByPayload<T extends Titulo_x_empresaGroupByArgs> = PrismaPromise<
-    Array<
-      PickArray<Titulo_x_empresaGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof Titulo_x_empresaGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], Titulo_x_empresaGroupByOutputType[P]>
-            : GetScalarType<T[P], Titulo_x_empresaGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type titulo_x_empresaSelect = {
-    id?: boolean
-  }
-
-
-  export type titulo_x_empresaGetPayload<S extends boolean | null | undefined | titulo_x_empresaArgs, U = keyof S> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? titulo_x_empresa :
-    S extends undefined ? never :
-    S extends { include: any } & (titulo_x_empresaArgs | titulo_x_empresaFindManyArgs)
-    ? titulo_x_empresa 
-    : S extends { select: any } & (titulo_x_empresaArgs | titulo_x_empresaFindManyArgs)
-      ? {
-    [P in TrueKeys<S['select']>]:
-    P extends keyof titulo_x_empresa ? titulo_x_empresa[P] : never
-  } 
-      : titulo_x_empresa
-
-
-  type titulo_x_empresaCountArgs = Merge<
-    Omit<titulo_x_empresaFindManyArgs, 'select' | 'include'> & {
-      select?: Titulo_x_empresaCountAggregateInputType | true
-    }
-  >
-
-  export interface titulo_x_empresaDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-    /**
-     * Find zero or one Titulo_x_empresa that matches the filter.
-     * @param {titulo_x_empresaFindUniqueArgs} args - Arguments to find a Titulo_x_empresa
-     * @example
-     * // Get one Titulo_x_empresa
-     * const titulo_x_empresa = await prisma.titulo_x_empresa.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends titulo_x_empresaFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, titulo_x_empresaFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'titulo_x_empresa'> extends True ? Prisma__titulo_x_empresaClient<titulo_x_empresaGetPayload<T>> : Prisma__titulo_x_empresaClient<titulo_x_empresaGetPayload<T> | null, null>
-
-    /**
-     * Find the first Titulo_x_empresa that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {titulo_x_empresaFindFirstArgs} args - Arguments to find a Titulo_x_empresa
-     * @example
-     * // Get one Titulo_x_empresa
-     * const titulo_x_empresa = await prisma.titulo_x_empresa.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends titulo_x_empresaFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, titulo_x_empresaFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'titulo_x_empresa'> extends True ? Prisma__titulo_x_empresaClient<titulo_x_empresaGetPayload<T>> : Prisma__titulo_x_empresaClient<titulo_x_empresaGetPayload<T> | null, null>
-
-    /**
-     * Find zero or more Titulo_x_empresas that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {titulo_x_empresaFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Titulo_x_empresas
-     * const titulo_x_empresas = await prisma.titulo_x_empresa.findMany()
-     * 
-     * // Get first 10 Titulo_x_empresas
-     * const titulo_x_empresas = await prisma.titulo_x_empresa.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const titulo_x_empresaWithIdOnly = await prisma.titulo_x_empresa.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends titulo_x_empresaFindManyArgs>(
-      args?: SelectSubset<T, titulo_x_empresaFindManyArgs>
-    ): PrismaPromise<Array<titulo_x_empresaGetPayload<T>>>
-
-    /**
-     * Create a Titulo_x_empresa.
-     * @param {titulo_x_empresaCreateArgs} args - Arguments to create a Titulo_x_empresa.
-     * @example
-     * // Create one Titulo_x_empresa
-     * const Titulo_x_empresa = await prisma.titulo_x_empresa.create({
-     *   data: {
-     *     // ... data to create a Titulo_x_empresa
-     *   }
-     * })
-     * 
-    **/
-    create<T extends titulo_x_empresaCreateArgs>(
-      args: SelectSubset<T, titulo_x_empresaCreateArgs>
-    ): Prisma__titulo_x_empresaClient<titulo_x_empresaGetPayload<T>>
-
-    /**
-     * Create many Titulo_x_empresas.
-     *     @param {titulo_x_empresaCreateManyArgs} args - Arguments to create many Titulo_x_empresas.
-     *     @example
-     *     // Create many Titulo_x_empresas
-     *     const titulo_x_empresa = await prisma.titulo_x_empresa.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends titulo_x_empresaCreateManyArgs>(
-      args?: SelectSubset<T, titulo_x_empresaCreateManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a Titulo_x_empresa.
-     * @param {titulo_x_empresaDeleteArgs} args - Arguments to delete one Titulo_x_empresa.
-     * @example
-     * // Delete one Titulo_x_empresa
-     * const Titulo_x_empresa = await prisma.titulo_x_empresa.delete({
-     *   where: {
-     *     // ... filter to delete one Titulo_x_empresa
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends titulo_x_empresaDeleteArgs>(
-      args: SelectSubset<T, titulo_x_empresaDeleteArgs>
-    ): Prisma__titulo_x_empresaClient<titulo_x_empresaGetPayload<T>>
-
-    /**
-     * Update one Titulo_x_empresa.
-     * @param {titulo_x_empresaUpdateArgs} args - Arguments to update one Titulo_x_empresa.
-     * @example
-     * // Update one Titulo_x_empresa
-     * const titulo_x_empresa = await prisma.titulo_x_empresa.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends titulo_x_empresaUpdateArgs>(
-      args: SelectSubset<T, titulo_x_empresaUpdateArgs>
-    ): Prisma__titulo_x_empresaClient<titulo_x_empresaGetPayload<T>>
-
-    /**
-     * Delete zero or more Titulo_x_empresas.
-     * @param {titulo_x_empresaDeleteManyArgs} args - Arguments to filter Titulo_x_empresas to delete.
-     * @example
-     * // Delete a few Titulo_x_empresas
-     * const { count } = await prisma.titulo_x_empresa.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends titulo_x_empresaDeleteManyArgs>(
-      args?: SelectSubset<T, titulo_x_empresaDeleteManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Titulo_x_empresas.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {titulo_x_empresaUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Titulo_x_empresas
-     * const titulo_x_empresa = await prisma.titulo_x_empresa.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends titulo_x_empresaUpdateManyArgs>(
-      args: SelectSubset<T, titulo_x_empresaUpdateManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one Titulo_x_empresa.
-     * @param {titulo_x_empresaUpsertArgs} args - Arguments to update or create a Titulo_x_empresa.
-     * @example
-     * // Update or create a Titulo_x_empresa
-     * const titulo_x_empresa = await prisma.titulo_x_empresa.upsert({
-     *   create: {
-     *     // ... data to create a Titulo_x_empresa
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Titulo_x_empresa we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends titulo_x_empresaUpsertArgs>(
-      args: SelectSubset<T, titulo_x_empresaUpsertArgs>
-    ): Prisma__titulo_x_empresaClient<titulo_x_empresaGetPayload<T>>
-
-    /**
-     * Find one Titulo_x_empresa that matches the filter or throw
-     * `NotFoundError` if no matches were found.
-     * @param {titulo_x_empresaFindUniqueOrThrowArgs} args - Arguments to find a Titulo_x_empresa
-     * @example
-     * // Get one Titulo_x_empresa
-     * const titulo_x_empresa = await prisma.titulo_x_empresa.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends titulo_x_empresaFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, titulo_x_empresaFindUniqueOrThrowArgs>
-    ): Prisma__titulo_x_empresaClient<titulo_x_empresaGetPayload<T>>
-
-    /**
-     * Find the first Titulo_x_empresa that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {titulo_x_empresaFindFirstOrThrowArgs} args - Arguments to find a Titulo_x_empresa
-     * @example
-     * // Get one Titulo_x_empresa
-     * const titulo_x_empresa = await prisma.titulo_x_empresa.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends titulo_x_empresaFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, titulo_x_empresaFindFirstOrThrowArgs>
-    ): Prisma__titulo_x_empresaClient<titulo_x_empresaGetPayload<T>>
-
-    /**
-     * Count the number of Titulo_x_empresas.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {titulo_x_empresaCountArgs} args - Arguments to filter Titulo_x_empresas to count.
-     * @example
-     * // Count the number of Titulo_x_empresas
-     * const count = await prisma.titulo_x_empresa.count({
-     *   where: {
-     *     // ... the filter for the Titulo_x_empresas we want to count
-     *   }
-     * })
-    **/
-    count<T extends titulo_x_empresaCountArgs>(
-      args?: Subset<T, titulo_x_empresaCountArgs>,
-    ): PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], Titulo_x_empresaCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Titulo_x_empresa.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Titulo_x_empresaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends Titulo_x_empresaAggregateArgs>(args: Subset<T, Titulo_x_empresaAggregateArgs>): PrismaPromise<GetTitulo_x_empresaAggregateType<T>>
-
-    /**
-     * Group by Titulo_x_empresa.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Titulo_x_empresaGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends Titulo_x_empresaGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: Titulo_x_empresaGroupByArgs['orderBy'] }
-        : { orderBy?: Titulo_x_empresaGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, Titulo_x_empresaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTitulo_x_empresaGroupByPayload<T> : PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for titulo_x_empresa.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__titulo_x_empresaClient<T, Null = never> implements PrismaPromise<T> {
-    [prisma]: true;
-    private readonly _dmmf;
-    private readonly _fetcher;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-    readonly [Symbol.toStringTag]: 'PrismaClientPromise';
-
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * titulo_x_empresa base type for findUnique actions
-   */
-  export type titulo_x_empresaFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the titulo_x_empresa
-     * 
-    **/
-    select?: titulo_x_empresaSelect | null
-    /**
-     * Filter, which titulo_x_empresa to fetch.
-     * 
-    **/
-    where: titulo_x_empresaWhereUniqueInput
-  }
-
-  /**
-   * titulo_x_empresa: findUnique
-   */
-  export interface titulo_x_empresaFindUniqueArgs extends titulo_x_empresaFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * titulo_x_empresa base type for findFirst actions
-   */
-  export type titulo_x_empresaFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the titulo_x_empresa
-     * 
-    **/
-    select?: titulo_x_empresaSelect | null
-    /**
-     * Filter, which titulo_x_empresa to fetch.
-     * 
-    **/
-    where?: titulo_x_empresaWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of titulo_x_empresas to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<titulo_x_empresaOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for titulo_x_empresas.
-     * 
-    **/
-    cursor?: titulo_x_empresaWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` titulo_x_empresas from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` titulo_x_empresas.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of titulo_x_empresas.
-     * 
-    **/
-    distinct?: Enumerable<Titulo_x_empresaScalarFieldEnum>
-  }
-
-  /**
-   * titulo_x_empresa: findFirst
-   */
-  export interface titulo_x_empresaFindFirstArgs extends titulo_x_empresaFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * titulo_x_empresa findMany
-   */
-  export type titulo_x_empresaFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the titulo_x_empresa
-     * 
-    **/
-    select?: titulo_x_empresaSelect | null
-    /**
-     * Filter, which titulo_x_empresas to fetch.
-     * 
-    **/
-    where?: titulo_x_empresaWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of titulo_x_empresas to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<titulo_x_empresaOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing titulo_x_empresas.
-     * 
-    **/
-    cursor?: titulo_x_empresaWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` titulo_x_empresas from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` titulo_x_empresas.
-     * 
-    **/
-    skip?: number
-    distinct?: Enumerable<Titulo_x_empresaScalarFieldEnum>
-  }
-
-
-  /**
-   * titulo_x_empresa create
-   */
-  export type titulo_x_empresaCreateArgs = {
-    /**
-     * Select specific fields to fetch from the titulo_x_empresa
-     * 
-    **/
-    select?: titulo_x_empresaSelect | null
-    /**
-     * The data needed to create a titulo_x_empresa.
-     * 
-    **/
-    data?: XOR<titulo_x_empresaCreateInput, titulo_x_empresaUncheckedCreateInput>
-  }
-
-
-  /**
-   * titulo_x_empresa createMany
-   */
-  export type titulo_x_empresaCreateManyArgs = {
-    /**
-     * The data used to create many titulo_x_empresas.
-     * 
-    **/
-    data: Enumerable<titulo_x_empresaCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * titulo_x_empresa update
-   */
-  export type titulo_x_empresaUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the titulo_x_empresa
-     * 
-    **/
-    select?: titulo_x_empresaSelect | null
-    /**
-     * The data needed to update a titulo_x_empresa.
-     * 
-    **/
-    data: XOR<titulo_x_empresaUpdateInput, titulo_x_empresaUncheckedUpdateInput>
-    /**
-     * Choose, which titulo_x_empresa to update.
-     * 
-    **/
-    where: titulo_x_empresaWhereUniqueInput
-  }
-
-
-  /**
-   * titulo_x_empresa updateMany
-   */
-  export type titulo_x_empresaUpdateManyArgs = {
-    /**
-     * The data used to update titulo_x_empresas.
-     * 
-    **/
-    data: XOR<titulo_x_empresaUpdateManyMutationInput, titulo_x_empresaUncheckedUpdateManyInput>
-    /**
-     * Filter which titulo_x_empresas to update
-     * 
-    **/
-    where?: titulo_x_empresaWhereInput
-  }
-
-
-  /**
-   * titulo_x_empresa upsert
-   */
-  export type titulo_x_empresaUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the titulo_x_empresa
-     * 
-    **/
-    select?: titulo_x_empresaSelect | null
-    /**
-     * The filter to search for the titulo_x_empresa to update in case it exists.
-     * 
-    **/
-    where: titulo_x_empresaWhereUniqueInput
-    /**
-     * In case the titulo_x_empresa found by the `where` argument doesn't exist, create a new titulo_x_empresa with this data.
-     * 
-    **/
-    create: XOR<titulo_x_empresaCreateInput, titulo_x_empresaUncheckedCreateInput>
-    /**
-     * In case the titulo_x_empresa was found with the provided `where` argument, update it with this data.
-     * 
-    **/
-    update: XOR<titulo_x_empresaUpdateInput, titulo_x_empresaUncheckedUpdateInput>
-  }
-
-
-  /**
-   * titulo_x_empresa delete
-   */
-  export type titulo_x_empresaDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the titulo_x_empresa
-     * 
-    **/
-    select?: titulo_x_empresaSelect | null
-    /**
-     * Filter which titulo_x_empresa to delete.
-     * 
-    **/
-    where: titulo_x_empresaWhereUniqueInput
-  }
-
-
-  /**
-   * titulo_x_empresa deleteMany
-   */
-  export type titulo_x_empresaDeleteManyArgs = {
-    /**
-     * Filter which titulo_x_empresas to delete
-     * 
-    **/
-    where?: titulo_x_empresaWhereInput
-  }
-
-
-  /**
-   * titulo_x_empresa: findUniqueOrThrow
-   */
-  export type titulo_x_empresaFindUniqueOrThrowArgs = titulo_x_empresaFindUniqueArgsBase
-      
-
-  /**
-   * titulo_x_empresa: findFirstOrThrow
-   */
-  export type titulo_x_empresaFindFirstOrThrowArgs = titulo_x_empresaFindFirstArgsBase
-      
-
-  /**
-   * titulo_x_empresa without action
-   */
-  export type titulo_x_empresaArgs = {
-    /**
-     * Select specific fields to fetch from the titulo_x_empresa
-     * 
-    **/
-    select?: titulo_x_empresaSelect | null
-  }
-
-
-
-  /**
-   * Model titulo_x_plataforma
-   */
-
-
-  export type AggregateTitulo_x_plataforma = {
-    _count: Titulo_x_plataformaCountAggregateOutputType | null
-    _avg: Titulo_x_plataformaAvgAggregateOutputType | null
-    _sum: Titulo_x_plataformaSumAggregateOutputType | null
-    _min: Titulo_x_plataformaMinAggregateOutputType | null
-    _max: Titulo_x_plataformaMaxAggregateOutputType | null
-  }
-
-  export type Titulo_x_plataformaAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Titulo_x_plataformaSumAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Titulo_x_plataformaMinAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Titulo_x_plataformaMaxAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Titulo_x_plataformaCountAggregateOutputType = {
-    id: number
-    _all: number
-  }
-
-
-  export type Titulo_x_plataformaAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type Titulo_x_plataformaSumAggregateInputType = {
-    id?: true
-  }
-
-  export type Titulo_x_plataformaMinAggregateInputType = {
-    id?: true
-  }
-
-  export type Titulo_x_plataformaMaxAggregateInputType = {
-    id?: true
-  }
-
-  export type Titulo_x_plataformaCountAggregateInputType = {
-    id?: true
-    _all?: true
-  }
-
-  export type Titulo_x_plataformaAggregateArgs = {
-    /**
-     * Filter which titulo_x_plataforma to aggregate.
-     * 
-    **/
-    where?: titulo_x_plataformaWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of titulo_x_plataformas to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<titulo_x_plataformaOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     * 
-    **/
-    cursor?: titulo_x_plataformaWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` titulo_x_plataformas from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` titulo_x_plataformas.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned titulo_x_plataformas
-    **/
-    _count?: true | Titulo_x_plataformaCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Titulo_x_plataformaAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Titulo_x_plataformaSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: Titulo_x_plataformaMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: Titulo_x_plataformaMaxAggregateInputType
-  }
-
-  export type GetTitulo_x_plataformaAggregateType<T extends Titulo_x_plataformaAggregateArgs> = {
-        [P in keyof T & keyof AggregateTitulo_x_plataforma]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateTitulo_x_plataforma[P]>
-      : GetScalarType<T[P], AggregateTitulo_x_plataforma[P]>
-  }
-
-
-
-
-  export type Titulo_x_plataformaGroupByArgs = {
-    where?: titulo_x_plataformaWhereInput
-    orderBy?: Enumerable<titulo_x_plataformaOrderByWithAggregationInput>
-    by: Array<Titulo_x_plataformaScalarFieldEnum>
-    having?: titulo_x_plataformaScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: Titulo_x_plataformaCountAggregateInputType | true
-    _avg?: Titulo_x_plataformaAvgAggregateInputType
-    _sum?: Titulo_x_plataformaSumAggregateInputType
-    _min?: Titulo_x_plataformaMinAggregateInputType
-    _max?: Titulo_x_plataformaMaxAggregateInputType
-  }
-
-
-  export type Titulo_x_plataformaGroupByOutputType = {
-    id: number
-    _count: Titulo_x_plataformaCountAggregateOutputType | null
-    _avg: Titulo_x_plataformaAvgAggregateOutputType | null
-    _sum: Titulo_x_plataformaSumAggregateOutputType | null
-    _min: Titulo_x_plataformaMinAggregateOutputType | null
-    _max: Titulo_x_plataformaMaxAggregateOutputType | null
-  }
-
-  type GetTitulo_x_plataformaGroupByPayload<T extends Titulo_x_plataformaGroupByArgs> = PrismaPromise<
-    Array<
-      PickArray<Titulo_x_plataformaGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof Titulo_x_plataformaGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], Titulo_x_plataformaGroupByOutputType[P]>
-            : GetScalarType<T[P], Titulo_x_plataformaGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type titulo_x_plataformaSelect = {
-    id?: boolean
-  }
-
-
-  export type titulo_x_plataformaGetPayload<S extends boolean | null | undefined | titulo_x_plataformaArgs, U = keyof S> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? titulo_x_plataforma :
-    S extends undefined ? never :
-    S extends { include: any } & (titulo_x_plataformaArgs | titulo_x_plataformaFindManyArgs)
-    ? titulo_x_plataforma 
-    : S extends { select: any } & (titulo_x_plataformaArgs | titulo_x_plataformaFindManyArgs)
-      ? {
-    [P in TrueKeys<S['select']>]:
-    P extends keyof titulo_x_plataforma ? titulo_x_plataforma[P] : never
-  } 
-      : titulo_x_plataforma
-
-
-  type titulo_x_plataformaCountArgs = Merge<
-    Omit<titulo_x_plataformaFindManyArgs, 'select' | 'include'> & {
-      select?: Titulo_x_plataformaCountAggregateInputType | true
-    }
-  >
-
-  export interface titulo_x_plataformaDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-    /**
-     * Find zero or one Titulo_x_plataforma that matches the filter.
-     * @param {titulo_x_plataformaFindUniqueArgs} args - Arguments to find a Titulo_x_plataforma
-     * @example
-     * // Get one Titulo_x_plataforma
-     * const titulo_x_plataforma = await prisma.titulo_x_plataforma.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends titulo_x_plataformaFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, titulo_x_plataformaFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'titulo_x_plataforma'> extends True ? Prisma__titulo_x_plataformaClient<titulo_x_plataformaGetPayload<T>> : Prisma__titulo_x_plataformaClient<titulo_x_plataformaGetPayload<T> | null, null>
-
-    /**
-     * Find the first Titulo_x_plataforma that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {titulo_x_plataformaFindFirstArgs} args - Arguments to find a Titulo_x_plataforma
-     * @example
-     * // Get one Titulo_x_plataforma
-     * const titulo_x_plataforma = await prisma.titulo_x_plataforma.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends titulo_x_plataformaFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, titulo_x_plataformaFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'titulo_x_plataforma'> extends True ? Prisma__titulo_x_plataformaClient<titulo_x_plataformaGetPayload<T>> : Prisma__titulo_x_plataformaClient<titulo_x_plataformaGetPayload<T> | null, null>
-
-    /**
-     * Find zero or more Titulo_x_plataformas that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {titulo_x_plataformaFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Titulo_x_plataformas
-     * const titulo_x_plataformas = await prisma.titulo_x_plataforma.findMany()
-     * 
-     * // Get first 10 Titulo_x_plataformas
-     * const titulo_x_plataformas = await prisma.titulo_x_plataforma.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const titulo_x_plataformaWithIdOnly = await prisma.titulo_x_plataforma.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends titulo_x_plataformaFindManyArgs>(
-      args?: SelectSubset<T, titulo_x_plataformaFindManyArgs>
-    ): PrismaPromise<Array<titulo_x_plataformaGetPayload<T>>>
-
-    /**
-     * Create a Titulo_x_plataforma.
-     * @param {titulo_x_plataformaCreateArgs} args - Arguments to create a Titulo_x_plataforma.
-     * @example
-     * // Create one Titulo_x_plataforma
-     * const Titulo_x_plataforma = await prisma.titulo_x_plataforma.create({
-     *   data: {
-     *     // ... data to create a Titulo_x_plataforma
-     *   }
-     * })
-     * 
-    **/
-    create<T extends titulo_x_plataformaCreateArgs>(
-      args: SelectSubset<T, titulo_x_plataformaCreateArgs>
-    ): Prisma__titulo_x_plataformaClient<titulo_x_plataformaGetPayload<T>>
-
-    /**
-     * Create many Titulo_x_plataformas.
-     *     @param {titulo_x_plataformaCreateManyArgs} args - Arguments to create many Titulo_x_plataformas.
-     *     @example
-     *     // Create many Titulo_x_plataformas
-     *     const titulo_x_plataforma = await prisma.titulo_x_plataforma.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends titulo_x_plataformaCreateManyArgs>(
-      args?: SelectSubset<T, titulo_x_plataformaCreateManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a Titulo_x_plataforma.
-     * @param {titulo_x_plataformaDeleteArgs} args - Arguments to delete one Titulo_x_plataforma.
-     * @example
-     * // Delete one Titulo_x_plataforma
-     * const Titulo_x_plataforma = await prisma.titulo_x_plataforma.delete({
-     *   where: {
-     *     // ... filter to delete one Titulo_x_plataforma
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends titulo_x_plataformaDeleteArgs>(
-      args: SelectSubset<T, titulo_x_plataformaDeleteArgs>
-    ): Prisma__titulo_x_plataformaClient<titulo_x_plataformaGetPayload<T>>
-
-    /**
-     * Update one Titulo_x_plataforma.
-     * @param {titulo_x_plataformaUpdateArgs} args - Arguments to update one Titulo_x_plataforma.
-     * @example
-     * // Update one Titulo_x_plataforma
-     * const titulo_x_plataforma = await prisma.titulo_x_plataforma.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends titulo_x_plataformaUpdateArgs>(
-      args: SelectSubset<T, titulo_x_plataformaUpdateArgs>
-    ): Prisma__titulo_x_plataformaClient<titulo_x_plataformaGetPayload<T>>
-
-    /**
-     * Delete zero or more Titulo_x_plataformas.
-     * @param {titulo_x_plataformaDeleteManyArgs} args - Arguments to filter Titulo_x_plataformas to delete.
-     * @example
-     * // Delete a few Titulo_x_plataformas
-     * const { count } = await prisma.titulo_x_plataforma.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends titulo_x_plataformaDeleteManyArgs>(
-      args?: SelectSubset<T, titulo_x_plataformaDeleteManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Titulo_x_plataformas.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {titulo_x_plataformaUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Titulo_x_plataformas
-     * const titulo_x_plataforma = await prisma.titulo_x_plataforma.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends titulo_x_plataformaUpdateManyArgs>(
-      args: SelectSubset<T, titulo_x_plataformaUpdateManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one Titulo_x_plataforma.
-     * @param {titulo_x_plataformaUpsertArgs} args - Arguments to update or create a Titulo_x_plataforma.
-     * @example
-     * // Update or create a Titulo_x_plataforma
-     * const titulo_x_plataforma = await prisma.titulo_x_plataforma.upsert({
-     *   create: {
-     *     // ... data to create a Titulo_x_plataforma
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Titulo_x_plataforma we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends titulo_x_plataformaUpsertArgs>(
-      args: SelectSubset<T, titulo_x_plataformaUpsertArgs>
-    ): Prisma__titulo_x_plataformaClient<titulo_x_plataformaGetPayload<T>>
-
-    /**
-     * Find one Titulo_x_plataforma that matches the filter or throw
-     * `NotFoundError` if no matches were found.
-     * @param {titulo_x_plataformaFindUniqueOrThrowArgs} args - Arguments to find a Titulo_x_plataforma
-     * @example
-     * // Get one Titulo_x_plataforma
-     * const titulo_x_plataforma = await prisma.titulo_x_plataforma.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends titulo_x_plataformaFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, titulo_x_plataformaFindUniqueOrThrowArgs>
-    ): Prisma__titulo_x_plataformaClient<titulo_x_plataformaGetPayload<T>>
-
-    /**
-     * Find the first Titulo_x_plataforma that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {titulo_x_plataformaFindFirstOrThrowArgs} args - Arguments to find a Titulo_x_plataforma
-     * @example
-     * // Get one Titulo_x_plataforma
-     * const titulo_x_plataforma = await prisma.titulo_x_plataforma.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends titulo_x_plataformaFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, titulo_x_plataformaFindFirstOrThrowArgs>
-    ): Prisma__titulo_x_plataformaClient<titulo_x_plataformaGetPayload<T>>
-
-    /**
-     * Count the number of Titulo_x_plataformas.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {titulo_x_plataformaCountArgs} args - Arguments to filter Titulo_x_plataformas to count.
-     * @example
-     * // Count the number of Titulo_x_plataformas
-     * const count = await prisma.titulo_x_plataforma.count({
-     *   where: {
-     *     // ... the filter for the Titulo_x_plataformas we want to count
-     *   }
-     * })
-    **/
-    count<T extends titulo_x_plataformaCountArgs>(
-      args?: Subset<T, titulo_x_plataformaCountArgs>,
-    ): PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], Titulo_x_plataformaCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Titulo_x_plataforma.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Titulo_x_plataformaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends Titulo_x_plataformaAggregateArgs>(args: Subset<T, Titulo_x_plataformaAggregateArgs>): PrismaPromise<GetTitulo_x_plataformaAggregateType<T>>
-
-    /**
-     * Group by Titulo_x_plataforma.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Titulo_x_plataformaGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends Titulo_x_plataformaGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: Titulo_x_plataformaGroupByArgs['orderBy'] }
-        : { orderBy?: Titulo_x_plataformaGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, Titulo_x_plataformaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTitulo_x_plataformaGroupByPayload<T> : PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for titulo_x_plataforma.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__titulo_x_plataformaClient<T, Null = never> implements PrismaPromise<T> {
-    [prisma]: true;
-    private readonly _dmmf;
-    private readonly _fetcher;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-    readonly [Symbol.toStringTag]: 'PrismaClientPromise';
-
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * titulo_x_plataforma base type for findUnique actions
-   */
-  export type titulo_x_plataformaFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the titulo_x_plataforma
-     * 
-    **/
-    select?: titulo_x_plataformaSelect | null
-    /**
-     * Filter, which titulo_x_plataforma to fetch.
-     * 
-    **/
-    where: titulo_x_plataformaWhereUniqueInput
-  }
-
-  /**
-   * titulo_x_plataforma: findUnique
-   */
-  export interface titulo_x_plataformaFindUniqueArgs extends titulo_x_plataformaFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * titulo_x_plataforma base type for findFirst actions
-   */
-  export type titulo_x_plataformaFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the titulo_x_plataforma
-     * 
-    **/
-    select?: titulo_x_plataformaSelect | null
-    /**
-     * Filter, which titulo_x_plataforma to fetch.
-     * 
-    **/
-    where?: titulo_x_plataformaWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of titulo_x_plataformas to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<titulo_x_plataformaOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for titulo_x_plataformas.
-     * 
-    **/
-    cursor?: titulo_x_plataformaWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` titulo_x_plataformas from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` titulo_x_plataformas.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of titulo_x_plataformas.
-     * 
-    **/
-    distinct?: Enumerable<Titulo_x_plataformaScalarFieldEnum>
-  }
-
-  /**
-   * titulo_x_plataforma: findFirst
-   */
-  export interface titulo_x_plataformaFindFirstArgs extends titulo_x_plataformaFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * titulo_x_plataforma findMany
-   */
-  export type titulo_x_plataformaFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the titulo_x_plataforma
-     * 
-    **/
-    select?: titulo_x_plataformaSelect | null
-    /**
-     * Filter, which titulo_x_plataformas to fetch.
-     * 
-    **/
-    where?: titulo_x_plataformaWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of titulo_x_plataformas to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<titulo_x_plataformaOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing titulo_x_plataformas.
-     * 
-    **/
-    cursor?: titulo_x_plataformaWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` titulo_x_plataformas from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` titulo_x_plataformas.
-     * 
-    **/
-    skip?: number
-    distinct?: Enumerable<Titulo_x_plataformaScalarFieldEnum>
-  }
-
-
-  /**
-   * titulo_x_plataforma create
-   */
-  export type titulo_x_plataformaCreateArgs = {
-    /**
-     * Select specific fields to fetch from the titulo_x_plataforma
-     * 
-    **/
-    select?: titulo_x_plataformaSelect | null
-    /**
-     * The data needed to create a titulo_x_plataforma.
-     * 
-    **/
-    data?: XOR<titulo_x_plataformaCreateInput, titulo_x_plataformaUncheckedCreateInput>
-  }
-
-
-  /**
-   * titulo_x_plataforma createMany
-   */
-  export type titulo_x_plataformaCreateManyArgs = {
-    /**
-     * The data used to create many titulo_x_plataformas.
-     * 
-    **/
-    data: Enumerable<titulo_x_plataformaCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * titulo_x_plataforma update
-   */
-  export type titulo_x_plataformaUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the titulo_x_plataforma
-     * 
-    **/
-    select?: titulo_x_plataformaSelect | null
-    /**
-     * The data needed to update a titulo_x_plataforma.
-     * 
-    **/
-    data: XOR<titulo_x_plataformaUpdateInput, titulo_x_plataformaUncheckedUpdateInput>
-    /**
-     * Choose, which titulo_x_plataforma to update.
-     * 
-    **/
-    where: titulo_x_plataformaWhereUniqueInput
-  }
-
-
-  /**
-   * titulo_x_plataforma updateMany
-   */
-  export type titulo_x_plataformaUpdateManyArgs = {
-    /**
-     * The data used to update titulo_x_plataformas.
-     * 
-    **/
-    data: XOR<titulo_x_plataformaUpdateManyMutationInput, titulo_x_plataformaUncheckedUpdateManyInput>
-    /**
-     * Filter which titulo_x_plataformas to update
-     * 
-    **/
-    where?: titulo_x_plataformaWhereInput
-  }
-
-
-  /**
-   * titulo_x_plataforma upsert
-   */
-  export type titulo_x_plataformaUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the titulo_x_plataforma
-     * 
-    **/
-    select?: titulo_x_plataformaSelect | null
-    /**
-     * The filter to search for the titulo_x_plataforma to update in case it exists.
-     * 
-    **/
-    where: titulo_x_plataformaWhereUniqueInput
-    /**
-     * In case the titulo_x_plataforma found by the `where` argument doesn't exist, create a new titulo_x_plataforma with this data.
-     * 
-    **/
-    create: XOR<titulo_x_plataformaCreateInput, titulo_x_plataformaUncheckedCreateInput>
-    /**
-     * In case the titulo_x_plataforma was found with the provided `where` argument, update it with this data.
-     * 
-    **/
-    update: XOR<titulo_x_plataformaUpdateInput, titulo_x_plataformaUncheckedUpdateInput>
-  }
-
-
-  /**
-   * titulo_x_plataforma delete
-   */
-  export type titulo_x_plataformaDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the titulo_x_plataforma
-     * 
-    **/
-    select?: titulo_x_plataformaSelect | null
-    /**
-     * Filter which titulo_x_plataforma to delete.
-     * 
-    **/
-    where: titulo_x_plataformaWhereUniqueInput
-  }
-
-
-  /**
-   * titulo_x_plataforma deleteMany
-   */
-  export type titulo_x_plataformaDeleteManyArgs = {
-    /**
-     * Filter which titulo_x_plataformas to delete
-     * 
-    **/
-    where?: titulo_x_plataformaWhereInput
-  }
-
-
-  /**
-   * titulo_x_plataforma: findUniqueOrThrow
-   */
-  export type titulo_x_plataformaFindUniqueOrThrowArgs = titulo_x_plataformaFindUniqueArgsBase
-      
-
-  /**
-   * titulo_x_plataforma: findFirstOrThrow
-   */
-  export type titulo_x_plataformaFindFirstOrThrowArgs = titulo_x_plataformaFindFirstArgsBase
-      
-
-  /**
-   * titulo_x_plataforma without action
-   */
-  export type titulo_x_plataformaArgs = {
-    /**
-     * Select specific fields to fetch from the titulo_x_plataforma
-     * 
-    **/
-    select?: titulo_x_plataformaSelect | null
-  }
-
-
-
-  /**
-   * Model titulos_x_usuario
-   */
-
-
-  export type AggregateTitulos_x_usuario = {
-    _count: Titulos_x_usuarioCountAggregateOutputType | null
-    _avg: Titulos_x_usuarioAvgAggregateOutputType | null
-    _sum: Titulos_x_usuarioSumAggregateOutputType | null
-    _min: Titulos_x_usuarioMinAggregateOutputType | null
-    _max: Titulos_x_usuarioMaxAggregateOutputType | null
-  }
-
-  export type Titulos_x_usuarioAvgAggregateOutputType = {
-    id: number | null
-    usuario: number | null
-    bordero: number | null
-  }
-
-  export type Titulos_x_usuarioSumAggregateOutputType = {
-    id: number | null
-    usuario: number | null
-    bordero: number | null
-  }
-
-  export type Titulos_x_usuarioMinAggregateOutputType = {
-    id: number | null
-    usuario: number | null
-    bordero: number | null
-    status: string | null
-  }
-
-  export type Titulos_x_usuarioMaxAggregateOutputType = {
-    id: number | null
-    usuario: number | null
-    bordero: number | null
-    status: string | null
-  }
-
-  export type Titulos_x_usuarioCountAggregateOutputType = {
-    id: number
-    usuario: number
-    bordero: number
-    status: number
-    _all: number
-  }
-
-
-  export type Titulos_x_usuarioAvgAggregateInputType = {
-    id?: true
-    usuario?: true
-    bordero?: true
-  }
-
-  export type Titulos_x_usuarioSumAggregateInputType = {
-    id?: true
-    usuario?: true
-    bordero?: true
-  }
-
-  export type Titulos_x_usuarioMinAggregateInputType = {
-    id?: true
-    usuario?: true
-    bordero?: true
-    status?: true
-  }
-
-  export type Titulos_x_usuarioMaxAggregateInputType = {
-    id?: true
-    usuario?: true
-    bordero?: true
-    status?: true
-  }
-
-  export type Titulos_x_usuarioCountAggregateInputType = {
-    id?: true
-    usuario?: true
-    bordero?: true
-    status?: true
-    _all?: true
-  }
-
-  export type Titulos_x_usuarioAggregateArgs = {
-    /**
-     * Filter which titulos_x_usuario to aggregate.
-     * 
-    **/
-    where?: titulos_x_usuarioWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of titulos_x_usuarios to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<titulos_x_usuarioOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     * 
-    **/
-    cursor?: titulos_x_usuarioWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` titulos_x_usuarios from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` titulos_x_usuarios.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned titulos_x_usuarios
-    **/
-    _count?: true | Titulos_x_usuarioCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Titulos_x_usuarioAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Titulos_x_usuarioSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: Titulos_x_usuarioMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: Titulos_x_usuarioMaxAggregateInputType
-  }
-
-  export type GetTitulos_x_usuarioAggregateType<T extends Titulos_x_usuarioAggregateArgs> = {
-        [P in keyof T & keyof AggregateTitulos_x_usuario]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateTitulos_x_usuario[P]>
-      : GetScalarType<T[P], AggregateTitulos_x_usuario[P]>
-  }
-
-
-
-
-  export type Titulos_x_usuarioGroupByArgs = {
-    where?: titulos_x_usuarioWhereInput
-    orderBy?: Enumerable<titulos_x_usuarioOrderByWithAggregationInput>
-    by: Array<Titulos_x_usuarioScalarFieldEnum>
-    having?: titulos_x_usuarioScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: Titulos_x_usuarioCountAggregateInputType | true
-    _avg?: Titulos_x_usuarioAvgAggregateInputType
-    _sum?: Titulos_x_usuarioSumAggregateInputType
-    _min?: Titulos_x_usuarioMinAggregateInputType
-    _max?: Titulos_x_usuarioMaxAggregateInputType
-  }
-
-
-  export type Titulos_x_usuarioGroupByOutputType = {
-    id: number
-    usuario: number | null
-    bordero: number | null
-    status: string | null
-    _count: Titulos_x_usuarioCountAggregateOutputType | null
-    _avg: Titulos_x_usuarioAvgAggregateOutputType | null
-    _sum: Titulos_x_usuarioSumAggregateOutputType | null
-    _min: Titulos_x_usuarioMinAggregateOutputType | null
-    _max: Titulos_x_usuarioMaxAggregateOutputType | null
-  }
-
-  type GetTitulos_x_usuarioGroupByPayload<T extends Titulos_x_usuarioGroupByArgs> = PrismaPromise<
-    Array<
-      PickArray<Titulos_x_usuarioGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof Titulos_x_usuarioGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], Titulos_x_usuarioGroupByOutputType[P]>
-            : GetScalarType<T[P], Titulos_x_usuarioGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type titulos_x_usuarioSelect = {
-    id?: boolean
-    usuario?: boolean
-    bordero?: boolean
-    status?: boolean
-    bordero_borderoTotitulos_x_usuario?: boolean | borderoArgs
-    usuario_titulos_x_usuarioTousuario?: boolean | usuarioArgs
-  }
-
-
-  export type titulos_x_usuarioInclude = {
-    bordero_borderoTotitulos_x_usuario?: boolean | borderoArgs
-    usuario_titulos_x_usuarioTousuario?: boolean | usuarioArgs
-  } 
-
-  export type titulos_x_usuarioGetPayload<S extends boolean | null | undefined | titulos_x_usuarioArgs, U = keyof S> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? titulos_x_usuario :
-    S extends undefined ? never :
-    S extends { include: any } & (titulos_x_usuarioArgs | titulos_x_usuarioFindManyArgs)
-    ? titulos_x_usuario  & {
-    [P in TrueKeys<S['include']>]:
-        P extends 'bordero_borderoTotitulos_x_usuario' ? borderoGetPayload<Exclude<S['include'], undefined | null>[P]> | null :
-        P extends 'usuario_titulos_x_usuarioTousuario' ? usuarioGetPayload<Exclude<S['include'], undefined | null>[P]> | null :  never
-  } 
-    : S extends { select: any } & (titulos_x_usuarioArgs | titulos_x_usuarioFindManyArgs)
-      ? {
-    [P in TrueKeys<S['select']>]:
-        P extends 'bordero_borderoTotitulos_x_usuario' ? borderoGetPayload<Exclude<S['select'], undefined | null>[P]> | null :
-        P extends 'usuario_titulos_x_usuarioTousuario' ? usuarioGetPayload<Exclude<S['select'], undefined | null>[P]> | null :  P extends keyof titulos_x_usuario ? titulos_x_usuario[P] : never
-  } 
-      : titulos_x_usuario
-
-
-  type titulos_x_usuarioCountArgs = Merge<
-    Omit<titulos_x_usuarioFindManyArgs, 'select' | 'include'> & {
-      select?: Titulos_x_usuarioCountAggregateInputType | true
-    }
-  >
-
-  export interface titulos_x_usuarioDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-    /**
-     * Find zero or one Titulos_x_usuario that matches the filter.
-     * @param {titulos_x_usuarioFindUniqueArgs} args - Arguments to find a Titulos_x_usuario
-     * @example
-     * // Get one Titulos_x_usuario
-     * const titulos_x_usuario = await prisma.titulos_x_usuario.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends titulos_x_usuarioFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, titulos_x_usuarioFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'titulos_x_usuario'> extends True ? Prisma__titulos_x_usuarioClient<titulos_x_usuarioGetPayload<T>> : Prisma__titulos_x_usuarioClient<titulos_x_usuarioGetPayload<T> | null, null>
-
-    /**
-     * Find the first Titulos_x_usuario that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {titulos_x_usuarioFindFirstArgs} args - Arguments to find a Titulos_x_usuario
-     * @example
-     * // Get one Titulos_x_usuario
-     * const titulos_x_usuario = await prisma.titulos_x_usuario.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends titulos_x_usuarioFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, titulos_x_usuarioFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'titulos_x_usuario'> extends True ? Prisma__titulos_x_usuarioClient<titulos_x_usuarioGetPayload<T>> : Prisma__titulos_x_usuarioClient<titulos_x_usuarioGetPayload<T> | null, null>
-
-    /**
-     * Find zero or more Titulos_x_usuarios that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {titulos_x_usuarioFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Titulos_x_usuarios
-     * const titulos_x_usuarios = await prisma.titulos_x_usuario.findMany()
-     * 
-     * // Get first 10 Titulos_x_usuarios
-     * const titulos_x_usuarios = await prisma.titulos_x_usuario.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const titulos_x_usuarioWithIdOnly = await prisma.titulos_x_usuario.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends titulos_x_usuarioFindManyArgs>(
-      args?: SelectSubset<T, titulos_x_usuarioFindManyArgs>
-    ): PrismaPromise<Array<titulos_x_usuarioGetPayload<T>>>
-
-    /**
-     * Create a Titulos_x_usuario.
-     * @param {titulos_x_usuarioCreateArgs} args - Arguments to create a Titulos_x_usuario.
-     * @example
-     * // Create one Titulos_x_usuario
-     * const Titulos_x_usuario = await prisma.titulos_x_usuario.create({
-     *   data: {
-     *     // ... data to create a Titulos_x_usuario
-     *   }
-     * })
-     * 
-    **/
-    create<T extends titulos_x_usuarioCreateArgs>(
-      args: SelectSubset<T, titulos_x_usuarioCreateArgs>
-    ): Prisma__titulos_x_usuarioClient<titulos_x_usuarioGetPayload<T>>
-
-    /**
-     * Create many Titulos_x_usuarios.
-     *     @param {titulos_x_usuarioCreateManyArgs} args - Arguments to create many Titulos_x_usuarios.
-     *     @example
-     *     // Create many Titulos_x_usuarios
-     *     const titulos_x_usuario = await prisma.titulos_x_usuario.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends titulos_x_usuarioCreateManyArgs>(
-      args?: SelectSubset<T, titulos_x_usuarioCreateManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a Titulos_x_usuario.
-     * @param {titulos_x_usuarioDeleteArgs} args - Arguments to delete one Titulos_x_usuario.
-     * @example
-     * // Delete one Titulos_x_usuario
-     * const Titulos_x_usuario = await prisma.titulos_x_usuario.delete({
-     *   where: {
-     *     // ... filter to delete one Titulos_x_usuario
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends titulos_x_usuarioDeleteArgs>(
-      args: SelectSubset<T, titulos_x_usuarioDeleteArgs>
-    ): Prisma__titulos_x_usuarioClient<titulos_x_usuarioGetPayload<T>>
-
-    /**
-     * Update one Titulos_x_usuario.
-     * @param {titulos_x_usuarioUpdateArgs} args - Arguments to update one Titulos_x_usuario.
-     * @example
-     * // Update one Titulos_x_usuario
-     * const titulos_x_usuario = await prisma.titulos_x_usuario.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends titulos_x_usuarioUpdateArgs>(
-      args: SelectSubset<T, titulos_x_usuarioUpdateArgs>
-    ): Prisma__titulos_x_usuarioClient<titulos_x_usuarioGetPayload<T>>
-
-    /**
-     * Delete zero or more Titulos_x_usuarios.
-     * @param {titulos_x_usuarioDeleteManyArgs} args - Arguments to filter Titulos_x_usuarios to delete.
-     * @example
-     * // Delete a few Titulos_x_usuarios
-     * const { count } = await prisma.titulos_x_usuario.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends titulos_x_usuarioDeleteManyArgs>(
-      args?: SelectSubset<T, titulos_x_usuarioDeleteManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Titulos_x_usuarios.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {titulos_x_usuarioUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Titulos_x_usuarios
-     * const titulos_x_usuario = await prisma.titulos_x_usuario.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends titulos_x_usuarioUpdateManyArgs>(
-      args: SelectSubset<T, titulos_x_usuarioUpdateManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one Titulos_x_usuario.
-     * @param {titulos_x_usuarioUpsertArgs} args - Arguments to update or create a Titulos_x_usuario.
-     * @example
-     * // Update or create a Titulos_x_usuario
-     * const titulos_x_usuario = await prisma.titulos_x_usuario.upsert({
-     *   create: {
-     *     // ... data to create a Titulos_x_usuario
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Titulos_x_usuario we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends titulos_x_usuarioUpsertArgs>(
-      args: SelectSubset<T, titulos_x_usuarioUpsertArgs>
-    ): Prisma__titulos_x_usuarioClient<titulos_x_usuarioGetPayload<T>>
-
-    /**
-     * Find one Titulos_x_usuario that matches the filter or throw
-     * `NotFoundError` if no matches were found.
-     * @param {titulos_x_usuarioFindUniqueOrThrowArgs} args - Arguments to find a Titulos_x_usuario
-     * @example
-     * // Get one Titulos_x_usuario
-     * const titulos_x_usuario = await prisma.titulos_x_usuario.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends titulos_x_usuarioFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, titulos_x_usuarioFindUniqueOrThrowArgs>
-    ): Prisma__titulos_x_usuarioClient<titulos_x_usuarioGetPayload<T>>
-
-    /**
-     * Find the first Titulos_x_usuario that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {titulos_x_usuarioFindFirstOrThrowArgs} args - Arguments to find a Titulos_x_usuario
-     * @example
-     * // Get one Titulos_x_usuario
-     * const titulos_x_usuario = await prisma.titulos_x_usuario.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends titulos_x_usuarioFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, titulos_x_usuarioFindFirstOrThrowArgs>
-    ): Prisma__titulos_x_usuarioClient<titulos_x_usuarioGetPayload<T>>
-
-    /**
-     * Count the number of Titulos_x_usuarios.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {titulos_x_usuarioCountArgs} args - Arguments to filter Titulos_x_usuarios to count.
-     * @example
-     * // Count the number of Titulos_x_usuarios
-     * const count = await prisma.titulos_x_usuario.count({
-     *   where: {
-     *     // ... the filter for the Titulos_x_usuarios we want to count
-     *   }
-     * })
-    **/
-    count<T extends titulos_x_usuarioCountArgs>(
-      args?: Subset<T, titulos_x_usuarioCountArgs>,
-    ): PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], Titulos_x_usuarioCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Titulos_x_usuario.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Titulos_x_usuarioAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends Titulos_x_usuarioAggregateArgs>(args: Subset<T, Titulos_x_usuarioAggregateArgs>): PrismaPromise<GetTitulos_x_usuarioAggregateType<T>>
-
-    /**
-     * Group by Titulos_x_usuario.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Titulos_x_usuarioGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends Titulos_x_usuarioGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: Titulos_x_usuarioGroupByArgs['orderBy'] }
-        : { orderBy?: Titulos_x_usuarioGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, Titulos_x_usuarioGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTitulos_x_usuarioGroupByPayload<T> : PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for titulos_x_usuario.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__titulos_x_usuarioClient<T, Null = never> implements PrismaPromise<T> {
-    [prisma]: true;
-    private readonly _dmmf;
-    private readonly _fetcher;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-    readonly [Symbol.toStringTag]: 'PrismaClientPromise';
-
-    bordero_borderoTotitulos_x_usuario<T extends borderoArgs= {}>(args?: Subset<T, borderoArgs>): Prisma__borderoClient<borderoGetPayload<T> | Null>;
-
-    usuario_titulos_x_usuarioTousuario<T extends usuarioArgs= {}>(args?: Subset<T, usuarioArgs>): Prisma__usuarioClient<usuarioGetPayload<T> | Null>;
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * titulos_x_usuario base type for findUnique actions
-   */
-  export type titulos_x_usuarioFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the titulos_x_usuario
-     * 
-    **/
-    select?: titulos_x_usuarioSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: titulos_x_usuarioInclude | null
-    /**
-     * Filter, which titulos_x_usuario to fetch.
-     * 
-    **/
-    where: titulos_x_usuarioWhereUniqueInput
-  }
-
-  /**
-   * titulos_x_usuario: findUnique
-   */
-  export interface titulos_x_usuarioFindUniqueArgs extends titulos_x_usuarioFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * titulos_x_usuario base type for findFirst actions
-   */
-  export type titulos_x_usuarioFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the titulos_x_usuario
-     * 
-    **/
-    select?: titulos_x_usuarioSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: titulos_x_usuarioInclude | null
-    /**
-     * Filter, which titulos_x_usuario to fetch.
-     * 
-    **/
-    where?: titulos_x_usuarioWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of titulos_x_usuarios to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<titulos_x_usuarioOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for titulos_x_usuarios.
-     * 
-    **/
-    cursor?: titulos_x_usuarioWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` titulos_x_usuarios from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` titulos_x_usuarios.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of titulos_x_usuarios.
-     * 
-    **/
-    distinct?: Enumerable<Titulos_x_usuarioScalarFieldEnum>
-  }
-
-  /**
-   * titulos_x_usuario: findFirst
-   */
-  export interface titulos_x_usuarioFindFirstArgs extends titulos_x_usuarioFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * titulos_x_usuario findMany
-   */
-  export type titulos_x_usuarioFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the titulos_x_usuario
-     * 
-    **/
-    select?: titulos_x_usuarioSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: titulos_x_usuarioInclude | null
-    /**
-     * Filter, which titulos_x_usuarios to fetch.
-     * 
-    **/
-    where?: titulos_x_usuarioWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of titulos_x_usuarios to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<titulos_x_usuarioOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing titulos_x_usuarios.
-     * 
-    **/
-    cursor?: titulos_x_usuarioWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` titulos_x_usuarios from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` titulos_x_usuarios.
-     * 
-    **/
-    skip?: number
-    distinct?: Enumerable<Titulos_x_usuarioScalarFieldEnum>
-  }
-
-
-  /**
-   * titulos_x_usuario create
-   */
-  export type titulos_x_usuarioCreateArgs = {
-    /**
-     * Select specific fields to fetch from the titulos_x_usuario
-     * 
-    **/
-    select?: titulos_x_usuarioSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: titulos_x_usuarioInclude | null
-    /**
-     * The data needed to create a titulos_x_usuario.
-     * 
-    **/
-    data: XOR<titulos_x_usuarioCreateInput, titulos_x_usuarioUncheckedCreateInput>
-  }
-
-
-  /**
-   * titulos_x_usuario createMany
-   */
-  export type titulos_x_usuarioCreateManyArgs = {
-    /**
-     * The data used to create many titulos_x_usuarios.
-     * 
-    **/
-    data: Enumerable<titulos_x_usuarioCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * titulos_x_usuario update
-   */
-  export type titulos_x_usuarioUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the titulos_x_usuario
-     * 
-    **/
-    select?: titulos_x_usuarioSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: titulos_x_usuarioInclude | null
-    /**
-     * The data needed to update a titulos_x_usuario.
-     * 
-    **/
-    data: XOR<titulos_x_usuarioUpdateInput, titulos_x_usuarioUncheckedUpdateInput>
-    /**
-     * Choose, which titulos_x_usuario to update.
-     * 
-    **/
-    where: titulos_x_usuarioWhereUniqueInput
-  }
-
-
-  /**
-   * titulos_x_usuario updateMany
-   */
-  export type titulos_x_usuarioUpdateManyArgs = {
-    /**
-     * The data used to update titulos_x_usuarios.
-     * 
-    **/
-    data: XOR<titulos_x_usuarioUpdateManyMutationInput, titulos_x_usuarioUncheckedUpdateManyInput>
-    /**
-     * Filter which titulos_x_usuarios to update
-     * 
-    **/
-    where?: titulos_x_usuarioWhereInput
-  }
-
-
-  /**
-   * titulos_x_usuario upsert
-   */
-  export type titulos_x_usuarioUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the titulos_x_usuario
-     * 
-    **/
-    select?: titulos_x_usuarioSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: titulos_x_usuarioInclude | null
-    /**
-     * The filter to search for the titulos_x_usuario to update in case it exists.
-     * 
-    **/
-    where: titulos_x_usuarioWhereUniqueInput
-    /**
-     * In case the titulos_x_usuario found by the `where` argument doesn't exist, create a new titulos_x_usuario with this data.
-     * 
-    **/
-    create: XOR<titulos_x_usuarioCreateInput, titulos_x_usuarioUncheckedCreateInput>
-    /**
-     * In case the titulos_x_usuario was found with the provided `where` argument, update it with this data.
-     * 
-    **/
-    update: XOR<titulos_x_usuarioUpdateInput, titulos_x_usuarioUncheckedUpdateInput>
-  }
-
-
-  /**
-   * titulos_x_usuario delete
-   */
-  export type titulos_x_usuarioDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the titulos_x_usuario
-     * 
-    **/
-    select?: titulos_x_usuarioSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: titulos_x_usuarioInclude | null
-    /**
-     * Filter which titulos_x_usuario to delete.
-     * 
-    **/
-    where: titulos_x_usuarioWhereUniqueInput
-  }
-
-
-  /**
-   * titulos_x_usuario deleteMany
-   */
-  export type titulos_x_usuarioDeleteManyArgs = {
-    /**
-     * Filter which titulos_x_usuarios to delete
-     * 
-    **/
-    where?: titulos_x_usuarioWhereInput
-  }
-
-
-  /**
-   * titulos_x_usuario: findUniqueOrThrow
-   */
-  export type titulos_x_usuarioFindUniqueOrThrowArgs = titulos_x_usuarioFindUniqueArgsBase
-      
-
-  /**
-   * titulos_x_usuario: findFirstOrThrow
-   */
-  export type titulos_x_usuarioFindFirstOrThrowArgs = titulos_x_usuarioFindFirstArgsBase
-      
-
-  /**
-   * titulos_x_usuario without action
-   */
-  export type titulos_x_usuarioArgs = {
-    /**
-     * Select specific fields to fetch from the titulos_x_usuario
-     * 
-    **/
-    select?: titulos_x_usuarioSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: titulos_x_usuarioInclude | null
-  }
-
-
-
-  /**
    * Model usuario
    */
 
@@ -28918,24 +22398,12 @@ export namespace Prisma {
     codigo_data_expiracao?: boolean
     created_at?: boolean
     updated_at?: boolean
-    auditoria?: boolean | auditoriaFindManyArgs
-    checagem?: boolean | checagemFindManyArgs
-    fidic_fundo_x_usuario?: boolean | fidic_fundo_x_usuarioFindManyArgs
-    titulos_x_usuario?: boolean | titulos_x_usuarioFindManyArgs
     pessoa?: boolean | pessoaArgs
-    usuario_x_perfil?: boolean | usuario_x_perfilFindManyArgs
-    _count?: boolean | UsuarioCountOutputTypeArgs
   }
 
 
   export type usuarioInclude = {
-    auditoria?: boolean | auditoriaFindManyArgs
-    checagem?: boolean | checagemFindManyArgs
-    fidic_fundo_x_usuario?: boolean | fidic_fundo_x_usuarioFindManyArgs
-    titulos_x_usuario?: boolean | titulos_x_usuarioFindManyArgs
     pessoa?: boolean | pessoaArgs
-    usuario_x_perfil?: boolean | usuario_x_perfilFindManyArgs
-    _count?: boolean | UsuarioCountOutputTypeArgs
   } 
 
   export type usuarioGetPayload<S extends boolean | null | undefined | usuarioArgs, U = keyof S> =
@@ -28945,24 +22413,12 @@ export namespace Prisma {
     S extends { include: any } & (usuarioArgs | usuarioFindManyArgs)
     ? usuario  & {
     [P in TrueKeys<S['include']>]:
-        P extends 'auditoria' ? Array < auditoriaGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
-        P extends 'checagem' ? Array < checagemGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
-        P extends 'fidic_fundo_x_usuario' ? Array < fidic_fundo_x_usuarioGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
-        P extends 'titulos_x_usuario' ? Array < titulos_x_usuarioGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
-        P extends 'pessoa' ? pessoaGetPayload<Exclude<S['include'], undefined | null>[P]> :
-        P extends 'usuario_x_perfil' ? Array < usuario_x_perfilGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
-        P extends '_count' ? UsuarioCountOutputTypeGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
+        P extends 'pessoa' ? pessoaGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
   } 
     : S extends { select: any } & (usuarioArgs | usuarioFindManyArgs)
       ? {
     [P in TrueKeys<S['select']>]:
-        P extends 'auditoria' ? Array < auditoriaGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
-        P extends 'checagem' ? Array < checagemGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
-        P extends 'fidic_fundo_x_usuario' ? Array < fidic_fundo_x_usuarioGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
-        P extends 'titulos_x_usuario' ? Array < titulos_x_usuarioGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
-        P extends 'pessoa' ? pessoaGetPayload<Exclude<S['select'], undefined | null>[P]> :
-        P extends 'usuario_x_perfil' ? Array < usuario_x_perfilGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
-        P extends '_count' ? UsuarioCountOutputTypeGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof usuario ? usuario[P] : never
+        P extends 'pessoa' ? pessoaGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof usuario ? usuario[P] : never
   } 
       : usuario
 
@@ -29336,17 +22792,7 @@ export namespace Prisma {
     constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
 
-    auditoria<T extends auditoriaFindManyArgs= {}>(args?: Subset<T, auditoriaFindManyArgs>): PrismaPromise<Array<auditoriaGetPayload<T>>| Null>;
-
-    checagem<T extends checagemFindManyArgs= {}>(args?: Subset<T, checagemFindManyArgs>): PrismaPromise<Array<checagemGetPayload<T>>| Null>;
-
-    fidic_fundo_x_usuario<T extends fidic_fundo_x_usuarioFindManyArgs= {}>(args?: Subset<T, fidic_fundo_x_usuarioFindManyArgs>): PrismaPromise<Array<fidic_fundo_x_usuarioGetPayload<T>>| Null>;
-
-    titulos_x_usuario<T extends titulos_x_usuarioFindManyArgs= {}>(args?: Subset<T, titulos_x_usuarioFindManyArgs>): PrismaPromise<Array<titulos_x_usuarioGetPayload<T>>| Null>;
-
     pessoa<T extends pessoaArgs= {}>(args?: Subset<T, pessoaArgs>): Prisma__pessoaClient<pessoaGetPayload<T> | Null>;
-
-    usuario_x_perfil<T extends usuario_x_perfilFindManyArgs= {}>(args?: Subset<T, usuario_x_perfilFindManyArgs>): PrismaPromise<Array<usuario_x_perfilGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -29703,1754 +23149,6 @@ export namespace Prisma {
 
 
   /**
-   * Model usuario__pessoa
-   */
-
-
-  export type AggregateUsuario__pessoa = {
-    _count: Usuario__pessoaCountAggregateOutputType | null
-    _avg: Usuario__pessoaAvgAggregateOutputType | null
-    _sum: Usuario__pessoaSumAggregateOutputType | null
-    _min: Usuario__pessoaMinAggregateOutputType | null
-    _max: Usuario__pessoaMaxAggregateOutputType | null
-  }
-
-  export type Usuario__pessoaAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Usuario__pessoaSumAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Usuario__pessoaMinAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Usuario__pessoaMaxAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Usuario__pessoaCountAggregateOutputType = {
-    id: number
-    _all: number
-  }
-
-
-  export type Usuario__pessoaAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type Usuario__pessoaSumAggregateInputType = {
-    id?: true
-  }
-
-  export type Usuario__pessoaMinAggregateInputType = {
-    id?: true
-  }
-
-  export type Usuario__pessoaMaxAggregateInputType = {
-    id?: true
-  }
-
-  export type Usuario__pessoaCountAggregateInputType = {
-    id?: true
-    _all?: true
-  }
-
-  export type Usuario__pessoaAggregateArgs = {
-    /**
-     * Filter which usuario__pessoa to aggregate.
-     * 
-    **/
-    where?: usuario__pessoaWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of usuario__pessoas to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<usuario__pessoaOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     * 
-    **/
-    cursor?: usuario__pessoaWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` usuario__pessoas from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` usuario__pessoas.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned usuario__pessoas
-    **/
-    _count?: true | Usuario__pessoaCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Usuario__pessoaAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Usuario__pessoaSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: Usuario__pessoaMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: Usuario__pessoaMaxAggregateInputType
-  }
-
-  export type GetUsuario__pessoaAggregateType<T extends Usuario__pessoaAggregateArgs> = {
-        [P in keyof T & keyof AggregateUsuario__pessoa]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateUsuario__pessoa[P]>
-      : GetScalarType<T[P], AggregateUsuario__pessoa[P]>
-  }
-
-
-
-
-  export type Usuario__pessoaGroupByArgs = {
-    where?: usuario__pessoaWhereInput
-    orderBy?: Enumerable<usuario__pessoaOrderByWithAggregationInput>
-    by: Array<Usuario__pessoaScalarFieldEnum>
-    having?: usuario__pessoaScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: Usuario__pessoaCountAggregateInputType | true
-    _avg?: Usuario__pessoaAvgAggregateInputType
-    _sum?: Usuario__pessoaSumAggregateInputType
-    _min?: Usuario__pessoaMinAggregateInputType
-    _max?: Usuario__pessoaMaxAggregateInputType
-  }
-
-
-  export type Usuario__pessoaGroupByOutputType = {
-    id: number
-    _count: Usuario__pessoaCountAggregateOutputType | null
-    _avg: Usuario__pessoaAvgAggregateOutputType | null
-    _sum: Usuario__pessoaSumAggregateOutputType | null
-    _min: Usuario__pessoaMinAggregateOutputType | null
-    _max: Usuario__pessoaMaxAggregateOutputType | null
-  }
-
-  type GetUsuario__pessoaGroupByPayload<T extends Usuario__pessoaGroupByArgs> = PrismaPromise<
-    Array<
-      PickArray<Usuario__pessoaGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof Usuario__pessoaGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], Usuario__pessoaGroupByOutputType[P]>
-            : GetScalarType<T[P], Usuario__pessoaGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type usuario__pessoaSelect = {
-    id?: boolean
-  }
-
-
-  export type usuario__pessoaGetPayload<S extends boolean | null | undefined | usuario__pessoaArgs, U = keyof S> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? usuario__pessoa :
-    S extends undefined ? never :
-    S extends { include: any } & (usuario__pessoaArgs | usuario__pessoaFindManyArgs)
-    ? usuario__pessoa 
-    : S extends { select: any } & (usuario__pessoaArgs | usuario__pessoaFindManyArgs)
-      ? {
-    [P in TrueKeys<S['select']>]:
-    P extends keyof usuario__pessoa ? usuario__pessoa[P] : never
-  } 
-      : usuario__pessoa
-
-
-  type usuario__pessoaCountArgs = Merge<
-    Omit<usuario__pessoaFindManyArgs, 'select' | 'include'> & {
-      select?: Usuario__pessoaCountAggregateInputType | true
-    }
-  >
-
-  export interface usuario__pessoaDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-    /**
-     * Find zero or one Usuario__pessoa that matches the filter.
-     * @param {usuario__pessoaFindUniqueArgs} args - Arguments to find a Usuario__pessoa
-     * @example
-     * // Get one Usuario__pessoa
-     * const usuario__pessoa = await prisma.usuario__pessoa.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends usuario__pessoaFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, usuario__pessoaFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'usuario__pessoa'> extends True ? Prisma__usuario__pessoaClient<usuario__pessoaGetPayload<T>> : Prisma__usuario__pessoaClient<usuario__pessoaGetPayload<T> | null, null>
-
-    /**
-     * Find the first Usuario__pessoa that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {usuario__pessoaFindFirstArgs} args - Arguments to find a Usuario__pessoa
-     * @example
-     * // Get one Usuario__pessoa
-     * const usuario__pessoa = await prisma.usuario__pessoa.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends usuario__pessoaFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, usuario__pessoaFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'usuario__pessoa'> extends True ? Prisma__usuario__pessoaClient<usuario__pessoaGetPayload<T>> : Prisma__usuario__pessoaClient<usuario__pessoaGetPayload<T> | null, null>
-
-    /**
-     * Find zero or more Usuario__pessoas that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {usuario__pessoaFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Usuario__pessoas
-     * const usuario__pessoas = await prisma.usuario__pessoa.findMany()
-     * 
-     * // Get first 10 Usuario__pessoas
-     * const usuario__pessoas = await prisma.usuario__pessoa.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const usuario__pessoaWithIdOnly = await prisma.usuario__pessoa.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends usuario__pessoaFindManyArgs>(
-      args?: SelectSubset<T, usuario__pessoaFindManyArgs>
-    ): PrismaPromise<Array<usuario__pessoaGetPayload<T>>>
-
-    /**
-     * Create a Usuario__pessoa.
-     * @param {usuario__pessoaCreateArgs} args - Arguments to create a Usuario__pessoa.
-     * @example
-     * // Create one Usuario__pessoa
-     * const Usuario__pessoa = await prisma.usuario__pessoa.create({
-     *   data: {
-     *     // ... data to create a Usuario__pessoa
-     *   }
-     * })
-     * 
-    **/
-    create<T extends usuario__pessoaCreateArgs>(
-      args: SelectSubset<T, usuario__pessoaCreateArgs>
-    ): Prisma__usuario__pessoaClient<usuario__pessoaGetPayload<T>>
-
-    /**
-     * Create many Usuario__pessoas.
-     *     @param {usuario__pessoaCreateManyArgs} args - Arguments to create many Usuario__pessoas.
-     *     @example
-     *     // Create many Usuario__pessoas
-     *     const usuario__pessoa = await prisma.usuario__pessoa.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends usuario__pessoaCreateManyArgs>(
-      args?: SelectSubset<T, usuario__pessoaCreateManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a Usuario__pessoa.
-     * @param {usuario__pessoaDeleteArgs} args - Arguments to delete one Usuario__pessoa.
-     * @example
-     * // Delete one Usuario__pessoa
-     * const Usuario__pessoa = await prisma.usuario__pessoa.delete({
-     *   where: {
-     *     // ... filter to delete one Usuario__pessoa
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends usuario__pessoaDeleteArgs>(
-      args: SelectSubset<T, usuario__pessoaDeleteArgs>
-    ): Prisma__usuario__pessoaClient<usuario__pessoaGetPayload<T>>
-
-    /**
-     * Update one Usuario__pessoa.
-     * @param {usuario__pessoaUpdateArgs} args - Arguments to update one Usuario__pessoa.
-     * @example
-     * // Update one Usuario__pessoa
-     * const usuario__pessoa = await prisma.usuario__pessoa.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends usuario__pessoaUpdateArgs>(
-      args: SelectSubset<T, usuario__pessoaUpdateArgs>
-    ): Prisma__usuario__pessoaClient<usuario__pessoaGetPayload<T>>
-
-    /**
-     * Delete zero or more Usuario__pessoas.
-     * @param {usuario__pessoaDeleteManyArgs} args - Arguments to filter Usuario__pessoas to delete.
-     * @example
-     * // Delete a few Usuario__pessoas
-     * const { count } = await prisma.usuario__pessoa.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends usuario__pessoaDeleteManyArgs>(
-      args?: SelectSubset<T, usuario__pessoaDeleteManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Usuario__pessoas.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {usuario__pessoaUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Usuario__pessoas
-     * const usuario__pessoa = await prisma.usuario__pessoa.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends usuario__pessoaUpdateManyArgs>(
-      args: SelectSubset<T, usuario__pessoaUpdateManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one Usuario__pessoa.
-     * @param {usuario__pessoaUpsertArgs} args - Arguments to update or create a Usuario__pessoa.
-     * @example
-     * // Update or create a Usuario__pessoa
-     * const usuario__pessoa = await prisma.usuario__pessoa.upsert({
-     *   create: {
-     *     // ... data to create a Usuario__pessoa
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Usuario__pessoa we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends usuario__pessoaUpsertArgs>(
-      args: SelectSubset<T, usuario__pessoaUpsertArgs>
-    ): Prisma__usuario__pessoaClient<usuario__pessoaGetPayload<T>>
-
-    /**
-     * Find one Usuario__pessoa that matches the filter or throw
-     * `NotFoundError` if no matches were found.
-     * @param {usuario__pessoaFindUniqueOrThrowArgs} args - Arguments to find a Usuario__pessoa
-     * @example
-     * // Get one Usuario__pessoa
-     * const usuario__pessoa = await prisma.usuario__pessoa.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends usuario__pessoaFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, usuario__pessoaFindUniqueOrThrowArgs>
-    ): Prisma__usuario__pessoaClient<usuario__pessoaGetPayload<T>>
-
-    /**
-     * Find the first Usuario__pessoa that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {usuario__pessoaFindFirstOrThrowArgs} args - Arguments to find a Usuario__pessoa
-     * @example
-     * // Get one Usuario__pessoa
-     * const usuario__pessoa = await prisma.usuario__pessoa.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends usuario__pessoaFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, usuario__pessoaFindFirstOrThrowArgs>
-    ): Prisma__usuario__pessoaClient<usuario__pessoaGetPayload<T>>
-
-    /**
-     * Count the number of Usuario__pessoas.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {usuario__pessoaCountArgs} args - Arguments to filter Usuario__pessoas to count.
-     * @example
-     * // Count the number of Usuario__pessoas
-     * const count = await prisma.usuario__pessoa.count({
-     *   where: {
-     *     // ... the filter for the Usuario__pessoas we want to count
-     *   }
-     * })
-    **/
-    count<T extends usuario__pessoaCountArgs>(
-      args?: Subset<T, usuario__pessoaCountArgs>,
-    ): PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], Usuario__pessoaCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Usuario__pessoa.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Usuario__pessoaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends Usuario__pessoaAggregateArgs>(args: Subset<T, Usuario__pessoaAggregateArgs>): PrismaPromise<GetUsuario__pessoaAggregateType<T>>
-
-    /**
-     * Group by Usuario__pessoa.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Usuario__pessoaGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends Usuario__pessoaGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: Usuario__pessoaGroupByArgs['orderBy'] }
-        : { orderBy?: Usuario__pessoaGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, Usuario__pessoaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUsuario__pessoaGroupByPayload<T> : PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for usuario__pessoa.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__usuario__pessoaClient<T, Null = never> implements PrismaPromise<T> {
-    [prisma]: true;
-    private readonly _dmmf;
-    private readonly _fetcher;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-    readonly [Symbol.toStringTag]: 'PrismaClientPromise';
-
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * usuario__pessoa base type for findUnique actions
-   */
-  export type usuario__pessoaFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the usuario__pessoa
-     * 
-    **/
-    select?: usuario__pessoaSelect | null
-    /**
-     * Filter, which usuario__pessoa to fetch.
-     * 
-    **/
-    where: usuario__pessoaWhereUniqueInput
-  }
-
-  /**
-   * usuario__pessoa: findUnique
-   */
-  export interface usuario__pessoaFindUniqueArgs extends usuario__pessoaFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * usuario__pessoa base type for findFirst actions
-   */
-  export type usuario__pessoaFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the usuario__pessoa
-     * 
-    **/
-    select?: usuario__pessoaSelect | null
-    /**
-     * Filter, which usuario__pessoa to fetch.
-     * 
-    **/
-    where?: usuario__pessoaWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of usuario__pessoas to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<usuario__pessoaOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for usuario__pessoas.
-     * 
-    **/
-    cursor?: usuario__pessoaWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` usuario__pessoas from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` usuario__pessoas.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of usuario__pessoas.
-     * 
-    **/
-    distinct?: Enumerable<Usuario__pessoaScalarFieldEnum>
-  }
-
-  /**
-   * usuario__pessoa: findFirst
-   */
-  export interface usuario__pessoaFindFirstArgs extends usuario__pessoaFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * usuario__pessoa findMany
-   */
-  export type usuario__pessoaFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the usuario__pessoa
-     * 
-    **/
-    select?: usuario__pessoaSelect | null
-    /**
-     * Filter, which usuario__pessoas to fetch.
-     * 
-    **/
-    where?: usuario__pessoaWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of usuario__pessoas to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<usuario__pessoaOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing usuario__pessoas.
-     * 
-    **/
-    cursor?: usuario__pessoaWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` usuario__pessoas from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` usuario__pessoas.
-     * 
-    **/
-    skip?: number
-    distinct?: Enumerable<Usuario__pessoaScalarFieldEnum>
-  }
-
-
-  /**
-   * usuario__pessoa create
-   */
-  export type usuario__pessoaCreateArgs = {
-    /**
-     * Select specific fields to fetch from the usuario__pessoa
-     * 
-    **/
-    select?: usuario__pessoaSelect | null
-    /**
-     * The data needed to create a usuario__pessoa.
-     * 
-    **/
-    data?: XOR<usuario__pessoaCreateInput, usuario__pessoaUncheckedCreateInput>
-  }
-
-
-  /**
-   * usuario__pessoa createMany
-   */
-  export type usuario__pessoaCreateManyArgs = {
-    /**
-     * The data used to create many usuario__pessoas.
-     * 
-    **/
-    data: Enumerable<usuario__pessoaCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * usuario__pessoa update
-   */
-  export type usuario__pessoaUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the usuario__pessoa
-     * 
-    **/
-    select?: usuario__pessoaSelect | null
-    /**
-     * The data needed to update a usuario__pessoa.
-     * 
-    **/
-    data: XOR<usuario__pessoaUpdateInput, usuario__pessoaUncheckedUpdateInput>
-    /**
-     * Choose, which usuario__pessoa to update.
-     * 
-    **/
-    where: usuario__pessoaWhereUniqueInput
-  }
-
-
-  /**
-   * usuario__pessoa updateMany
-   */
-  export type usuario__pessoaUpdateManyArgs = {
-    /**
-     * The data used to update usuario__pessoas.
-     * 
-    **/
-    data: XOR<usuario__pessoaUpdateManyMutationInput, usuario__pessoaUncheckedUpdateManyInput>
-    /**
-     * Filter which usuario__pessoas to update
-     * 
-    **/
-    where?: usuario__pessoaWhereInput
-  }
-
-
-  /**
-   * usuario__pessoa upsert
-   */
-  export type usuario__pessoaUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the usuario__pessoa
-     * 
-    **/
-    select?: usuario__pessoaSelect | null
-    /**
-     * The filter to search for the usuario__pessoa to update in case it exists.
-     * 
-    **/
-    where: usuario__pessoaWhereUniqueInput
-    /**
-     * In case the usuario__pessoa found by the `where` argument doesn't exist, create a new usuario__pessoa with this data.
-     * 
-    **/
-    create: XOR<usuario__pessoaCreateInput, usuario__pessoaUncheckedCreateInput>
-    /**
-     * In case the usuario__pessoa was found with the provided `where` argument, update it with this data.
-     * 
-    **/
-    update: XOR<usuario__pessoaUpdateInput, usuario__pessoaUncheckedUpdateInput>
-  }
-
-
-  /**
-   * usuario__pessoa delete
-   */
-  export type usuario__pessoaDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the usuario__pessoa
-     * 
-    **/
-    select?: usuario__pessoaSelect | null
-    /**
-     * Filter which usuario__pessoa to delete.
-     * 
-    **/
-    where: usuario__pessoaWhereUniqueInput
-  }
-
-
-  /**
-   * usuario__pessoa deleteMany
-   */
-  export type usuario__pessoaDeleteManyArgs = {
-    /**
-     * Filter which usuario__pessoas to delete
-     * 
-    **/
-    where?: usuario__pessoaWhereInput
-  }
-
-
-  /**
-   * usuario__pessoa: findUniqueOrThrow
-   */
-  export type usuario__pessoaFindUniqueOrThrowArgs = usuario__pessoaFindUniqueArgsBase
-      
-
-  /**
-   * usuario__pessoa: findFirstOrThrow
-   */
-  export type usuario__pessoaFindFirstOrThrowArgs = usuario__pessoaFindFirstArgsBase
-      
-
-  /**
-   * usuario__pessoa without action
-   */
-  export type usuario__pessoaArgs = {
-    /**
-     * Select specific fields to fetch from the usuario__pessoa
-     * 
-    **/
-    select?: usuario__pessoaSelect | null
-  }
-
-
-
-  /**
-   * Model usuario_n_borderos
-   */
-
-
-  export type AggregateUsuario_n_borderos = {
-    _count: Usuario_n_borderosCountAggregateOutputType | null
-    _avg: Usuario_n_borderosAvgAggregateOutputType | null
-    _sum: Usuario_n_borderosSumAggregateOutputType | null
-    _min: Usuario_n_borderosMinAggregateOutputType | null
-    _max: Usuario_n_borderosMaxAggregateOutputType | null
-  }
-
-  export type Usuario_n_borderosAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Usuario_n_borderosSumAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Usuario_n_borderosMinAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Usuario_n_borderosMaxAggregateOutputType = {
-    id: number | null
-  }
-
-  export type Usuario_n_borderosCountAggregateOutputType = {
-    id: number
-    _all: number
-  }
-
-
-  export type Usuario_n_borderosAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type Usuario_n_borderosSumAggregateInputType = {
-    id?: true
-  }
-
-  export type Usuario_n_borderosMinAggregateInputType = {
-    id?: true
-  }
-
-  export type Usuario_n_borderosMaxAggregateInputType = {
-    id?: true
-  }
-
-  export type Usuario_n_borderosCountAggregateInputType = {
-    id?: true
-    _all?: true
-  }
-
-  export type Usuario_n_borderosAggregateArgs = {
-    /**
-     * Filter which usuario_n_borderos to aggregate.
-     * 
-    **/
-    where?: usuario_n_borderosWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of usuario_n_borderos to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<usuario_n_borderosOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     * 
-    **/
-    cursor?: usuario_n_borderosWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` usuario_n_borderos from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` usuario_n_borderos.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned usuario_n_borderos
-    **/
-    _count?: true | Usuario_n_borderosCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Usuario_n_borderosAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Usuario_n_borderosSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: Usuario_n_borderosMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: Usuario_n_borderosMaxAggregateInputType
-  }
-
-  export type GetUsuario_n_borderosAggregateType<T extends Usuario_n_borderosAggregateArgs> = {
-        [P in keyof T & keyof AggregateUsuario_n_borderos]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateUsuario_n_borderos[P]>
-      : GetScalarType<T[P], AggregateUsuario_n_borderos[P]>
-  }
-
-
-
-
-  export type Usuario_n_borderosGroupByArgs = {
-    where?: usuario_n_borderosWhereInput
-    orderBy?: Enumerable<usuario_n_borderosOrderByWithAggregationInput>
-    by: Array<Usuario_n_borderosScalarFieldEnum>
-    having?: usuario_n_borderosScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: Usuario_n_borderosCountAggregateInputType | true
-    _avg?: Usuario_n_borderosAvgAggregateInputType
-    _sum?: Usuario_n_borderosSumAggregateInputType
-    _min?: Usuario_n_borderosMinAggregateInputType
-    _max?: Usuario_n_borderosMaxAggregateInputType
-  }
-
-
-  export type Usuario_n_borderosGroupByOutputType = {
-    id: number
-    _count: Usuario_n_borderosCountAggregateOutputType | null
-    _avg: Usuario_n_borderosAvgAggregateOutputType | null
-    _sum: Usuario_n_borderosSumAggregateOutputType | null
-    _min: Usuario_n_borderosMinAggregateOutputType | null
-    _max: Usuario_n_borderosMaxAggregateOutputType | null
-  }
-
-  type GetUsuario_n_borderosGroupByPayload<T extends Usuario_n_borderosGroupByArgs> = PrismaPromise<
-    Array<
-      PickArray<Usuario_n_borderosGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof Usuario_n_borderosGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], Usuario_n_borderosGroupByOutputType[P]>
-            : GetScalarType<T[P], Usuario_n_borderosGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type usuario_n_borderosSelect = {
-    id?: boolean
-  }
-
-
-  export type usuario_n_borderosGetPayload<S extends boolean | null | undefined | usuario_n_borderosArgs, U = keyof S> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? usuario_n_borderos :
-    S extends undefined ? never :
-    S extends { include: any } & (usuario_n_borderosArgs | usuario_n_borderosFindManyArgs)
-    ? usuario_n_borderos 
-    : S extends { select: any } & (usuario_n_borderosArgs | usuario_n_borderosFindManyArgs)
-      ? {
-    [P in TrueKeys<S['select']>]:
-    P extends keyof usuario_n_borderos ? usuario_n_borderos[P] : never
-  } 
-      : usuario_n_borderos
-
-
-  type usuario_n_borderosCountArgs = Merge<
-    Omit<usuario_n_borderosFindManyArgs, 'select' | 'include'> & {
-      select?: Usuario_n_borderosCountAggregateInputType | true
-    }
-  >
-
-  export interface usuario_n_borderosDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-    /**
-     * Find zero or one Usuario_n_borderos that matches the filter.
-     * @param {usuario_n_borderosFindUniqueArgs} args - Arguments to find a Usuario_n_borderos
-     * @example
-     * // Get one Usuario_n_borderos
-     * const usuario_n_borderos = await prisma.usuario_n_borderos.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends usuario_n_borderosFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, usuario_n_borderosFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'usuario_n_borderos'> extends True ? Prisma__usuario_n_borderosClient<usuario_n_borderosGetPayload<T>> : Prisma__usuario_n_borderosClient<usuario_n_borderosGetPayload<T> | null, null>
-
-    /**
-     * Find the first Usuario_n_borderos that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {usuario_n_borderosFindFirstArgs} args - Arguments to find a Usuario_n_borderos
-     * @example
-     * // Get one Usuario_n_borderos
-     * const usuario_n_borderos = await prisma.usuario_n_borderos.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends usuario_n_borderosFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, usuario_n_borderosFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'usuario_n_borderos'> extends True ? Prisma__usuario_n_borderosClient<usuario_n_borderosGetPayload<T>> : Prisma__usuario_n_borderosClient<usuario_n_borderosGetPayload<T> | null, null>
-
-    /**
-     * Find zero or more Usuario_n_borderos that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {usuario_n_borderosFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Usuario_n_borderos
-     * const usuario_n_borderos = await prisma.usuario_n_borderos.findMany()
-     * 
-     * // Get first 10 Usuario_n_borderos
-     * const usuario_n_borderos = await prisma.usuario_n_borderos.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const usuario_n_borderosWithIdOnly = await prisma.usuario_n_borderos.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends usuario_n_borderosFindManyArgs>(
-      args?: SelectSubset<T, usuario_n_borderosFindManyArgs>
-    ): PrismaPromise<Array<usuario_n_borderosGetPayload<T>>>
-
-    /**
-     * Create a Usuario_n_borderos.
-     * @param {usuario_n_borderosCreateArgs} args - Arguments to create a Usuario_n_borderos.
-     * @example
-     * // Create one Usuario_n_borderos
-     * const Usuario_n_borderos = await prisma.usuario_n_borderos.create({
-     *   data: {
-     *     // ... data to create a Usuario_n_borderos
-     *   }
-     * })
-     * 
-    **/
-    create<T extends usuario_n_borderosCreateArgs>(
-      args: SelectSubset<T, usuario_n_borderosCreateArgs>
-    ): Prisma__usuario_n_borderosClient<usuario_n_borderosGetPayload<T>>
-
-    /**
-     * Create many Usuario_n_borderos.
-     *     @param {usuario_n_borderosCreateManyArgs} args - Arguments to create many Usuario_n_borderos.
-     *     @example
-     *     // Create many Usuario_n_borderos
-     *     const usuario_n_borderos = await prisma.usuario_n_borderos.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends usuario_n_borderosCreateManyArgs>(
-      args?: SelectSubset<T, usuario_n_borderosCreateManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a Usuario_n_borderos.
-     * @param {usuario_n_borderosDeleteArgs} args - Arguments to delete one Usuario_n_borderos.
-     * @example
-     * // Delete one Usuario_n_borderos
-     * const Usuario_n_borderos = await prisma.usuario_n_borderos.delete({
-     *   where: {
-     *     // ... filter to delete one Usuario_n_borderos
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends usuario_n_borderosDeleteArgs>(
-      args: SelectSubset<T, usuario_n_borderosDeleteArgs>
-    ): Prisma__usuario_n_borderosClient<usuario_n_borderosGetPayload<T>>
-
-    /**
-     * Update one Usuario_n_borderos.
-     * @param {usuario_n_borderosUpdateArgs} args - Arguments to update one Usuario_n_borderos.
-     * @example
-     * // Update one Usuario_n_borderos
-     * const usuario_n_borderos = await prisma.usuario_n_borderos.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends usuario_n_borderosUpdateArgs>(
-      args: SelectSubset<T, usuario_n_borderosUpdateArgs>
-    ): Prisma__usuario_n_borderosClient<usuario_n_borderosGetPayload<T>>
-
-    /**
-     * Delete zero or more Usuario_n_borderos.
-     * @param {usuario_n_borderosDeleteManyArgs} args - Arguments to filter Usuario_n_borderos to delete.
-     * @example
-     * // Delete a few Usuario_n_borderos
-     * const { count } = await prisma.usuario_n_borderos.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends usuario_n_borderosDeleteManyArgs>(
-      args?: SelectSubset<T, usuario_n_borderosDeleteManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Usuario_n_borderos.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {usuario_n_borderosUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Usuario_n_borderos
-     * const usuario_n_borderos = await prisma.usuario_n_borderos.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends usuario_n_borderosUpdateManyArgs>(
-      args: SelectSubset<T, usuario_n_borderosUpdateManyArgs>
-    ): PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one Usuario_n_borderos.
-     * @param {usuario_n_borderosUpsertArgs} args - Arguments to update or create a Usuario_n_borderos.
-     * @example
-     * // Update or create a Usuario_n_borderos
-     * const usuario_n_borderos = await prisma.usuario_n_borderos.upsert({
-     *   create: {
-     *     // ... data to create a Usuario_n_borderos
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Usuario_n_borderos we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends usuario_n_borderosUpsertArgs>(
-      args: SelectSubset<T, usuario_n_borderosUpsertArgs>
-    ): Prisma__usuario_n_borderosClient<usuario_n_borderosGetPayload<T>>
-
-    /**
-     * Find one Usuario_n_borderos that matches the filter or throw
-     * `NotFoundError` if no matches were found.
-     * @param {usuario_n_borderosFindUniqueOrThrowArgs} args - Arguments to find a Usuario_n_borderos
-     * @example
-     * // Get one Usuario_n_borderos
-     * const usuario_n_borderos = await prisma.usuario_n_borderos.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends usuario_n_borderosFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, usuario_n_borderosFindUniqueOrThrowArgs>
-    ): Prisma__usuario_n_borderosClient<usuario_n_borderosGetPayload<T>>
-
-    /**
-     * Find the first Usuario_n_borderos that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {usuario_n_borderosFindFirstOrThrowArgs} args - Arguments to find a Usuario_n_borderos
-     * @example
-     * // Get one Usuario_n_borderos
-     * const usuario_n_borderos = await prisma.usuario_n_borderos.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends usuario_n_borderosFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, usuario_n_borderosFindFirstOrThrowArgs>
-    ): Prisma__usuario_n_borderosClient<usuario_n_borderosGetPayload<T>>
-
-    /**
-     * Count the number of Usuario_n_borderos.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {usuario_n_borderosCountArgs} args - Arguments to filter Usuario_n_borderos to count.
-     * @example
-     * // Count the number of Usuario_n_borderos
-     * const count = await prisma.usuario_n_borderos.count({
-     *   where: {
-     *     // ... the filter for the Usuario_n_borderos we want to count
-     *   }
-     * })
-    **/
-    count<T extends usuario_n_borderosCountArgs>(
-      args?: Subset<T, usuario_n_borderosCountArgs>,
-    ): PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], Usuario_n_borderosCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Usuario_n_borderos.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Usuario_n_borderosAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends Usuario_n_borderosAggregateArgs>(args: Subset<T, Usuario_n_borderosAggregateArgs>): PrismaPromise<GetUsuario_n_borderosAggregateType<T>>
-
-    /**
-     * Group by Usuario_n_borderos.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Usuario_n_borderosGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends Usuario_n_borderosGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: Usuario_n_borderosGroupByArgs['orderBy'] }
-        : { orderBy?: Usuario_n_borderosGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, Usuario_n_borderosGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUsuario_n_borderosGroupByPayload<T> : PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for usuario_n_borderos.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__usuario_n_borderosClient<T, Null = never> implements PrismaPromise<T> {
-    [prisma]: true;
-    private readonly _dmmf;
-    private readonly _fetcher;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-    readonly [Symbol.toStringTag]: 'PrismaClientPromise';
-
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * usuario_n_borderos base type for findUnique actions
-   */
-  export type usuario_n_borderosFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the usuario_n_borderos
-     * 
-    **/
-    select?: usuario_n_borderosSelect | null
-    /**
-     * Filter, which usuario_n_borderos to fetch.
-     * 
-    **/
-    where: usuario_n_borderosWhereUniqueInput
-  }
-
-  /**
-   * usuario_n_borderos: findUnique
-   */
-  export interface usuario_n_borderosFindUniqueArgs extends usuario_n_borderosFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * usuario_n_borderos base type for findFirst actions
-   */
-  export type usuario_n_borderosFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the usuario_n_borderos
-     * 
-    **/
-    select?: usuario_n_borderosSelect | null
-    /**
-     * Filter, which usuario_n_borderos to fetch.
-     * 
-    **/
-    where?: usuario_n_borderosWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of usuario_n_borderos to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<usuario_n_borderosOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for usuario_n_borderos.
-     * 
-    **/
-    cursor?: usuario_n_borderosWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` usuario_n_borderos from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` usuario_n_borderos.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of usuario_n_borderos.
-     * 
-    **/
-    distinct?: Enumerable<Usuario_n_borderosScalarFieldEnum>
-  }
-
-  /**
-   * usuario_n_borderos: findFirst
-   */
-  export interface usuario_n_borderosFindFirstArgs extends usuario_n_borderosFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * usuario_n_borderos findMany
-   */
-  export type usuario_n_borderosFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the usuario_n_borderos
-     * 
-    **/
-    select?: usuario_n_borderosSelect | null
-    /**
-     * Filter, which usuario_n_borderos to fetch.
-     * 
-    **/
-    where?: usuario_n_borderosWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of usuario_n_borderos to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<usuario_n_borderosOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing usuario_n_borderos.
-     * 
-    **/
-    cursor?: usuario_n_borderosWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` usuario_n_borderos from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` usuario_n_borderos.
-     * 
-    **/
-    skip?: number
-    distinct?: Enumerable<Usuario_n_borderosScalarFieldEnum>
-  }
-
-
-  /**
-   * usuario_n_borderos create
-   */
-  export type usuario_n_borderosCreateArgs = {
-    /**
-     * Select specific fields to fetch from the usuario_n_borderos
-     * 
-    **/
-    select?: usuario_n_borderosSelect | null
-    /**
-     * The data needed to create a usuario_n_borderos.
-     * 
-    **/
-    data?: XOR<usuario_n_borderosCreateInput, usuario_n_borderosUncheckedCreateInput>
-  }
-
-
-  /**
-   * usuario_n_borderos createMany
-   */
-  export type usuario_n_borderosCreateManyArgs = {
-    /**
-     * The data used to create many usuario_n_borderos.
-     * 
-    **/
-    data: Enumerable<usuario_n_borderosCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * usuario_n_borderos update
-   */
-  export type usuario_n_borderosUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the usuario_n_borderos
-     * 
-    **/
-    select?: usuario_n_borderosSelect | null
-    /**
-     * The data needed to update a usuario_n_borderos.
-     * 
-    **/
-    data: XOR<usuario_n_borderosUpdateInput, usuario_n_borderosUncheckedUpdateInput>
-    /**
-     * Choose, which usuario_n_borderos to update.
-     * 
-    **/
-    where: usuario_n_borderosWhereUniqueInput
-  }
-
-
-  /**
-   * usuario_n_borderos updateMany
-   */
-  export type usuario_n_borderosUpdateManyArgs = {
-    /**
-     * The data used to update usuario_n_borderos.
-     * 
-    **/
-    data: XOR<usuario_n_borderosUpdateManyMutationInput, usuario_n_borderosUncheckedUpdateManyInput>
-    /**
-     * Filter which usuario_n_borderos to update
-     * 
-    **/
-    where?: usuario_n_borderosWhereInput
-  }
-
-
-  /**
-   * usuario_n_borderos upsert
-   */
-  export type usuario_n_borderosUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the usuario_n_borderos
-     * 
-    **/
-    select?: usuario_n_borderosSelect | null
-    /**
-     * The filter to search for the usuario_n_borderos to update in case it exists.
-     * 
-    **/
-    where: usuario_n_borderosWhereUniqueInput
-    /**
-     * In case the usuario_n_borderos found by the `where` argument doesn't exist, create a new usuario_n_borderos with this data.
-     * 
-    **/
-    create: XOR<usuario_n_borderosCreateInput, usuario_n_borderosUncheckedCreateInput>
-    /**
-     * In case the usuario_n_borderos was found with the provided `where` argument, update it with this data.
-     * 
-    **/
-    update: XOR<usuario_n_borderosUpdateInput, usuario_n_borderosUncheckedUpdateInput>
-  }
-
-
-  /**
-   * usuario_n_borderos delete
-   */
-  export type usuario_n_borderosDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the usuario_n_borderos
-     * 
-    **/
-    select?: usuario_n_borderosSelect | null
-    /**
-     * Filter which usuario_n_borderos to delete.
-     * 
-    **/
-    where: usuario_n_borderosWhereUniqueInput
-  }
-
-
-  /**
-   * usuario_n_borderos deleteMany
-   */
-  export type usuario_n_borderosDeleteManyArgs = {
-    /**
-     * Filter which usuario_n_borderos to delete
-     * 
-    **/
-    where?: usuario_n_borderosWhereInput
-  }
-
-
-  /**
-   * usuario_n_borderos: findUniqueOrThrow
-   */
-  export type usuario_n_borderosFindUniqueOrThrowArgs = usuario_n_borderosFindUniqueArgsBase
-      
-
-  /**
-   * usuario_n_borderos: findFirstOrThrow
-   */
-  export type usuario_n_borderosFindFirstOrThrowArgs = usuario_n_borderosFindFirstArgsBase
-      
-
-  /**
-   * usuario_n_borderos without action
-   */
-  export type usuario_n_borderosArgs = {
-    /**
-     * Select specific fields to fetch from the usuario_n_borderos
-     * 
-    **/
-    select?: usuario_n_borderosSelect | null
-  }
-
-
-
-  /**
    * Model usuario_perfil_tipo
    */
 
@@ -31631,13 +23329,13 @@ export namespace Prisma {
   export type usuario_perfil_tipoSelect = {
     id?: boolean
     nome?: boolean
-    usuario_x_perfil?: boolean | usuario_x_perfilFindManyArgs
+    usuario_perfil?: boolean | usuario_perfilFindManyArgs
     _count?: boolean | Usuario_perfil_tipoCountOutputTypeArgs
   }
 
 
   export type usuario_perfil_tipoInclude = {
-    usuario_x_perfil?: boolean | usuario_x_perfilFindManyArgs
+    usuario_perfil?: boolean | usuario_perfilFindManyArgs
     _count?: boolean | Usuario_perfil_tipoCountOutputTypeArgs
   } 
 
@@ -31648,13 +23346,13 @@ export namespace Prisma {
     S extends { include: any } & (usuario_perfil_tipoArgs | usuario_perfil_tipoFindManyArgs)
     ? usuario_perfil_tipo  & {
     [P in TrueKeys<S['include']>]:
-        P extends 'usuario_x_perfil' ? Array < usuario_x_perfilGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
+        P extends 'usuario_perfil' ? Array < usuario_perfilGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
         P extends '_count' ? Usuario_perfil_tipoCountOutputTypeGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
   } 
     : S extends { select: any } & (usuario_perfil_tipoArgs | usuario_perfil_tipoFindManyArgs)
       ? {
     [P in TrueKeys<S['select']>]:
-        P extends 'usuario_x_perfil' ? Array < usuario_x_perfilGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
+        P extends 'usuario_perfil' ? Array < usuario_perfilGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
         P extends '_count' ? Usuario_perfil_tipoCountOutputTypeGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof usuario_perfil_tipo ? usuario_perfil_tipo[P] : never
   } 
       : usuario_perfil_tipo
@@ -32029,7 +23727,7 @@ export namespace Prisma {
     constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
 
-    usuario_x_perfil<T extends usuario_x_perfilFindManyArgs= {}>(args?: Subset<T, usuario_x_perfilFindManyArgs>): PrismaPromise<Array<usuario_x_perfilGetPayload<T>>| Null>;
+    usuario_perfil<T extends usuario_perfilFindManyArgs= {}>(args?: Subset<T, usuario_perfilFindManyArgs>): PrismaPromise<Array<usuario_perfilGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -32386,352 +24084,344 @@ export namespace Prisma {
 
 
   /**
-   * Model usuario_x_perfil
+   * Model carteira_n_cedentes
    */
 
 
-  export type AggregateUsuario_x_perfil = {
-    _count: Usuario_x_perfilCountAggregateOutputType | null
-    _avg: Usuario_x_perfilAvgAggregateOutputType | null
-    _sum: Usuario_x_perfilSumAggregateOutputType | null
-    _min: Usuario_x_perfilMinAggregateOutputType | null
-    _max: Usuario_x_perfilMaxAggregateOutputType | null
+  export type AggregateCarteira_n_cedentes = {
+    _count: Carteira_n_cedentesCountAggregateOutputType | null
+    _avg: Carteira_n_cedentesAvgAggregateOutputType | null
+    _sum: Carteira_n_cedentesSumAggregateOutputType | null
+    _min: Carteira_n_cedentesMinAggregateOutputType | null
+    _max: Carteira_n_cedentesMaxAggregateOutputType | null
   }
 
-  export type Usuario_x_perfilAvgAggregateOutputType = {
+  export type Carteira_n_cedentesAvgAggregateOutputType = {
     id: number | null
-    usuario_id: number | null
-    usuario_perfil_id: number | null
+    carteira_id: number | null
+    cedente_id: number | null
   }
 
-  export type Usuario_x_perfilSumAggregateOutputType = {
+  export type Carteira_n_cedentesSumAggregateOutputType = {
     id: number | null
-    usuario_id: number | null
-    usuario_perfil_id: number | null
+    carteira_id: number | null
+    cedente_id: number | null
   }
 
-  export type Usuario_x_perfilMinAggregateOutputType = {
+  export type Carteira_n_cedentesMinAggregateOutputType = {
     id: number | null
-    senha: string | null
-    usuario_id: number | null
-    usuario_perfil_id: number | null
+    carteira_id: number | null
+    cedente_id: number | null
   }
 
-  export type Usuario_x_perfilMaxAggregateOutputType = {
+  export type Carteira_n_cedentesMaxAggregateOutputType = {
     id: number | null
-    senha: string | null
-    usuario_id: number | null
-    usuario_perfil_id: number | null
+    carteira_id: number | null
+    cedente_id: number | null
   }
 
-  export type Usuario_x_perfilCountAggregateOutputType = {
+  export type Carteira_n_cedentesCountAggregateOutputType = {
     id: number
-    senha: number
-    usuario_id: number
-    usuario_perfil_id: number
+    carteira_id: number
+    cedente_id: number
     _all: number
   }
 
 
-  export type Usuario_x_perfilAvgAggregateInputType = {
+  export type Carteira_n_cedentesAvgAggregateInputType = {
     id?: true
-    usuario_id?: true
-    usuario_perfil_id?: true
+    carteira_id?: true
+    cedente_id?: true
   }
 
-  export type Usuario_x_perfilSumAggregateInputType = {
+  export type Carteira_n_cedentesSumAggregateInputType = {
     id?: true
-    usuario_id?: true
-    usuario_perfil_id?: true
+    carteira_id?: true
+    cedente_id?: true
   }
 
-  export type Usuario_x_perfilMinAggregateInputType = {
+  export type Carteira_n_cedentesMinAggregateInputType = {
     id?: true
-    senha?: true
-    usuario_id?: true
-    usuario_perfil_id?: true
+    carteira_id?: true
+    cedente_id?: true
   }
 
-  export type Usuario_x_perfilMaxAggregateInputType = {
+  export type Carteira_n_cedentesMaxAggregateInputType = {
     id?: true
-    senha?: true
-    usuario_id?: true
-    usuario_perfil_id?: true
+    carteira_id?: true
+    cedente_id?: true
   }
 
-  export type Usuario_x_perfilCountAggregateInputType = {
+  export type Carteira_n_cedentesCountAggregateInputType = {
     id?: true
-    senha?: true
-    usuario_id?: true
-    usuario_perfil_id?: true
+    carteira_id?: true
+    cedente_id?: true
     _all?: true
   }
 
-  export type Usuario_x_perfilAggregateArgs = {
+  export type Carteira_n_cedentesAggregateArgs = {
     /**
-     * Filter which usuario_x_perfil to aggregate.
+     * Filter which carteira_n_cedentes to aggregate.
      * 
     **/
-    where?: usuario_x_perfilWhereInput
+    where?: carteira_n_cedentesWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of usuario_x_perfils to fetch.
+     * Determine the order of carteira_n_cedentes to fetch.
      * 
     **/
-    orderBy?: Enumerable<usuario_x_perfilOrderByWithRelationInput>
+    orderBy?: Enumerable<carteira_n_cedentesOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      * 
     **/
-    cursor?: usuario_x_perfilWhereUniqueInput
+    cursor?: carteira_n_cedentesWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` usuario_x_perfils from the position of the cursor.
+     * Take `±n` carteira_n_cedentes from the position of the cursor.
      * 
     **/
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` usuario_x_perfils.
+     * Skip the first `n` carteira_n_cedentes.
      * 
     **/
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned usuario_x_perfils
+     * Count returned carteira_n_cedentes
     **/
-    _count?: true | Usuario_x_perfilCountAggregateInputType
+    _count?: true | Carteira_n_cedentesCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: Usuario_x_perfilAvgAggregateInputType
+    _avg?: Carteira_n_cedentesAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: Usuario_x_perfilSumAggregateInputType
+    _sum?: Carteira_n_cedentesSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: Usuario_x_perfilMinAggregateInputType
+    _min?: Carteira_n_cedentesMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: Usuario_x_perfilMaxAggregateInputType
+    _max?: Carteira_n_cedentesMaxAggregateInputType
   }
 
-  export type GetUsuario_x_perfilAggregateType<T extends Usuario_x_perfilAggregateArgs> = {
-        [P in keyof T & keyof AggregateUsuario_x_perfil]: P extends '_count' | 'count'
+  export type GetCarteira_n_cedentesAggregateType<T extends Carteira_n_cedentesAggregateArgs> = {
+        [P in keyof T & keyof AggregateCarteira_n_cedentes]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateUsuario_x_perfil[P]>
-      : GetScalarType<T[P], AggregateUsuario_x_perfil[P]>
+        : GetScalarType<T[P], AggregateCarteira_n_cedentes[P]>
+      : GetScalarType<T[P], AggregateCarteira_n_cedentes[P]>
   }
 
 
 
 
-  export type Usuario_x_perfilGroupByArgs = {
-    where?: usuario_x_perfilWhereInput
-    orderBy?: Enumerable<usuario_x_perfilOrderByWithAggregationInput>
-    by: Array<Usuario_x_perfilScalarFieldEnum>
-    having?: usuario_x_perfilScalarWhereWithAggregatesInput
+  export type Carteira_n_cedentesGroupByArgs = {
+    where?: carteira_n_cedentesWhereInput
+    orderBy?: Enumerable<carteira_n_cedentesOrderByWithAggregationInput>
+    by: Array<Carteira_n_cedentesScalarFieldEnum>
+    having?: carteira_n_cedentesScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: Usuario_x_perfilCountAggregateInputType | true
-    _avg?: Usuario_x_perfilAvgAggregateInputType
-    _sum?: Usuario_x_perfilSumAggregateInputType
-    _min?: Usuario_x_perfilMinAggregateInputType
-    _max?: Usuario_x_perfilMaxAggregateInputType
+    _count?: Carteira_n_cedentesCountAggregateInputType | true
+    _avg?: Carteira_n_cedentesAvgAggregateInputType
+    _sum?: Carteira_n_cedentesSumAggregateInputType
+    _min?: Carteira_n_cedentesMinAggregateInputType
+    _max?: Carteira_n_cedentesMaxAggregateInputType
   }
 
 
-  export type Usuario_x_perfilGroupByOutputType = {
+  export type Carteira_n_cedentesGroupByOutputType = {
     id: number
-    senha: string
-    usuario_id: number
-    usuario_perfil_id: number
-    _count: Usuario_x_perfilCountAggregateOutputType | null
-    _avg: Usuario_x_perfilAvgAggregateOutputType | null
-    _sum: Usuario_x_perfilSumAggregateOutputType | null
-    _min: Usuario_x_perfilMinAggregateOutputType | null
-    _max: Usuario_x_perfilMaxAggregateOutputType | null
+    carteira_id: number
+    cedente_id: number
+    _count: Carteira_n_cedentesCountAggregateOutputType | null
+    _avg: Carteira_n_cedentesAvgAggregateOutputType | null
+    _sum: Carteira_n_cedentesSumAggregateOutputType | null
+    _min: Carteira_n_cedentesMinAggregateOutputType | null
+    _max: Carteira_n_cedentesMaxAggregateOutputType | null
   }
 
-  type GetUsuario_x_perfilGroupByPayload<T extends Usuario_x_perfilGroupByArgs> = PrismaPromise<
+  type GetCarteira_n_cedentesGroupByPayload<T extends Carteira_n_cedentesGroupByArgs> = PrismaPromise<
     Array<
-      PickArray<Usuario_x_perfilGroupByOutputType, T['by']> &
+      PickArray<Carteira_n_cedentesGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof Usuario_x_perfilGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof Carteira_n_cedentesGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], Usuario_x_perfilGroupByOutputType[P]>
-            : GetScalarType<T[P], Usuario_x_perfilGroupByOutputType[P]>
+              : GetScalarType<T[P], Carteira_n_cedentesGroupByOutputType[P]>
+            : GetScalarType<T[P], Carteira_n_cedentesGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type usuario_x_perfilSelect = {
+  export type carteira_n_cedentesSelect = {
     id?: boolean
-    senha?: boolean
-    usuario_id?: boolean
-    usuario_perfil_id?: boolean
-    usuario?: boolean | usuarioArgs
-    usuario_perfil_tipo?: boolean | usuario_perfil_tipoArgs
+    carteira_id?: boolean
+    cedente_id?: boolean
+    carteira?: boolean | carteiraArgs
+    cedente?: boolean | cedenteArgs
   }
 
 
-  export type usuario_x_perfilInclude = {
-    usuario?: boolean | usuarioArgs
-    usuario_perfil_tipo?: boolean | usuario_perfil_tipoArgs
+  export type carteira_n_cedentesInclude = {
+    carteira?: boolean | carteiraArgs
+    cedente?: boolean | cedenteArgs
   } 
 
-  export type usuario_x_perfilGetPayload<S extends boolean | null | undefined | usuario_x_perfilArgs, U = keyof S> =
+  export type carteira_n_cedentesGetPayload<S extends boolean | null | undefined | carteira_n_cedentesArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? usuario_x_perfil :
+    S extends true ? carteira_n_cedentes :
     S extends undefined ? never :
-    S extends { include: any } & (usuario_x_perfilArgs | usuario_x_perfilFindManyArgs)
-    ? usuario_x_perfil  & {
+    S extends { include: any } & (carteira_n_cedentesArgs | carteira_n_cedentesFindManyArgs)
+    ? carteira_n_cedentes  & {
     [P in TrueKeys<S['include']>]:
-        P extends 'usuario' ? usuarioGetPayload<Exclude<S['include'], undefined | null>[P]> :
-        P extends 'usuario_perfil_tipo' ? usuario_perfil_tipoGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
+        P extends 'carteira' ? carteiraGetPayload<Exclude<S['include'], undefined | null>[P]> :
+        P extends 'cedente' ? cedenteGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
   } 
-    : S extends { select: any } & (usuario_x_perfilArgs | usuario_x_perfilFindManyArgs)
+    : S extends { select: any } & (carteira_n_cedentesArgs | carteira_n_cedentesFindManyArgs)
       ? {
     [P in TrueKeys<S['select']>]:
-        P extends 'usuario' ? usuarioGetPayload<Exclude<S['select'], undefined | null>[P]> :
-        P extends 'usuario_perfil_tipo' ? usuario_perfil_tipoGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof usuario_x_perfil ? usuario_x_perfil[P] : never
+        P extends 'carteira' ? carteiraGetPayload<Exclude<S['select'], undefined | null>[P]> :
+        P extends 'cedente' ? cedenteGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof carteira_n_cedentes ? carteira_n_cedentes[P] : never
   } 
-      : usuario_x_perfil
+      : carteira_n_cedentes
 
 
-  type usuario_x_perfilCountArgs = Merge<
-    Omit<usuario_x_perfilFindManyArgs, 'select' | 'include'> & {
-      select?: Usuario_x_perfilCountAggregateInputType | true
+  type carteira_n_cedentesCountArgs = Merge<
+    Omit<carteira_n_cedentesFindManyArgs, 'select' | 'include'> & {
+      select?: Carteira_n_cedentesCountAggregateInputType | true
     }
   >
 
-  export interface usuario_x_perfilDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+  export interface carteira_n_cedentesDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
     /**
-     * Find zero or one Usuario_x_perfil that matches the filter.
-     * @param {usuario_x_perfilFindUniqueArgs} args - Arguments to find a Usuario_x_perfil
+     * Find zero or one Carteira_n_cedentes that matches the filter.
+     * @param {carteira_n_cedentesFindUniqueArgs} args - Arguments to find a Carteira_n_cedentes
      * @example
-     * // Get one Usuario_x_perfil
-     * const usuario_x_perfil = await prisma.usuario_x_perfil.findUnique({
+     * // Get one Carteira_n_cedentes
+     * const carteira_n_cedentes = await prisma.carteira_n_cedentes.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUnique<T extends usuario_x_perfilFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, usuario_x_perfilFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'usuario_x_perfil'> extends True ? Prisma__usuario_x_perfilClient<usuario_x_perfilGetPayload<T>> : Prisma__usuario_x_perfilClient<usuario_x_perfilGetPayload<T> | null, null>
+    findUnique<T extends carteira_n_cedentesFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, carteira_n_cedentesFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'carteira_n_cedentes'> extends True ? Prisma__carteira_n_cedentesClient<carteira_n_cedentesGetPayload<T>> : Prisma__carteira_n_cedentesClient<carteira_n_cedentesGetPayload<T> | null, null>
 
     /**
-     * Find the first Usuario_x_perfil that matches the filter.
+     * Find the first Carteira_n_cedentes that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {usuario_x_perfilFindFirstArgs} args - Arguments to find a Usuario_x_perfil
+     * @param {carteira_n_cedentesFindFirstArgs} args - Arguments to find a Carteira_n_cedentes
      * @example
-     * // Get one Usuario_x_perfil
-     * const usuario_x_perfil = await prisma.usuario_x_perfil.findFirst({
+     * // Get one Carteira_n_cedentes
+     * const carteira_n_cedentes = await prisma.carteira_n_cedentes.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirst<T extends usuario_x_perfilFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, usuario_x_perfilFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'usuario_x_perfil'> extends True ? Prisma__usuario_x_perfilClient<usuario_x_perfilGetPayload<T>> : Prisma__usuario_x_perfilClient<usuario_x_perfilGetPayload<T> | null, null>
+    findFirst<T extends carteira_n_cedentesFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, carteira_n_cedentesFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'carteira_n_cedentes'> extends True ? Prisma__carteira_n_cedentesClient<carteira_n_cedentesGetPayload<T>> : Prisma__carteira_n_cedentesClient<carteira_n_cedentesGetPayload<T> | null, null>
 
     /**
-     * Find zero or more Usuario_x_perfils that matches the filter.
+     * Find zero or more Carteira_n_cedentes that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {usuario_x_perfilFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {carteira_n_cedentesFindManyArgs=} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Usuario_x_perfils
-     * const usuario_x_perfils = await prisma.usuario_x_perfil.findMany()
+     * // Get all Carteira_n_cedentes
+     * const carteira_n_cedentes = await prisma.carteira_n_cedentes.findMany()
      * 
-     * // Get first 10 Usuario_x_perfils
-     * const usuario_x_perfils = await prisma.usuario_x_perfil.findMany({ take: 10 })
+     * // Get first 10 Carteira_n_cedentes
+     * const carteira_n_cedentes = await prisma.carteira_n_cedentes.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const usuario_x_perfilWithIdOnly = await prisma.usuario_x_perfil.findMany({ select: { id: true } })
+     * const carteira_n_cedentesWithIdOnly = await prisma.carteira_n_cedentes.findMany({ select: { id: true } })
      * 
     **/
-    findMany<T extends usuario_x_perfilFindManyArgs>(
-      args?: SelectSubset<T, usuario_x_perfilFindManyArgs>
-    ): PrismaPromise<Array<usuario_x_perfilGetPayload<T>>>
+    findMany<T extends carteira_n_cedentesFindManyArgs>(
+      args?: SelectSubset<T, carteira_n_cedentesFindManyArgs>
+    ): PrismaPromise<Array<carteira_n_cedentesGetPayload<T>>>
 
     /**
-     * Create a Usuario_x_perfil.
-     * @param {usuario_x_perfilCreateArgs} args - Arguments to create a Usuario_x_perfil.
+     * Create a Carteira_n_cedentes.
+     * @param {carteira_n_cedentesCreateArgs} args - Arguments to create a Carteira_n_cedentes.
      * @example
-     * // Create one Usuario_x_perfil
-     * const Usuario_x_perfil = await prisma.usuario_x_perfil.create({
+     * // Create one Carteira_n_cedentes
+     * const Carteira_n_cedentes = await prisma.carteira_n_cedentes.create({
      *   data: {
-     *     // ... data to create a Usuario_x_perfil
+     *     // ... data to create a Carteira_n_cedentes
      *   }
      * })
      * 
     **/
-    create<T extends usuario_x_perfilCreateArgs>(
-      args: SelectSubset<T, usuario_x_perfilCreateArgs>
-    ): Prisma__usuario_x_perfilClient<usuario_x_perfilGetPayload<T>>
+    create<T extends carteira_n_cedentesCreateArgs>(
+      args: SelectSubset<T, carteira_n_cedentesCreateArgs>
+    ): Prisma__carteira_n_cedentesClient<carteira_n_cedentesGetPayload<T>>
 
     /**
-     * Create many Usuario_x_perfils.
-     *     @param {usuario_x_perfilCreateManyArgs} args - Arguments to create many Usuario_x_perfils.
+     * Create many Carteira_n_cedentes.
+     *     @param {carteira_n_cedentesCreateManyArgs} args - Arguments to create many Carteira_n_cedentes.
      *     @example
-     *     // Create many Usuario_x_perfils
-     *     const usuario_x_perfil = await prisma.usuario_x_perfil.createMany({
+     *     // Create many Carteira_n_cedentes
+     *     const carteira_n_cedentes = await prisma.carteira_n_cedentes.createMany({
      *       data: {
      *         // ... provide data here
      *       }
      *     })
      *     
     **/
-    createMany<T extends usuario_x_perfilCreateManyArgs>(
-      args?: SelectSubset<T, usuario_x_perfilCreateManyArgs>
+    createMany<T extends carteira_n_cedentesCreateManyArgs>(
+      args?: SelectSubset<T, carteira_n_cedentesCreateManyArgs>
     ): PrismaPromise<BatchPayload>
 
     /**
-     * Delete a Usuario_x_perfil.
-     * @param {usuario_x_perfilDeleteArgs} args - Arguments to delete one Usuario_x_perfil.
+     * Delete a Carteira_n_cedentes.
+     * @param {carteira_n_cedentesDeleteArgs} args - Arguments to delete one Carteira_n_cedentes.
      * @example
-     * // Delete one Usuario_x_perfil
-     * const Usuario_x_perfil = await prisma.usuario_x_perfil.delete({
+     * // Delete one Carteira_n_cedentes
+     * const Carteira_n_cedentes = await prisma.carteira_n_cedentes.delete({
      *   where: {
-     *     // ... filter to delete one Usuario_x_perfil
+     *     // ... filter to delete one Carteira_n_cedentes
      *   }
      * })
      * 
     **/
-    delete<T extends usuario_x_perfilDeleteArgs>(
-      args: SelectSubset<T, usuario_x_perfilDeleteArgs>
-    ): Prisma__usuario_x_perfilClient<usuario_x_perfilGetPayload<T>>
+    delete<T extends carteira_n_cedentesDeleteArgs>(
+      args: SelectSubset<T, carteira_n_cedentesDeleteArgs>
+    ): Prisma__carteira_n_cedentesClient<carteira_n_cedentesGetPayload<T>>
 
     /**
-     * Update one Usuario_x_perfil.
-     * @param {usuario_x_perfilUpdateArgs} args - Arguments to update one Usuario_x_perfil.
+     * Update one Carteira_n_cedentes.
+     * @param {carteira_n_cedentesUpdateArgs} args - Arguments to update one Carteira_n_cedentes.
      * @example
-     * // Update one Usuario_x_perfil
-     * const usuario_x_perfil = await prisma.usuario_x_perfil.update({
+     * // Update one Carteira_n_cedentes
+     * const carteira_n_cedentes = await prisma.carteira_n_cedentes.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -32741,34 +24431,34 @@ export namespace Prisma {
      * })
      * 
     **/
-    update<T extends usuario_x_perfilUpdateArgs>(
-      args: SelectSubset<T, usuario_x_perfilUpdateArgs>
-    ): Prisma__usuario_x_perfilClient<usuario_x_perfilGetPayload<T>>
+    update<T extends carteira_n_cedentesUpdateArgs>(
+      args: SelectSubset<T, carteira_n_cedentesUpdateArgs>
+    ): Prisma__carteira_n_cedentesClient<carteira_n_cedentesGetPayload<T>>
 
     /**
-     * Delete zero or more Usuario_x_perfils.
-     * @param {usuario_x_perfilDeleteManyArgs} args - Arguments to filter Usuario_x_perfils to delete.
+     * Delete zero or more Carteira_n_cedentes.
+     * @param {carteira_n_cedentesDeleteManyArgs} args - Arguments to filter Carteira_n_cedentes to delete.
      * @example
-     * // Delete a few Usuario_x_perfils
-     * const { count } = await prisma.usuario_x_perfil.deleteMany({
+     * // Delete a few Carteira_n_cedentes
+     * const { count } = await prisma.carteira_n_cedentes.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
     **/
-    deleteMany<T extends usuario_x_perfilDeleteManyArgs>(
-      args?: SelectSubset<T, usuario_x_perfilDeleteManyArgs>
+    deleteMany<T extends carteira_n_cedentesDeleteManyArgs>(
+      args?: SelectSubset<T, carteira_n_cedentesDeleteManyArgs>
     ): PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Usuario_x_perfils.
+     * Update zero or more Carteira_n_cedentes.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {usuario_x_perfilUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {carteira_n_cedentesUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Usuario_x_perfils
-     * const usuario_x_perfil = await prisma.usuario_x_perfil.updateMany({
+     * // Update many Carteira_n_cedentes
+     * const carteira_n_cedentes = await prisma.carteira_n_cedentes.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -32778,93 +24468,93 @@ export namespace Prisma {
      * })
      * 
     **/
-    updateMany<T extends usuario_x_perfilUpdateManyArgs>(
-      args: SelectSubset<T, usuario_x_perfilUpdateManyArgs>
+    updateMany<T extends carteira_n_cedentesUpdateManyArgs>(
+      args: SelectSubset<T, carteira_n_cedentesUpdateManyArgs>
     ): PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one Usuario_x_perfil.
-     * @param {usuario_x_perfilUpsertArgs} args - Arguments to update or create a Usuario_x_perfil.
+     * Create or update one Carteira_n_cedentes.
+     * @param {carteira_n_cedentesUpsertArgs} args - Arguments to update or create a Carteira_n_cedentes.
      * @example
-     * // Update or create a Usuario_x_perfil
-     * const usuario_x_perfil = await prisma.usuario_x_perfil.upsert({
+     * // Update or create a Carteira_n_cedentes
+     * const carteira_n_cedentes = await prisma.carteira_n_cedentes.upsert({
      *   create: {
-     *     // ... data to create a Usuario_x_perfil
+     *     // ... data to create a Carteira_n_cedentes
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Usuario_x_perfil we want to update
+     *     // ... the filter for the Carteira_n_cedentes we want to update
      *   }
      * })
     **/
-    upsert<T extends usuario_x_perfilUpsertArgs>(
-      args: SelectSubset<T, usuario_x_perfilUpsertArgs>
-    ): Prisma__usuario_x_perfilClient<usuario_x_perfilGetPayload<T>>
+    upsert<T extends carteira_n_cedentesUpsertArgs>(
+      args: SelectSubset<T, carteira_n_cedentesUpsertArgs>
+    ): Prisma__carteira_n_cedentesClient<carteira_n_cedentesGetPayload<T>>
 
     /**
-     * Find one Usuario_x_perfil that matches the filter or throw
+     * Find one Carteira_n_cedentes that matches the filter or throw
      * `NotFoundError` if no matches were found.
-     * @param {usuario_x_perfilFindUniqueOrThrowArgs} args - Arguments to find a Usuario_x_perfil
+     * @param {carteira_n_cedentesFindUniqueOrThrowArgs} args - Arguments to find a Carteira_n_cedentes
      * @example
-     * // Get one Usuario_x_perfil
-     * const usuario_x_perfil = await prisma.usuario_x_perfil.findUniqueOrThrow({
+     * // Get one Carteira_n_cedentes
+     * const carteira_n_cedentes = await prisma.carteira_n_cedentes.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUniqueOrThrow<T extends usuario_x_perfilFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, usuario_x_perfilFindUniqueOrThrowArgs>
-    ): Prisma__usuario_x_perfilClient<usuario_x_perfilGetPayload<T>>
+    findUniqueOrThrow<T extends carteira_n_cedentesFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, carteira_n_cedentesFindUniqueOrThrowArgs>
+    ): Prisma__carteira_n_cedentesClient<carteira_n_cedentesGetPayload<T>>
 
     /**
-     * Find the first Usuario_x_perfil that matches the filter or
+     * Find the first Carteira_n_cedentes that matches the filter or
      * throw `NotFoundError` if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {usuario_x_perfilFindFirstOrThrowArgs} args - Arguments to find a Usuario_x_perfil
+     * @param {carteira_n_cedentesFindFirstOrThrowArgs} args - Arguments to find a Carteira_n_cedentes
      * @example
-     * // Get one Usuario_x_perfil
-     * const usuario_x_perfil = await prisma.usuario_x_perfil.findFirstOrThrow({
+     * // Get one Carteira_n_cedentes
+     * const carteira_n_cedentes = await prisma.carteira_n_cedentes.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirstOrThrow<T extends usuario_x_perfilFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, usuario_x_perfilFindFirstOrThrowArgs>
-    ): Prisma__usuario_x_perfilClient<usuario_x_perfilGetPayload<T>>
+    findFirstOrThrow<T extends carteira_n_cedentesFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, carteira_n_cedentesFindFirstOrThrowArgs>
+    ): Prisma__carteira_n_cedentesClient<carteira_n_cedentesGetPayload<T>>
 
     /**
-     * Count the number of Usuario_x_perfils.
+     * Count the number of Carteira_n_cedentes.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {usuario_x_perfilCountArgs} args - Arguments to filter Usuario_x_perfils to count.
+     * @param {carteira_n_cedentesCountArgs} args - Arguments to filter Carteira_n_cedentes to count.
      * @example
-     * // Count the number of Usuario_x_perfils
-     * const count = await prisma.usuario_x_perfil.count({
+     * // Count the number of Carteira_n_cedentes
+     * const count = await prisma.carteira_n_cedentes.count({
      *   where: {
-     *     // ... the filter for the Usuario_x_perfils we want to count
+     *     // ... the filter for the Carteira_n_cedentes we want to count
      *   }
      * })
     **/
-    count<T extends usuario_x_perfilCountArgs>(
-      args?: Subset<T, usuario_x_perfilCountArgs>,
+    count<T extends carteira_n_cedentesCountArgs>(
+      args?: Subset<T, carteira_n_cedentesCountArgs>,
     ): PrismaPromise<
       T extends _Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], Usuario_x_perfilCountAggregateOutputType>
+          : GetScalarType<T['select'], Carteira_n_cedentesCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Usuario_x_perfil.
+     * Allows you to perform aggregations operations on a Carteira_n_cedentes.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {Usuario_x_perfilAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {Carteira_n_cedentesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -32884,13 +24574,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends Usuario_x_perfilAggregateArgs>(args: Subset<T, Usuario_x_perfilAggregateArgs>): PrismaPromise<GetUsuario_x_perfilAggregateType<T>>
+    aggregate<T extends Carteira_n_cedentesAggregateArgs>(args: Subset<T, Carteira_n_cedentesAggregateArgs>): PrismaPromise<GetCarteira_n_cedentesAggregateType<T>>
 
     /**
-     * Group by Usuario_x_perfil.
+     * Group by Carteira_n_cedentes.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {Usuario_x_perfilGroupByArgs} args - Group by arguments.
+     * @param {Carteira_n_cedentesGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -32905,14 +24595,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends Usuario_x_perfilGroupByArgs,
+      T extends Carteira_n_cedentesGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: Usuario_x_perfilGroupByArgs['orderBy'] }
-        : { orderBy?: Usuario_x_perfilGroupByArgs['orderBy'] },
+        ? { orderBy: Carteira_n_cedentesGroupByArgs['orderBy'] }
+        : { orderBy?: Carteira_n_cedentesGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends TupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -32961,17 +24651,17 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, Usuario_x_perfilGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUsuario_x_perfilGroupByPayload<T> : PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, Carteira_n_cedentesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCarteira_n_cedentesGroupByPayload<T> : PrismaPromise<InputErrors>
 
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for usuario_x_perfil.
+   * The delegate class that acts as a "Promise-like" for carteira_n_cedentes.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export class Prisma__usuario_x_perfilClient<T, Null = never> implements PrismaPromise<T> {
+  export class Prisma__carteira_n_cedentesClient<T, Null = never> implements PrismaPromise<T> {
     [prisma]: true;
     private readonly _dmmf;
     private readonly _fetcher;
@@ -32988,7 +24678,3791 @@ export namespace Prisma {
     constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
 
-    usuario<T extends usuarioArgs= {}>(args?: Subset<T, usuarioArgs>): Prisma__usuarioClient<usuarioGetPayload<T> | Null>;
+    carteira<T extends carteiraArgs= {}>(args?: Subset<T, carteiraArgs>): Prisma__carteiraClient<carteiraGetPayload<T> | Null>;
+
+    cedente<T extends cedenteArgs= {}>(args?: Subset<T, cedenteArgs>): Prisma__cedenteClient<cedenteGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * carteira_n_cedentes base type for findUnique actions
+   */
+  export type carteira_n_cedentesFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the carteira_n_cedentes
+     * 
+    **/
+    select?: carteira_n_cedentesSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: carteira_n_cedentesInclude | null
+    /**
+     * Filter, which carteira_n_cedentes to fetch.
+     * 
+    **/
+    where: carteira_n_cedentesWhereUniqueInput
+  }
+
+  /**
+   * carteira_n_cedentes: findUnique
+   */
+  export interface carteira_n_cedentesFindUniqueArgs extends carteira_n_cedentesFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * carteira_n_cedentes base type for findFirst actions
+   */
+  export type carteira_n_cedentesFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the carteira_n_cedentes
+     * 
+    **/
+    select?: carteira_n_cedentesSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: carteira_n_cedentesInclude | null
+    /**
+     * Filter, which carteira_n_cedentes to fetch.
+     * 
+    **/
+    where?: carteira_n_cedentesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of carteira_n_cedentes to fetch.
+     * 
+    **/
+    orderBy?: Enumerable<carteira_n_cedentesOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for carteira_n_cedentes.
+     * 
+    **/
+    cursor?: carteira_n_cedentesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` carteira_n_cedentes from the position of the cursor.
+     * 
+    **/
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` carteira_n_cedentes.
+     * 
+    **/
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of carteira_n_cedentes.
+     * 
+    **/
+    distinct?: Enumerable<Carteira_n_cedentesScalarFieldEnum>
+  }
+
+  /**
+   * carteira_n_cedentes: findFirst
+   */
+  export interface carteira_n_cedentesFindFirstArgs extends carteira_n_cedentesFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * carteira_n_cedentes findMany
+   */
+  export type carteira_n_cedentesFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the carteira_n_cedentes
+     * 
+    **/
+    select?: carteira_n_cedentesSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: carteira_n_cedentesInclude | null
+    /**
+     * Filter, which carteira_n_cedentes to fetch.
+     * 
+    **/
+    where?: carteira_n_cedentesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of carteira_n_cedentes to fetch.
+     * 
+    **/
+    orderBy?: Enumerable<carteira_n_cedentesOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing carteira_n_cedentes.
+     * 
+    **/
+    cursor?: carteira_n_cedentesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` carteira_n_cedentes from the position of the cursor.
+     * 
+    **/
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` carteira_n_cedentes.
+     * 
+    **/
+    skip?: number
+    distinct?: Enumerable<Carteira_n_cedentesScalarFieldEnum>
+  }
+
+
+  /**
+   * carteira_n_cedentes create
+   */
+  export type carteira_n_cedentesCreateArgs = {
+    /**
+     * Select specific fields to fetch from the carteira_n_cedentes
+     * 
+    **/
+    select?: carteira_n_cedentesSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: carteira_n_cedentesInclude | null
+    /**
+     * The data needed to create a carteira_n_cedentes.
+     * 
+    **/
+    data: XOR<carteira_n_cedentesCreateInput, carteira_n_cedentesUncheckedCreateInput>
+  }
+
+
+  /**
+   * carteira_n_cedentes createMany
+   */
+  export type carteira_n_cedentesCreateManyArgs = {
+    /**
+     * The data used to create many carteira_n_cedentes.
+     * 
+    **/
+    data: Enumerable<carteira_n_cedentesCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * carteira_n_cedentes update
+   */
+  export type carteira_n_cedentesUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the carteira_n_cedentes
+     * 
+    **/
+    select?: carteira_n_cedentesSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: carteira_n_cedentesInclude | null
+    /**
+     * The data needed to update a carteira_n_cedentes.
+     * 
+    **/
+    data: XOR<carteira_n_cedentesUpdateInput, carteira_n_cedentesUncheckedUpdateInput>
+    /**
+     * Choose, which carteira_n_cedentes to update.
+     * 
+    **/
+    where: carteira_n_cedentesWhereUniqueInput
+  }
+
+
+  /**
+   * carteira_n_cedentes updateMany
+   */
+  export type carteira_n_cedentesUpdateManyArgs = {
+    /**
+     * The data used to update carteira_n_cedentes.
+     * 
+    **/
+    data: XOR<carteira_n_cedentesUpdateManyMutationInput, carteira_n_cedentesUncheckedUpdateManyInput>
+    /**
+     * Filter which carteira_n_cedentes to update
+     * 
+    **/
+    where?: carteira_n_cedentesWhereInput
+  }
+
+
+  /**
+   * carteira_n_cedentes upsert
+   */
+  export type carteira_n_cedentesUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the carteira_n_cedentes
+     * 
+    **/
+    select?: carteira_n_cedentesSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: carteira_n_cedentesInclude | null
+    /**
+     * The filter to search for the carteira_n_cedentes to update in case it exists.
+     * 
+    **/
+    where: carteira_n_cedentesWhereUniqueInput
+    /**
+     * In case the carteira_n_cedentes found by the `where` argument doesn't exist, create a new carteira_n_cedentes with this data.
+     * 
+    **/
+    create: XOR<carteira_n_cedentesCreateInput, carteira_n_cedentesUncheckedCreateInput>
+    /**
+     * In case the carteira_n_cedentes was found with the provided `where` argument, update it with this data.
+     * 
+    **/
+    update: XOR<carteira_n_cedentesUpdateInput, carteira_n_cedentesUncheckedUpdateInput>
+  }
+
+
+  /**
+   * carteira_n_cedentes delete
+   */
+  export type carteira_n_cedentesDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the carteira_n_cedentes
+     * 
+    **/
+    select?: carteira_n_cedentesSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: carteira_n_cedentesInclude | null
+    /**
+     * Filter which carteira_n_cedentes to delete.
+     * 
+    **/
+    where: carteira_n_cedentesWhereUniqueInput
+  }
+
+
+  /**
+   * carteira_n_cedentes deleteMany
+   */
+  export type carteira_n_cedentesDeleteManyArgs = {
+    /**
+     * Filter which carteira_n_cedentes to delete
+     * 
+    **/
+    where?: carteira_n_cedentesWhereInput
+  }
+
+
+  /**
+   * carteira_n_cedentes: findUniqueOrThrow
+   */
+  export type carteira_n_cedentesFindUniqueOrThrowArgs = carteira_n_cedentesFindUniqueArgsBase
+      
+
+  /**
+   * carteira_n_cedentes: findFirstOrThrow
+   */
+  export type carteira_n_cedentesFindFirstOrThrowArgs = carteira_n_cedentesFindFirstArgsBase
+      
+
+  /**
+   * carteira_n_cedentes without action
+   */
+  export type carteira_n_cedentesArgs = {
+    /**
+     * Select specific fields to fetch from the carteira_n_cedentes
+     * 
+    **/
+    select?: carteira_n_cedentesSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: carteira_n_cedentesInclude | null
+  }
+
+
+
+  /**
+   * Model organograma_x_usuario
+   */
+
+
+  export type AggregateOrganograma_x_usuario = {
+    _count: Organograma_x_usuarioCountAggregateOutputType | null
+    _avg: Organograma_x_usuarioAvgAggregateOutputType | null
+    _sum: Organograma_x_usuarioSumAggregateOutputType | null
+    _min: Organograma_x_usuarioMinAggregateOutputType | null
+    _max: Organograma_x_usuarioMaxAggregateOutputType | null
+  }
+
+  export type Organograma_x_usuarioAvgAggregateOutputType = {
+    id: number | null
+    organograma_id: number | null
+    usuario_id: number | null
+  }
+
+  export type Organograma_x_usuarioSumAggregateOutputType = {
+    id: number | null
+    organograma_id: number | null
+    usuario_id: number | null
+  }
+
+  export type Organograma_x_usuarioMinAggregateOutputType = {
+    id: number | null
+    organograma_id: number | null
+    usuario_id: number | null
+  }
+
+  export type Organograma_x_usuarioMaxAggregateOutputType = {
+    id: number | null
+    organograma_id: number | null
+    usuario_id: number | null
+  }
+
+  export type Organograma_x_usuarioCountAggregateOutputType = {
+    id: number
+    organograma_id: number
+    usuario_id: number
+    _all: number
+  }
+
+
+  export type Organograma_x_usuarioAvgAggregateInputType = {
+    id?: true
+    organograma_id?: true
+    usuario_id?: true
+  }
+
+  export type Organograma_x_usuarioSumAggregateInputType = {
+    id?: true
+    organograma_id?: true
+    usuario_id?: true
+  }
+
+  export type Organograma_x_usuarioMinAggregateInputType = {
+    id?: true
+    organograma_id?: true
+    usuario_id?: true
+  }
+
+  export type Organograma_x_usuarioMaxAggregateInputType = {
+    id?: true
+    organograma_id?: true
+    usuario_id?: true
+  }
+
+  export type Organograma_x_usuarioCountAggregateInputType = {
+    id?: true
+    organograma_id?: true
+    usuario_id?: true
+    _all?: true
+  }
+
+  export type Organograma_x_usuarioAggregateArgs = {
+    /**
+     * Filter which organograma_x_usuario to aggregate.
+     * 
+    **/
+    where?: organograma_x_usuarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of organograma_x_usuarios to fetch.
+     * 
+    **/
+    orderBy?: Enumerable<organograma_x_usuarioOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     * 
+    **/
+    cursor?: organograma_x_usuarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` organograma_x_usuarios from the position of the cursor.
+     * 
+    **/
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` organograma_x_usuarios.
+     * 
+    **/
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned organograma_x_usuarios
+    **/
+    _count?: true | Organograma_x_usuarioCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Organograma_x_usuarioAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Organograma_x_usuarioSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Organograma_x_usuarioMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Organograma_x_usuarioMaxAggregateInputType
+  }
+
+  export type GetOrganograma_x_usuarioAggregateType<T extends Organograma_x_usuarioAggregateArgs> = {
+        [P in keyof T & keyof AggregateOrganograma_x_usuario]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOrganograma_x_usuario[P]>
+      : GetScalarType<T[P], AggregateOrganograma_x_usuario[P]>
+  }
+
+
+
+
+  export type Organograma_x_usuarioGroupByArgs = {
+    where?: organograma_x_usuarioWhereInput
+    orderBy?: Enumerable<organograma_x_usuarioOrderByWithAggregationInput>
+    by: Array<Organograma_x_usuarioScalarFieldEnum>
+    having?: organograma_x_usuarioScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Organograma_x_usuarioCountAggregateInputType | true
+    _avg?: Organograma_x_usuarioAvgAggregateInputType
+    _sum?: Organograma_x_usuarioSumAggregateInputType
+    _min?: Organograma_x_usuarioMinAggregateInputType
+    _max?: Organograma_x_usuarioMaxAggregateInputType
+  }
+
+
+  export type Organograma_x_usuarioGroupByOutputType = {
+    id: number
+    organograma_id: number
+    usuario_id: number
+    _count: Organograma_x_usuarioCountAggregateOutputType | null
+    _avg: Organograma_x_usuarioAvgAggregateOutputType | null
+    _sum: Organograma_x_usuarioSumAggregateOutputType | null
+    _min: Organograma_x_usuarioMinAggregateOutputType | null
+    _max: Organograma_x_usuarioMaxAggregateOutputType | null
+  }
+
+  type GetOrganograma_x_usuarioGroupByPayload<T extends Organograma_x_usuarioGroupByArgs> = PrismaPromise<
+    Array<
+      PickArray<Organograma_x_usuarioGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Organograma_x_usuarioGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Organograma_x_usuarioGroupByOutputType[P]>
+            : GetScalarType<T[P], Organograma_x_usuarioGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type organograma_x_usuarioSelect = {
+    id?: boolean
+    organograma_id?: boolean
+    usuario_id?: boolean
+    organograma?: boolean | organogramaArgs
+  }
+
+
+  export type organograma_x_usuarioInclude = {
+    organograma?: boolean | organogramaArgs
+  } 
+
+  export type organograma_x_usuarioGetPayload<S extends boolean | null | undefined | organograma_x_usuarioArgs, U = keyof S> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? organograma_x_usuario :
+    S extends undefined ? never :
+    S extends { include: any } & (organograma_x_usuarioArgs | organograma_x_usuarioFindManyArgs)
+    ? organograma_x_usuario  & {
+    [P in TrueKeys<S['include']>]:
+        P extends 'organograma' ? organogramaGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
+  } 
+    : S extends { select: any } & (organograma_x_usuarioArgs | organograma_x_usuarioFindManyArgs)
+      ? {
+    [P in TrueKeys<S['select']>]:
+        P extends 'organograma' ? organogramaGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof organograma_x_usuario ? organograma_x_usuario[P] : never
+  } 
+      : organograma_x_usuario
+
+
+  type organograma_x_usuarioCountArgs = Merge<
+    Omit<organograma_x_usuarioFindManyArgs, 'select' | 'include'> & {
+      select?: Organograma_x_usuarioCountAggregateInputType | true
+    }
+  >
+
+  export interface organograma_x_usuarioDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+    /**
+     * Find zero or one Organograma_x_usuario that matches the filter.
+     * @param {organograma_x_usuarioFindUniqueArgs} args - Arguments to find a Organograma_x_usuario
+     * @example
+     * // Get one Organograma_x_usuario
+     * const organograma_x_usuario = await prisma.organograma_x_usuario.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends organograma_x_usuarioFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, organograma_x_usuarioFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'organograma_x_usuario'> extends True ? Prisma__organograma_x_usuarioClient<organograma_x_usuarioGetPayload<T>> : Prisma__organograma_x_usuarioClient<organograma_x_usuarioGetPayload<T> | null, null>
+
+    /**
+     * Find the first Organograma_x_usuario that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {organograma_x_usuarioFindFirstArgs} args - Arguments to find a Organograma_x_usuario
+     * @example
+     * // Get one Organograma_x_usuario
+     * const organograma_x_usuario = await prisma.organograma_x_usuario.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends organograma_x_usuarioFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, organograma_x_usuarioFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'organograma_x_usuario'> extends True ? Prisma__organograma_x_usuarioClient<organograma_x_usuarioGetPayload<T>> : Prisma__organograma_x_usuarioClient<organograma_x_usuarioGetPayload<T> | null, null>
+
+    /**
+     * Find zero or more Organograma_x_usuarios that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {organograma_x_usuarioFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Organograma_x_usuarios
+     * const organograma_x_usuarios = await prisma.organograma_x_usuario.findMany()
+     * 
+     * // Get first 10 Organograma_x_usuarios
+     * const organograma_x_usuarios = await prisma.organograma_x_usuario.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const organograma_x_usuarioWithIdOnly = await prisma.organograma_x_usuario.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends organograma_x_usuarioFindManyArgs>(
+      args?: SelectSubset<T, organograma_x_usuarioFindManyArgs>
+    ): PrismaPromise<Array<organograma_x_usuarioGetPayload<T>>>
+
+    /**
+     * Create a Organograma_x_usuario.
+     * @param {organograma_x_usuarioCreateArgs} args - Arguments to create a Organograma_x_usuario.
+     * @example
+     * // Create one Organograma_x_usuario
+     * const Organograma_x_usuario = await prisma.organograma_x_usuario.create({
+     *   data: {
+     *     // ... data to create a Organograma_x_usuario
+     *   }
+     * })
+     * 
+    **/
+    create<T extends organograma_x_usuarioCreateArgs>(
+      args: SelectSubset<T, organograma_x_usuarioCreateArgs>
+    ): Prisma__organograma_x_usuarioClient<organograma_x_usuarioGetPayload<T>>
+
+    /**
+     * Create many Organograma_x_usuarios.
+     *     @param {organograma_x_usuarioCreateManyArgs} args - Arguments to create many Organograma_x_usuarios.
+     *     @example
+     *     // Create many Organograma_x_usuarios
+     *     const organograma_x_usuario = await prisma.organograma_x_usuario.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends organograma_x_usuarioCreateManyArgs>(
+      args?: SelectSubset<T, organograma_x_usuarioCreateManyArgs>
+    ): PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Organograma_x_usuario.
+     * @param {organograma_x_usuarioDeleteArgs} args - Arguments to delete one Organograma_x_usuario.
+     * @example
+     * // Delete one Organograma_x_usuario
+     * const Organograma_x_usuario = await prisma.organograma_x_usuario.delete({
+     *   where: {
+     *     // ... filter to delete one Organograma_x_usuario
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends organograma_x_usuarioDeleteArgs>(
+      args: SelectSubset<T, organograma_x_usuarioDeleteArgs>
+    ): Prisma__organograma_x_usuarioClient<organograma_x_usuarioGetPayload<T>>
+
+    /**
+     * Update one Organograma_x_usuario.
+     * @param {organograma_x_usuarioUpdateArgs} args - Arguments to update one Organograma_x_usuario.
+     * @example
+     * // Update one Organograma_x_usuario
+     * const organograma_x_usuario = await prisma.organograma_x_usuario.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends organograma_x_usuarioUpdateArgs>(
+      args: SelectSubset<T, organograma_x_usuarioUpdateArgs>
+    ): Prisma__organograma_x_usuarioClient<organograma_x_usuarioGetPayload<T>>
+
+    /**
+     * Delete zero or more Organograma_x_usuarios.
+     * @param {organograma_x_usuarioDeleteManyArgs} args - Arguments to filter Organograma_x_usuarios to delete.
+     * @example
+     * // Delete a few Organograma_x_usuarios
+     * const { count } = await prisma.organograma_x_usuario.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends organograma_x_usuarioDeleteManyArgs>(
+      args?: SelectSubset<T, organograma_x_usuarioDeleteManyArgs>
+    ): PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Organograma_x_usuarios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {organograma_x_usuarioUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Organograma_x_usuarios
+     * const organograma_x_usuario = await prisma.organograma_x_usuario.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends organograma_x_usuarioUpdateManyArgs>(
+      args: SelectSubset<T, organograma_x_usuarioUpdateManyArgs>
+    ): PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Organograma_x_usuario.
+     * @param {organograma_x_usuarioUpsertArgs} args - Arguments to update or create a Organograma_x_usuario.
+     * @example
+     * // Update or create a Organograma_x_usuario
+     * const organograma_x_usuario = await prisma.organograma_x_usuario.upsert({
+     *   create: {
+     *     // ... data to create a Organograma_x_usuario
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Organograma_x_usuario we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends organograma_x_usuarioUpsertArgs>(
+      args: SelectSubset<T, organograma_x_usuarioUpsertArgs>
+    ): Prisma__organograma_x_usuarioClient<organograma_x_usuarioGetPayload<T>>
+
+    /**
+     * Find one Organograma_x_usuario that matches the filter or throw
+     * `NotFoundError` if no matches were found.
+     * @param {organograma_x_usuarioFindUniqueOrThrowArgs} args - Arguments to find a Organograma_x_usuario
+     * @example
+     * // Get one Organograma_x_usuario
+     * const organograma_x_usuario = await prisma.organograma_x_usuario.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends organograma_x_usuarioFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, organograma_x_usuarioFindUniqueOrThrowArgs>
+    ): Prisma__organograma_x_usuarioClient<organograma_x_usuarioGetPayload<T>>
+
+    /**
+     * Find the first Organograma_x_usuario that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {organograma_x_usuarioFindFirstOrThrowArgs} args - Arguments to find a Organograma_x_usuario
+     * @example
+     * // Get one Organograma_x_usuario
+     * const organograma_x_usuario = await prisma.organograma_x_usuario.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends organograma_x_usuarioFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, organograma_x_usuarioFindFirstOrThrowArgs>
+    ): Prisma__organograma_x_usuarioClient<organograma_x_usuarioGetPayload<T>>
+
+    /**
+     * Count the number of Organograma_x_usuarios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {organograma_x_usuarioCountArgs} args - Arguments to filter Organograma_x_usuarios to count.
+     * @example
+     * // Count the number of Organograma_x_usuarios
+     * const count = await prisma.organograma_x_usuario.count({
+     *   where: {
+     *     // ... the filter for the Organograma_x_usuarios we want to count
+     *   }
+     * })
+    **/
+    count<T extends organograma_x_usuarioCountArgs>(
+      args?: Subset<T, organograma_x_usuarioCountArgs>,
+    ): PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Organograma_x_usuarioCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Organograma_x_usuario.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Organograma_x_usuarioAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Organograma_x_usuarioAggregateArgs>(args: Subset<T, Organograma_x_usuarioAggregateArgs>): PrismaPromise<GetOrganograma_x_usuarioAggregateType<T>>
+
+    /**
+     * Group by Organograma_x_usuario.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Organograma_x_usuarioGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Organograma_x_usuarioGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Organograma_x_usuarioGroupByArgs['orderBy'] }
+        : { orderBy?: Organograma_x_usuarioGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Organograma_x_usuarioGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOrganograma_x_usuarioGroupByPayload<T> : PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for organograma_x_usuario.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__organograma_x_usuarioClient<T, Null = never> implements PrismaPromise<T> {
+    [prisma]: true;
+    private readonly _dmmf;
+    private readonly _fetcher;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+    readonly [Symbol.toStringTag]: 'PrismaClientPromise';
+
+    organograma<T extends organogramaArgs= {}>(args?: Subset<T, organogramaArgs>): Prisma__organogramaClient<organogramaGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * organograma_x_usuario base type for findUnique actions
+   */
+  export type organograma_x_usuarioFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the organograma_x_usuario
+     * 
+    **/
+    select?: organograma_x_usuarioSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_x_usuarioInclude | null
+    /**
+     * Filter, which organograma_x_usuario to fetch.
+     * 
+    **/
+    where: organograma_x_usuarioWhereUniqueInput
+  }
+
+  /**
+   * organograma_x_usuario: findUnique
+   */
+  export interface organograma_x_usuarioFindUniqueArgs extends organograma_x_usuarioFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * organograma_x_usuario base type for findFirst actions
+   */
+  export type organograma_x_usuarioFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the organograma_x_usuario
+     * 
+    **/
+    select?: organograma_x_usuarioSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_x_usuarioInclude | null
+    /**
+     * Filter, which organograma_x_usuario to fetch.
+     * 
+    **/
+    where?: organograma_x_usuarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of organograma_x_usuarios to fetch.
+     * 
+    **/
+    orderBy?: Enumerable<organograma_x_usuarioOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for organograma_x_usuarios.
+     * 
+    **/
+    cursor?: organograma_x_usuarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` organograma_x_usuarios from the position of the cursor.
+     * 
+    **/
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` organograma_x_usuarios.
+     * 
+    **/
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of organograma_x_usuarios.
+     * 
+    **/
+    distinct?: Enumerable<Organograma_x_usuarioScalarFieldEnum>
+  }
+
+  /**
+   * organograma_x_usuario: findFirst
+   */
+  export interface organograma_x_usuarioFindFirstArgs extends organograma_x_usuarioFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * organograma_x_usuario findMany
+   */
+  export type organograma_x_usuarioFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the organograma_x_usuario
+     * 
+    **/
+    select?: organograma_x_usuarioSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_x_usuarioInclude | null
+    /**
+     * Filter, which organograma_x_usuarios to fetch.
+     * 
+    **/
+    where?: organograma_x_usuarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of organograma_x_usuarios to fetch.
+     * 
+    **/
+    orderBy?: Enumerable<organograma_x_usuarioOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing organograma_x_usuarios.
+     * 
+    **/
+    cursor?: organograma_x_usuarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` organograma_x_usuarios from the position of the cursor.
+     * 
+    **/
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` organograma_x_usuarios.
+     * 
+    **/
+    skip?: number
+    distinct?: Enumerable<Organograma_x_usuarioScalarFieldEnum>
+  }
+
+
+  /**
+   * organograma_x_usuario create
+   */
+  export type organograma_x_usuarioCreateArgs = {
+    /**
+     * Select specific fields to fetch from the organograma_x_usuario
+     * 
+    **/
+    select?: organograma_x_usuarioSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_x_usuarioInclude | null
+    /**
+     * The data needed to create a organograma_x_usuario.
+     * 
+    **/
+    data: XOR<organograma_x_usuarioCreateInput, organograma_x_usuarioUncheckedCreateInput>
+  }
+
+
+  /**
+   * organograma_x_usuario createMany
+   */
+  export type organograma_x_usuarioCreateManyArgs = {
+    /**
+     * The data used to create many organograma_x_usuarios.
+     * 
+    **/
+    data: Enumerable<organograma_x_usuarioCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * organograma_x_usuario update
+   */
+  export type organograma_x_usuarioUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the organograma_x_usuario
+     * 
+    **/
+    select?: organograma_x_usuarioSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_x_usuarioInclude | null
+    /**
+     * The data needed to update a organograma_x_usuario.
+     * 
+    **/
+    data: XOR<organograma_x_usuarioUpdateInput, organograma_x_usuarioUncheckedUpdateInput>
+    /**
+     * Choose, which organograma_x_usuario to update.
+     * 
+    **/
+    where: organograma_x_usuarioWhereUniqueInput
+  }
+
+
+  /**
+   * organograma_x_usuario updateMany
+   */
+  export type organograma_x_usuarioUpdateManyArgs = {
+    /**
+     * The data used to update organograma_x_usuarios.
+     * 
+    **/
+    data: XOR<organograma_x_usuarioUpdateManyMutationInput, organograma_x_usuarioUncheckedUpdateManyInput>
+    /**
+     * Filter which organograma_x_usuarios to update
+     * 
+    **/
+    where?: organograma_x_usuarioWhereInput
+  }
+
+
+  /**
+   * organograma_x_usuario upsert
+   */
+  export type organograma_x_usuarioUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the organograma_x_usuario
+     * 
+    **/
+    select?: organograma_x_usuarioSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_x_usuarioInclude | null
+    /**
+     * The filter to search for the organograma_x_usuario to update in case it exists.
+     * 
+    **/
+    where: organograma_x_usuarioWhereUniqueInput
+    /**
+     * In case the organograma_x_usuario found by the `where` argument doesn't exist, create a new organograma_x_usuario with this data.
+     * 
+    **/
+    create: XOR<organograma_x_usuarioCreateInput, organograma_x_usuarioUncheckedCreateInput>
+    /**
+     * In case the organograma_x_usuario was found with the provided `where` argument, update it with this data.
+     * 
+    **/
+    update: XOR<organograma_x_usuarioUpdateInput, organograma_x_usuarioUncheckedUpdateInput>
+  }
+
+
+  /**
+   * organograma_x_usuario delete
+   */
+  export type organograma_x_usuarioDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the organograma_x_usuario
+     * 
+    **/
+    select?: organograma_x_usuarioSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_x_usuarioInclude | null
+    /**
+     * Filter which organograma_x_usuario to delete.
+     * 
+    **/
+    where: organograma_x_usuarioWhereUniqueInput
+  }
+
+
+  /**
+   * organograma_x_usuario deleteMany
+   */
+  export type organograma_x_usuarioDeleteManyArgs = {
+    /**
+     * Filter which organograma_x_usuarios to delete
+     * 
+    **/
+    where?: organograma_x_usuarioWhereInput
+  }
+
+
+  /**
+   * organograma_x_usuario: findUniqueOrThrow
+   */
+  export type organograma_x_usuarioFindUniqueOrThrowArgs = organograma_x_usuarioFindUniqueArgsBase
+      
+
+  /**
+   * organograma_x_usuario: findFirstOrThrow
+   */
+  export type organograma_x_usuarioFindFirstOrThrowArgs = organograma_x_usuarioFindFirstArgsBase
+      
+
+  /**
+   * organograma_x_usuario without action
+   */
+  export type organograma_x_usuarioArgs = {
+    /**
+     * Select specific fields to fetch from the organograma_x_usuario
+     * 
+    **/
+    select?: organograma_x_usuarioSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: organograma_x_usuarioInclude | null
+  }
+
+
+
+  /**
+   * Model plataforma_x_usuario
+   */
+
+
+  export type AggregatePlataforma_x_usuario = {
+    _count: Plataforma_x_usuarioCountAggregateOutputType | null
+    _avg: Plataforma_x_usuarioAvgAggregateOutputType | null
+    _sum: Plataforma_x_usuarioSumAggregateOutputType | null
+    _min: Plataforma_x_usuarioMinAggregateOutputType | null
+    _max: Plataforma_x_usuarioMaxAggregateOutputType | null
+  }
+
+  export type Plataforma_x_usuarioAvgAggregateOutputType = {
+    id: number | null
+    plataforma_id: number | null
+    usuario_id: number | null
+  }
+
+  export type Plataforma_x_usuarioSumAggregateOutputType = {
+    id: number | null
+    plataforma_id: number | null
+    usuario_id: number | null
+  }
+
+  export type Plataforma_x_usuarioMinAggregateOutputType = {
+    id: number | null
+    plataforma_id: number | null
+    usuario_id: number | null
+  }
+
+  export type Plataforma_x_usuarioMaxAggregateOutputType = {
+    id: number | null
+    plataforma_id: number | null
+    usuario_id: number | null
+  }
+
+  export type Plataforma_x_usuarioCountAggregateOutputType = {
+    id: number
+    plataforma_id: number
+    usuario_id: number
+    _all: number
+  }
+
+
+  export type Plataforma_x_usuarioAvgAggregateInputType = {
+    id?: true
+    plataforma_id?: true
+    usuario_id?: true
+  }
+
+  export type Plataforma_x_usuarioSumAggregateInputType = {
+    id?: true
+    plataforma_id?: true
+    usuario_id?: true
+  }
+
+  export type Plataforma_x_usuarioMinAggregateInputType = {
+    id?: true
+    plataforma_id?: true
+    usuario_id?: true
+  }
+
+  export type Plataforma_x_usuarioMaxAggregateInputType = {
+    id?: true
+    plataforma_id?: true
+    usuario_id?: true
+  }
+
+  export type Plataforma_x_usuarioCountAggregateInputType = {
+    id?: true
+    plataforma_id?: true
+    usuario_id?: true
+    _all?: true
+  }
+
+  export type Plataforma_x_usuarioAggregateArgs = {
+    /**
+     * Filter which plataforma_x_usuario to aggregate.
+     * 
+    **/
+    where?: plataforma_x_usuarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of plataforma_x_usuarios to fetch.
+     * 
+    **/
+    orderBy?: Enumerable<plataforma_x_usuarioOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     * 
+    **/
+    cursor?: plataforma_x_usuarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` plataforma_x_usuarios from the position of the cursor.
+     * 
+    **/
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` plataforma_x_usuarios.
+     * 
+    **/
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned plataforma_x_usuarios
+    **/
+    _count?: true | Plataforma_x_usuarioCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Plataforma_x_usuarioAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Plataforma_x_usuarioSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Plataforma_x_usuarioMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Plataforma_x_usuarioMaxAggregateInputType
+  }
+
+  export type GetPlataforma_x_usuarioAggregateType<T extends Plataforma_x_usuarioAggregateArgs> = {
+        [P in keyof T & keyof AggregatePlataforma_x_usuario]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePlataforma_x_usuario[P]>
+      : GetScalarType<T[P], AggregatePlataforma_x_usuario[P]>
+  }
+
+
+
+
+  export type Plataforma_x_usuarioGroupByArgs = {
+    where?: plataforma_x_usuarioWhereInput
+    orderBy?: Enumerable<plataforma_x_usuarioOrderByWithAggregationInput>
+    by: Array<Plataforma_x_usuarioScalarFieldEnum>
+    having?: plataforma_x_usuarioScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Plataforma_x_usuarioCountAggregateInputType | true
+    _avg?: Plataforma_x_usuarioAvgAggregateInputType
+    _sum?: Plataforma_x_usuarioSumAggregateInputType
+    _min?: Plataforma_x_usuarioMinAggregateInputType
+    _max?: Plataforma_x_usuarioMaxAggregateInputType
+  }
+
+
+  export type Plataforma_x_usuarioGroupByOutputType = {
+    id: number
+    plataforma_id: number
+    usuario_id: number
+    _count: Plataforma_x_usuarioCountAggregateOutputType | null
+    _avg: Plataforma_x_usuarioAvgAggregateOutputType | null
+    _sum: Plataforma_x_usuarioSumAggregateOutputType | null
+    _min: Plataforma_x_usuarioMinAggregateOutputType | null
+    _max: Plataforma_x_usuarioMaxAggregateOutputType | null
+  }
+
+  type GetPlataforma_x_usuarioGroupByPayload<T extends Plataforma_x_usuarioGroupByArgs> = PrismaPromise<
+    Array<
+      PickArray<Plataforma_x_usuarioGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Plataforma_x_usuarioGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Plataforma_x_usuarioGroupByOutputType[P]>
+            : GetScalarType<T[P], Plataforma_x_usuarioGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type plataforma_x_usuarioSelect = {
+    id?: boolean
+    plataforma_id?: boolean
+    usuario_id?: boolean
+    plataforma?: boolean | plataformaArgs
+  }
+
+
+  export type plataforma_x_usuarioInclude = {
+    plataforma?: boolean | plataformaArgs
+  } 
+
+  export type plataforma_x_usuarioGetPayload<S extends boolean | null | undefined | plataforma_x_usuarioArgs, U = keyof S> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? plataforma_x_usuario :
+    S extends undefined ? never :
+    S extends { include: any } & (plataforma_x_usuarioArgs | plataforma_x_usuarioFindManyArgs)
+    ? plataforma_x_usuario  & {
+    [P in TrueKeys<S['include']>]:
+        P extends 'plataforma' ? plataformaGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
+  } 
+    : S extends { select: any } & (plataforma_x_usuarioArgs | plataforma_x_usuarioFindManyArgs)
+      ? {
+    [P in TrueKeys<S['select']>]:
+        P extends 'plataforma' ? plataformaGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof plataforma_x_usuario ? plataforma_x_usuario[P] : never
+  } 
+      : plataforma_x_usuario
+
+
+  type plataforma_x_usuarioCountArgs = Merge<
+    Omit<plataforma_x_usuarioFindManyArgs, 'select' | 'include'> & {
+      select?: Plataforma_x_usuarioCountAggregateInputType | true
+    }
+  >
+
+  export interface plataforma_x_usuarioDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+    /**
+     * Find zero or one Plataforma_x_usuario that matches the filter.
+     * @param {plataforma_x_usuarioFindUniqueArgs} args - Arguments to find a Plataforma_x_usuario
+     * @example
+     * // Get one Plataforma_x_usuario
+     * const plataforma_x_usuario = await prisma.plataforma_x_usuario.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends plataforma_x_usuarioFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, plataforma_x_usuarioFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'plataforma_x_usuario'> extends True ? Prisma__plataforma_x_usuarioClient<plataforma_x_usuarioGetPayload<T>> : Prisma__plataforma_x_usuarioClient<plataforma_x_usuarioGetPayload<T> | null, null>
+
+    /**
+     * Find the first Plataforma_x_usuario that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {plataforma_x_usuarioFindFirstArgs} args - Arguments to find a Plataforma_x_usuario
+     * @example
+     * // Get one Plataforma_x_usuario
+     * const plataforma_x_usuario = await prisma.plataforma_x_usuario.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends plataforma_x_usuarioFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, plataforma_x_usuarioFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'plataforma_x_usuario'> extends True ? Prisma__plataforma_x_usuarioClient<plataforma_x_usuarioGetPayload<T>> : Prisma__plataforma_x_usuarioClient<plataforma_x_usuarioGetPayload<T> | null, null>
+
+    /**
+     * Find zero or more Plataforma_x_usuarios that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {plataforma_x_usuarioFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Plataforma_x_usuarios
+     * const plataforma_x_usuarios = await prisma.plataforma_x_usuario.findMany()
+     * 
+     * // Get first 10 Plataforma_x_usuarios
+     * const plataforma_x_usuarios = await prisma.plataforma_x_usuario.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const plataforma_x_usuarioWithIdOnly = await prisma.plataforma_x_usuario.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends plataforma_x_usuarioFindManyArgs>(
+      args?: SelectSubset<T, plataforma_x_usuarioFindManyArgs>
+    ): PrismaPromise<Array<plataforma_x_usuarioGetPayload<T>>>
+
+    /**
+     * Create a Plataforma_x_usuario.
+     * @param {plataforma_x_usuarioCreateArgs} args - Arguments to create a Plataforma_x_usuario.
+     * @example
+     * // Create one Plataforma_x_usuario
+     * const Plataforma_x_usuario = await prisma.plataforma_x_usuario.create({
+     *   data: {
+     *     // ... data to create a Plataforma_x_usuario
+     *   }
+     * })
+     * 
+    **/
+    create<T extends plataforma_x_usuarioCreateArgs>(
+      args: SelectSubset<T, plataforma_x_usuarioCreateArgs>
+    ): Prisma__plataforma_x_usuarioClient<plataforma_x_usuarioGetPayload<T>>
+
+    /**
+     * Create many Plataforma_x_usuarios.
+     *     @param {plataforma_x_usuarioCreateManyArgs} args - Arguments to create many Plataforma_x_usuarios.
+     *     @example
+     *     // Create many Plataforma_x_usuarios
+     *     const plataforma_x_usuario = await prisma.plataforma_x_usuario.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends plataforma_x_usuarioCreateManyArgs>(
+      args?: SelectSubset<T, plataforma_x_usuarioCreateManyArgs>
+    ): PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Plataforma_x_usuario.
+     * @param {plataforma_x_usuarioDeleteArgs} args - Arguments to delete one Plataforma_x_usuario.
+     * @example
+     * // Delete one Plataforma_x_usuario
+     * const Plataforma_x_usuario = await prisma.plataforma_x_usuario.delete({
+     *   where: {
+     *     // ... filter to delete one Plataforma_x_usuario
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends plataforma_x_usuarioDeleteArgs>(
+      args: SelectSubset<T, plataforma_x_usuarioDeleteArgs>
+    ): Prisma__plataforma_x_usuarioClient<plataforma_x_usuarioGetPayload<T>>
+
+    /**
+     * Update one Plataforma_x_usuario.
+     * @param {plataforma_x_usuarioUpdateArgs} args - Arguments to update one Plataforma_x_usuario.
+     * @example
+     * // Update one Plataforma_x_usuario
+     * const plataforma_x_usuario = await prisma.plataforma_x_usuario.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends plataforma_x_usuarioUpdateArgs>(
+      args: SelectSubset<T, plataforma_x_usuarioUpdateArgs>
+    ): Prisma__plataforma_x_usuarioClient<plataforma_x_usuarioGetPayload<T>>
+
+    /**
+     * Delete zero or more Plataforma_x_usuarios.
+     * @param {plataforma_x_usuarioDeleteManyArgs} args - Arguments to filter Plataforma_x_usuarios to delete.
+     * @example
+     * // Delete a few Plataforma_x_usuarios
+     * const { count } = await prisma.plataforma_x_usuario.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends plataforma_x_usuarioDeleteManyArgs>(
+      args?: SelectSubset<T, plataforma_x_usuarioDeleteManyArgs>
+    ): PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Plataforma_x_usuarios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {plataforma_x_usuarioUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Plataforma_x_usuarios
+     * const plataforma_x_usuario = await prisma.plataforma_x_usuario.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends plataforma_x_usuarioUpdateManyArgs>(
+      args: SelectSubset<T, plataforma_x_usuarioUpdateManyArgs>
+    ): PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Plataforma_x_usuario.
+     * @param {plataforma_x_usuarioUpsertArgs} args - Arguments to update or create a Plataforma_x_usuario.
+     * @example
+     * // Update or create a Plataforma_x_usuario
+     * const plataforma_x_usuario = await prisma.plataforma_x_usuario.upsert({
+     *   create: {
+     *     // ... data to create a Plataforma_x_usuario
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Plataforma_x_usuario we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends plataforma_x_usuarioUpsertArgs>(
+      args: SelectSubset<T, plataforma_x_usuarioUpsertArgs>
+    ): Prisma__plataforma_x_usuarioClient<plataforma_x_usuarioGetPayload<T>>
+
+    /**
+     * Find one Plataforma_x_usuario that matches the filter or throw
+     * `NotFoundError` if no matches were found.
+     * @param {plataforma_x_usuarioFindUniqueOrThrowArgs} args - Arguments to find a Plataforma_x_usuario
+     * @example
+     * // Get one Plataforma_x_usuario
+     * const plataforma_x_usuario = await prisma.plataforma_x_usuario.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends plataforma_x_usuarioFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, plataforma_x_usuarioFindUniqueOrThrowArgs>
+    ): Prisma__plataforma_x_usuarioClient<plataforma_x_usuarioGetPayload<T>>
+
+    /**
+     * Find the first Plataforma_x_usuario that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {plataforma_x_usuarioFindFirstOrThrowArgs} args - Arguments to find a Plataforma_x_usuario
+     * @example
+     * // Get one Plataforma_x_usuario
+     * const plataforma_x_usuario = await prisma.plataforma_x_usuario.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends plataforma_x_usuarioFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, plataforma_x_usuarioFindFirstOrThrowArgs>
+    ): Prisma__plataforma_x_usuarioClient<plataforma_x_usuarioGetPayload<T>>
+
+    /**
+     * Count the number of Plataforma_x_usuarios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {plataforma_x_usuarioCountArgs} args - Arguments to filter Plataforma_x_usuarios to count.
+     * @example
+     * // Count the number of Plataforma_x_usuarios
+     * const count = await prisma.plataforma_x_usuario.count({
+     *   where: {
+     *     // ... the filter for the Plataforma_x_usuarios we want to count
+     *   }
+     * })
+    **/
+    count<T extends plataforma_x_usuarioCountArgs>(
+      args?: Subset<T, plataforma_x_usuarioCountArgs>,
+    ): PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Plataforma_x_usuarioCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Plataforma_x_usuario.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Plataforma_x_usuarioAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Plataforma_x_usuarioAggregateArgs>(args: Subset<T, Plataforma_x_usuarioAggregateArgs>): PrismaPromise<GetPlataforma_x_usuarioAggregateType<T>>
+
+    /**
+     * Group by Plataforma_x_usuario.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Plataforma_x_usuarioGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Plataforma_x_usuarioGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Plataforma_x_usuarioGroupByArgs['orderBy'] }
+        : { orderBy?: Plataforma_x_usuarioGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Plataforma_x_usuarioGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPlataforma_x_usuarioGroupByPayload<T> : PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for plataforma_x_usuario.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__plataforma_x_usuarioClient<T, Null = never> implements PrismaPromise<T> {
+    [prisma]: true;
+    private readonly _dmmf;
+    private readonly _fetcher;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+    readonly [Symbol.toStringTag]: 'PrismaClientPromise';
+
+    plataforma<T extends plataformaArgs= {}>(args?: Subset<T, plataformaArgs>): Prisma__plataformaClient<plataformaGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * plataforma_x_usuario base type for findUnique actions
+   */
+  export type plataforma_x_usuarioFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the plataforma_x_usuario
+     * 
+    **/
+    select?: plataforma_x_usuarioSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_x_usuarioInclude | null
+    /**
+     * Filter, which plataforma_x_usuario to fetch.
+     * 
+    **/
+    where: plataforma_x_usuarioWhereUniqueInput
+  }
+
+  /**
+   * plataforma_x_usuario: findUnique
+   */
+  export interface plataforma_x_usuarioFindUniqueArgs extends plataforma_x_usuarioFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * plataforma_x_usuario base type for findFirst actions
+   */
+  export type plataforma_x_usuarioFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the plataforma_x_usuario
+     * 
+    **/
+    select?: plataforma_x_usuarioSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_x_usuarioInclude | null
+    /**
+     * Filter, which plataforma_x_usuario to fetch.
+     * 
+    **/
+    where?: plataforma_x_usuarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of plataforma_x_usuarios to fetch.
+     * 
+    **/
+    orderBy?: Enumerable<plataforma_x_usuarioOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for plataforma_x_usuarios.
+     * 
+    **/
+    cursor?: plataforma_x_usuarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` plataforma_x_usuarios from the position of the cursor.
+     * 
+    **/
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` plataforma_x_usuarios.
+     * 
+    **/
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of plataforma_x_usuarios.
+     * 
+    **/
+    distinct?: Enumerable<Plataforma_x_usuarioScalarFieldEnum>
+  }
+
+  /**
+   * plataforma_x_usuario: findFirst
+   */
+  export interface plataforma_x_usuarioFindFirstArgs extends plataforma_x_usuarioFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * plataforma_x_usuario findMany
+   */
+  export type plataforma_x_usuarioFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the plataforma_x_usuario
+     * 
+    **/
+    select?: plataforma_x_usuarioSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_x_usuarioInclude | null
+    /**
+     * Filter, which plataforma_x_usuarios to fetch.
+     * 
+    **/
+    where?: plataforma_x_usuarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of plataforma_x_usuarios to fetch.
+     * 
+    **/
+    orderBy?: Enumerable<plataforma_x_usuarioOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing plataforma_x_usuarios.
+     * 
+    **/
+    cursor?: plataforma_x_usuarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` plataforma_x_usuarios from the position of the cursor.
+     * 
+    **/
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` plataforma_x_usuarios.
+     * 
+    **/
+    skip?: number
+    distinct?: Enumerable<Plataforma_x_usuarioScalarFieldEnum>
+  }
+
+
+  /**
+   * plataforma_x_usuario create
+   */
+  export type plataforma_x_usuarioCreateArgs = {
+    /**
+     * Select specific fields to fetch from the plataforma_x_usuario
+     * 
+    **/
+    select?: plataforma_x_usuarioSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_x_usuarioInclude | null
+    /**
+     * The data needed to create a plataforma_x_usuario.
+     * 
+    **/
+    data: XOR<plataforma_x_usuarioCreateInput, plataforma_x_usuarioUncheckedCreateInput>
+  }
+
+
+  /**
+   * plataforma_x_usuario createMany
+   */
+  export type plataforma_x_usuarioCreateManyArgs = {
+    /**
+     * The data used to create many plataforma_x_usuarios.
+     * 
+    **/
+    data: Enumerable<plataforma_x_usuarioCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * plataforma_x_usuario update
+   */
+  export type plataforma_x_usuarioUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the plataforma_x_usuario
+     * 
+    **/
+    select?: plataforma_x_usuarioSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_x_usuarioInclude | null
+    /**
+     * The data needed to update a plataforma_x_usuario.
+     * 
+    **/
+    data: XOR<plataforma_x_usuarioUpdateInput, plataforma_x_usuarioUncheckedUpdateInput>
+    /**
+     * Choose, which plataforma_x_usuario to update.
+     * 
+    **/
+    where: plataforma_x_usuarioWhereUniqueInput
+  }
+
+
+  /**
+   * plataforma_x_usuario updateMany
+   */
+  export type plataforma_x_usuarioUpdateManyArgs = {
+    /**
+     * The data used to update plataforma_x_usuarios.
+     * 
+    **/
+    data: XOR<plataforma_x_usuarioUpdateManyMutationInput, plataforma_x_usuarioUncheckedUpdateManyInput>
+    /**
+     * Filter which plataforma_x_usuarios to update
+     * 
+    **/
+    where?: plataforma_x_usuarioWhereInput
+  }
+
+
+  /**
+   * plataforma_x_usuario upsert
+   */
+  export type plataforma_x_usuarioUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the plataforma_x_usuario
+     * 
+    **/
+    select?: plataforma_x_usuarioSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_x_usuarioInclude | null
+    /**
+     * The filter to search for the plataforma_x_usuario to update in case it exists.
+     * 
+    **/
+    where: plataforma_x_usuarioWhereUniqueInput
+    /**
+     * In case the plataforma_x_usuario found by the `where` argument doesn't exist, create a new plataforma_x_usuario with this data.
+     * 
+    **/
+    create: XOR<plataforma_x_usuarioCreateInput, plataforma_x_usuarioUncheckedCreateInput>
+    /**
+     * In case the plataforma_x_usuario was found with the provided `where` argument, update it with this data.
+     * 
+    **/
+    update: XOR<plataforma_x_usuarioUpdateInput, plataforma_x_usuarioUncheckedUpdateInput>
+  }
+
+
+  /**
+   * plataforma_x_usuario delete
+   */
+  export type plataforma_x_usuarioDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the plataforma_x_usuario
+     * 
+    **/
+    select?: plataforma_x_usuarioSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_x_usuarioInclude | null
+    /**
+     * Filter which plataforma_x_usuario to delete.
+     * 
+    **/
+    where: plataforma_x_usuarioWhereUniqueInput
+  }
+
+
+  /**
+   * plataforma_x_usuario deleteMany
+   */
+  export type plataforma_x_usuarioDeleteManyArgs = {
+    /**
+     * Filter which plataforma_x_usuarios to delete
+     * 
+    **/
+    where?: plataforma_x_usuarioWhereInput
+  }
+
+
+  /**
+   * plataforma_x_usuario: findUniqueOrThrow
+   */
+  export type plataforma_x_usuarioFindUniqueOrThrowArgs = plataforma_x_usuarioFindUniqueArgsBase
+      
+
+  /**
+   * plataforma_x_usuario: findFirstOrThrow
+   */
+  export type plataforma_x_usuarioFindFirstOrThrowArgs = plataforma_x_usuarioFindFirstArgsBase
+      
+
+  /**
+   * plataforma_x_usuario without action
+   */
+  export type plataforma_x_usuarioArgs = {
+    /**
+     * Select specific fields to fetch from the plataforma_x_usuario
+     * 
+    **/
+    select?: plataforma_x_usuarioSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: plataforma_x_usuarioInclude | null
+  }
+
+
+
+  /**
+   * Model titulo_itens
+   */
+
+
+  export type AggregateTitulo_itens = {
+    _count: Titulo_itensCountAggregateOutputType | null
+    _avg: Titulo_itensAvgAggregateOutputType | null
+    _sum: Titulo_itensSumAggregateOutputType | null
+    _min: Titulo_itensMinAggregateOutputType | null
+    _max: Titulo_itensMaxAggregateOutputType | null
+  }
+
+  export type Titulo_itensAvgAggregateOutputType = {
+    id: number | null
+    titulo_id: number | null
+  }
+
+  export type Titulo_itensSumAggregateOutputType = {
+    id: number | null
+    titulo_id: number | null
+  }
+
+  export type Titulo_itensMinAggregateOutputType = {
+    id: number | null
+    titulo_id: number | null
+  }
+
+  export type Titulo_itensMaxAggregateOutputType = {
+    id: number | null
+    titulo_id: number | null
+  }
+
+  export type Titulo_itensCountAggregateOutputType = {
+    id: number
+    titulo_id: number
+    _all: number
+  }
+
+
+  export type Titulo_itensAvgAggregateInputType = {
+    id?: true
+    titulo_id?: true
+  }
+
+  export type Titulo_itensSumAggregateInputType = {
+    id?: true
+    titulo_id?: true
+  }
+
+  export type Titulo_itensMinAggregateInputType = {
+    id?: true
+    titulo_id?: true
+  }
+
+  export type Titulo_itensMaxAggregateInputType = {
+    id?: true
+    titulo_id?: true
+  }
+
+  export type Titulo_itensCountAggregateInputType = {
+    id?: true
+    titulo_id?: true
+    _all?: true
+  }
+
+  export type Titulo_itensAggregateArgs = {
+    /**
+     * Filter which titulo_itens to aggregate.
+     * 
+    **/
+    where?: titulo_itensWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of titulo_itens to fetch.
+     * 
+    **/
+    orderBy?: Enumerable<titulo_itensOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     * 
+    **/
+    cursor?: titulo_itensWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` titulo_itens from the position of the cursor.
+     * 
+    **/
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` titulo_itens.
+     * 
+    **/
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned titulo_itens
+    **/
+    _count?: true | Titulo_itensCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Titulo_itensAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Titulo_itensSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Titulo_itensMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Titulo_itensMaxAggregateInputType
+  }
+
+  export type GetTitulo_itensAggregateType<T extends Titulo_itensAggregateArgs> = {
+        [P in keyof T & keyof AggregateTitulo_itens]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTitulo_itens[P]>
+      : GetScalarType<T[P], AggregateTitulo_itens[P]>
+  }
+
+
+
+
+  export type Titulo_itensGroupByArgs = {
+    where?: titulo_itensWhereInput
+    orderBy?: Enumerable<titulo_itensOrderByWithAggregationInput>
+    by: Array<Titulo_itensScalarFieldEnum>
+    having?: titulo_itensScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Titulo_itensCountAggregateInputType | true
+    _avg?: Titulo_itensAvgAggregateInputType
+    _sum?: Titulo_itensSumAggregateInputType
+    _min?: Titulo_itensMinAggregateInputType
+    _max?: Titulo_itensMaxAggregateInputType
+  }
+
+
+  export type Titulo_itensGroupByOutputType = {
+    id: number
+    titulo_id: number
+    _count: Titulo_itensCountAggregateOutputType | null
+    _avg: Titulo_itensAvgAggregateOutputType | null
+    _sum: Titulo_itensSumAggregateOutputType | null
+    _min: Titulo_itensMinAggregateOutputType | null
+    _max: Titulo_itensMaxAggregateOutputType | null
+  }
+
+  type GetTitulo_itensGroupByPayload<T extends Titulo_itensGroupByArgs> = PrismaPromise<
+    Array<
+      PickArray<Titulo_itensGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Titulo_itensGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Titulo_itensGroupByOutputType[P]>
+            : GetScalarType<T[P], Titulo_itensGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type titulo_itensSelect = {
+    id?: boolean
+    titulo_id?: boolean
+    titulo?: boolean | tituloArgs
+  }
+
+
+  export type titulo_itensInclude = {
+    titulo?: boolean | tituloArgs
+  } 
+
+  export type titulo_itensGetPayload<S extends boolean | null | undefined | titulo_itensArgs, U = keyof S> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? titulo_itens :
+    S extends undefined ? never :
+    S extends { include: any } & (titulo_itensArgs | titulo_itensFindManyArgs)
+    ? titulo_itens  & {
+    [P in TrueKeys<S['include']>]:
+        P extends 'titulo' ? tituloGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
+  } 
+    : S extends { select: any } & (titulo_itensArgs | titulo_itensFindManyArgs)
+      ? {
+    [P in TrueKeys<S['select']>]:
+        P extends 'titulo' ? tituloGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof titulo_itens ? titulo_itens[P] : never
+  } 
+      : titulo_itens
+
+
+  type titulo_itensCountArgs = Merge<
+    Omit<titulo_itensFindManyArgs, 'select' | 'include'> & {
+      select?: Titulo_itensCountAggregateInputType | true
+    }
+  >
+
+  export interface titulo_itensDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+    /**
+     * Find zero or one Titulo_itens that matches the filter.
+     * @param {titulo_itensFindUniqueArgs} args - Arguments to find a Titulo_itens
+     * @example
+     * // Get one Titulo_itens
+     * const titulo_itens = await prisma.titulo_itens.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends titulo_itensFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, titulo_itensFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'titulo_itens'> extends True ? Prisma__titulo_itensClient<titulo_itensGetPayload<T>> : Prisma__titulo_itensClient<titulo_itensGetPayload<T> | null, null>
+
+    /**
+     * Find the first Titulo_itens that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {titulo_itensFindFirstArgs} args - Arguments to find a Titulo_itens
+     * @example
+     * // Get one Titulo_itens
+     * const titulo_itens = await prisma.titulo_itens.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends titulo_itensFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, titulo_itensFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'titulo_itens'> extends True ? Prisma__titulo_itensClient<titulo_itensGetPayload<T>> : Prisma__titulo_itensClient<titulo_itensGetPayload<T> | null, null>
+
+    /**
+     * Find zero or more Titulo_itens that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {titulo_itensFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Titulo_itens
+     * const titulo_itens = await prisma.titulo_itens.findMany()
+     * 
+     * // Get first 10 Titulo_itens
+     * const titulo_itens = await prisma.titulo_itens.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const titulo_itensWithIdOnly = await prisma.titulo_itens.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends titulo_itensFindManyArgs>(
+      args?: SelectSubset<T, titulo_itensFindManyArgs>
+    ): PrismaPromise<Array<titulo_itensGetPayload<T>>>
+
+    /**
+     * Create a Titulo_itens.
+     * @param {titulo_itensCreateArgs} args - Arguments to create a Titulo_itens.
+     * @example
+     * // Create one Titulo_itens
+     * const Titulo_itens = await prisma.titulo_itens.create({
+     *   data: {
+     *     // ... data to create a Titulo_itens
+     *   }
+     * })
+     * 
+    **/
+    create<T extends titulo_itensCreateArgs>(
+      args: SelectSubset<T, titulo_itensCreateArgs>
+    ): Prisma__titulo_itensClient<titulo_itensGetPayload<T>>
+
+    /**
+     * Create many Titulo_itens.
+     *     @param {titulo_itensCreateManyArgs} args - Arguments to create many Titulo_itens.
+     *     @example
+     *     // Create many Titulo_itens
+     *     const titulo_itens = await prisma.titulo_itens.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends titulo_itensCreateManyArgs>(
+      args?: SelectSubset<T, titulo_itensCreateManyArgs>
+    ): PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Titulo_itens.
+     * @param {titulo_itensDeleteArgs} args - Arguments to delete one Titulo_itens.
+     * @example
+     * // Delete one Titulo_itens
+     * const Titulo_itens = await prisma.titulo_itens.delete({
+     *   where: {
+     *     // ... filter to delete one Titulo_itens
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends titulo_itensDeleteArgs>(
+      args: SelectSubset<T, titulo_itensDeleteArgs>
+    ): Prisma__titulo_itensClient<titulo_itensGetPayload<T>>
+
+    /**
+     * Update one Titulo_itens.
+     * @param {titulo_itensUpdateArgs} args - Arguments to update one Titulo_itens.
+     * @example
+     * // Update one Titulo_itens
+     * const titulo_itens = await prisma.titulo_itens.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends titulo_itensUpdateArgs>(
+      args: SelectSubset<T, titulo_itensUpdateArgs>
+    ): Prisma__titulo_itensClient<titulo_itensGetPayload<T>>
+
+    /**
+     * Delete zero or more Titulo_itens.
+     * @param {titulo_itensDeleteManyArgs} args - Arguments to filter Titulo_itens to delete.
+     * @example
+     * // Delete a few Titulo_itens
+     * const { count } = await prisma.titulo_itens.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends titulo_itensDeleteManyArgs>(
+      args?: SelectSubset<T, titulo_itensDeleteManyArgs>
+    ): PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Titulo_itens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {titulo_itensUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Titulo_itens
+     * const titulo_itens = await prisma.titulo_itens.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends titulo_itensUpdateManyArgs>(
+      args: SelectSubset<T, titulo_itensUpdateManyArgs>
+    ): PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Titulo_itens.
+     * @param {titulo_itensUpsertArgs} args - Arguments to update or create a Titulo_itens.
+     * @example
+     * // Update or create a Titulo_itens
+     * const titulo_itens = await prisma.titulo_itens.upsert({
+     *   create: {
+     *     // ... data to create a Titulo_itens
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Titulo_itens we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends titulo_itensUpsertArgs>(
+      args: SelectSubset<T, titulo_itensUpsertArgs>
+    ): Prisma__titulo_itensClient<titulo_itensGetPayload<T>>
+
+    /**
+     * Find one Titulo_itens that matches the filter or throw
+     * `NotFoundError` if no matches were found.
+     * @param {titulo_itensFindUniqueOrThrowArgs} args - Arguments to find a Titulo_itens
+     * @example
+     * // Get one Titulo_itens
+     * const titulo_itens = await prisma.titulo_itens.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends titulo_itensFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, titulo_itensFindUniqueOrThrowArgs>
+    ): Prisma__titulo_itensClient<titulo_itensGetPayload<T>>
+
+    /**
+     * Find the first Titulo_itens that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {titulo_itensFindFirstOrThrowArgs} args - Arguments to find a Titulo_itens
+     * @example
+     * // Get one Titulo_itens
+     * const titulo_itens = await prisma.titulo_itens.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends titulo_itensFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, titulo_itensFindFirstOrThrowArgs>
+    ): Prisma__titulo_itensClient<titulo_itensGetPayload<T>>
+
+    /**
+     * Count the number of Titulo_itens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {titulo_itensCountArgs} args - Arguments to filter Titulo_itens to count.
+     * @example
+     * // Count the number of Titulo_itens
+     * const count = await prisma.titulo_itens.count({
+     *   where: {
+     *     // ... the filter for the Titulo_itens we want to count
+     *   }
+     * })
+    **/
+    count<T extends titulo_itensCountArgs>(
+      args?: Subset<T, titulo_itensCountArgs>,
+    ): PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Titulo_itensCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Titulo_itens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Titulo_itensAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Titulo_itensAggregateArgs>(args: Subset<T, Titulo_itensAggregateArgs>): PrismaPromise<GetTitulo_itensAggregateType<T>>
+
+    /**
+     * Group by Titulo_itens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Titulo_itensGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Titulo_itensGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Titulo_itensGroupByArgs['orderBy'] }
+        : { orderBy?: Titulo_itensGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Titulo_itensGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTitulo_itensGroupByPayload<T> : PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for titulo_itens.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__titulo_itensClient<T, Null = never> implements PrismaPromise<T> {
+    [prisma]: true;
+    private readonly _dmmf;
+    private readonly _fetcher;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+    readonly [Symbol.toStringTag]: 'PrismaClientPromise';
+
+    titulo<T extends tituloArgs= {}>(args?: Subset<T, tituloArgs>): Prisma__tituloClient<tituloGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * titulo_itens base type for findUnique actions
+   */
+  export type titulo_itensFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the titulo_itens
+     * 
+    **/
+    select?: titulo_itensSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: titulo_itensInclude | null
+    /**
+     * Filter, which titulo_itens to fetch.
+     * 
+    **/
+    where: titulo_itensWhereUniqueInput
+  }
+
+  /**
+   * titulo_itens: findUnique
+   */
+  export interface titulo_itensFindUniqueArgs extends titulo_itensFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * titulo_itens base type for findFirst actions
+   */
+  export type titulo_itensFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the titulo_itens
+     * 
+    **/
+    select?: titulo_itensSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: titulo_itensInclude | null
+    /**
+     * Filter, which titulo_itens to fetch.
+     * 
+    **/
+    where?: titulo_itensWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of titulo_itens to fetch.
+     * 
+    **/
+    orderBy?: Enumerable<titulo_itensOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for titulo_itens.
+     * 
+    **/
+    cursor?: titulo_itensWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` titulo_itens from the position of the cursor.
+     * 
+    **/
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` titulo_itens.
+     * 
+    **/
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of titulo_itens.
+     * 
+    **/
+    distinct?: Enumerable<Titulo_itensScalarFieldEnum>
+  }
+
+  /**
+   * titulo_itens: findFirst
+   */
+  export interface titulo_itensFindFirstArgs extends titulo_itensFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * titulo_itens findMany
+   */
+  export type titulo_itensFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the titulo_itens
+     * 
+    **/
+    select?: titulo_itensSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: titulo_itensInclude | null
+    /**
+     * Filter, which titulo_itens to fetch.
+     * 
+    **/
+    where?: titulo_itensWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of titulo_itens to fetch.
+     * 
+    **/
+    orderBy?: Enumerable<titulo_itensOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing titulo_itens.
+     * 
+    **/
+    cursor?: titulo_itensWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` titulo_itens from the position of the cursor.
+     * 
+    **/
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` titulo_itens.
+     * 
+    **/
+    skip?: number
+    distinct?: Enumerable<Titulo_itensScalarFieldEnum>
+  }
+
+
+  /**
+   * titulo_itens create
+   */
+  export type titulo_itensCreateArgs = {
+    /**
+     * Select specific fields to fetch from the titulo_itens
+     * 
+    **/
+    select?: titulo_itensSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: titulo_itensInclude | null
+    /**
+     * The data needed to create a titulo_itens.
+     * 
+    **/
+    data: XOR<titulo_itensCreateInput, titulo_itensUncheckedCreateInput>
+  }
+
+
+  /**
+   * titulo_itens createMany
+   */
+  export type titulo_itensCreateManyArgs = {
+    /**
+     * The data used to create many titulo_itens.
+     * 
+    **/
+    data: Enumerable<titulo_itensCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * titulo_itens update
+   */
+  export type titulo_itensUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the titulo_itens
+     * 
+    **/
+    select?: titulo_itensSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: titulo_itensInclude | null
+    /**
+     * The data needed to update a titulo_itens.
+     * 
+    **/
+    data: XOR<titulo_itensUpdateInput, titulo_itensUncheckedUpdateInput>
+    /**
+     * Choose, which titulo_itens to update.
+     * 
+    **/
+    where: titulo_itensWhereUniqueInput
+  }
+
+
+  /**
+   * titulo_itens updateMany
+   */
+  export type titulo_itensUpdateManyArgs = {
+    /**
+     * The data used to update titulo_itens.
+     * 
+    **/
+    data: XOR<titulo_itensUpdateManyMutationInput, titulo_itensUncheckedUpdateManyInput>
+    /**
+     * Filter which titulo_itens to update
+     * 
+    **/
+    where?: titulo_itensWhereInput
+  }
+
+
+  /**
+   * titulo_itens upsert
+   */
+  export type titulo_itensUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the titulo_itens
+     * 
+    **/
+    select?: titulo_itensSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: titulo_itensInclude | null
+    /**
+     * The filter to search for the titulo_itens to update in case it exists.
+     * 
+    **/
+    where: titulo_itensWhereUniqueInput
+    /**
+     * In case the titulo_itens found by the `where` argument doesn't exist, create a new titulo_itens with this data.
+     * 
+    **/
+    create: XOR<titulo_itensCreateInput, titulo_itensUncheckedCreateInput>
+    /**
+     * In case the titulo_itens was found with the provided `where` argument, update it with this data.
+     * 
+    **/
+    update: XOR<titulo_itensUpdateInput, titulo_itensUncheckedUpdateInput>
+  }
+
+
+  /**
+   * titulo_itens delete
+   */
+  export type titulo_itensDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the titulo_itens
+     * 
+    **/
+    select?: titulo_itensSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: titulo_itensInclude | null
+    /**
+     * Filter which titulo_itens to delete.
+     * 
+    **/
+    where: titulo_itensWhereUniqueInput
+  }
+
+
+  /**
+   * titulo_itens deleteMany
+   */
+  export type titulo_itensDeleteManyArgs = {
+    /**
+     * Filter which titulo_itens to delete
+     * 
+    **/
+    where?: titulo_itensWhereInput
+  }
+
+
+  /**
+   * titulo_itens: findUniqueOrThrow
+   */
+  export type titulo_itensFindUniqueOrThrowArgs = titulo_itensFindUniqueArgsBase
+      
+
+  /**
+   * titulo_itens: findFirstOrThrow
+   */
+  export type titulo_itensFindFirstOrThrowArgs = titulo_itensFindFirstArgsBase
+      
+
+  /**
+   * titulo_itens without action
+   */
+  export type titulo_itensArgs = {
+    /**
+     * Select specific fields to fetch from the titulo_itens
+     * 
+    **/
+    select?: titulo_itensSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: titulo_itensInclude | null
+  }
+
+
+
+  /**
+   * Model usuario_perfil
+   */
+
+
+  export type AggregateUsuario_perfil = {
+    _count: Usuario_perfilCountAggregateOutputType | null
+    _avg: Usuario_perfilAvgAggregateOutputType | null
+    _sum: Usuario_perfilSumAggregateOutputType | null
+    _min: Usuario_perfilMinAggregateOutputType | null
+    _max: Usuario_perfilMaxAggregateOutputType | null
+  }
+
+  export type Usuario_perfilAvgAggregateOutputType = {
+    id: number | null
+    usuario_id: number | null
+    usuario_perfil_tipo_id: number | null
+  }
+
+  export type Usuario_perfilSumAggregateOutputType = {
+    id: number | null
+    usuario_id: number | null
+    usuario_perfil_tipo_id: number | null
+  }
+
+  export type Usuario_perfilMinAggregateOutputType = {
+    id: number | null
+    senha: string | null
+    usuario_id: number | null
+    usuario_perfil_tipo_id: number | null
+  }
+
+  export type Usuario_perfilMaxAggregateOutputType = {
+    id: number | null
+    senha: string | null
+    usuario_id: number | null
+    usuario_perfil_tipo_id: number | null
+  }
+
+  export type Usuario_perfilCountAggregateOutputType = {
+    id: number
+    senha: number
+    usuario_id: number
+    usuario_perfil_tipo_id: number
+    _all: number
+  }
+
+
+  export type Usuario_perfilAvgAggregateInputType = {
+    id?: true
+    usuario_id?: true
+    usuario_perfil_tipo_id?: true
+  }
+
+  export type Usuario_perfilSumAggregateInputType = {
+    id?: true
+    usuario_id?: true
+    usuario_perfil_tipo_id?: true
+  }
+
+  export type Usuario_perfilMinAggregateInputType = {
+    id?: true
+    senha?: true
+    usuario_id?: true
+    usuario_perfil_tipo_id?: true
+  }
+
+  export type Usuario_perfilMaxAggregateInputType = {
+    id?: true
+    senha?: true
+    usuario_id?: true
+    usuario_perfil_tipo_id?: true
+  }
+
+  export type Usuario_perfilCountAggregateInputType = {
+    id?: true
+    senha?: true
+    usuario_id?: true
+    usuario_perfil_tipo_id?: true
+    _all?: true
+  }
+
+  export type Usuario_perfilAggregateArgs = {
+    /**
+     * Filter which usuario_perfil to aggregate.
+     * 
+    **/
+    where?: usuario_perfilWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of usuario_perfils to fetch.
+     * 
+    **/
+    orderBy?: Enumerable<usuario_perfilOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     * 
+    **/
+    cursor?: usuario_perfilWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` usuario_perfils from the position of the cursor.
+     * 
+    **/
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` usuario_perfils.
+     * 
+    **/
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned usuario_perfils
+    **/
+    _count?: true | Usuario_perfilCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Usuario_perfilAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Usuario_perfilSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Usuario_perfilMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Usuario_perfilMaxAggregateInputType
+  }
+
+  export type GetUsuario_perfilAggregateType<T extends Usuario_perfilAggregateArgs> = {
+        [P in keyof T & keyof AggregateUsuario_perfil]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUsuario_perfil[P]>
+      : GetScalarType<T[P], AggregateUsuario_perfil[P]>
+  }
+
+
+
+
+  export type Usuario_perfilGroupByArgs = {
+    where?: usuario_perfilWhereInput
+    orderBy?: Enumerable<usuario_perfilOrderByWithAggregationInput>
+    by: Array<Usuario_perfilScalarFieldEnum>
+    having?: usuario_perfilScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Usuario_perfilCountAggregateInputType | true
+    _avg?: Usuario_perfilAvgAggregateInputType
+    _sum?: Usuario_perfilSumAggregateInputType
+    _min?: Usuario_perfilMinAggregateInputType
+    _max?: Usuario_perfilMaxAggregateInputType
+  }
+
+
+  export type Usuario_perfilGroupByOutputType = {
+    id: number
+    senha: string
+    usuario_id: number
+    usuario_perfil_tipo_id: number
+    _count: Usuario_perfilCountAggregateOutputType | null
+    _avg: Usuario_perfilAvgAggregateOutputType | null
+    _sum: Usuario_perfilSumAggregateOutputType | null
+    _min: Usuario_perfilMinAggregateOutputType | null
+    _max: Usuario_perfilMaxAggregateOutputType | null
+  }
+
+  type GetUsuario_perfilGroupByPayload<T extends Usuario_perfilGroupByArgs> = PrismaPromise<
+    Array<
+      PickArray<Usuario_perfilGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Usuario_perfilGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Usuario_perfilGroupByOutputType[P]>
+            : GetScalarType<T[P], Usuario_perfilGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type usuario_perfilSelect = {
+    id?: boolean
+    senha?: boolean
+    usuario_id?: boolean
+    usuario_perfil_tipo_id?: boolean
+    usuario_perfil_tipo?: boolean | usuario_perfil_tipoArgs
+  }
+
+
+  export type usuario_perfilInclude = {
+    usuario_perfil_tipo?: boolean | usuario_perfil_tipoArgs
+  } 
+
+  export type usuario_perfilGetPayload<S extends boolean | null | undefined | usuario_perfilArgs, U = keyof S> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? usuario_perfil :
+    S extends undefined ? never :
+    S extends { include: any } & (usuario_perfilArgs | usuario_perfilFindManyArgs)
+    ? usuario_perfil  & {
+    [P in TrueKeys<S['include']>]:
+        P extends 'usuario_perfil_tipo' ? usuario_perfil_tipoGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
+  } 
+    : S extends { select: any } & (usuario_perfilArgs | usuario_perfilFindManyArgs)
+      ? {
+    [P in TrueKeys<S['select']>]:
+        P extends 'usuario_perfil_tipo' ? usuario_perfil_tipoGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof usuario_perfil ? usuario_perfil[P] : never
+  } 
+      : usuario_perfil
+
+
+  type usuario_perfilCountArgs = Merge<
+    Omit<usuario_perfilFindManyArgs, 'select' | 'include'> & {
+      select?: Usuario_perfilCountAggregateInputType | true
+    }
+  >
+
+  export interface usuario_perfilDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+    /**
+     * Find zero or one Usuario_perfil that matches the filter.
+     * @param {usuario_perfilFindUniqueArgs} args - Arguments to find a Usuario_perfil
+     * @example
+     * // Get one Usuario_perfil
+     * const usuario_perfil = await prisma.usuario_perfil.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends usuario_perfilFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, usuario_perfilFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'usuario_perfil'> extends True ? Prisma__usuario_perfilClient<usuario_perfilGetPayload<T>> : Prisma__usuario_perfilClient<usuario_perfilGetPayload<T> | null, null>
+
+    /**
+     * Find the first Usuario_perfil that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {usuario_perfilFindFirstArgs} args - Arguments to find a Usuario_perfil
+     * @example
+     * // Get one Usuario_perfil
+     * const usuario_perfil = await prisma.usuario_perfil.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends usuario_perfilFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, usuario_perfilFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'usuario_perfil'> extends True ? Prisma__usuario_perfilClient<usuario_perfilGetPayload<T>> : Prisma__usuario_perfilClient<usuario_perfilGetPayload<T> | null, null>
+
+    /**
+     * Find zero or more Usuario_perfils that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {usuario_perfilFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Usuario_perfils
+     * const usuario_perfils = await prisma.usuario_perfil.findMany()
+     * 
+     * // Get first 10 Usuario_perfils
+     * const usuario_perfils = await prisma.usuario_perfil.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const usuario_perfilWithIdOnly = await prisma.usuario_perfil.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends usuario_perfilFindManyArgs>(
+      args?: SelectSubset<T, usuario_perfilFindManyArgs>
+    ): PrismaPromise<Array<usuario_perfilGetPayload<T>>>
+
+    /**
+     * Create a Usuario_perfil.
+     * @param {usuario_perfilCreateArgs} args - Arguments to create a Usuario_perfil.
+     * @example
+     * // Create one Usuario_perfil
+     * const Usuario_perfil = await prisma.usuario_perfil.create({
+     *   data: {
+     *     // ... data to create a Usuario_perfil
+     *   }
+     * })
+     * 
+    **/
+    create<T extends usuario_perfilCreateArgs>(
+      args: SelectSubset<T, usuario_perfilCreateArgs>
+    ): Prisma__usuario_perfilClient<usuario_perfilGetPayload<T>>
+
+    /**
+     * Create many Usuario_perfils.
+     *     @param {usuario_perfilCreateManyArgs} args - Arguments to create many Usuario_perfils.
+     *     @example
+     *     // Create many Usuario_perfils
+     *     const usuario_perfil = await prisma.usuario_perfil.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends usuario_perfilCreateManyArgs>(
+      args?: SelectSubset<T, usuario_perfilCreateManyArgs>
+    ): PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Usuario_perfil.
+     * @param {usuario_perfilDeleteArgs} args - Arguments to delete one Usuario_perfil.
+     * @example
+     * // Delete one Usuario_perfil
+     * const Usuario_perfil = await prisma.usuario_perfil.delete({
+     *   where: {
+     *     // ... filter to delete one Usuario_perfil
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends usuario_perfilDeleteArgs>(
+      args: SelectSubset<T, usuario_perfilDeleteArgs>
+    ): Prisma__usuario_perfilClient<usuario_perfilGetPayload<T>>
+
+    /**
+     * Update one Usuario_perfil.
+     * @param {usuario_perfilUpdateArgs} args - Arguments to update one Usuario_perfil.
+     * @example
+     * // Update one Usuario_perfil
+     * const usuario_perfil = await prisma.usuario_perfil.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends usuario_perfilUpdateArgs>(
+      args: SelectSubset<T, usuario_perfilUpdateArgs>
+    ): Prisma__usuario_perfilClient<usuario_perfilGetPayload<T>>
+
+    /**
+     * Delete zero or more Usuario_perfils.
+     * @param {usuario_perfilDeleteManyArgs} args - Arguments to filter Usuario_perfils to delete.
+     * @example
+     * // Delete a few Usuario_perfils
+     * const { count } = await prisma.usuario_perfil.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends usuario_perfilDeleteManyArgs>(
+      args?: SelectSubset<T, usuario_perfilDeleteManyArgs>
+    ): PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Usuario_perfils.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {usuario_perfilUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Usuario_perfils
+     * const usuario_perfil = await prisma.usuario_perfil.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends usuario_perfilUpdateManyArgs>(
+      args: SelectSubset<T, usuario_perfilUpdateManyArgs>
+    ): PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Usuario_perfil.
+     * @param {usuario_perfilUpsertArgs} args - Arguments to update or create a Usuario_perfil.
+     * @example
+     * // Update or create a Usuario_perfil
+     * const usuario_perfil = await prisma.usuario_perfil.upsert({
+     *   create: {
+     *     // ... data to create a Usuario_perfil
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Usuario_perfil we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends usuario_perfilUpsertArgs>(
+      args: SelectSubset<T, usuario_perfilUpsertArgs>
+    ): Prisma__usuario_perfilClient<usuario_perfilGetPayload<T>>
+
+    /**
+     * Find one Usuario_perfil that matches the filter or throw
+     * `NotFoundError` if no matches were found.
+     * @param {usuario_perfilFindUniqueOrThrowArgs} args - Arguments to find a Usuario_perfil
+     * @example
+     * // Get one Usuario_perfil
+     * const usuario_perfil = await prisma.usuario_perfil.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends usuario_perfilFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, usuario_perfilFindUniqueOrThrowArgs>
+    ): Prisma__usuario_perfilClient<usuario_perfilGetPayload<T>>
+
+    /**
+     * Find the first Usuario_perfil that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {usuario_perfilFindFirstOrThrowArgs} args - Arguments to find a Usuario_perfil
+     * @example
+     * // Get one Usuario_perfil
+     * const usuario_perfil = await prisma.usuario_perfil.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends usuario_perfilFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, usuario_perfilFindFirstOrThrowArgs>
+    ): Prisma__usuario_perfilClient<usuario_perfilGetPayload<T>>
+
+    /**
+     * Count the number of Usuario_perfils.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {usuario_perfilCountArgs} args - Arguments to filter Usuario_perfils to count.
+     * @example
+     * // Count the number of Usuario_perfils
+     * const count = await prisma.usuario_perfil.count({
+     *   where: {
+     *     // ... the filter for the Usuario_perfils we want to count
+     *   }
+     * })
+    **/
+    count<T extends usuario_perfilCountArgs>(
+      args?: Subset<T, usuario_perfilCountArgs>,
+    ): PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Usuario_perfilCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Usuario_perfil.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Usuario_perfilAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Usuario_perfilAggregateArgs>(args: Subset<T, Usuario_perfilAggregateArgs>): PrismaPromise<GetUsuario_perfilAggregateType<T>>
+
+    /**
+     * Group by Usuario_perfil.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Usuario_perfilGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Usuario_perfilGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Usuario_perfilGroupByArgs['orderBy'] }
+        : { orderBy?: Usuario_perfilGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Usuario_perfilGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUsuario_perfilGroupByPayload<T> : PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for usuario_perfil.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__usuario_perfilClient<T, Null = never> implements PrismaPromise<T> {
+    [prisma]: true;
+    private readonly _dmmf;
+    private readonly _fetcher;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+    readonly [Symbol.toStringTag]: 'PrismaClientPromise';
 
     usuario_perfil_tipo<T extends usuario_perfil_tipoArgs= {}>(args?: Subset<T, usuario_perfil_tipoArgs>): Prisma__usuario_perfil_tipoClient<usuario_perfil_tipoGetPayload<T> | Null>;
 
@@ -33020,30 +28494,30 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * usuario_x_perfil base type for findUnique actions
+   * usuario_perfil base type for findUnique actions
    */
-  export type usuario_x_perfilFindUniqueArgsBase = {
+  export type usuario_perfilFindUniqueArgsBase = {
     /**
-     * Select specific fields to fetch from the usuario_x_perfil
+     * Select specific fields to fetch from the usuario_perfil
      * 
     **/
-    select?: usuario_x_perfilSelect | null
+    select?: usuario_perfilSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      * 
     **/
-    include?: usuario_x_perfilInclude | null
+    include?: usuario_perfilInclude | null
     /**
-     * Filter, which usuario_x_perfil to fetch.
+     * Filter, which usuario_perfil to fetch.
      * 
     **/
-    where: usuario_x_perfilWhereUniqueInput
+    where: usuario_perfilWhereUniqueInput
   }
 
   /**
-   * usuario_x_perfil: findUnique
+   * usuario_perfil: findUnique
    */
-  export interface usuario_x_perfilFindUniqueArgs extends usuario_x_perfilFindUniqueArgsBase {
+  export interface usuario_perfilFindUniqueArgs extends usuario_perfilFindUniqueArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
@@ -33053,65 +28527,65 @@ export namespace Prisma {
       
 
   /**
-   * usuario_x_perfil base type for findFirst actions
+   * usuario_perfil base type for findFirst actions
    */
-  export type usuario_x_perfilFindFirstArgsBase = {
+  export type usuario_perfilFindFirstArgsBase = {
     /**
-     * Select specific fields to fetch from the usuario_x_perfil
+     * Select specific fields to fetch from the usuario_perfil
      * 
     **/
-    select?: usuario_x_perfilSelect | null
+    select?: usuario_perfilSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      * 
     **/
-    include?: usuario_x_perfilInclude | null
+    include?: usuario_perfilInclude | null
     /**
-     * Filter, which usuario_x_perfil to fetch.
+     * Filter, which usuario_perfil to fetch.
      * 
     **/
-    where?: usuario_x_perfilWhereInput
+    where?: usuario_perfilWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of usuario_x_perfils to fetch.
+     * Determine the order of usuario_perfils to fetch.
      * 
     **/
-    orderBy?: Enumerable<usuario_x_perfilOrderByWithRelationInput>
+    orderBy?: Enumerable<usuario_perfilOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for usuario_x_perfils.
+     * Sets the position for searching for usuario_perfils.
      * 
     **/
-    cursor?: usuario_x_perfilWhereUniqueInput
+    cursor?: usuario_perfilWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` usuario_x_perfils from the position of the cursor.
+     * Take `±n` usuario_perfils from the position of the cursor.
      * 
     **/
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` usuario_x_perfils.
+     * Skip the first `n` usuario_perfils.
      * 
     **/
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of usuario_x_perfils.
+     * Filter by unique combinations of usuario_perfils.
      * 
     **/
-    distinct?: Enumerable<Usuario_x_perfilScalarFieldEnum>
+    distinct?: Enumerable<Usuario_perfilScalarFieldEnum>
   }
 
   /**
-   * usuario_x_perfil: findFirst
+   * usuario_perfil: findFirst
    */
-  export interface usuario_x_perfilFindFirstArgs extends usuario_x_perfilFindFirstArgsBase {
+  export interface usuario_perfilFindFirstArgs extends usuario_perfilFindFirstArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
@@ -33121,227 +28595,227 @@ export namespace Prisma {
       
 
   /**
-   * usuario_x_perfil findMany
+   * usuario_perfil findMany
    */
-  export type usuario_x_perfilFindManyArgs = {
+  export type usuario_perfilFindManyArgs = {
     /**
-     * Select specific fields to fetch from the usuario_x_perfil
+     * Select specific fields to fetch from the usuario_perfil
      * 
     **/
-    select?: usuario_x_perfilSelect | null
+    select?: usuario_perfilSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      * 
     **/
-    include?: usuario_x_perfilInclude | null
+    include?: usuario_perfilInclude | null
     /**
-     * Filter, which usuario_x_perfils to fetch.
+     * Filter, which usuario_perfils to fetch.
      * 
     **/
-    where?: usuario_x_perfilWhereInput
+    where?: usuario_perfilWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of usuario_x_perfils to fetch.
+     * Determine the order of usuario_perfils to fetch.
      * 
     **/
-    orderBy?: Enumerable<usuario_x_perfilOrderByWithRelationInput>
+    orderBy?: Enumerable<usuario_perfilOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing usuario_x_perfils.
+     * Sets the position for listing usuario_perfils.
      * 
     **/
-    cursor?: usuario_x_perfilWhereUniqueInput
+    cursor?: usuario_perfilWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` usuario_x_perfils from the position of the cursor.
+     * Take `±n` usuario_perfils from the position of the cursor.
      * 
     **/
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` usuario_x_perfils.
+     * Skip the first `n` usuario_perfils.
      * 
     **/
     skip?: number
-    distinct?: Enumerable<Usuario_x_perfilScalarFieldEnum>
+    distinct?: Enumerable<Usuario_perfilScalarFieldEnum>
   }
 
 
   /**
-   * usuario_x_perfil create
+   * usuario_perfil create
    */
-  export type usuario_x_perfilCreateArgs = {
+  export type usuario_perfilCreateArgs = {
     /**
-     * Select specific fields to fetch from the usuario_x_perfil
+     * Select specific fields to fetch from the usuario_perfil
      * 
     **/
-    select?: usuario_x_perfilSelect | null
+    select?: usuario_perfilSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      * 
     **/
-    include?: usuario_x_perfilInclude | null
+    include?: usuario_perfilInclude | null
     /**
-     * The data needed to create a usuario_x_perfil.
+     * The data needed to create a usuario_perfil.
      * 
     **/
-    data: XOR<usuario_x_perfilCreateInput, usuario_x_perfilUncheckedCreateInput>
+    data: XOR<usuario_perfilCreateInput, usuario_perfilUncheckedCreateInput>
   }
 
 
   /**
-   * usuario_x_perfil createMany
+   * usuario_perfil createMany
    */
-  export type usuario_x_perfilCreateManyArgs = {
+  export type usuario_perfilCreateManyArgs = {
     /**
-     * The data used to create many usuario_x_perfils.
+     * The data used to create many usuario_perfils.
      * 
     **/
-    data: Enumerable<usuario_x_perfilCreateManyInput>
+    data: Enumerable<usuario_perfilCreateManyInput>
     skipDuplicates?: boolean
   }
 
 
   /**
-   * usuario_x_perfil update
+   * usuario_perfil update
    */
-  export type usuario_x_perfilUpdateArgs = {
+  export type usuario_perfilUpdateArgs = {
     /**
-     * Select specific fields to fetch from the usuario_x_perfil
+     * Select specific fields to fetch from the usuario_perfil
      * 
     **/
-    select?: usuario_x_perfilSelect | null
+    select?: usuario_perfilSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      * 
     **/
-    include?: usuario_x_perfilInclude | null
+    include?: usuario_perfilInclude | null
     /**
-     * The data needed to update a usuario_x_perfil.
+     * The data needed to update a usuario_perfil.
      * 
     **/
-    data: XOR<usuario_x_perfilUpdateInput, usuario_x_perfilUncheckedUpdateInput>
+    data: XOR<usuario_perfilUpdateInput, usuario_perfilUncheckedUpdateInput>
     /**
-     * Choose, which usuario_x_perfil to update.
+     * Choose, which usuario_perfil to update.
      * 
     **/
-    where: usuario_x_perfilWhereUniqueInput
+    where: usuario_perfilWhereUniqueInput
   }
 
 
   /**
-   * usuario_x_perfil updateMany
+   * usuario_perfil updateMany
    */
-  export type usuario_x_perfilUpdateManyArgs = {
+  export type usuario_perfilUpdateManyArgs = {
     /**
-     * The data used to update usuario_x_perfils.
+     * The data used to update usuario_perfils.
      * 
     **/
-    data: XOR<usuario_x_perfilUpdateManyMutationInput, usuario_x_perfilUncheckedUpdateManyInput>
+    data: XOR<usuario_perfilUpdateManyMutationInput, usuario_perfilUncheckedUpdateManyInput>
     /**
-     * Filter which usuario_x_perfils to update
+     * Filter which usuario_perfils to update
      * 
     **/
-    where?: usuario_x_perfilWhereInput
+    where?: usuario_perfilWhereInput
   }
 
 
   /**
-   * usuario_x_perfil upsert
+   * usuario_perfil upsert
    */
-  export type usuario_x_perfilUpsertArgs = {
+  export type usuario_perfilUpsertArgs = {
     /**
-     * Select specific fields to fetch from the usuario_x_perfil
+     * Select specific fields to fetch from the usuario_perfil
      * 
     **/
-    select?: usuario_x_perfilSelect | null
+    select?: usuario_perfilSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      * 
     **/
-    include?: usuario_x_perfilInclude | null
+    include?: usuario_perfilInclude | null
     /**
-     * The filter to search for the usuario_x_perfil to update in case it exists.
+     * The filter to search for the usuario_perfil to update in case it exists.
      * 
     **/
-    where: usuario_x_perfilWhereUniqueInput
+    where: usuario_perfilWhereUniqueInput
     /**
-     * In case the usuario_x_perfil found by the `where` argument doesn't exist, create a new usuario_x_perfil with this data.
+     * In case the usuario_perfil found by the `where` argument doesn't exist, create a new usuario_perfil with this data.
      * 
     **/
-    create: XOR<usuario_x_perfilCreateInput, usuario_x_perfilUncheckedCreateInput>
+    create: XOR<usuario_perfilCreateInput, usuario_perfilUncheckedCreateInput>
     /**
-     * In case the usuario_x_perfil was found with the provided `where` argument, update it with this data.
+     * In case the usuario_perfil was found with the provided `where` argument, update it with this data.
      * 
     **/
-    update: XOR<usuario_x_perfilUpdateInput, usuario_x_perfilUncheckedUpdateInput>
+    update: XOR<usuario_perfilUpdateInput, usuario_perfilUncheckedUpdateInput>
   }
 
 
   /**
-   * usuario_x_perfil delete
+   * usuario_perfil delete
    */
-  export type usuario_x_perfilDeleteArgs = {
+  export type usuario_perfilDeleteArgs = {
     /**
-     * Select specific fields to fetch from the usuario_x_perfil
+     * Select specific fields to fetch from the usuario_perfil
      * 
     **/
-    select?: usuario_x_perfilSelect | null
+    select?: usuario_perfilSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      * 
     **/
-    include?: usuario_x_perfilInclude | null
+    include?: usuario_perfilInclude | null
     /**
-     * Filter which usuario_x_perfil to delete.
+     * Filter which usuario_perfil to delete.
      * 
     **/
-    where: usuario_x_perfilWhereUniqueInput
+    where: usuario_perfilWhereUniqueInput
   }
 
 
   /**
-   * usuario_x_perfil deleteMany
+   * usuario_perfil deleteMany
    */
-  export type usuario_x_perfilDeleteManyArgs = {
+  export type usuario_perfilDeleteManyArgs = {
     /**
-     * Filter which usuario_x_perfils to delete
+     * Filter which usuario_perfils to delete
      * 
     **/
-    where?: usuario_x_perfilWhereInput
+    where?: usuario_perfilWhereInput
   }
 
 
   /**
-   * usuario_x_perfil: findUniqueOrThrow
+   * usuario_perfil: findUniqueOrThrow
    */
-  export type usuario_x_perfilFindUniqueOrThrowArgs = usuario_x_perfilFindUniqueArgsBase
+  export type usuario_perfilFindUniqueOrThrowArgs = usuario_perfilFindUniqueArgsBase
       
 
   /**
-   * usuario_x_perfil: findFirstOrThrow
+   * usuario_perfil: findFirstOrThrow
    */
-  export type usuario_x_perfilFindFirstOrThrowArgs = usuario_x_perfilFindFirstArgsBase
+  export type usuario_perfilFindFirstOrThrowArgs = usuario_perfilFindFirstArgsBase
       
 
   /**
-   * usuario_x_perfil without action
+   * usuario_perfil without action
    */
-  export type usuario_x_perfilArgs = {
+  export type usuario_perfilArgs = {
     /**
-     * Select specific fields to fetch from the usuario_x_perfil
+     * Select specific fields to fetch from the usuario_perfil
      * 
     **/
-    select?: usuario_x_perfilSelect | null
+    select?: usuario_perfilSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      * 
     **/
-    include?: usuario_x_perfilInclude | null
+    include?: usuario_perfilInclude | null
   }
 
 
@@ -33378,6 +28852,15 @@ export namespace Prisma {
   };
 
   export type CarteiraScalarFieldEnum = (typeof CarteiraScalarFieldEnum)[keyof typeof CarteiraScalarFieldEnum]
+
+
+  export const Carteira_n_cedentesScalarFieldEnum: {
+    id: 'id',
+    carteira_id: 'carteira_id',
+    cedente_id: 'cedente_id'
+  };
+
+  export type Carteira_n_cedentesScalarFieldEnum = (typeof Carteira_n_cedentesScalarFieldEnum)[keyof typeof Carteira_n_cedentesScalarFieldEnum]
 
 
   export const CedenteScalarFieldEnum: {
@@ -33440,13 +28923,6 @@ export namespace Prisma {
   export type Fidic_fundoScalarFieldEnum = (typeof Fidic_fundoScalarFieldEnum)[keyof typeof Fidic_fundoScalarFieldEnum]
 
 
-  export const Fidic_fundo_carteira_n_cedentesScalarFieldEnum: {
-    id: 'id'
-  };
-
-  export type Fidic_fundo_carteira_n_cedentesScalarFieldEnum = (typeof Fidic_fundo_carteira_n_cedentesScalarFieldEnum)[keyof typeof Fidic_fundo_carteira_n_cedentesScalarFieldEnum]
-
-
   export const Fidic_fundo_x_usuarioScalarFieldEnum: {
     id: 'id',
     usuario: 'usuario',
@@ -33457,7 +28933,8 @@ export namespace Prisma {
 
 
   export const OrganogramaScalarFieldEnum: {
-    id: 'id'
+    id: 'id',
+    organograma_id: 'organograma_id'
   };
 
   export type OrganogramaScalarFieldEnum = (typeof OrganogramaScalarFieldEnum)[keyof typeof OrganogramaScalarFieldEnum]
@@ -33471,22 +28948,22 @@ export namespace Prisma {
   export type Organograma_tipoScalarFieldEnum = (typeof Organograma_tipoScalarFieldEnum)[keyof typeof Organograma_tipoScalarFieldEnum]
 
 
-  export const Organograma_x_regiaoScalarFieldEnum: {
-    id: 'id',
-    organograma_id: 'organograma_id',
-    regiao_id: 'regiao_id'
-  };
-
-  export type Organograma_x_regiaoScalarFieldEnum = (typeof Organograma_x_regiaoScalarFieldEnum)[keyof typeof Organograma_x_regiaoScalarFieldEnum]
-
-
   export const Organograma_x_regiao_atuacaoScalarFieldEnum: {
     id: 'id',
     organograma_id: 'organograma_id',
-    regiao_id: 'regiao_id'
+    regiao_atuacao_id: 'regiao_atuacao_id'
   };
 
   export type Organograma_x_regiao_atuacaoScalarFieldEnum = (typeof Organograma_x_regiao_atuacaoScalarFieldEnum)[keyof typeof Organograma_x_regiao_atuacaoScalarFieldEnum]
+
+
+  export const Organograma_x_usuarioScalarFieldEnum: {
+    id: 'id',
+    organograma_id: 'organograma_id',
+    usuario_id: 'usuario_id'
+  };
+
+  export type Organograma_x_usuarioScalarFieldEnum = (typeof Organograma_x_usuarioScalarFieldEnum)[keyof typeof Organograma_x_usuarioScalarFieldEnum]
 
 
   export const PessoaScalarFieldEnum: {
@@ -33504,17 +28981,11 @@ export namespace Prisma {
 
   export const PlataformaScalarFieldEnum: {
     id: 'id',
-    nome: 'nome'
+    nome: 'nome',
+    plataforma_papel_tipo_id: 'plataforma_papel_tipo_id'
   };
 
   export type PlataformaScalarFieldEnum = (typeof PlataformaScalarFieldEnum)[keyof typeof PlataformaScalarFieldEnum]
-
-
-  export const Plataforma_n_borderosScalarFieldEnum: {
-    id: 'id'
-  };
-
-  export type Plataforma_n_borderosScalarFieldEnum = (typeof Plataforma_n_borderosScalarFieldEnum)[keyof typeof Plataforma_n_borderosScalarFieldEnum]
 
 
   export const Plataforma_papel_tipoScalarFieldEnum: {
@@ -33524,23 +28995,28 @@ export namespace Prisma {
   export type Plataforma_papel_tipoScalarFieldEnum = (typeof Plataforma_papel_tipoScalarFieldEnum)[keyof typeof Plataforma_papel_tipoScalarFieldEnum]
 
 
-  export const Plataforma_papel_x_pessoaScalarFieldEnum: {
-    id: 'id'
-  };
-
-  export type Plataforma_papel_x_pessoaScalarFieldEnum = (typeof Plataforma_papel_x_pessoaScalarFieldEnum)[keyof typeof Plataforma_papel_x_pessoaScalarFieldEnum]
-
-
   export const Plataforma_x_regiao_atuacaoScalarFieldEnum: {
-    id: 'id'
+    id: 'id',
+    plataforma_id: 'plataforma_id',
+    regiao_atuacao_id: 'regiao_atuacao_id'
   };
 
   export type Plataforma_x_regiao_atuacaoScalarFieldEnum = (typeof Plataforma_x_regiao_atuacaoScalarFieldEnum)[keyof typeof Plataforma_x_regiao_atuacaoScalarFieldEnum]
 
 
+  export const Plataforma_x_usuarioScalarFieldEnum: {
+    id: 'id',
+    plataforma_id: 'plataforma_id',
+    usuario_id: 'usuario_id'
+  };
+
+  export type Plataforma_x_usuarioScalarFieldEnum = (typeof Plataforma_x_usuarioScalarFieldEnum)[keyof typeof Plataforma_x_usuarioScalarFieldEnum]
+
+
   export const Regiao_atuacaoScalarFieldEnum: {
     id: 'id',
-    nome: 'nome'
+    nome: 'nome',
+    regiao_atuacao_tipo_id: 'regiao_atuacao_tipo_id'
   };
 
   export type Regiao_atuacaoScalarFieldEnum = (typeof Regiao_atuacaoScalarFieldEnum)[keyof typeof Regiao_atuacaoScalarFieldEnum]
@@ -33589,44 +29065,20 @@ export namespace Prisma {
   export type TituloScalarFieldEnum = (typeof TituloScalarFieldEnum)[keyof typeof TituloScalarFieldEnum]
 
 
+  export const Titulo_itensScalarFieldEnum: {
+    id: 'id',
+    titulo_id: 'titulo_id'
+  };
+
+  export type Titulo_itensScalarFieldEnum = (typeof Titulo_itensScalarFieldEnum)[keyof typeof Titulo_itensScalarFieldEnum]
+
+
   export const Titulo_tipoScalarFieldEnum: {
     id: 'id',
     nome: 'nome'
   };
 
   export type Titulo_tipoScalarFieldEnum = (typeof Titulo_tipoScalarFieldEnum)[keyof typeof Titulo_tipoScalarFieldEnum]
-
-
-  export const Titulo_x_cedenteScalarFieldEnum: {
-    id: 'id',
-    cedente: 'cedente'
-  };
-
-  export type Titulo_x_cedenteScalarFieldEnum = (typeof Titulo_x_cedenteScalarFieldEnum)[keyof typeof Titulo_x_cedenteScalarFieldEnum]
-
-
-  export const Titulo_x_empresaScalarFieldEnum: {
-    id: 'id'
-  };
-
-  export type Titulo_x_empresaScalarFieldEnum = (typeof Titulo_x_empresaScalarFieldEnum)[keyof typeof Titulo_x_empresaScalarFieldEnum]
-
-
-  export const Titulo_x_plataformaScalarFieldEnum: {
-    id: 'id'
-  };
-
-  export type Titulo_x_plataformaScalarFieldEnum = (typeof Titulo_x_plataformaScalarFieldEnum)[keyof typeof Titulo_x_plataformaScalarFieldEnum]
-
-
-  export const Titulos_x_usuarioScalarFieldEnum: {
-    id: 'id',
-    usuario: 'usuario',
-    bordero: 'bordero',
-    status: 'status'
-  };
-
-  export type Titulos_x_usuarioScalarFieldEnum = (typeof Titulos_x_usuarioScalarFieldEnum)[keyof typeof Titulos_x_usuarioScalarFieldEnum]
 
 
   export const TransactionIsolationLevel: {
@@ -33657,18 +29109,14 @@ export namespace Prisma {
   export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeof UsuarioScalarFieldEnum]
 
 
-  export const Usuario__pessoaScalarFieldEnum: {
-    id: 'id'
+  export const Usuario_perfilScalarFieldEnum: {
+    id: 'id',
+    senha: 'senha',
+    usuario_id: 'usuario_id',
+    usuario_perfil_tipo_id: 'usuario_perfil_tipo_id'
   };
 
-  export type Usuario__pessoaScalarFieldEnum = (typeof Usuario__pessoaScalarFieldEnum)[keyof typeof Usuario__pessoaScalarFieldEnum]
-
-
-  export const Usuario_n_borderosScalarFieldEnum: {
-    id: 'id'
-  };
-
-  export type Usuario_n_borderosScalarFieldEnum = (typeof Usuario_n_borderosScalarFieldEnum)[keyof typeof Usuario_n_borderosScalarFieldEnum]
+  export type Usuario_perfilScalarFieldEnum = (typeof Usuario_perfilScalarFieldEnum)[keyof typeof Usuario_perfilScalarFieldEnum]
 
 
   export const Usuario_perfil_tipoScalarFieldEnum: {
@@ -33677,16 +29125,6 @@ export namespace Prisma {
   };
 
   export type Usuario_perfil_tipoScalarFieldEnum = (typeof Usuario_perfil_tipoScalarFieldEnum)[keyof typeof Usuario_perfil_tipoScalarFieldEnum]
-
-
-  export const Usuario_x_perfilScalarFieldEnum: {
-    id: 'id',
-    senha: 'senha',
-    usuario_id: 'usuario_id',
-    usuario_perfil_id: 'usuario_perfil_id'
-  };
-
-  export type Usuario_x_perfilScalarFieldEnum = (typeof Usuario_x_perfilScalarFieldEnum)[keyof typeof Usuario_x_perfilScalarFieldEnum]
 
 
   /**
@@ -33703,7 +29141,6 @@ export namespace Prisma {
     data?: DateTimeNullableFilter | Date | string | null
     modulo?: StringNullableFilter | string | null
     id?: IntFilter | number
-    usuario_auditoriaTousuario?: XOR<UsuarioRelationFilter, usuarioWhereInput> | null
   }
 
   export type auditoriaOrderByWithRelationInput = {
@@ -33712,7 +29149,6 @@ export namespace Prisma {
     data?: SortOrder
     modulo?: SortOrder
     id?: SortOrder
-    usuario_auditoriaTousuario?: usuarioOrderByWithRelationInput
   }
 
   export type auditoriaWhereUniqueInput = {
@@ -33749,15 +29185,15 @@ export namespace Prisma {
     NOT?: Enumerable<borderoWhereInput>
     id?: IntFilter | number
     carteira_id?: IntFilter | number
+    carteira?: XOR<CarteiraRelationFilter, carteiraWhereInput>
     titulo?: TituloListRelationFilter
-    titulos_x_usuario?: Titulos_x_usuarioListRelationFilter
   }
 
   export type borderoOrderByWithRelationInput = {
     id?: SortOrder
     carteira_id?: SortOrder
+    carteira?: carteiraOrderByWithRelationInput
     titulo?: tituloOrderByRelationAggregateInput
-    titulos_x_usuario?: titulos_x_usuarioOrderByRelationAggregateInput
   }
 
   export type borderoWhereUniqueInput = {
@@ -33789,12 +29225,16 @@ export namespace Prisma {
     id?: IntFilter | number
     fiduc_fundo_id?: IntFilter | number
     fidic_fundo?: XOR<Fidic_fundoRelationFilter, fidic_fundoWhereInput>
+    bordero?: BorderoListRelationFilter
+    carteira_n_cedentes?: Carteira_n_cedentesListRelationFilter
   }
 
   export type carteiraOrderByWithRelationInput = {
     id?: SortOrder
     fiduc_fundo_id?: SortOrder
     fidic_fundo?: fidic_fundoOrderByWithRelationInput
+    bordero?: borderoOrderByRelationAggregateInput
+    carteira_n_cedentes?: carteira_n_cedentesOrderByRelationAggregateInput
   }
 
   export type carteiraWhereUniqueInput = {
@@ -33836,9 +29276,9 @@ export namespace Prisma {
     cidade?: StringNullableFilter | string | null
     uf?: StringNullableFilter | string | null
     telefone?: StringNullableFilter | string | null
+    carteira_n_cedentes?: Carteira_n_cedentesListRelationFilter
     cedente_analise?: Cedente_analiseListRelationFilter
     cedente_n_sacados?: Cedente_n_sacadosListRelationFilter
-    titulo_x_cedente?: Titulo_x_cedenteListRelationFilter
   }
 
   export type cedenteOrderByWithRelationInput = {
@@ -33855,9 +29295,9 @@ export namespace Prisma {
     cidade?: SortOrder
     uf?: SortOrder
     telefone?: SortOrder
+    carteira_n_cedentes?: carteira_n_cedentesOrderByRelationAggregateInput
     cedente_analise?: cedente_analiseOrderByRelationAggregateInput
     cedente_n_sacados?: cedente_n_sacadosOrderByRelationAggregateInput
-    titulo_x_cedente?: titulo_x_cedenteOrderByRelationAggregateInput
   }
 
   export type cedenteWhereUniqueInput = {
@@ -33997,7 +29437,6 @@ export namespace Prisma {
     status?: StringNullableFilter | string | null
     usuario?: IntNullableFilter | number | null
     titulos?: StringNullableFilter | string | null
-    usuario_checagemTousuario?: XOR<UsuarioRelationFilter, usuarioWhereInput> | null
   }
 
   export type checagemOrderByWithRelationInput = {
@@ -34006,7 +29445,6 @@ export namespace Prisma {
     status?: SortOrder
     usuario?: SortOrder
     titulos?: SortOrder
-    usuario_checagemTousuario?: usuarioOrderByWithRelationInput
   }
 
   export type checagemWhereUniqueInput = {
@@ -34092,37 +29530,6 @@ export namespace Prisma {
     cnpj?: StringNullableWithAggregatesFilter | string | null
   }
 
-  export type fidic_fundo_carteira_n_cedentesWhereInput = {
-    AND?: Enumerable<fidic_fundo_carteira_n_cedentesWhereInput>
-    OR?: Enumerable<fidic_fundo_carteira_n_cedentesWhereInput>
-    NOT?: Enumerable<fidic_fundo_carteira_n_cedentesWhereInput>
-    id?: IntFilter | number
-  }
-
-  export type fidic_fundo_carteira_n_cedentesOrderByWithRelationInput = {
-    id?: SortOrder
-  }
-
-  export type fidic_fundo_carteira_n_cedentesWhereUniqueInput = {
-    id?: number
-  }
-
-  export type fidic_fundo_carteira_n_cedentesOrderByWithAggregationInput = {
-    id?: SortOrder
-    _count?: fidic_fundo_carteira_n_cedentesCountOrderByAggregateInput
-    _avg?: fidic_fundo_carteira_n_cedentesAvgOrderByAggregateInput
-    _max?: fidic_fundo_carteira_n_cedentesMaxOrderByAggregateInput
-    _min?: fidic_fundo_carteira_n_cedentesMinOrderByAggregateInput
-    _sum?: fidic_fundo_carteira_n_cedentesSumOrderByAggregateInput
-  }
-
-  export type fidic_fundo_carteira_n_cedentesScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<fidic_fundo_carteira_n_cedentesScalarWhereWithAggregatesInput>
-    OR?: Enumerable<fidic_fundo_carteira_n_cedentesScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<fidic_fundo_carteira_n_cedentesScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-  }
-
   export type fidic_fundo_x_usuarioWhereInput = {
     AND?: Enumerable<fidic_fundo_x_usuarioWhereInput>
     OR?: Enumerable<fidic_fundo_x_usuarioWhereInput>
@@ -34131,7 +29538,6 @@ export namespace Prisma {
     usuario?: IntNullableFilter | number | null
     fidic?: IntFilter | number
     fidic_fundo?: XOR<Fidic_fundoRelationFilter, fidic_fundoWhereInput>
-    usuario_fidic_fundo_x_usuarioTousuario?: XOR<UsuarioRelationFilter, usuarioWhereInput> | null
   }
 
   export type fidic_fundo_x_usuarioOrderByWithRelationInput = {
@@ -34139,7 +29545,6 @@ export namespace Prisma {
     usuario?: SortOrder
     fidic?: SortOrder
     fidic_fundo?: fidic_fundoOrderByWithRelationInput
-    usuario_fidic_fundo_x_usuarioTousuario?: usuarioOrderByWithRelationInput
   }
 
   export type fidic_fundo_x_usuarioWhereUniqueInput = {
@@ -34171,10 +29576,18 @@ export namespace Prisma {
     OR?: Enumerable<organogramaWhereInput>
     NOT?: Enumerable<organogramaWhereInput>
     id?: IntFilter | number
+    organograma_id?: IntFilter | number
+    organograma_tipo?: XOR<Organograma_tipoRelationFilter, organograma_tipoWhereInput>
+    organograma_x_regiao_atuacao?: Organograma_x_regiao_atuacaoListRelationFilter
+    organograma_x_usuario?: Organograma_x_usuarioListRelationFilter
   }
 
   export type organogramaOrderByWithRelationInput = {
     id?: SortOrder
+    organograma_id?: SortOrder
+    organograma_tipo?: organograma_tipoOrderByWithRelationInput
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoOrderByRelationAggregateInput
+    organograma_x_usuario?: organograma_x_usuarioOrderByRelationAggregateInput
   }
 
   export type organogramaWhereUniqueInput = {
@@ -34183,6 +29596,7 @@ export namespace Prisma {
 
   export type organogramaOrderByWithAggregationInput = {
     id?: SortOrder
+    organograma_id?: SortOrder
     _count?: organogramaCountOrderByAggregateInput
     _avg?: organogramaAvgOrderByAggregateInput
     _max?: organogramaMaxOrderByAggregateInput
@@ -34195,6 +29609,7 @@ export namespace Prisma {
     OR?: Enumerable<organogramaScalarWhereWithAggregatesInput>
     NOT?: Enumerable<organogramaScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
+    organograma_id?: IntWithAggregatesFilter | number
   }
 
   export type organograma_tipoWhereInput = {
@@ -34203,11 +29618,13 @@ export namespace Prisma {
     NOT?: Enumerable<organograma_tipoWhereInput>
     id?: IntFilter | number
     nome?: StringFilter | string
+    organograma?: OrganogramaListRelationFilter
   }
 
   export type organograma_tipoOrderByWithRelationInput = {
     id?: SortOrder
     nome?: SortOrder
+    organograma?: organogramaOrderByRelationAggregateInput
   }
 
   export type organograma_tipoWhereUniqueInput = {
@@ -34232,58 +29649,23 @@ export namespace Prisma {
     nome?: StringWithAggregatesFilter | string
   }
 
-  export type organograma_x_regiaoWhereInput = {
-    AND?: Enumerable<organograma_x_regiaoWhereInput>
-    OR?: Enumerable<organograma_x_regiaoWhereInput>
-    NOT?: Enumerable<organograma_x_regiaoWhereInput>
-    id?: IntFilter | number
-    organograma_id?: IntFilter | number
-    regiao_id?: IntFilter | number
-  }
-
-  export type organograma_x_regiaoOrderByWithRelationInput = {
-    id?: SortOrder
-    organograma_id?: SortOrder
-    regiao_id?: SortOrder
-  }
-
-  export type organograma_x_regiaoWhereUniqueInput = {
-    id?: number
-  }
-
-  export type organograma_x_regiaoOrderByWithAggregationInput = {
-    id?: SortOrder
-    organograma_id?: SortOrder
-    regiao_id?: SortOrder
-    _count?: organograma_x_regiaoCountOrderByAggregateInput
-    _avg?: organograma_x_regiaoAvgOrderByAggregateInput
-    _max?: organograma_x_regiaoMaxOrderByAggregateInput
-    _min?: organograma_x_regiaoMinOrderByAggregateInput
-    _sum?: organograma_x_regiaoSumOrderByAggregateInput
-  }
-
-  export type organograma_x_regiaoScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<organograma_x_regiaoScalarWhereWithAggregatesInput>
-    OR?: Enumerable<organograma_x_regiaoScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<organograma_x_regiaoScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    organograma_id?: IntWithAggregatesFilter | number
-    regiao_id?: IntWithAggregatesFilter | number
-  }
-
   export type organograma_x_regiao_atuacaoWhereInput = {
     AND?: Enumerable<organograma_x_regiao_atuacaoWhereInput>
     OR?: Enumerable<organograma_x_regiao_atuacaoWhereInput>
     NOT?: Enumerable<organograma_x_regiao_atuacaoWhereInput>
     id?: IntFilter | number
     organograma_id?: IntFilter | number
-    regiao_id?: IntFilter | number
+    regiao_atuacao_id?: IntFilter | number
+    organograma?: XOR<OrganogramaRelationFilter, organogramaWhereInput>
+    regiao_atuacao?: XOR<Regiao_atuacaoRelationFilter, regiao_atuacaoWhereInput>
   }
 
   export type organograma_x_regiao_atuacaoOrderByWithRelationInput = {
     id?: SortOrder
     organograma_id?: SortOrder
-    regiao_id?: SortOrder
+    regiao_atuacao_id?: SortOrder
+    organograma?: organogramaOrderByWithRelationInput
+    regiao_atuacao?: regiao_atuacaoOrderByWithRelationInput
   }
 
   export type organograma_x_regiao_atuacaoWhereUniqueInput = {
@@ -34293,7 +29675,7 @@ export namespace Prisma {
   export type organograma_x_regiao_atuacaoOrderByWithAggregationInput = {
     id?: SortOrder
     organograma_id?: SortOrder
-    regiao_id?: SortOrder
+    regiao_atuacao_id?: SortOrder
     _count?: organograma_x_regiao_atuacaoCountOrderByAggregateInput
     _avg?: organograma_x_regiao_atuacaoAvgOrderByAggregateInput
     _max?: organograma_x_regiao_atuacaoMaxOrderByAggregateInput
@@ -34307,7 +29689,7 @@ export namespace Prisma {
     NOT?: Enumerable<organograma_x_regiao_atuacaoScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     organograma_id?: IntWithAggregatesFilter | number
-    regiao_id?: IntWithAggregatesFilter | number
+    regiao_atuacao_id?: IntWithAggregatesFilter | number
   }
 
   export type pessoaWhereInput = {
@@ -34373,11 +29755,19 @@ export namespace Prisma {
     NOT?: Enumerable<plataformaWhereInput>
     id?: IntFilter | number
     nome?: StringNullableFilter | string | null
+    plataforma_papel_tipo_id?: IntFilter | number
+    plataforma_papel_tipo?: XOR<Plataforma_papel_tipoRelationFilter, plataforma_papel_tipoWhereInput>
+    plataforma_x_regiao_atuacao?: Plataforma_x_regiao_atuacaoListRelationFilter
+    plataforma_x_usuario?: Plataforma_x_usuarioListRelationFilter
   }
 
   export type plataformaOrderByWithRelationInput = {
     id?: SortOrder
     nome?: SortOrder
+    plataforma_papel_tipo_id?: SortOrder
+    plataforma_papel_tipo?: plataforma_papel_tipoOrderByWithRelationInput
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoOrderByRelationAggregateInput
+    plataforma_x_usuario?: plataforma_x_usuarioOrderByRelationAggregateInput
   }
 
   export type plataformaWhereUniqueInput = {
@@ -34387,6 +29777,7 @@ export namespace Prisma {
   export type plataformaOrderByWithAggregationInput = {
     id?: SortOrder
     nome?: SortOrder
+    plataforma_papel_tipo_id?: SortOrder
     _count?: plataformaCountOrderByAggregateInput
     _avg?: plataformaAvgOrderByAggregateInput
     _max?: plataformaMaxOrderByAggregateInput
@@ -34400,37 +29791,7 @@ export namespace Prisma {
     NOT?: Enumerable<plataformaScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     nome?: StringNullableWithAggregatesFilter | string | null
-  }
-
-  export type plataforma_n_borderosWhereInput = {
-    AND?: Enumerable<plataforma_n_borderosWhereInput>
-    OR?: Enumerable<plataforma_n_borderosWhereInput>
-    NOT?: Enumerable<plataforma_n_borderosWhereInput>
-    id?: IntFilter | number
-  }
-
-  export type plataforma_n_borderosOrderByWithRelationInput = {
-    id?: SortOrder
-  }
-
-  export type plataforma_n_borderosWhereUniqueInput = {
-    id?: number
-  }
-
-  export type plataforma_n_borderosOrderByWithAggregationInput = {
-    id?: SortOrder
-    _count?: plataforma_n_borderosCountOrderByAggregateInput
-    _avg?: plataforma_n_borderosAvgOrderByAggregateInput
-    _max?: plataforma_n_borderosMaxOrderByAggregateInput
-    _min?: plataforma_n_borderosMinOrderByAggregateInput
-    _sum?: plataforma_n_borderosSumOrderByAggregateInput
-  }
-
-  export type plataforma_n_borderosScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<plataforma_n_borderosScalarWhereWithAggregatesInput>
-    OR?: Enumerable<plataforma_n_borderosScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<plataforma_n_borderosScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
+    plataforma_papel_tipo_id?: IntWithAggregatesFilter | number
   }
 
   export type plataforma_papel_tipoWhereInput = {
@@ -34438,10 +29799,12 @@ export namespace Prisma {
     OR?: Enumerable<plataforma_papel_tipoWhereInput>
     NOT?: Enumerable<plataforma_papel_tipoWhereInput>
     id?: IntFilter | number
+    plataforma?: PlataformaListRelationFilter
   }
 
   export type plataforma_papel_tipoOrderByWithRelationInput = {
     id?: SortOrder
+    plataforma?: plataformaOrderByRelationAggregateInput
   }
 
   export type plataforma_papel_tipoWhereUniqueInput = {
@@ -34464,46 +29827,23 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter | number
   }
 
-  export type plataforma_papel_x_pessoaWhereInput = {
-    AND?: Enumerable<plataforma_papel_x_pessoaWhereInput>
-    OR?: Enumerable<plataforma_papel_x_pessoaWhereInput>
-    NOT?: Enumerable<plataforma_papel_x_pessoaWhereInput>
-    id?: IntFilter | number
-  }
-
-  export type plataforma_papel_x_pessoaOrderByWithRelationInput = {
-    id?: SortOrder
-  }
-
-  export type plataforma_papel_x_pessoaWhereUniqueInput = {
-    id?: number
-  }
-
-  export type plataforma_papel_x_pessoaOrderByWithAggregationInput = {
-    id?: SortOrder
-    _count?: plataforma_papel_x_pessoaCountOrderByAggregateInput
-    _avg?: plataforma_papel_x_pessoaAvgOrderByAggregateInput
-    _max?: plataforma_papel_x_pessoaMaxOrderByAggregateInput
-    _min?: plataforma_papel_x_pessoaMinOrderByAggregateInput
-    _sum?: plataforma_papel_x_pessoaSumOrderByAggregateInput
-  }
-
-  export type plataforma_papel_x_pessoaScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<plataforma_papel_x_pessoaScalarWhereWithAggregatesInput>
-    OR?: Enumerable<plataforma_papel_x_pessoaScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<plataforma_papel_x_pessoaScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-  }
-
   export type plataforma_x_regiao_atuacaoWhereInput = {
     AND?: Enumerable<plataforma_x_regiao_atuacaoWhereInput>
     OR?: Enumerable<plataforma_x_regiao_atuacaoWhereInput>
     NOT?: Enumerable<plataforma_x_regiao_atuacaoWhereInput>
     id?: IntFilter | number
+    plataforma_id?: IntFilter | number
+    regiao_atuacao_id?: IntFilter | number
+    plataforma?: XOR<PlataformaRelationFilter, plataformaWhereInput>
+    regiao_atuacao?: XOR<Regiao_atuacaoRelationFilter, regiao_atuacaoWhereInput>
   }
 
   export type plataforma_x_regiao_atuacaoOrderByWithRelationInput = {
     id?: SortOrder
+    plataforma_id?: SortOrder
+    regiao_atuacao_id?: SortOrder
+    plataforma?: plataformaOrderByWithRelationInput
+    regiao_atuacao?: regiao_atuacaoOrderByWithRelationInput
   }
 
   export type plataforma_x_regiao_atuacaoWhereUniqueInput = {
@@ -34512,6 +29852,8 @@ export namespace Prisma {
 
   export type plataforma_x_regiao_atuacaoOrderByWithAggregationInput = {
     id?: SortOrder
+    plataforma_id?: SortOrder
+    regiao_atuacao_id?: SortOrder
     _count?: plataforma_x_regiao_atuacaoCountOrderByAggregateInput
     _avg?: plataforma_x_regiao_atuacaoAvgOrderByAggregateInput
     _max?: plataforma_x_regiao_atuacaoMaxOrderByAggregateInput
@@ -34524,6 +29866,8 @@ export namespace Prisma {
     OR?: Enumerable<plataforma_x_regiao_atuacaoScalarWhereWithAggregatesInput>
     NOT?: Enumerable<plataforma_x_regiao_atuacaoScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
+    plataforma_id?: IntWithAggregatesFilter | number
+    regiao_atuacao_id?: IntWithAggregatesFilter | number
   }
 
   export type regiao_atuacaoWhereInput = {
@@ -34532,11 +29876,19 @@ export namespace Prisma {
     NOT?: Enumerable<regiao_atuacaoWhereInput>
     id?: IntFilter | number
     nome?: StringFilter | string
+    regiao_atuacao_tipo_id?: IntFilter | number
+    regiao_atuacao_tipo?: XOR<Regiao_atuacao_tipoRelationFilter, regiao_atuacao_tipoWhereInput>
+    organograma_x_regiao_atuacao?: Organograma_x_regiao_atuacaoListRelationFilter
+    plataforma_x_regiao_atuacao?: Plataforma_x_regiao_atuacaoListRelationFilter
   }
 
   export type regiao_atuacaoOrderByWithRelationInput = {
     id?: SortOrder
     nome?: SortOrder
+    regiao_atuacao_tipo_id?: SortOrder
+    regiao_atuacao_tipo?: regiao_atuacao_tipoOrderByWithRelationInput
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoOrderByRelationAggregateInput
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoOrderByRelationAggregateInput
   }
 
   export type regiao_atuacaoWhereUniqueInput = {
@@ -34546,6 +29898,7 @@ export namespace Prisma {
   export type regiao_atuacaoOrderByWithAggregationInput = {
     id?: SortOrder
     nome?: SortOrder
+    regiao_atuacao_tipo_id?: SortOrder
     _count?: regiao_atuacaoCountOrderByAggregateInput
     _avg?: regiao_atuacaoAvgOrderByAggregateInput
     _max?: regiao_atuacaoMaxOrderByAggregateInput
@@ -34559,6 +29912,7 @@ export namespace Prisma {
     NOT?: Enumerable<regiao_atuacaoScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     nome?: StringWithAggregatesFilter | string
+    regiao_atuacao_tipo_id?: IntWithAggregatesFilter | number
   }
 
   export type regiao_atuacao_tipoWhereInput = {
@@ -34567,11 +29921,13 @@ export namespace Prisma {
     NOT?: Enumerable<regiao_atuacao_tipoWhereInput>
     id?: IntFilter | number
     nome?: StringFilter | string
+    regiao_atuacao?: Regiao_atuacaoListRelationFilter
   }
 
   export type regiao_atuacao_tipoOrderByWithRelationInput = {
     id?: SortOrder
     nome?: SortOrder
+    regiao_atuacao?: regiao_atuacaoOrderByRelationAggregateInput
   }
 
   export type regiao_atuacao_tipoWhereUniqueInput = {
@@ -34664,6 +30020,7 @@ export namespace Prisma {
     parcela?: StringNullableFilter | string | null
     titulo_tipo?: XOR<Titulo_tipoRelationFilter, titulo_tipoWhereInput>
     bordero?: XOR<BorderoRelationFilter, borderoWhereInput>
+    titulo_itens?: Titulo_itensListRelationFilter
   }
 
   export type tituloOrderByWithRelationInput = {
@@ -34678,6 +30035,7 @@ export namespace Prisma {
     parcela?: SortOrder
     titulo_tipo?: titulo_tipoOrderByWithRelationInput
     bordero?: borderoOrderByWithRelationInput
+    titulo_itens?: titulo_itensOrderByRelationAggregateInput
   }
 
   export type tituloWhereUniqueInput = {
@@ -34753,152 +30111,6 @@ export namespace Prisma {
     nome?: StringNullableWithAggregatesFilter | string | null
   }
 
-  export type titulo_x_cedenteWhereInput = {
-    AND?: Enumerable<titulo_x_cedenteWhereInput>
-    OR?: Enumerable<titulo_x_cedenteWhereInput>
-    NOT?: Enumerable<titulo_x_cedenteWhereInput>
-    id?: IntFilter | number
-    cedente?: IntFilter | number
-    cedente_cedenteTotitulo_x_cedente?: XOR<CedenteRelationFilter, cedenteWhereInput>
-  }
-
-  export type titulo_x_cedenteOrderByWithRelationInput = {
-    id?: SortOrder
-    cedente?: SortOrder
-    cedente_cedenteTotitulo_x_cedente?: cedenteOrderByWithRelationInput
-  }
-
-  export type titulo_x_cedenteWhereUniqueInput = {
-    id?: number
-  }
-
-  export type titulo_x_cedenteOrderByWithAggregationInput = {
-    id?: SortOrder
-    cedente?: SortOrder
-    _count?: titulo_x_cedenteCountOrderByAggregateInput
-    _avg?: titulo_x_cedenteAvgOrderByAggregateInput
-    _max?: titulo_x_cedenteMaxOrderByAggregateInput
-    _min?: titulo_x_cedenteMinOrderByAggregateInput
-    _sum?: titulo_x_cedenteSumOrderByAggregateInput
-  }
-
-  export type titulo_x_cedenteScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<titulo_x_cedenteScalarWhereWithAggregatesInput>
-    OR?: Enumerable<titulo_x_cedenteScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<titulo_x_cedenteScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    cedente?: IntWithAggregatesFilter | number
-  }
-
-  export type titulo_x_empresaWhereInput = {
-    AND?: Enumerable<titulo_x_empresaWhereInput>
-    OR?: Enumerable<titulo_x_empresaWhereInput>
-    NOT?: Enumerable<titulo_x_empresaWhereInput>
-    id?: IntFilter | number
-  }
-
-  export type titulo_x_empresaOrderByWithRelationInput = {
-    id?: SortOrder
-  }
-
-  export type titulo_x_empresaWhereUniqueInput = {
-    id?: number
-  }
-
-  export type titulo_x_empresaOrderByWithAggregationInput = {
-    id?: SortOrder
-    _count?: titulo_x_empresaCountOrderByAggregateInput
-    _avg?: titulo_x_empresaAvgOrderByAggregateInput
-    _max?: titulo_x_empresaMaxOrderByAggregateInput
-    _min?: titulo_x_empresaMinOrderByAggregateInput
-    _sum?: titulo_x_empresaSumOrderByAggregateInput
-  }
-
-  export type titulo_x_empresaScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<titulo_x_empresaScalarWhereWithAggregatesInput>
-    OR?: Enumerable<titulo_x_empresaScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<titulo_x_empresaScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-  }
-
-  export type titulo_x_plataformaWhereInput = {
-    AND?: Enumerable<titulo_x_plataformaWhereInput>
-    OR?: Enumerable<titulo_x_plataformaWhereInput>
-    NOT?: Enumerable<titulo_x_plataformaWhereInput>
-    id?: IntFilter | number
-  }
-
-  export type titulo_x_plataformaOrderByWithRelationInput = {
-    id?: SortOrder
-  }
-
-  export type titulo_x_plataformaWhereUniqueInput = {
-    id?: number
-  }
-
-  export type titulo_x_plataformaOrderByWithAggregationInput = {
-    id?: SortOrder
-    _count?: titulo_x_plataformaCountOrderByAggregateInput
-    _avg?: titulo_x_plataformaAvgOrderByAggregateInput
-    _max?: titulo_x_plataformaMaxOrderByAggregateInput
-    _min?: titulo_x_plataformaMinOrderByAggregateInput
-    _sum?: titulo_x_plataformaSumOrderByAggregateInput
-  }
-
-  export type titulo_x_plataformaScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<titulo_x_plataformaScalarWhereWithAggregatesInput>
-    OR?: Enumerable<titulo_x_plataformaScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<titulo_x_plataformaScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-  }
-
-  export type titulos_x_usuarioWhereInput = {
-    AND?: Enumerable<titulos_x_usuarioWhereInput>
-    OR?: Enumerable<titulos_x_usuarioWhereInput>
-    NOT?: Enumerable<titulos_x_usuarioWhereInput>
-    id?: IntFilter | number
-    usuario?: IntNullableFilter | number | null
-    bordero?: IntNullableFilter | number | null
-    status?: StringNullableFilter | string | null
-    bordero_borderoTotitulos_x_usuario?: XOR<BorderoRelationFilter, borderoWhereInput> | null
-    usuario_titulos_x_usuarioTousuario?: XOR<UsuarioRelationFilter, usuarioWhereInput> | null
-  }
-
-  export type titulos_x_usuarioOrderByWithRelationInput = {
-    id?: SortOrder
-    usuario?: SortOrder
-    bordero?: SortOrder
-    status?: SortOrder
-    bordero_borderoTotitulos_x_usuario?: borderoOrderByWithRelationInput
-    usuario_titulos_x_usuarioTousuario?: usuarioOrderByWithRelationInput
-  }
-
-  export type titulos_x_usuarioWhereUniqueInput = {
-    id?: number
-  }
-
-  export type titulos_x_usuarioOrderByWithAggregationInput = {
-    id?: SortOrder
-    usuario?: SortOrder
-    bordero?: SortOrder
-    status?: SortOrder
-    _count?: titulos_x_usuarioCountOrderByAggregateInput
-    _avg?: titulos_x_usuarioAvgOrderByAggregateInput
-    _max?: titulos_x_usuarioMaxOrderByAggregateInput
-    _min?: titulos_x_usuarioMinOrderByAggregateInput
-    _sum?: titulos_x_usuarioSumOrderByAggregateInput
-  }
-
-  export type titulos_x_usuarioScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<titulos_x_usuarioScalarWhereWithAggregatesInput>
-    OR?: Enumerable<titulos_x_usuarioScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<titulos_x_usuarioScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    usuario?: IntNullableWithAggregatesFilter | number | null
-    bordero?: IntNullableWithAggregatesFilter | number | null
-    status?: StringNullableWithAggregatesFilter | string | null
-  }
-
   export type usuarioWhereInput = {
     AND?: Enumerable<usuarioWhereInput>
     OR?: Enumerable<usuarioWhereInput>
@@ -34915,12 +30127,7 @@ export namespace Prisma {
     codigo_data_expiracao?: DateTimeNullableFilter | Date | string | null
     created_at?: DateTimeFilter | Date | string
     updated_at?: DateTimeNullableFilter | Date | string | null
-    auditoria?: AuditoriaListRelationFilter
-    checagem?: ChecagemListRelationFilter
-    fidic_fundo_x_usuario?: Fidic_fundo_x_usuarioListRelationFilter
-    titulos_x_usuario?: Titulos_x_usuarioListRelationFilter
     pessoa?: XOR<PessoaRelationFilter, pessoaWhereInput>
-    usuario_x_perfil?: Usuario_x_perfilListRelationFilter
   }
 
   export type usuarioOrderByWithRelationInput = {
@@ -34936,12 +30143,7 @@ export namespace Prisma {
     codigo_data_expiracao?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
-    auditoria?: auditoriaOrderByRelationAggregateInput
-    checagem?: checagemOrderByRelationAggregateInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioOrderByRelationAggregateInput
-    titulos_x_usuario?: titulos_x_usuarioOrderByRelationAggregateInput
     pessoa?: pessoaOrderByWithRelationInput
-    usuario_x_perfil?: usuario_x_perfilOrderByRelationAggregateInput
   }
 
   export type usuarioWhereUniqueInput = {
@@ -34987,81 +30189,19 @@ export namespace Prisma {
     updated_at?: DateTimeNullableWithAggregatesFilter | Date | string | null
   }
 
-  export type usuario__pessoaWhereInput = {
-    AND?: Enumerable<usuario__pessoaWhereInput>
-    OR?: Enumerable<usuario__pessoaWhereInput>
-    NOT?: Enumerable<usuario__pessoaWhereInput>
-    id?: IntFilter | number
-  }
-
-  export type usuario__pessoaOrderByWithRelationInput = {
-    id?: SortOrder
-  }
-
-  export type usuario__pessoaWhereUniqueInput = {
-    id?: number
-  }
-
-  export type usuario__pessoaOrderByWithAggregationInput = {
-    id?: SortOrder
-    _count?: usuario__pessoaCountOrderByAggregateInput
-    _avg?: usuario__pessoaAvgOrderByAggregateInput
-    _max?: usuario__pessoaMaxOrderByAggregateInput
-    _min?: usuario__pessoaMinOrderByAggregateInput
-    _sum?: usuario__pessoaSumOrderByAggregateInput
-  }
-
-  export type usuario__pessoaScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<usuario__pessoaScalarWhereWithAggregatesInput>
-    OR?: Enumerable<usuario__pessoaScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<usuario__pessoaScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-  }
-
-  export type usuario_n_borderosWhereInput = {
-    AND?: Enumerable<usuario_n_borderosWhereInput>
-    OR?: Enumerable<usuario_n_borderosWhereInput>
-    NOT?: Enumerable<usuario_n_borderosWhereInput>
-    id?: IntFilter | number
-  }
-
-  export type usuario_n_borderosOrderByWithRelationInput = {
-    id?: SortOrder
-  }
-
-  export type usuario_n_borderosWhereUniqueInput = {
-    id?: number
-  }
-
-  export type usuario_n_borderosOrderByWithAggregationInput = {
-    id?: SortOrder
-    _count?: usuario_n_borderosCountOrderByAggregateInput
-    _avg?: usuario_n_borderosAvgOrderByAggregateInput
-    _max?: usuario_n_borderosMaxOrderByAggregateInput
-    _min?: usuario_n_borderosMinOrderByAggregateInput
-    _sum?: usuario_n_borderosSumOrderByAggregateInput
-  }
-
-  export type usuario_n_borderosScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<usuario_n_borderosScalarWhereWithAggregatesInput>
-    OR?: Enumerable<usuario_n_borderosScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<usuario_n_borderosScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-  }
-
   export type usuario_perfil_tipoWhereInput = {
     AND?: Enumerable<usuario_perfil_tipoWhereInput>
     OR?: Enumerable<usuario_perfil_tipoWhereInput>
     NOT?: Enumerable<usuario_perfil_tipoWhereInput>
     id?: IntFilter | number
     nome?: StringFilter | string
-    usuario_x_perfil?: Usuario_x_perfilListRelationFilter
+    usuario_perfil?: Usuario_perfilListRelationFilter
   }
 
   export type usuario_perfil_tipoOrderByWithRelationInput = {
     id?: SortOrder
     nome?: SortOrder
-    usuario_x_perfil?: usuario_x_perfilOrderByRelationAggregateInput
+    usuario_perfil?: usuario_perfilOrderByRelationAggregateInput
   }
 
   export type usuario_perfil_tipoWhereUniqueInput = {
@@ -35086,58 +30226,218 @@ export namespace Prisma {
     nome?: StringWithAggregatesFilter | string
   }
 
-  export type usuario_x_perfilWhereInput = {
-    AND?: Enumerable<usuario_x_perfilWhereInput>
-    OR?: Enumerable<usuario_x_perfilWhereInput>
-    NOT?: Enumerable<usuario_x_perfilWhereInput>
+  export type carteira_n_cedentesWhereInput = {
+    AND?: Enumerable<carteira_n_cedentesWhereInput>
+    OR?: Enumerable<carteira_n_cedentesWhereInput>
+    NOT?: Enumerable<carteira_n_cedentesWhereInput>
     id?: IntFilter | number
-    senha?: StringFilter | string
-    usuario_id?: IntFilter | number
-    usuario_perfil_id?: IntFilter | number
-    usuario?: XOR<UsuarioRelationFilter, usuarioWhereInput>
-    usuario_perfil_tipo?: XOR<Usuario_perfil_tipoRelationFilter, usuario_perfil_tipoWhereInput>
+    carteira_id?: IntFilter | number
+    cedente_id?: IntFilter | number
+    carteira?: XOR<CarteiraRelationFilter, carteiraWhereInput>
+    cedente?: XOR<CedenteRelationFilter, cedenteWhereInput>
   }
 
-  export type usuario_x_perfilOrderByWithRelationInput = {
+  export type carteira_n_cedentesOrderByWithRelationInput = {
     id?: SortOrder
-    senha?: SortOrder
-    usuario_id?: SortOrder
-    usuario_perfil_id?: SortOrder
-    usuario?: usuarioOrderByWithRelationInput
-    usuario_perfil_tipo?: usuario_perfil_tipoOrderByWithRelationInput
+    carteira_id?: SortOrder
+    cedente_id?: SortOrder
+    carteira?: carteiraOrderByWithRelationInput
+    cedente?: cedenteOrderByWithRelationInput
   }
 
-  export type usuario_x_perfilWhereUniqueInput = {
+  export type carteira_n_cedentesWhereUniqueInput = {
     id?: number
   }
 
-  export type usuario_x_perfilOrderByWithAggregationInput = {
+  export type carteira_n_cedentesOrderByWithAggregationInput = {
+    id?: SortOrder
+    carteira_id?: SortOrder
+    cedente_id?: SortOrder
+    _count?: carteira_n_cedentesCountOrderByAggregateInput
+    _avg?: carteira_n_cedentesAvgOrderByAggregateInput
+    _max?: carteira_n_cedentesMaxOrderByAggregateInput
+    _min?: carteira_n_cedentesMinOrderByAggregateInput
+    _sum?: carteira_n_cedentesSumOrderByAggregateInput
+  }
+
+  export type carteira_n_cedentesScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<carteira_n_cedentesScalarWhereWithAggregatesInput>
+    OR?: Enumerable<carteira_n_cedentesScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<carteira_n_cedentesScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    carteira_id?: IntWithAggregatesFilter | number
+    cedente_id?: IntWithAggregatesFilter | number
+  }
+
+  export type organograma_x_usuarioWhereInput = {
+    AND?: Enumerable<organograma_x_usuarioWhereInput>
+    OR?: Enumerable<organograma_x_usuarioWhereInput>
+    NOT?: Enumerable<organograma_x_usuarioWhereInput>
+    id?: IntFilter | number
+    organograma_id?: IntFilter | number
+    usuario_id?: IntFilter | number
+    organograma?: XOR<OrganogramaRelationFilter, organogramaWhereInput>
+  }
+
+  export type organograma_x_usuarioOrderByWithRelationInput = {
+    id?: SortOrder
+    organograma_id?: SortOrder
+    usuario_id?: SortOrder
+    organograma?: organogramaOrderByWithRelationInput
+  }
+
+  export type organograma_x_usuarioWhereUniqueInput = {
+    id?: number
+  }
+
+  export type organograma_x_usuarioOrderByWithAggregationInput = {
+    id?: SortOrder
+    organograma_id?: SortOrder
+    usuario_id?: SortOrder
+    _count?: organograma_x_usuarioCountOrderByAggregateInput
+    _avg?: organograma_x_usuarioAvgOrderByAggregateInput
+    _max?: organograma_x_usuarioMaxOrderByAggregateInput
+    _min?: organograma_x_usuarioMinOrderByAggregateInput
+    _sum?: organograma_x_usuarioSumOrderByAggregateInput
+  }
+
+  export type organograma_x_usuarioScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<organograma_x_usuarioScalarWhereWithAggregatesInput>
+    OR?: Enumerable<organograma_x_usuarioScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<organograma_x_usuarioScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    organograma_id?: IntWithAggregatesFilter | number
+    usuario_id?: IntWithAggregatesFilter | number
+  }
+
+  export type plataforma_x_usuarioWhereInput = {
+    AND?: Enumerable<plataforma_x_usuarioWhereInput>
+    OR?: Enumerable<plataforma_x_usuarioWhereInput>
+    NOT?: Enumerable<plataforma_x_usuarioWhereInput>
+    id?: IntFilter | number
+    plataforma_id?: IntFilter | number
+    usuario_id?: IntFilter | number
+    plataforma?: XOR<PlataformaRelationFilter, plataformaWhereInput>
+  }
+
+  export type plataforma_x_usuarioOrderByWithRelationInput = {
+    id?: SortOrder
+    plataforma_id?: SortOrder
+    usuario_id?: SortOrder
+    plataforma?: plataformaOrderByWithRelationInput
+  }
+
+  export type plataforma_x_usuarioWhereUniqueInput = {
+    id?: number
+  }
+
+  export type plataforma_x_usuarioOrderByWithAggregationInput = {
+    id?: SortOrder
+    plataforma_id?: SortOrder
+    usuario_id?: SortOrder
+    _count?: plataforma_x_usuarioCountOrderByAggregateInput
+    _avg?: plataforma_x_usuarioAvgOrderByAggregateInput
+    _max?: plataforma_x_usuarioMaxOrderByAggregateInput
+    _min?: plataforma_x_usuarioMinOrderByAggregateInput
+    _sum?: plataforma_x_usuarioSumOrderByAggregateInput
+  }
+
+  export type plataforma_x_usuarioScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<plataforma_x_usuarioScalarWhereWithAggregatesInput>
+    OR?: Enumerable<plataforma_x_usuarioScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<plataforma_x_usuarioScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    plataforma_id?: IntWithAggregatesFilter | number
+    usuario_id?: IntWithAggregatesFilter | number
+  }
+
+  export type titulo_itensWhereInput = {
+    AND?: Enumerable<titulo_itensWhereInput>
+    OR?: Enumerable<titulo_itensWhereInput>
+    NOT?: Enumerable<titulo_itensWhereInput>
+    id?: IntFilter | number
+    titulo_id?: IntFilter | number
+    titulo?: XOR<TituloRelationFilter, tituloWhereInput>
+  }
+
+  export type titulo_itensOrderByWithRelationInput = {
+    id?: SortOrder
+    titulo_id?: SortOrder
+    titulo?: tituloOrderByWithRelationInput
+  }
+
+  export type titulo_itensWhereUniqueInput = {
+    id?: number
+  }
+
+  export type titulo_itensOrderByWithAggregationInput = {
+    id?: SortOrder
+    titulo_id?: SortOrder
+    _count?: titulo_itensCountOrderByAggregateInput
+    _avg?: titulo_itensAvgOrderByAggregateInput
+    _max?: titulo_itensMaxOrderByAggregateInput
+    _min?: titulo_itensMinOrderByAggregateInput
+    _sum?: titulo_itensSumOrderByAggregateInput
+  }
+
+  export type titulo_itensScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<titulo_itensScalarWhereWithAggregatesInput>
+    OR?: Enumerable<titulo_itensScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<titulo_itensScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    titulo_id?: IntWithAggregatesFilter | number
+  }
+
+  export type usuario_perfilWhereInput = {
+    AND?: Enumerable<usuario_perfilWhereInput>
+    OR?: Enumerable<usuario_perfilWhereInput>
+    NOT?: Enumerable<usuario_perfilWhereInput>
+    id?: IntFilter | number
+    senha?: StringFilter | string
+    usuario_id?: IntFilter | number
+    usuario_perfil_tipo_id?: IntFilter | number
+    usuario_perfil_tipo?: XOR<Usuario_perfil_tipoRelationFilter, usuario_perfil_tipoWhereInput>
+  }
+
+  export type usuario_perfilOrderByWithRelationInput = {
     id?: SortOrder
     senha?: SortOrder
     usuario_id?: SortOrder
-    usuario_perfil_id?: SortOrder
-    _count?: usuario_x_perfilCountOrderByAggregateInput
-    _avg?: usuario_x_perfilAvgOrderByAggregateInput
-    _max?: usuario_x_perfilMaxOrderByAggregateInput
-    _min?: usuario_x_perfilMinOrderByAggregateInput
-    _sum?: usuario_x_perfilSumOrderByAggregateInput
+    usuario_perfil_tipo_id?: SortOrder
+    usuario_perfil_tipo?: usuario_perfil_tipoOrderByWithRelationInput
   }
 
-  export type usuario_x_perfilScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<usuario_x_perfilScalarWhereWithAggregatesInput>
-    OR?: Enumerable<usuario_x_perfilScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<usuario_x_perfilScalarWhereWithAggregatesInput>
+  export type usuario_perfilWhereUniqueInput = {
+    id?: number
+  }
+
+  export type usuario_perfilOrderByWithAggregationInput = {
+    id?: SortOrder
+    senha?: SortOrder
+    usuario_id?: SortOrder
+    usuario_perfil_tipo_id?: SortOrder
+    _count?: usuario_perfilCountOrderByAggregateInput
+    _avg?: usuario_perfilAvgOrderByAggregateInput
+    _max?: usuario_perfilMaxOrderByAggregateInput
+    _min?: usuario_perfilMinOrderByAggregateInput
+    _sum?: usuario_perfilSumOrderByAggregateInput
+  }
+
+  export type usuario_perfilScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<usuario_perfilScalarWhereWithAggregatesInput>
+    OR?: Enumerable<usuario_perfilScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<usuario_perfilScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     senha?: StringWithAggregatesFilter | string
     usuario_id?: IntWithAggregatesFilter | number
-    usuario_perfil_id?: IntWithAggregatesFilter | number
+    usuario_perfil_tipo_id?: IntWithAggregatesFilter | number
   }
 
   export type auditoriaCreateInput = {
     action?: string | null
+    usuario?: number | null
     data?: Date | string | null
     modulo?: string | null
-    usuario_auditoriaTousuario?: usuarioCreateNestedOneWithoutAuditoriaInput
   }
 
   export type auditoriaUncheckedCreateInput = {
@@ -35150,9 +30450,9 @@ export namespace Prisma {
 
   export type auditoriaUpdateInput = {
     action?: NullableStringFieldUpdateOperationsInput | string | null
+    usuario?: NullableIntFieldUpdateOperationsInput | number | null
     data?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     modulo?: NullableStringFieldUpdateOperationsInput | string | null
-    usuario_auditoriaTousuario?: usuarioUpdateOneWithoutAuditoriaNestedInput
   }
 
   export type auditoriaUncheckedUpdateInput = {
@@ -35173,6 +30473,7 @@ export namespace Prisma {
 
   export type auditoriaUpdateManyMutationInput = {
     action?: NullableStringFieldUpdateOperationsInput | string | null
+    usuario?: NullableIntFieldUpdateOperationsInput | number | null
     data?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     modulo?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -35186,29 +30487,25 @@ export namespace Prisma {
   }
 
   export type borderoCreateInput = {
-    carteira_id: number
+    carteira: carteiraCreateNestedOneWithoutBorderoInput
     titulo?: tituloCreateNestedManyWithoutBorderoInput
-    titulos_x_usuario?: titulos_x_usuarioCreateNestedManyWithoutBordero_borderoTotitulos_x_usuarioInput
   }
 
   export type borderoUncheckedCreateInput = {
     id?: number
     carteira_id: number
     titulo?: tituloUncheckedCreateNestedManyWithoutBorderoInput
-    titulos_x_usuario?: titulos_x_usuarioUncheckedCreateNestedManyWithoutBordero_borderoTotitulos_x_usuarioInput
   }
 
   export type borderoUpdateInput = {
-    carteira_id?: IntFieldUpdateOperationsInput | number
+    carteira?: carteiraUpdateOneRequiredWithoutBorderoNestedInput
     titulo?: tituloUpdateManyWithoutBorderoNestedInput
-    titulos_x_usuario?: titulos_x_usuarioUpdateManyWithoutBordero_borderoTotitulos_x_usuarioNestedInput
   }
 
   export type borderoUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     carteira_id?: IntFieldUpdateOperationsInput | number
     titulo?: tituloUncheckedUpdateManyWithoutBorderoNestedInput
-    titulos_x_usuario?: titulos_x_usuarioUncheckedUpdateManyWithoutBordero_borderoTotitulos_x_usuarioNestedInput
   }
 
   export type borderoCreateManyInput = {
@@ -35217,7 +30514,7 @@ export namespace Prisma {
   }
 
   export type borderoUpdateManyMutationInput = {
-    carteira_id?: IntFieldUpdateOperationsInput | number
+
   }
 
   export type borderoUncheckedUpdateManyInput = {
@@ -35227,20 +30524,28 @@ export namespace Prisma {
 
   export type carteiraCreateInput = {
     fidic_fundo: fidic_fundoCreateNestedOneWithoutCarteiraInput
+    bordero?: borderoCreateNestedManyWithoutCarteiraInput
+    carteira_n_cedentes?: carteira_n_cedentesCreateNestedManyWithoutCarteiraInput
   }
 
   export type carteiraUncheckedCreateInput = {
     id?: number
     fiduc_fundo_id: number
+    bordero?: borderoUncheckedCreateNestedManyWithoutCarteiraInput
+    carteira_n_cedentes?: carteira_n_cedentesUncheckedCreateNestedManyWithoutCarteiraInput
   }
 
   export type carteiraUpdateInput = {
     fidic_fundo?: fidic_fundoUpdateOneRequiredWithoutCarteiraNestedInput
+    bordero?: borderoUpdateManyWithoutCarteiraNestedInput
+    carteira_n_cedentes?: carteira_n_cedentesUpdateManyWithoutCarteiraNestedInput
   }
 
   export type carteiraUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     fiduc_fundo_id?: IntFieldUpdateOperationsInput | number
+    bordero?: borderoUncheckedUpdateManyWithoutCarteiraNestedInput
+    carteira_n_cedentes?: carteira_n_cedentesUncheckedUpdateManyWithoutCarteiraNestedInput
   }
 
   export type carteiraCreateManyInput = {
@@ -35270,9 +30575,9 @@ export namespace Prisma {
     cidade?: string | null
     uf?: string | null
     telefone?: string | null
+    carteira_n_cedentes?: carteira_n_cedentesCreateNestedManyWithoutCedenteInput
     cedente_analise?: cedente_analiseCreateNestedManyWithoutCedente_cedenteTocedente_analiseInput
     cedente_n_sacados?: cedente_n_sacadosCreateNestedManyWithoutCedente_cedenteTocedente_n_sacadosInput
-    titulo_x_cedente?: titulo_x_cedenteCreateNestedManyWithoutCedente_cedenteTotitulo_x_cedenteInput
   }
 
   export type cedenteUncheckedCreateInput = {
@@ -35289,9 +30594,9 @@ export namespace Prisma {
     cidade?: string | null
     uf?: string | null
     telefone?: string | null
+    carteira_n_cedentes?: carteira_n_cedentesUncheckedCreateNestedManyWithoutCedenteInput
     cedente_analise?: cedente_analiseUncheckedCreateNestedManyWithoutCedente_cedenteTocedente_analiseInput
     cedente_n_sacados?: cedente_n_sacadosUncheckedCreateNestedManyWithoutCedente_cedenteTocedente_n_sacadosInput
-    titulo_x_cedente?: titulo_x_cedenteUncheckedCreateNestedManyWithoutCedente_cedenteTotitulo_x_cedenteInput
   }
 
   export type cedenteUpdateInput = {
@@ -35307,9 +30612,9 @@ export namespace Prisma {
     cidade?: NullableStringFieldUpdateOperationsInput | string | null
     uf?: NullableStringFieldUpdateOperationsInput | string | null
     telefone?: NullableStringFieldUpdateOperationsInput | string | null
+    carteira_n_cedentes?: carteira_n_cedentesUpdateManyWithoutCedenteNestedInput
     cedente_analise?: cedente_analiseUpdateManyWithoutCedente_cedenteTocedente_analiseNestedInput
     cedente_n_sacados?: cedente_n_sacadosUpdateManyWithoutCedente_cedenteTocedente_n_sacadosNestedInput
-    titulo_x_cedente?: titulo_x_cedenteUpdateManyWithoutCedente_cedenteTotitulo_x_cedenteNestedInput
   }
 
   export type cedenteUncheckedUpdateInput = {
@@ -35326,9 +30631,9 @@ export namespace Prisma {
     cidade?: NullableStringFieldUpdateOperationsInput | string | null
     uf?: NullableStringFieldUpdateOperationsInput | string | null
     telefone?: NullableStringFieldUpdateOperationsInput | string | null
+    carteira_n_cedentes?: carteira_n_cedentesUncheckedUpdateManyWithoutCedenteNestedInput
     cedente_analise?: cedente_analiseUncheckedUpdateManyWithoutCedente_cedenteTocedente_analiseNestedInput
     cedente_n_sacados?: cedente_n_sacadosUncheckedUpdateManyWithoutCedente_cedenteTocedente_n_sacadosNestedInput
-    titulo_x_cedente?: titulo_x_cedenteUncheckedUpdateManyWithoutCedente_cedenteTotitulo_x_cedenteNestedInput
   }
 
   export type cedenteCreateManyInput = {
@@ -35457,8 +30762,8 @@ export namespace Prisma {
   export type checagemCreateInput = {
     nf?: string | null
     status?: string | null
+    usuario?: number | null
     titulos?: string | null
-    usuario_checagemTousuario?: usuarioCreateNestedOneWithoutChecagemInput
   }
 
   export type checagemUncheckedCreateInput = {
@@ -35472,8 +30777,8 @@ export namespace Prisma {
   export type checagemUpdateInput = {
     nf?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    usuario?: NullableIntFieldUpdateOperationsInput | number | null
     titulos?: NullableStringFieldUpdateOperationsInput | string | null
-    usuario_checagemTousuario?: usuarioUpdateOneWithoutChecagemNestedInput
   }
 
   export type checagemUncheckedUpdateInput = {
@@ -35495,6 +30800,7 @@ export namespace Prisma {
   export type checagemUpdateManyMutationInput = {
     nf?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    usuario?: NullableIntFieldUpdateOperationsInput | number | null
     titulos?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -35574,37 +30880,9 @@ export namespace Prisma {
     cnpj?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type fidic_fundo_carteira_n_cedentesCreateInput = {
-
-  }
-
-  export type fidic_fundo_carteira_n_cedentesUncheckedCreateInput = {
-    id?: number
-  }
-
-  export type fidic_fundo_carteira_n_cedentesUpdateInput = {
-
-  }
-
-  export type fidic_fundo_carteira_n_cedentesUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type fidic_fundo_carteira_n_cedentesCreateManyInput = {
-    id?: number
-  }
-
-  export type fidic_fundo_carteira_n_cedentesUpdateManyMutationInput = {
-
-  }
-
-  export type fidic_fundo_carteira_n_cedentesUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-  }
-
   export type fidic_fundo_x_usuarioCreateInput = {
+    usuario?: number | null
     fidic_fundo: fidic_fundoCreateNestedOneWithoutFidic_fundo_x_usuarioInput
-    usuario_fidic_fundo_x_usuarioTousuario?: usuarioCreateNestedOneWithoutFidic_fundo_x_usuarioInput
   }
 
   export type fidic_fundo_x_usuarioUncheckedCreateInput = {
@@ -35614,8 +30892,8 @@ export namespace Prisma {
   }
 
   export type fidic_fundo_x_usuarioUpdateInput = {
+    usuario?: NullableIntFieldUpdateOperationsInput | number | null
     fidic_fundo?: fidic_fundoUpdateOneRequiredWithoutFidic_fundo_x_usuarioNestedInput
-    usuario_fidic_fundo_x_usuarioTousuario?: usuarioUpdateOneWithoutFidic_fundo_x_usuarioNestedInput
   }
 
   export type fidic_fundo_x_usuarioUncheckedUpdateInput = {
@@ -35631,7 +30909,7 @@ export namespace Prisma {
   }
 
   export type fidic_fundo_x_usuarioUpdateManyMutationInput = {
-
+    usuario?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type fidic_fundo_x_usuarioUncheckedUpdateManyInput = {
@@ -35641,23 +30919,34 @@ export namespace Prisma {
   }
 
   export type organogramaCreateInput = {
-
+    organograma_tipo: organograma_tipoCreateNestedOneWithoutOrganogramaInput
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoCreateNestedManyWithoutOrganogramaInput
+    organograma_x_usuario?: organograma_x_usuarioCreateNestedManyWithoutOrganogramaInput
   }
 
   export type organogramaUncheckedCreateInput = {
     id?: number
+    organograma_id: number
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoUncheckedCreateNestedManyWithoutOrganogramaInput
+    organograma_x_usuario?: organograma_x_usuarioUncheckedCreateNestedManyWithoutOrganogramaInput
   }
 
   export type organogramaUpdateInput = {
-
+    organograma_tipo?: organograma_tipoUpdateOneRequiredWithoutOrganogramaNestedInput
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoUpdateManyWithoutOrganogramaNestedInput
+    organograma_x_usuario?: organograma_x_usuarioUpdateManyWithoutOrganogramaNestedInput
   }
 
   export type organogramaUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    organograma_id?: IntFieldUpdateOperationsInput | number
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoUncheckedUpdateManyWithoutOrganogramaNestedInput
+    organograma_x_usuario?: organograma_x_usuarioUncheckedUpdateManyWithoutOrganogramaNestedInput
   }
 
   export type organogramaCreateManyInput = {
     id?: number
+    organograma_id: number
   }
 
   export type organogramaUpdateManyMutationInput = {
@@ -35666,24 +30955,29 @@ export namespace Prisma {
 
   export type organogramaUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    organograma_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type organograma_tipoCreateInput = {
     nome: string
+    organograma?: organogramaCreateNestedManyWithoutOrganograma_tipoInput
   }
 
   export type organograma_tipoUncheckedCreateInput = {
     id?: number
     nome: string
+    organograma?: organogramaUncheckedCreateNestedManyWithoutOrganograma_tipoInput
   }
 
   export type organograma_tipoUpdateInput = {
     nome?: StringFieldUpdateOperationsInput | string
+    organograma?: organogramaUpdateManyWithoutOrganograma_tipoNestedInput
   }
 
   export type organograma_tipoUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     nome?: StringFieldUpdateOperationsInput | string
+    organograma?: organogramaUncheckedUpdateManyWithoutOrganograma_tipoNestedInput
   }
 
   export type organograma_tipoCreateManyInput = {
@@ -35700,82 +30994,42 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
   }
 
-  export type organograma_x_regiaoCreateInput = {
-    organograma_id: number
-    regiao_id: number
-  }
-
-  export type organograma_x_regiaoUncheckedCreateInput = {
-    id?: number
-    organograma_id: number
-    regiao_id: number
-  }
-
-  export type organograma_x_regiaoUpdateInput = {
-    organograma_id?: IntFieldUpdateOperationsInput | number
-    regiao_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type organograma_x_regiaoUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    organograma_id?: IntFieldUpdateOperationsInput | number
-    regiao_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type organograma_x_regiaoCreateManyInput = {
-    id?: number
-    organograma_id: number
-    regiao_id: number
-  }
-
-  export type organograma_x_regiaoUpdateManyMutationInput = {
-    organograma_id?: IntFieldUpdateOperationsInput | number
-    regiao_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type organograma_x_regiaoUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    organograma_id?: IntFieldUpdateOperationsInput | number
-    regiao_id?: IntFieldUpdateOperationsInput | number
-  }
-
   export type organograma_x_regiao_atuacaoCreateInput = {
-    organograma_id: number
-    regiao_id: number
+    organograma: organogramaCreateNestedOneWithoutOrganograma_x_regiao_atuacaoInput
+    regiao_atuacao: regiao_atuacaoCreateNestedOneWithoutOrganograma_x_regiao_atuacaoInput
   }
 
   export type organograma_x_regiao_atuacaoUncheckedCreateInput = {
     id?: number
     organograma_id: number
-    regiao_id: number
+    regiao_atuacao_id: number
   }
 
   export type organograma_x_regiao_atuacaoUpdateInput = {
-    organograma_id?: IntFieldUpdateOperationsInput | number
-    regiao_id?: IntFieldUpdateOperationsInput | number
+    organograma?: organogramaUpdateOneRequiredWithoutOrganograma_x_regiao_atuacaoNestedInput
+    regiao_atuacao?: regiao_atuacaoUpdateOneRequiredWithoutOrganograma_x_regiao_atuacaoNestedInput
   }
 
   export type organograma_x_regiao_atuacaoUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     organograma_id?: IntFieldUpdateOperationsInput | number
-    regiao_id?: IntFieldUpdateOperationsInput | number
+    regiao_atuacao_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type organograma_x_regiao_atuacaoCreateManyInput = {
     id?: number
     organograma_id: number
-    regiao_id: number
+    regiao_atuacao_id: number
   }
 
   export type organograma_x_regiao_atuacaoUpdateManyMutationInput = {
-    organograma_id?: IntFieldUpdateOperationsInput | number
-    regiao_id?: IntFieldUpdateOperationsInput | number
+
   }
 
   export type organograma_x_regiao_atuacaoUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     organograma_id?: IntFieldUpdateOperationsInput | number
-    regiao_id?: IntFieldUpdateOperationsInput | number
+    regiao_atuacao_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type pessoaCreateInput = {
@@ -35851,25 +31105,38 @@ export namespace Prisma {
 
   export type plataformaCreateInput = {
     nome?: string | null
+    plataforma_papel_tipo: plataforma_papel_tipoCreateNestedOneWithoutPlataformaInput
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoCreateNestedManyWithoutPlataformaInput
+    plataforma_x_usuario?: plataforma_x_usuarioCreateNestedManyWithoutPlataformaInput
   }
 
   export type plataformaUncheckedCreateInput = {
     id?: number
     nome?: string | null
+    plataforma_papel_tipo_id: number
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoUncheckedCreateNestedManyWithoutPlataformaInput
+    plataforma_x_usuario?: plataforma_x_usuarioUncheckedCreateNestedManyWithoutPlataformaInput
   }
 
   export type plataformaUpdateInput = {
     nome?: NullableStringFieldUpdateOperationsInput | string | null
+    plataforma_papel_tipo?: plataforma_papel_tipoUpdateOneRequiredWithoutPlataformaNestedInput
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoUpdateManyWithoutPlataformaNestedInput
+    plataforma_x_usuario?: plataforma_x_usuarioUpdateManyWithoutPlataformaNestedInput
   }
 
   export type plataformaUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     nome?: NullableStringFieldUpdateOperationsInput | string | null
+    plataforma_papel_tipo_id?: IntFieldUpdateOperationsInput | number
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoUncheckedUpdateManyWithoutPlataformaNestedInput
+    plataforma_x_usuario?: plataforma_x_usuarioUncheckedUpdateManyWithoutPlataformaNestedInput
   }
 
   export type plataformaCreateManyInput = {
     id?: number
     nome?: string | null
+    plataforma_papel_tipo_id: number
   }
 
   export type plataformaUpdateManyMutationInput = {
@@ -35879,50 +31146,25 @@ export namespace Prisma {
   export type plataformaUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     nome?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type plataforma_n_borderosCreateInput = {
-
-  }
-
-  export type plataforma_n_borderosUncheckedCreateInput = {
-    id?: number
-  }
-
-  export type plataforma_n_borderosUpdateInput = {
-
-  }
-
-  export type plataforma_n_borderosUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type plataforma_n_borderosCreateManyInput = {
-    id?: number
-  }
-
-  export type plataforma_n_borderosUpdateManyMutationInput = {
-
-  }
-
-  export type plataforma_n_borderosUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    plataforma_papel_tipo_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type plataforma_papel_tipoCreateInput = {
-
+    plataforma?: plataformaCreateNestedManyWithoutPlataforma_papel_tipoInput
   }
 
   export type plataforma_papel_tipoUncheckedCreateInput = {
     id?: number
+    plataforma?: plataformaUncheckedCreateNestedManyWithoutPlataforma_papel_tipoInput
   }
 
   export type plataforma_papel_tipoUpdateInput = {
-
+    plataforma?: plataformaUpdateManyWithoutPlataforma_papel_tipoNestedInput
   }
 
   export type plataforma_papel_tipoUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    plataforma?: plataformaUncheckedUpdateManyWithoutPlataforma_papel_tipoNestedInput
   }
 
   export type plataforma_papel_tipoCreateManyInput = {
@@ -35937,52 +31179,32 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
   }
 
-  export type plataforma_papel_x_pessoaCreateInput = {
-
-  }
-
-  export type plataforma_papel_x_pessoaUncheckedCreateInput = {
-    id?: number
-  }
-
-  export type plataforma_papel_x_pessoaUpdateInput = {
-
-  }
-
-  export type plataforma_papel_x_pessoaUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type plataforma_papel_x_pessoaCreateManyInput = {
-    id?: number
-  }
-
-  export type plataforma_papel_x_pessoaUpdateManyMutationInput = {
-
-  }
-
-  export type plataforma_papel_x_pessoaUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-  }
-
   export type plataforma_x_regiao_atuacaoCreateInput = {
-
+    plataforma: plataformaCreateNestedOneWithoutPlataforma_x_regiao_atuacaoInput
+    regiao_atuacao: regiao_atuacaoCreateNestedOneWithoutPlataforma_x_regiao_atuacaoInput
   }
 
   export type plataforma_x_regiao_atuacaoUncheckedCreateInput = {
     id?: number
+    plataforma_id: number
+    regiao_atuacao_id: number
   }
 
   export type plataforma_x_regiao_atuacaoUpdateInput = {
-
+    plataforma?: plataformaUpdateOneRequiredWithoutPlataforma_x_regiao_atuacaoNestedInput
+    regiao_atuacao?: regiao_atuacaoUpdateOneRequiredWithoutPlataforma_x_regiao_atuacaoNestedInput
   }
 
   export type plataforma_x_regiao_atuacaoUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    plataforma_id?: IntFieldUpdateOperationsInput | number
+    regiao_atuacao_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type plataforma_x_regiao_atuacaoCreateManyInput = {
     id?: number
+    plataforma_id: number
+    regiao_atuacao_id: number
   }
 
   export type plataforma_x_regiao_atuacaoUpdateManyMutationInput = {
@@ -35991,29 +31213,44 @@ export namespace Prisma {
 
   export type plataforma_x_regiao_atuacaoUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    plataforma_id?: IntFieldUpdateOperationsInput | number
+    regiao_atuacao_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type regiao_atuacaoCreateInput = {
     nome: string
+    regiao_atuacao_tipo: regiao_atuacao_tipoCreateNestedOneWithoutRegiao_atuacaoInput
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoCreateNestedManyWithoutRegiao_atuacaoInput
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoCreateNestedManyWithoutRegiao_atuacaoInput
   }
 
   export type regiao_atuacaoUncheckedCreateInput = {
     id?: number
     nome: string
+    regiao_atuacao_tipo_id: number
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoUncheckedCreateNestedManyWithoutRegiao_atuacaoInput
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoUncheckedCreateNestedManyWithoutRegiao_atuacaoInput
   }
 
   export type regiao_atuacaoUpdateInput = {
     nome?: StringFieldUpdateOperationsInput | string
+    regiao_atuacao_tipo?: regiao_atuacao_tipoUpdateOneRequiredWithoutRegiao_atuacaoNestedInput
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoUpdateManyWithoutRegiao_atuacaoNestedInput
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoUpdateManyWithoutRegiao_atuacaoNestedInput
   }
 
   export type regiao_atuacaoUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     nome?: StringFieldUpdateOperationsInput | string
+    regiao_atuacao_tipo_id?: IntFieldUpdateOperationsInput | number
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoUncheckedUpdateManyWithoutRegiao_atuacaoNestedInput
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoUncheckedUpdateManyWithoutRegiao_atuacaoNestedInput
   }
 
   export type regiao_atuacaoCreateManyInput = {
     id?: number
     nome: string
+    regiao_atuacao_tipo_id: number
   }
 
   export type regiao_atuacaoUpdateManyMutationInput = {
@@ -36023,24 +31260,29 @@ export namespace Prisma {
   export type regiao_atuacaoUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     nome?: StringFieldUpdateOperationsInput | string
+    regiao_atuacao_tipo_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type regiao_atuacao_tipoCreateInput = {
     nome: string
+    regiao_atuacao?: regiao_atuacaoCreateNestedManyWithoutRegiao_atuacao_tipoInput
   }
 
   export type regiao_atuacao_tipoUncheckedCreateInput = {
     id?: number
     nome: string
+    regiao_atuacao?: regiao_atuacaoUncheckedCreateNestedManyWithoutRegiao_atuacao_tipoInput
   }
 
   export type regiao_atuacao_tipoUpdateInput = {
     nome?: StringFieldUpdateOperationsInput | string
+    regiao_atuacao?: regiao_atuacaoUpdateManyWithoutRegiao_atuacao_tipoNestedInput
   }
 
   export type regiao_atuacao_tipoUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     nome?: StringFieldUpdateOperationsInput | string
+    regiao_atuacao?: regiao_atuacaoUncheckedUpdateManyWithoutRegiao_atuacao_tipoNestedInput
   }
 
   export type regiao_atuacao_tipoCreateManyInput = {
@@ -36130,6 +31372,7 @@ export namespace Prisma {
     parcela?: string | null
     titulo_tipo: titulo_tipoCreateNestedOneWithoutTituloInput
     bordero: borderoCreateNestedOneWithoutTituloInput
+    titulo_itens?: titulo_itensCreateNestedManyWithoutTituloInput
   }
 
   export type tituloUncheckedCreateInput = {
@@ -36142,6 +31385,7 @@ export namespace Prisma {
     numero?: string | null
     emissao?: Date | string | null
     parcela?: string | null
+    titulo_itens?: titulo_itensUncheckedCreateNestedManyWithoutTituloInput
   }
 
   export type tituloUpdateInput = {
@@ -36153,6 +31397,7 @@ export namespace Prisma {
     parcela?: NullableStringFieldUpdateOperationsInput | string | null
     titulo_tipo?: titulo_tipoUpdateOneRequiredWithoutTituloNestedInput
     bordero?: borderoUpdateOneRequiredWithoutTituloNestedInput
+    titulo_itens?: titulo_itensUpdateManyWithoutTituloNestedInput
   }
 
   export type tituloUncheckedUpdateInput = {
@@ -36165,6 +31410,7 @@ export namespace Prisma {
     numero?: NullableStringFieldUpdateOperationsInput | string | null
     emissao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     parcela?: NullableStringFieldUpdateOperationsInput | string | null
+    titulo_itens?: titulo_itensUncheckedUpdateManyWithoutTituloNestedInput
   }
 
   export type tituloCreateManyInput = {
@@ -36236,138 +31482,6 @@ export namespace Prisma {
     nome?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type titulo_x_cedenteCreateInput = {
-    cedente_cedenteTotitulo_x_cedente: cedenteCreateNestedOneWithoutTitulo_x_cedenteInput
-  }
-
-  export type titulo_x_cedenteUncheckedCreateInput = {
-    id?: number
-    cedente: number
-  }
-
-  export type titulo_x_cedenteUpdateInput = {
-    cedente_cedenteTotitulo_x_cedente?: cedenteUpdateOneRequiredWithoutTitulo_x_cedenteNestedInput
-  }
-
-  export type titulo_x_cedenteUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    cedente?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type titulo_x_cedenteCreateManyInput = {
-    id?: number
-    cedente: number
-  }
-
-  export type titulo_x_cedenteUpdateManyMutationInput = {
-
-  }
-
-  export type titulo_x_cedenteUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    cedente?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type titulo_x_empresaCreateInput = {
-
-  }
-
-  export type titulo_x_empresaUncheckedCreateInput = {
-    id?: number
-  }
-
-  export type titulo_x_empresaUpdateInput = {
-
-  }
-
-  export type titulo_x_empresaUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type titulo_x_empresaCreateManyInput = {
-    id?: number
-  }
-
-  export type titulo_x_empresaUpdateManyMutationInput = {
-
-  }
-
-  export type titulo_x_empresaUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type titulo_x_plataformaCreateInput = {
-
-  }
-
-  export type titulo_x_plataformaUncheckedCreateInput = {
-    id?: number
-  }
-
-  export type titulo_x_plataformaUpdateInput = {
-
-  }
-
-  export type titulo_x_plataformaUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type titulo_x_plataformaCreateManyInput = {
-    id?: number
-  }
-
-  export type titulo_x_plataformaUpdateManyMutationInput = {
-
-  }
-
-  export type titulo_x_plataformaUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type titulos_x_usuarioCreateInput = {
-    status?: string | null
-    bordero_borderoTotitulos_x_usuario?: borderoCreateNestedOneWithoutTitulos_x_usuarioInput
-    usuario_titulos_x_usuarioTousuario?: usuarioCreateNestedOneWithoutTitulos_x_usuarioInput
-  }
-
-  export type titulos_x_usuarioUncheckedCreateInput = {
-    id?: number
-    usuario?: number | null
-    bordero?: number | null
-    status?: string | null
-  }
-
-  export type titulos_x_usuarioUpdateInput = {
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    bordero_borderoTotitulos_x_usuario?: borderoUpdateOneWithoutTitulos_x_usuarioNestedInput
-    usuario_titulos_x_usuarioTousuario?: usuarioUpdateOneWithoutTitulos_x_usuarioNestedInput
-  }
-
-  export type titulos_x_usuarioUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    usuario?: NullableIntFieldUpdateOperationsInput | number | null
-    bordero?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type titulos_x_usuarioCreateManyInput = {
-    id?: number
-    usuario?: number | null
-    bordero?: number | null
-    status?: string | null
-  }
-
-  export type titulos_x_usuarioUpdateManyMutationInput = {
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type titulos_x_usuarioUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    usuario?: NullableIntFieldUpdateOperationsInput | number | null
-    bordero?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
   export type usuarioCreateInput = {
     email: string
     senha: string
@@ -36379,12 +31493,7 @@ export namespace Prisma {
     codigo_data_expiracao?: Date | string | null
     created_at?: Date | string
     updated_at?: Date | string | null
-    auditoria?: auditoriaCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
-    checagem?: checagemCreateNestedManyWithoutUsuario_checagemTousuarioInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
-    titulos_x_usuario?: titulos_x_usuarioCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput
     pessoa: pessoaCreateNestedOneWithoutUsuarioInput
-    usuario_x_perfil?: usuario_x_perfilCreateNestedManyWithoutUsuarioInput
   }
 
   export type usuarioUncheckedCreateInput = {
@@ -36400,11 +31509,6 @@ export namespace Prisma {
     codigo_data_expiracao?: Date | string | null
     created_at?: Date | string
     updated_at?: Date | string | null
-    auditoria?: auditoriaUncheckedCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
-    checagem?: checagemUncheckedCreateNestedManyWithoutUsuario_checagemTousuarioInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
-    titulos_x_usuario?: titulos_x_usuarioUncheckedCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput
-    usuario_x_perfil?: usuario_x_perfilUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type usuarioUpdateInput = {
@@ -36418,12 +31522,7 @@ export namespace Prisma {
     codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    auditoria?: auditoriaUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
-    checagem?: checagemUpdateManyWithoutUsuario_checagemTousuarioNestedInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
-    titulos_x_usuario?: titulos_x_usuarioUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
     pessoa?: pessoaUpdateOneRequiredWithoutUsuarioNestedInput
-    usuario_x_perfil?: usuario_x_perfilUpdateManyWithoutUsuarioNestedInput
   }
 
   export type usuarioUncheckedUpdateInput = {
@@ -36439,11 +31538,6 @@ export namespace Prisma {
     codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    auditoria?: auditoriaUncheckedUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
-    checagem?: checagemUncheckedUpdateManyWithoutUsuario_checagemTousuarioNestedInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
-    titulos_x_usuario?: titulos_x_usuarioUncheckedUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
-    usuario_x_perfil?: usuario_x_perfilUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type usuarioCreateManyInput = {
@@ -36489,82 +31583,26 @@ export namespace Prisma {
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type usuario__pessoaCreateInput = {
-
-  }
-
-  export type usuario__pessoaUncheckedCreateInput = {
-    id?: number
-  }
-
-  export type usuario__pessoaUpdateInput = {
-
-  }
-
-  export type usuario__pessoaUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type usuario__pessoaCreateManyInput = {
-    id?: number
-  }
-
-  export type usuario__pessoaUpdateManyMutationInput = {
-
-  }
-
-  export type usuario__pessoaUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type usuario_n_borderosCreateInput = {
-
-  }
-
-  export type usuario_n_borderosUncheckedCreateInput = {
-    id?: number
-  }
-
-  export type usuario_n_borderosUpdateInput = {
-
-  }
-
-  export type usuario_n_borderosUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type usuario_n_borderosCreateManyInput = {
-    id?: number
-  }
-
-  export type usuario_n_borderosUpdateManyMutationInput = {
-
-  }
-
-  export type usuario_n_borderosUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-  }
-
   export type usuario_perfil_tipoCreateInput = {
     nome: string
-    usuario_x_perfil?: usuario_x_perfilCreateNestedManyWithoutUsuario_perfil_tipoInput
+    usuario_perfil?: usuario_perfilCreateNestedManyWithoutUsuario_perfil_tipoInput
   }
 
   export type usuario_perfil_tipoUncheckedCreateInput = {
     id?: number
     nome: string
-    usuario_x_perfil?: usuario_x_perfilUncheckedCreateNestedManyWithoutUsuario_perfil_tipoInput
+    usuario_perfil?: usuario_perfilUncheckedCreateNestedManyWithoutUsuario_perfil_tipoInput
   }
 
   export type usuario_perfil_tipoUpdateInput = {
     nome?: StringFieldUpdateOperationsInput | string
-    usuario_x_perfil?: usuario_x_perfilUpdateManyWithoutUsuario_perfil_tipoNestedInput
+    usuario_perfil?: usuario_perfilUpdateManyWithoutUsuario_perfil_tipoNestedInput
   }
 
   export type usuario_perfil_tipoUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     nome?: StringFieldUpdateOperationsInput | string
-    usuario_x_perfil?: usuario_x_perfilUncheckedUpdateManyWithoutUsuario_perfil_tipoNestedInput
+    usuario_perfil?: usuario_perfilUncheckedUpdateManyWithoutUsuario_perfil_tipoNestedInput
   }
 
   export type usuario_perfil_tipoCreateManyInput = {
@@ -36581,48 +31619,195 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
   }
 
-  export type usuario_x_perfilCreateInput = {
-    senha: string
-    usuario: usuarioCreateNestedOneWithoutUsuario_x_perfilInput
-    usuario_perfil_tipo: usuario_perfil_tipoCreateNestedOneWithoutUsuario_x_perfilInput
+  export type carteira_n_cedentesCreateInput = {
+    carteira: carteiraCreateNestedOneWithoutCarteira_n_cedentesInput
+    cedente: cedenteCreateNestedOneWithoutCarteira_n_cedentesInput
   }
 
-  export type usuario_x_perfilUncheckedCreateInput = {
+  export type carteira_n_cedentesUncheckedCreateInput = {
+    id?: number
+    carteira_id: number
+    cedente_id: number
+  }
+
+  export type carteira_n_cedentesUpdateInput = {
+    carteira?: carteiraUpdateOneRequiredWithoutCarteira_n_cedentesNestedInput
+    cedente?: cedenteUpdateOneRequiredWithoutCarteira_n_cedentesNestedInput
+  }
+
+  export type carteira_n_cedentesUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    carteira_id?: IntFieldUpdateOperationsInput | number
+    cedente_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type carteira_n_cedentesCreateManyInput = {
+    id?: number
+    carteira_id: number
+    cedente_id: number
+  }
+
+  export type carteira_n_cedentesUpdateManyMutationInput = {
+
+  }
+
+  export type carteira_n_cedentesUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    carteira_id?: IntFieldUpdateOperationsInput | number
+    cedente_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type organograma_x_usuarioCreateInput = {
+    usuario_id: number
+    organograma: organogramaCreateNestedOneWithoutOrganograma_x_usuarioInput
+  }
+
+  export type organograma_x_usuarioUncheckedCreateInput = {
+    id?: number
+    organograma_id: number
+    usuario_id: number
+  }
+
+  export type organograma_x_usuarioUpdateInput = {
+    usuario_id?: IntFieldUpdateOperationsInput | number
+    organograma?: organogramaUpdateOneRequiredWithoutOrganograma_x_usuarioNestedInput
+  }
+
+  export type organograma_x_usuarioUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    organograma_id?: IntFieldUpdateOperationsInput | number
+    usuario_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type organograma_x_usuarioCreateManyInput = {
+    id?: number
+    organograma_id: number
+    usuario_id: number
+  }
+
+  export type organograma_x_usuarioUpdateManyMutationInput = {
+    usuario_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type organograma_x_usuarioUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    organograma_id?: IntFieldUpdateOperationsInput | number
+    usuario_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type plataforma_x_usuarioCreateInput = {
+    usuario_id: number
+    plataforma: plataformaCreateNestedOneWithoutPlataforma_x_usuarioInput
+  }
+
+  export type plataforma_x_usuarioUncheckedCreateInput = {
+    id?: number
+    plataforma_id: number
+    usuario_id: number
+  }
+
+  export type plataforma_x_usuarioUpdateInput = {
+    usuario_id?: IntFieldUpdateOperationsInput | number
+    plataforma?: plataformaUpdateOneRequiredWithoutPlataforma_x_usuarioNestedInput
+  }
+
+  export type plataforma_x_usuarioUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    plataforma_id?: IntFieldUpdateOperationsInput | number
+    usuario_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type plataforma_x_usuarioCreateManyInput = {
+    id?: number
+    plataforma_id: number
+    usuario_id: number
+  }
+
+  export type plataforma_x_usuarioUpdateManyMutationInput = {
+    usuario_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type plataforma_x_usuarioUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    plataforma_id?: IntFieldUpdateOperationsInput | number
+    usuario_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type titulo_itensCreateInput = {
+    titulo: tituloCreateNestedOneWithoutTitulo_itensInput
+  }
+
+  export type titulo_itensUncheckedCreateInput = {
+    id?: number
+    titulo_id: number
+  }
+
+  export type titulo_itensUpdateInput = {
+    titulo?: tituloUpdateOneRequiredWithoutTitulo_itensNestedInput
+  }
+
+  export type titulo_itensUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    titulo_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type titulo_itensCreateManyInput = {
+    id?: number
+    titulo_id: number
+  }
+
+  export type titulo_itensUpdateManyMutationInput = {
+
+  }
+
+  export type titulo_itensUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    titulo_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type usuario_perfilCreateInput = {
+    senha: string
+    usuario_id: number
+    usuario_perfil_tipo: usuario_perfil_tipoCreateNestedOneWithoutUsuario_perfilInput
+  }
+
+  export type usuario_perfilUncheckedCreateInput = {
     id?: number
     senha: string
     usuario_id: number
-    usuario_perfil_id: number
+    usuario_perfil_tipo_id: number
   }
 
-  export type usuario_x_perfilUpdateInput = {
+  export type usuario_perfilUpdateInput = {
     senha?: StringFieldUpdateOperationsInput | string
-    usuario?: usuarioUpdateOneRequiredWithoutUsuario_x_perfilNestedInput
-    usuario_perfil_tipo?: usuario_perfil_tipoUpdateOneRequiredWithoutUsuario_x_perfilNestedInput
+    usuario_id?: IntFieldUpdateOperationsInput | number
+    usuario_perfil_tipo?: usuario_perfil_tipoUpdateOneRequiredWithoutUsuario_perfilNestedInput
   }
 
-  export type usuario_x_perfilUncheckedUpdateInput = {
+  export type usuario_perfilUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
     usuario_id?: IntFieldUpdateOperationsInput | number
-    usuario_perfil_id?: IntFieldUpdateOperationsInput | number
+    usuario_perfil_tipo_id?: IntFieldUpdateOperationsInput | number
   }
 
-  export type usuario_x_perfilCreateManyInput = {
+  export type usuario_perfilCreateManyInput = {
     id?: number
     senha: string
     usuario_id: number
-    usuario_perfil_id: number
+    usuario_perfil_tipo_id: number
   }
 
-  export type usuario_x_perfilUpdateManyMutationInput = {
+  export type usuario_perfilUpdateManyMutationInput = {
     senha?: StringFieldUpdateOperationsInput | string
+    usuario_id?: IntFieldUpdateOperationsInput | number
   }
 
-  export type usuario_x_perfilUncheckedUpdateManyInput = {
+  export type usuario_perfilUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
     usuario_id?: IntFieldUpdateOperationsInput | number
-    usuario_perfil_id?: IntFieldUpdateOperationsInput | number
+    usuario_perfil_tipo_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type StringNullableFilter = {
@@ -36670,11 +31855,6 @@ export namespace Prisma {
     gt?: number
     gte?: number
     not?: NestedIntFilter | number
-  }
-
-  export type UsuarioRelationFilter = {
-    is?: usuarioWhereInput | null
-    isNot?: usuarioWhereInput | null
   }
 
   export type auditoriaCountOrderByAggregateInput = {
@@ -36774,23 +31954,18 @@ export namespace Prisma {
     _max?: NestedIntFilter
   }
 
+  export type CarteiraRelationFilter = {
+    is?: carteiraWhereInput
+    isNot?: carteiraWhereInput
+  }
+
   export type TituloListRelationFilter = {
     every?: tituloWhereInput
     some?: tituloWhereInput
     none?: tituloWhereInput
   }
 
-  export type Titulos_x_usuarioListRelationFilter = {
-    every?: titulos_x_usuarioWhereInput
-    some?: titulos_x_usuarioWhereInput
-    none?: titulos_x_usuarioWhereInput
-  }
-
   export type tituloOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type titulos_x_usuarioOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -36822,6 +31997,26 @@ export namespace Prisma {
   export type Fidic_fundoRelationFilter = {
     is?: fidic_fundoWhereInput
     isNot?: fidic_fundoWhereInput
+  }
+
+  export type BorderoListRelationFilter = {
+    every?: borderoWhereInput
+    some?: borderoWhereInput
+    none?: borderoWhereInput
+  }
+
+  export type Carteira_n_cedentesListRelationFilter = {
+    every?: carteira_n_cedentesWhereInput
+    some?: carteira_n_cedentesWhereInput
+    none?: carteira_n_cedentesWhereInput
+  }
+
+  export type borderoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type carteira_n_cedentesOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type carteiraCountOrderByAggregateInput = {
@@ -36875,21 +32070,11 @@ export namespace Prisma {
     none?: cedente_n_sacadosWhereInput
   }
 
-  export type Titulo_x_cedenteListRelationFilter = {
-    every?: titulo_x_cedenteWhereInput
-    some?: titulo_x_cedenteWhereInput
-    none?: titulo_x_cedenteWhereInput
-  }
-
   export type cedente_analiseOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type cedente_n_sacadosOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type titulo_x_cedenteOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -37127,26 +32312,6 @@ export namespace Prisma {
     pessoa_id?: SortOrder
   }
 
-  export type fidic_fundo_carteira_n_cedentesCountOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type fidic_fundo_carteira_n_cedentesAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type fidic_fundo_carteira_n_cedentesMaxOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type fidic_fundo_carteira_n_cedentesMinOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type fidic_fundo_carteira_n_cedentesSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
   export type fidic_fundo_x_usuarioCountOrderByAggregateInput = {
     id?: SortOrder
     usuario?: SortOrder
@@ -37177,24 +32342,64 @@ export namespace Prisma {
     fidic?: SortOrder
   }
 
+  export type Organograma_tipoRelationFilter = {
+    is?: organograma_tipoWhereInput
+    isNot?: organograma_tipoWhereInput
+  }
+
+  export type Organograma_x_regiao_atuacaoListRelationFilter = {
+    every?: organograma_x_regiao_atuacaoWhereInput
+    some?: organograma_x_regiao_atuacaoWhereInput
+    none?: organograma_x_regiao_atuacaoWhereInput
+  }
+
+  export type Organograma_x_usuarioListRelationFilter = {
+    every?: organograma_x_usuarioWhereInput
+    some?: organograma_x_usuarioWhereInput
+    none?: organograma_x_usuarioWhereInput
+  }
+
+  export type organograma_x_regiao_atuacaoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type organograma_x_usuarioOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type organogramaCountOrderByAggregateInput = {
     id?: SortOrder
+    organograma_id?: SortOrder
   }
 
   export type organogramaAvgOrderByAggregateInput = {
     id?: SortOrder
+    organograma_id?: SortOrder
   }
 
   export type organogramaMaxOrderByAggregateInput = {
     id?: SortOrder
+    organograma_id?: SortOrder
   }
 
   export type organogramaMinOrderByAggregateInput = {
     id?: SortOrder
+    organograma_id?: SortOrder
   }
 
   export type organogramaSumOrderByAggregateInput = {
     id?: SortOrder
+    organograma_id?: SortOrder
+  }
+
+  export type OrganogramaListRelationFilter = {
+    every?: organogramaWhereInput
+    some?: organogramaWhereInput
+    none?: organogramaWhereInput
+  }
+
+  export type organogramaOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type organograma_tipoCountOrderByAggregateInput = {
@@ -37220,64 +32425,44 @@ export namespace Prisma {
     id?: SortOrder
   }
 
-  export type organograma_x_regiaoCountOrderByAggregateInput = {
-    id?: SortOrder
-    organograma_id?: SortOrder
-    regiao_id?: SortOrder
+  export type OrganogramaRelationFilter = {
+    is?: organogramaWhereInput
+    isNot?: organogramaWhereInput
   }
 
-  export type organograma_x_regiaoAvgOrderByAggregateInput = {
-    id?: SortOrder
-    organograma_id?: SortOrder
-    regiao_id?: SortOrder
-  }
-
-  export type organograma_x_regiaoMaxOrderByAggregateInput = {
-    id?: SortOrder
-    organograma_id?: SortOrder
-    regiao_id?: SortOrder
-  }
-
-  export type organograma_x_regiaoMinOrderByAggregateInput = {
-    id?: SortOrder
-    organograma_id?: SortOrder
-    regiao_id?: SortOrder
-  }
-
-  export type organograma_x_regiaoSumOrderByAggregateInput = {
-    id?: SortOrder
-    organograma_id?: SortOrder
-    regiao_id?: SortOrder
+  export type Regiao_atuacaoRelationFilter = {
+    is?: regiao_atuacaoWhereInput
+    isNot?: regiao_atuacaoWhereInput
   }
 
   export type organograma_x_regiao_atuacaoCountOrderByAggregateInput = {
     id?: SortOrder
     organograma_id?: SortOrder
-    regiao_id?: SortOrder
+    regiao_atuacao_id?: SortOrder
   }
 
   export type organograma_x_regiao_atuacaoAvgOrderByAggregateInput = {
     id?: SortOrder
     organograma_id?: SortOrder
-    regiao_id?: SortOrder
+    regiao_atuacao_id?: SortOrder
   }
 
   export type organograma_x_regiao_atuacaoMaxOrderByAggregateInput = {
     id?: SortOrder
     organograma_id?: SortOrder
-    regiao_id?: SortOrder
+    regiao_atuacao_id?: SortOrder
   }
 
   export type organograma_x_regiao_atuacaoMinOrderByAggregateInput = {
     id?: SortOrder
     organograma_id?: SortOrder
-    regiao_id?: SortOrder
+    regiao_atuacao_id?: SortOrder
   }
 
   export type organograma_x_regiao_atuacaoSumOrderByAggregateInput = {
     id?: SortOrder
     organograma_id?: SortOrder
-    regiao_id?: SortOrder
+    regiao_atuacao_id?: SortOrder
   }
 
   export type UsuarioListRelationFilter = {
@@ -37328,47 +32513,67 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type Plataforma_papel_tipoRelationFilter = {
+    is?: plataforma_papel_tipoWhereInput
+    isNot?: plataforma_papel_tipoWhereInput
+  }
+
+  export type Plataforma_x_regiao_atuacaoListRelationFilter = {
+    every?: plataforma_x_regiao_atuacaoWhereInput
+    some?: plataforma_x_regiao_atuacaoWhereInput
+    none?: plataforma_x_regiao_atuacaoWhereInput
+  }
+
+  export type Plataforma_x_usuarioListRelationFilter = {
+    every?: plataforma_x_usuarioWhereInput
+    some?: plataforma_x_usuarioWhereInput
+    none?: plataforma_x_usuarioWhereInput
+  }
+
+  export type plataforma_x_regiao_atuacaoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type plataforma_x_usuarioOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type plataformaCountOrderByAggregateInput = {
     id?: SortOrder
     nome?: SortOrder
+    plataforma_papel_tipo_id?: SortOrder
   }
 
   export type plataformaAvgOrderByAggregateInput = {
     id?: SortOrder
+    plataforma_papel_tipo_id?: SortOrder
   }
 
   export type plataformaMaxOrderByAggregateInput = {
     id?: SortOrder
     nome?: SortOrder
+    plataforma_papel_tipo_id?: SortOrder
   }
 
   export type plataformaMinOrderByAggregateInput = {
     id?: SortOrder
     nome?: SortOrder
+    plataforma_papel_tipo_id?: SortOrder
   }
 
   export type plataformaSumOrderByAggregateInput = {
     id?: SortOrder
+    plataforma_papel_tipo_id?: SortOrder
   }
 
-  export type plataforma_n_borderosCountOrderByAggregateInput = {
-    id?: SortOrder
+  export type PlataformaListRelationFilter = {
+    every?: plataformaWhereInput
+    some?: plataformaWhereInput
+    none?: plataformaWhereInput
   }
 
-  export type plataforma_n_borderosAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type plataforma_n_borderosMaxOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type plataforma_n_borderosMinOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type plataforma_n_borderosSumOrderByAggregateInput = {
-    id?: SortOrder
+  export type plataformaOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type plataforma_papel_tipoCountOrderByAggregateInput = {
@@ -37391,67 +32596,82 @@ export namespace Prisma {
     id?: SortOrder
   }
 
-  export type plataforma_papel_x_pessoaCountOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type plataforma_papel_x_pessoaAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type plataforma_papel_x_pessoaMaxOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type plataforma_papel_x_pessoaMinOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type plataforma_papel_x_pessoaSumOrderByAggregateInput = {
-    id?: SortOrder
+  export type PlataformaRelationFilter = {
+    is?: plataformaWhereInput
+    isNot?: plataformaWhereInput
   }
 
   export type plataforma_x_regiao_atuacaoCountOrderByAggregateInput = {
     id?: SortOrder
+    plataforma_id?: SortOrder
+    regiao_atuacao_id?: SortOrder
   }
 
   export type plataforma_x_regiao_atuacaoAvgOrderByAggregateInput = {
     id?: SortOrder
+    plataforma_id?: SortOrder
+    regiao_atuacao_id?: SortOrder
   }
 
   export type plataforma_x_regiao_atuacaoMaxOrderByAggregateInput = {
     id?: SortOrder
+    plataforma_id?: SortOrder
+    regiao_atuacao_id?: SortOrder
   }
 
   export type plataforma_x_regiao_atuacaoMinOrderByAggregateInput = {
     id?: SortOrder
+    plataforma_id?: SortOrder
+    regiao_atuacao_id?: SortOrder
   }
 
   export type plataforma_x_regiao_atuacaoSumOrderByAggregateInput = {
     id?: SortOrder
+    plataforma_id?: SortOrder
+    regiao_atuacao_id?: SortOrder
+  }
+
+  export type Regiao_atuacao_tipoRelationFilter = {
+    is?: regiao_atuacao_tipoWhereInput
+    isNot?: regiao_atuacao_tipoWhereInput
   }
 
   export type regiao_atuacaoCountOrderByAggregateInput = {
     id?: SortOrder
     nome?: SortOrder
+    regiao_atuacao_tipo_id?: SortOrder
   }
 
   export type regiao_atuacaoAvgOrderByAggregateInput = {
     id?: SortOrder
+    regiao_atuacao_tipo_id?: SortOrder
   }
 
   export type regiao_atuacaoMaxOrderByAggregateInput = {
     id?: SortOrder
     nome?: SortOrder
+    regiao_atuacao_tipo_id?: SortOrder
   }
 
   export type regiao_atuacaoMinOrderByAggregateInput = {
     id?: SortOrder
     nome?: SortOrder
+    regiao_atuacao_tipo_id?: SortOrder
   }
 
   export type regiao_atuacaoSumOrderByAggregateInput = {
     id?: SortOrder
+    regiao_atuacao_tipo_id?: SortOrder
+  }
+
+  export type Regiao_atuacaoListRelationFilter = {
+    every?: regiao_atuacaoWhereInput
+    some?: regiao_atuacaoWhereInput
+    none?: regiao_atuacaoWhereInput
+  }
+
+  export type regiao_atuacaoOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type regiao_atuacao_tipoCountOrderByAggregateInput = {
@@ -37531,8 +32751,18 @@ export namespace Prisma {
   }
 
   export type BorderoRelationFilter = {
-    is?: borderoWhereInput | null
-    isNot?: borderoWhereInput | null
+    is?: borderoWhereInput
+    isNot?: borderoWhereInput
+  }
+
+  export type Titulo_itensListRelationFilter = {
+    every?: titulo_itensWhereInput
+    some?: titulo_itensWhereInput
+    none?: titulo_itensWhereInput
+  }
+
+  export type titulo_itensOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type tituloCountOrderByAggregateInput = {
@@ -37624,104 +32854,6 @@ export namespace Prisma {
     id?: SortOrder
   }
 
-  export type titulo_x_cedenteCountOrderByAggregateInput = {
-    id?: SortOrder
-    cedente?: SortOrder
-  }
-
-  export type titulo_x_cedenteAvgOrderByAggregateInput = {
-    id?: SortOrder
-    cedente?: SortOrder
-  }
-
-  export type titulo_x_cedenteMaxOrderByAggregateInput = {
-    id?: SortOrder
-    cedente?: SortOrder
-  }
-
-  export type titulo_x_cedenteMinOrderByAggregateInput = {
-    id?: SortOrder
-    cedente?: SortOrder
-  }
-
-  export type titulo_x_cedenteSumOrderByAggregateInput = {
-    id?: SortOrder
-    cedente?: SortOrder
-  }
-
-  export type titulo_x_empresaCountOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type titulo_x_empresaAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type titulo_x_empresaMaxOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type titulo_x_empresaMinOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type titulo_x_empresaSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type titulo_x_plataformaCountOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type titulo_x_plataformaAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type titulo_x_plataformaMaxOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type titulo_x_plataformaMinOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type titulo_x_plataformaSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type titulos_x_usuarioCountOrderByAggregateInput = {
-    id?: SortOrder
-    usuario?: SortOrder
-    bordero?: SortOrder
-    status?: SortOrder
-  }
-
-  export type titulos_x_usuarioAvgOrderByAggregateInput = {
-    id?: SortOrder
-    usuario?: SortOrder
-    bordero?: SortOrder
-  }
-
-  export type titulos_x_usuarioMaxOrderByAggregateInput = {
-    id?: SortOrder
-    usuario?: SortOrder
-    bordero?: SortOrder
-    status?: SortOrder
-  }
-
-  export type titulos_x_usuarioMinOrderByAggregateInput = {
-    id?: SortOrder
-    usuario?: SortOrder
-    bordero?: SortOrder
-    status?: SortOrder
-  }
-
-  export type titulos_x_usuarioSumOrderByAggregateInput = {
-    id?: SortOrder
-    usuario?: SortOrder
-    bordero?: SortOrder
-  }
-
   export type BoolNullableFilter = {
     equals?: boolean | null
     not?: NestedBoolNullableFilter | boolean | null
@@ -37738,39 +32870,9 @@ export namespace Prisma {
     not?: NestedDateTimeFilter | Date | string
   }
 
-  export type AuditoriaListRelationFilter = {
-    every?: auditoriaWhereInput
-    some?: auditoriaWhereInput
-    none?: auditoriaWhereInput
-  }
-
-  export type ChecagemListRelationFilter = {
-    every?: checagemWhereInput
-    some?: checagemWhereInput
-    none?: checagemWhereInput
-  }
-
   export type PessoaRelationFilter = {
     is?: pessoaWhereInput
     isNot?: pessoaWhereInput
-  }
-
-  export type Usuario_x_perfilListRelationFilter = {
-    every?: usuario_x_perfilWhereInput
-    some?: usuario_x_perfilWhereInput
-    none?: usuario_x_perfilWhereInput
-  }
-
-  export type auditoriaOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type checagemOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type usuario_x_perfilOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type usuarioCountOrderByAggregateInput = {
@@ -37850,44 +32952,14 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter
   }
 
-  export type usuario__pessoaCountOrderByAggregateInput = {
-    id?: SortOrder
+  export type Usuario_perfilListRelationFilter = {
+    every?: usuario_perfilWhereInput
+    some?: usuario_perfilWhereInput
+    none?: usuario_perfilWhereInput
   }
 
-  export type usuario__pessoaAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type usuario__pessoaMaxOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type usuario__pessoaMinOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type usuario__pessoaSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type usuario_n_borderosCountOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type usuario_n_borderosAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type usuario_n_borderosMaxOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type usuario_n_borderosMinOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type usuario_n_borderosSumOrderByAggregateInput = {
-    id?: SortOrder
+  export type usuario_perfilOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type usuario_perfil_tipoCountOrderByAggregateInput = {
@@ -37913,66 +32985,166 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type carteira_n_cedentesCountOrderByAggregateInput = {
+    id?: SortOrder
+    carteira_id?: SortOrder
+    cedente_id?: SortOrder
+  }
+
+  export type carteira_n_cedentesAvgOrderByAggregateInput = {
+    id?: SortOrder
+    carteira_id?: SortOrder
+    cedente_id?: SortOrder
+  }
+
+  export type carteira_n_cedentesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    carteira_id?: SortOrder
+    cedente_id?: SortOrder
+  }
+
+  export type carteira_n_cedentesMinOrderByAggregateInput = {
+    id?: SortOrder
+    carteira_id?: SortOrder
+    cedente_id?: SortOrder
+  }
+
+  export type carteira_n_cedentesSumOrderByAggregateInput = {
+    id?: SortOrder
+    carteira_id?: SortOrder
+    cedente_id?: SortOrder
+  }
+
+  export type organograma_x_usuarioCountOrderByAggregateInput = {
+    id?: SortOrder
+    organograma_id?: SortOrder
+    usuario_id?: SortOrder
+  }
+
+  export type organograma_x_usuarioAvgOrderByAggregateInput = {
+    id?: SortOrder
+    organograma_id?: SortOrder
+    usuario_id?: SortOrder
+  }
+
+  export type organograma_x_usuarioMaxOrderByAggregateInput = {
+    id?: SortOrder
+    organograma_id?: SortOrder
+    usuario_id?: SortOrder
+  }
+
+  export type organograma_x_usuarioMinOrderByAggregateInput = {
+    id?: SortOrder
+    organograma_id?: SortOrder
+    usuario_id?: SortOrder
+  }
+
+  export type organograma_x_usuarioSumOrderByAggregateInput = {
+    id?: SortOrder
+    organograma_id?: SortOrder
+    usuario_id?: SortOrder
+  }
+
+  export type plataforma_x_usuarioCountOrderByAggregateInput = {
+    id?: SortOrder
+    plataforma_id?: SortOrder
+    usuario_id?: SortOrder
+  }
+
+  export type plataforma_x_usuarioAvgOrderByAggregateInput = {
+    id?: SortOrder
+    plataforma_id?: SortOrder
+    usuario_id?: SortOrder
+  }
+
+  export type plataforma_x_usuarioMaxOrderByAggregateInput = {
+    id?: SortOrder
+    plataforma_id?: SortOrder
+    usuario_id?: SortOrder
+  }
+
+  export type plataforma_x_usuarioMinOrderByAggregateInput = {
+    id?: SortOrder
+    plataforma_id?: SortOrder
+    usuario_id?: SortOrder
+  }
+
+  export type plataforma_x_usuarioSumOrderByAggregateInput = {
+    id?: SortOrder
+    plataforma_id?: SortOrder
+    usuario_id?: SortOrder
+  }
+
+  export type TituloRelationFilter = {
+    is?: tituloWhereInput
+    isNot?: tituloWhereInput
+  }
+
+  export type titulo_itensCountOrderByAggregateInput = {
+    id?: SortOrder
+    titulo_id?: SortOrder
+  }
+
+  export type titulo_itensAvgOrderByAggregateInput = {
+    id?: SortOrder
+    titulo_id?: SortOrder
+  }
+
+  export type titulo_itensMaxOrderByAggregateInput = {
+    id?: SortOrder
+    titulo_id?: SortOrder
+  }
+
+  export type titulo_itensMinOrderByAggregateInput = {
+    id?: SortOrder
+    titulo_id?: SortOrder
+  }
+
+  export type titulo_itensSumOrderByAggregateInput = {
+    id?: SortOrder
+    titulo_id?: SortOrder
+  }
+
   export type Usuario_perfil_tipoRelationFilter = {
     is?: usuario_perfil_tipoWhereInput
     isNot?: usuario_perfil_tipoWhereInput
   }
 
-  export type usuario_x_perfilCountOrderByAggregateInput = {
+  export type usuario_perfilCountOrderByAggregateInput = {
     id?: SortOrder
     senha?: SortOrder
     usuario_id?: SortOrder
-    usuario_perfil_id?: SortOrder
+    usuario_perfil_tipo_id?: SortOrder
   }
 
-  export type usuario_x_perfilAvgOrderByAggregateInput = {
+  export type usuario_perfilAvgOrderByAggregateInput = {
     id?: SortOrder
     usuario_id?: SortOrder
-    usuario_perfil_id?: SortOrder
+    usuario_perfil_tipo_id?: SortOrder
   }
 
-  export type usuario_x_perfilMaxOrderByAggregateInput = {
-    id?: SortOrder
-    senha?: SortOrder
-    usuario_id?: SortOrder
-    usuario_perfil_id?: SortOrder
-  }
-
-  export type usuario_x_perfilMinOrderByAggregateInput = {
+  export type usuario_perfilMaxOrderByAggregateInput = {
     id?: SortOrder
     senha?: SortOrder
     usuario_id?: SortOrder
-    usuario_perfil_id?: SortOrder
+    usuario_perfil_tipo_id?: SortOrder
   }
 
-  export type usuario_x_perfilSumOrderByAggregateInput = {
+  export type usuario_perfilMinOrderByAggregateInput = {
+    id?: SortOrder
+    senha?: SortOrder
+    usuario_id?: SortOrder
+    usuario_perfil_tipo_id?: SortOrder
+  }
+
+  export type usuario_perfilSumOrderByAggregateInput = {
     id?: SortOrder
     usuario_id?: SortOrder
-    usuario_perfil_id?: SortOrder
-  }
-
-  export type usuarioCreateNestedOneWithoutAuditoriaInput = {
-    create?: XOR<usuarioCreateWithoutAuditoriaInput, usuarioUncheckedCreateWithoutAuditoriaInput>
-    connectOrCreate?: usuarioCreateOrConnectWithoutAuditoriaInput
-    connect?: usuarioWhereUniqueInput
+    usuario_perfil_tipo_id?: SortOrder
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
-  }
-
-  export type usuarioUpdateOneWithoutAuditoriaNestedInput = {
-    create?: XOR<usuarioCreateWithoutAuditoriaInput, usuarioUncheckedCreateWithoutAuditoriaInput>
-    connectOrCreate?: usuarioCreateOrConnectWithoutAuditoriaInput
-    upsert?: usuarioUpsertWithoutAuditoriaInput
-    disconnect?: boolean
-    delete?: boolean
-    connect?: usuarioWhereUniqueInput
-    update?: XOR<usuarioUpdateWithoutAuditoriaInput, usuarioUncheckedUpdateWithoutAuditoriaInput>
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -37983,12 +33155,22 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type carteiraCreateNestedOneWithoutBorderoInput = {
+    create?: XOR<carteiraCreateWithoutBorderoInput, carteiraUncheckedCreateWithoutBorderoInput>
+    connectOrCreate?: carteiraCreateOrConnectWithoutBorderoInput
+    connect?: carteiraWhereUniqueInput
   }
 
   export type tituloCreateNestedManyWithoutBorderoInput = {
@@ -37998,13 +33180,6 @@ export namespace Prisma {
     connect?: Enumerable<tituloWhereUniqueInput>
   }
 
-  export type titulos_x_usuarioCreateNestedManyWithoutBordero_borderoTotitulos_x_usuarioInput = {
-    create?: XOR<Enumerable<titulos_x_usuarioCreateWithoutBordero_borderoTotitulos_x_usuarioInput>, Enumerable<titulos_x_usuarioUncheckedCreateWithoutBordero_borderoTotitulos_x_usuarioInput>>
-    connectOrCreate?: Enumerable<titulos_x_usuarioCreateOrConnectWithoutBordero_borderoTotitulos_x_usuarioInput>
-    createMany?: titulos_x_usuarioCreateManyBordero_borderoTotitulos_x_usuarioInputEnvelope
-    connect?: Enumerable<titulos_x_usuarioWhereUniqueInput>
-  }
-
   export type tituloUncheckedCreateNestedManyWithoutBorderoInput = {
     create?: XOR<Enumerable<tituloCreateWithoutBorderoInput>, Enumerable<tituloUncheckedCreateWithoutBorderoInput>>
     connectOrCreate?: Enumerable<tituloCreateOrConnectWithoutBorderoInput>
@@ -38012,11 +33187,12 @@ export namespace Prisma {
     connect?: Enumerable<tituloWhereUniqueInput>
   }
 
-  export type titulos_x_usuarioUncheckedCreateNestedManyWithoutBordero_borderoTotitulos_x_usuarioInput = {
-    create?: XOR<Enumerable<titulos_x_usuarioCreateWithoutBordero_borderoTotitulos_x_usuarioInput>, Enumerable<titulos_x_usuarioUncheckedCreateWithoutBordero_borderoTotitulos_x_usuarioInput>>
-    connectOrCreate?: Enumerable<titulos_x_usuarioCreateOrConnectWithoutBordero_borderoTotitulos_x_usuarioInput>
-    createMany?: titulos_x_usuarioCreateManyBordero_borderoTotitulos_x_usuarioInputEnvelope
-    connect?: Enumerable<titulos_x_usuarioWhereUniqueInput>
+  export type carteiraUpdateOneRequiredWithoutBorderoNestedInput = {
+    create?: XOR<carteiraCreateWithoutBorderoInput, carteiraUncheckedCreateWithoutBorderoInput>
+    connectOrCreate?: carteiraCreateOrConnectWithoutBorderoInput
+    upsert?: carteiraUpsertWithoutBorderoInput
+    connect?: carteiraWhereUniqueInput
+    update?: XOR<carteiraUpdateWithoutBorderoInput, carteiraUncheckedUpdateWithoutBorderoInput>
   }
 
   export type tituloUpdateManyWithoutBorderoNestedInput = {
@@ -38033,20 +33209,6 @@ export namespace Prisma {
     deleteMany?: Enumerable<tituloScalarWhereInput>
   }
 
-  export type titulos_x_usuarioUpdateManyWithoutBordero_borderoTotitulos_x_usuarioNestedInput = {
-    create?: XOR<Enumerable<titulos_x_usuarioCreateWithoutBordero_borderoTotitulos_x_usuarioInput>, Enumerable<titulos_x_usuarioUncheckedCreateWithoutBordero_borderoTotitulos_x_usuarioInput>>
-    connectOrCreate?: Enumerable<titulos_x_usuarioCreateOrConnectWithoutBordero_borderoTotitulos_x_usuarioInput>
-    upsert?: Enumerable<titulos_x_usuarioUpsertWithWhereUniqueWithoutBordero_borderoTotitulos_x_usuarioInput>
-    createMany?: titulos_x_usuarioCreateManyBordero_borderoTotitulos_x_usuarioInputEnvelope
-    set?: Enumerable<titulos_x_usuarioWhereUniqueInput>
-    disconnect?: Enumerable<titulos_x_usuarioWhereUniqueInput>
-    delete?: Enumerable<titulos_x_usuarioWhereUniqueInput>
-    connect?: Enumerable<titulos_x_usuarioWhereUniqueInput>
-    update?: Enumerable<titulos_x_usuarioUpdateWithWhereUniqueWithoutBordero_borderoTotitulos_x_usuarioInput>
-    updateMany?: Enumerable<titulos_x_usuarioUpdateManyWithWhereWithoutBordero_borderoTotitulos_x_usuarioInput>
-    deleteMany?: Enumerable<titulos_x_usuarioScalarWhereInput>
-  }
-
   export type tituloUncheckedUpdateManyWithoutBorderoNestedInput = {
     create?: XOR<Enumerable<tituloCreateWithoutBorderoInput>, Enumerable<tituloUncheckedCreateWithoutBorderoInput>>
     connectOrCreate?: Enumerable<tituloCreateOrConnectWithoutBorderoInput>
@@ -38061,24 +33223,38 @@ export namespace Prisma {
     deleteMany?: Enumerable<tituloScalarWhereInput>
   }
 
-  export type titulos_x_usuarioUncheckedUpdateManyWithoutBordero_borderoTotitulos_x_usuarioNestedInput = {
-    create?: XOR<Enumerable<titulos_x_usuarioCreateWithoutBordero_borderoTotitulos_x_usuarioInput>, Enumerable<titulos_x_usuarioUncheckedCreateWithoutBordero_borderoTotitulos_x_usuarioInput>>
-    connectOrCreate?: Enumerable<titulos_x_usuarioCreateOrConnectWithoutBordero_borderoTotitulos_x_usuarioInput>
-    upsert?: Enumerable<titulos_x_usuarioUpsertWithWhereUniqueWithoutBordero_borderoTotitulos_x_usuarioInput>
-    createMany?: titulos_x_usuarioCreateManyBordero_borderoTotitulos_x_usuarioInputEnvelope
-    set?: Enumerable<titulos_x_usuarioWhereUniqueInput>
-    disconnect?: Enumerable<titulos_x_usuarioWhereUniqueInput>
-    delete?: Enumerable<titulos_x_usuarioWhereUniqueInput>
-    connect?: Enumerable<titulos_x_usuarioWhereUniqueInput>
-    update?: Enumerable<titulos_x_usuarioUpdateWithWhereUniqueWithoutBordero_borderoTotitulos_x_usuarioInput>
-    updateMany?: Enumerable<titulos_x_usuarioUpdateManyWithWhereWithoutBordero_borderoTotitulos_x_usuarioInput>
-    deleteMany?: Enumerable<titulos_x_usuarioScalarWhereInput>
-  }
-
   export type fidic_fundoCreateNestedOneWithoutCarteiraInput = {
     create?: XOR<fidic_fundoCreateWithoutCarteiraInput, fidic_fundoUncheckedCreateWithoutCarteiraInput>
     connectOrCreate?: fidic_fundoCreateOrConnectWithoutCarteiraInput
     connect?: fidic_fundoWhereUniqueInput
+  }
+
+  export type borderoCreateNestedManyWithoutCarteiraInput = {
+    create?: XOR<Enumerable<borderoCreateWithoutCarteiraInput>, Enumerable<borderoUncheckedCreateWithoutCarteiraInput>>
+    connectOrCreate?: Enumerable<borderoCreateOrConnectWithoutCarteiraInput>
+    createMany?: borderoCreateManyCarteiraInputEnvelope
+    connect?: Enumerable<borderoWhereUniqueInput>
+  }
+
+  export type carteira_n_cedentesCreateNestedManyWithoutCarteiraInput = {
+    create?: XOR<Enumerable<carteira_n_cedentesCreateWithoutCarteiraInput>, Enumerable<carteira_n_cedentesUncheckedCreateWithoutCarteiraInput>>
+    connectOrCreate?: Enumerable<carteira_n_cedentesCreateOrConnectWithoutCarteiraInput>
+    createMany?: carteira_n_cedentesCreateManyCarteiraInputEnvelope
+    connect?: Enumerable<carteira_n_cedentesWhereUniqueInput>
+  }
+
+  export type borderoUncheckedCreateNestedManyWithoutCarteiraInput = {
+    create?: XOR<Enumerable<borderoCreateWithoutCarteiraInput>, Enumerable<borderoUncheckedCreateWithoutCarteiraInput>>
+    connectOrCreate?: Enumerable<borderoCreateOrConnectWithoutCarteiraInput>
+    createMany?: borderoCreateManyCarteiraInputEnvelope
+    connect?: Enumerable<borderoWhereUniqueInput>
+  }
+
+  export type carteira_n_cedentesUncheckedCreateNestedManyWithoutCarteiraInput = {
+    create?: XOR<Enumerable<carteira_n_cedentesCreateWithoutCarteiraInput>, Enumerable<carteira_n_cedentesUncheckedCreateWithoutCarteiraInput>>
+    connectOrCreate?: Enumerable<carteira_n_cedentesCreateOrConnectWithoutCarteiraInput>
+    createMany?: carteira_n_cedentesCreateManyCarteiraInputEnvelope
+    connect?: Enumerable<carteira_n_cedentesWhereUniqueInput>
   }
 
   export type fidic_fundoUpdateOneRequiredWithoutCarteiraNestedInput = {
@@ -38087,6 +33263,69 @@ export namespace Prisma {
     upsert?: fidic_fundoUpsertWithoutCarteiraInput
     connect?: fidic_fundoWhereUniqueInput
     update?: XOR<fidic_fundoUpdateWithoutCarteiraInput, fidic_fundoUncheckedUpdateWithoutCarteiraInput>
+  }
+
+  export type borderoUpdateManyWithoutCarteiraNestedInput = {
+    create?: XOR<Enumerable<borderoCreateWithoutCarteiraInput>, Enumerable<borderoUncheckedCreateWithoutCarteiraInput>>
+    connectOrCreate?: Enumerable<borderoCreateOrConnectWithoutCarteiraInput>
+    upsert?: Enumerable<borderoUpsertWithWhereUniqueWithoutCarteiraInput>
+    createMany?: borderoCreateManyCarteiraInputEnvelope
+    set?: Enumerable<borderoWhereUniqueInput>
+    disconnect?: Enumerable<borderoWhereUniqueInput>
+    delete?: Enumerable<borderoWhereUniqueInput>
+    connect?: Enumerable<borderoWhereUniqueInput>
+    update?: Enumerable<borderoUpdateWithWhereUniqueWithoutCarteiraInput>
+    updateMany?: Enumerable<borderoUpdateManyWithWhereWithoutCarteiraInput>
+    deleteMany?: Enumerable<borderoScalarWhereInput>
+  }
+
+  export type carteira_n_cedentesUpdateManyWithoutCarteiraNestedInput = {
+    create?: XOR<Enumerable<carteira_n_cedentesCreateWithoutCarteiraInput>, Enumerable<carteira_n_cedentesUncheckedCreateWithoutCarteiraInput>>
+    connectOrCreate?: Enumerable<carteira_n_cedentesCreateOrConnectWithoutCarteiraInput>
+    upsert?: Enumerable<carteira_n_cedentesUpsertWithWhereUniqueWithoutCarteiraInput>
+    createMany?: carteira_n_cedentesCreateManyCarteiraInputEnvelope
+    set?: Enumerable<carteira_n_cedentesWhereUniqueInput>
+    disconnect?: Enumerable<carteira_n_cedentesWhereUniqueInput>
+    delete?: Enumerable<carteira_n_cedentesWhereUniqueInput>
+    connect?: Enumerable<carteira_n_cedentesWhereUniqueInput>
+    update?: Enumerable<carteira_n_cedentesUpdateWithWhereUniqueWithoutCarteiraInput>
+    updateMany?: Enumerable<carteira_n_cedentesUpdateManyWithWhereWithoutCarteiraInput>
+    deleteMany?: Enumerable<carteira_n_cedentesScalarWhereInput>
+  }
+
+  export type borderoUncheckedUpdateManyWithoutCarteiraNestedInput = {
+    create?: XOR<Enumerable<borderoCreateWithoutCarteiraInput>, Enumerable<borderoUncheckedCreateWithoutCarteiraInput>>
+    connectOrCreate?: Enumerable<borderoCreateOrConnectWithoutCarteiraInput>
+    upsert?: Enumerable<borderoUpsertWithWhereUniqueWithoutCarteiraInput>
+    createMany?: borderoCreateManyCarteiraInputEnvelope
+    set?: Enumerable<borderoWhereUniqueInput>
+    disconnect?: Enumerable<borderoWhereUniqueInput>
+    delete?: Enumerable<borderoWhereUniqueInput>
+    connect?: Enumerable<borderoWhereUniqueInput>
+    update?: Enumerable<borderoUpdateWithWhereUniqueWithoutCarteiraInput>
+    updateMany?: Enumerable<borderoUpdateManyWithWhereWithoutCarteiraInput>
+    deleteMany?: Enumerable<borderoScalarWhereInput>
+  }
+
+  export type carteira_n_cedentesUncheckedUpdateManyWithoutCarteiraNestedInput = {
+    create?: XOR<Enumerable<carteira_n_cedentesCreateWithoutCarteiraInput>, Enumerable<carteira_n_cedentesUncheckedCreateWithoutCarteiraInput>>
+    connectOrCreate?: Enumerable<carteira_n_cedentesCreateOrConnectWithoutCarteiraInput>
+    upsert?: Enumerable<carteira_n_cedentesUpsertWithWhereUniqueWithoutCarteiraInput>
+    createMany?: carteira_n_cedentesCreateManyCarteiraInputEnvelope
+    set?: Enumerable<carteira_n_cedentesWhereUniqueInput>
+    disconnect?: Enumerable<carteira_n_cedentesWhereUniqueInput>
+    delete?: Enumerable<carteira_n_cedentesWhereUniqueInput>
+    connect?: Enumerable<carteira_n_cedentesWhereUniqueInput>
+    update?: Enumerable<carteira_n_cedentesUpdateWithWhereUniqueWithoutCarteiraInput>
+    updateMany?: Enumerable<carteira_n_cedentesUpdateManyWithWhereWithoutCarteiraInput>
+    deleteMany?: Enumerable<carteira_n_cedentesScalarWhereInput>
+  }
+
+  export type carteira_n_cedentesCreateNestedManyWithoutCedenteInput = {
+    create?: XOR<Enumerable<carteira_n_cedentesCreateWithoutCedenteInput>, Enumerable<carteira_n_cedentesUncheckedCreateWithoutCedenteInput>>
+    connectOrCreate?: Enumerable<carteira_n_cedentesCreateOrConnectWithoutCedenteInput>
+    createMany?: carteira_n_cedentesCreateManyCedenteInputEnvelope
+    connect?: Enumerable<carteira_n_cedentesWhereUniqueInput>
   }
 
   export type cedente_analiseCreateNestedManyWithoutCedente_cedenteTocedente_analiseInput = {
@@ -38103,11 +33342,11 @@ export namespace Prisma {
     connect?: Enumerable<cedente_n_sacadosWhereUniqueInput>
   }
 
-  export type titulo_x_cedenteCreateNestedManyWithoutCedente_cedenteTotitulo_x_cedenteInput = {
-    create?: XOR<Enumerable<titulo_x_cedenteCreateWithoutCedente_cedenteTotitulo_x_cedenteInput>, Enumerable<titulo_x_cedenteUncheckedCreateWithoutCedente_cedenteTotitulo_x_cedenteInput>>
-    connectOrCreate?: Enumerable<titulo_x_cedenteCreateOrConnectWithoutCedente_cedenteTotitulo_x_cedenteInput>
-    createMany?: titulo_x_cedenteCreateManyCedente_cedenteTotitulo_x_cedenteInputEnvelope
-    connect?: Enumerable<titulo_x_cedenteWhereUniqueInput>
+  export type carteira_n_cedentesUncheckedCreateNestedManyWithoutCedenteInput = {
+    create?: XOR<Enumerable<carteira_n_cedentesCreateWithoutCedenteInput>, Enumerable<carteira_n_cedentesUncheckedCreateWithoutCedenteInput>>
+    connectOrCreate?: Enumerable<carteira_n_cedentesCreateOrConnectWithoutCedenteInput>
+    createMany?: carteira_n_cedentesCreateManyCedenteInputEnvelope
+    connect?: Enumerable<carteira_n_cedentesWhereUniqueInput>
   }
 
   export type cedente_analiseUncheckedCreateNestedManyWithoutCedente_cedenteTocedente_analiseInput = {
@@ -38124,15 +33363,22 @@ export namespace Prisma {
     connect?: Enumerable<cedente_n_sacadosWhereUniqueInput>
   }
 
-  export type titulo_x_cedenteUncheckedCreateNestedManyWithoutCedente_cedenteTotitulo_x_cedenteInput = {
-    create?: XOR<Enumerable<titulo_x_cedenteCreateWithoutCedente_cedenteTotitulo_x_cedenteInput>, Enumerable<titulo_x_cedenteUncheckedCreateWithoutCedente_cedenteTotitulo_x_cedenteInput>>
-    connectOrCreate?: Enumerable<titulo_x_cedenteCreateOrConnectWithoutCedente_cedenteTotitulo_x_cedenteInput>
-    createMany?: titulo_x_cedenteCreateManyCedente_cedenteTotitulo_x_cedenteInputEnvelope
-    connect?: Enumerable<titulo_x_cedenteWhereUniqueInput>
-  }
-
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type carteira_n_cedentesUpdateManyWithoutCedenteNestedInput = {
+    create?: XOR<Enumerable<carteira_n_cedentesCreateWithoutCedenteInput>, Enumerable<carteira_n_cedentesUncheckedCreateWithoutCedenteInput>>
+    connectOrCreate?: Enumerable<carteira_n_cedentesCreateOrConnectWithoutCedenteInput>
+    upsert?: Enumerable<carteira_n_cedentesUpsertWithWhereUniqueWithoutCedenteInput>
+    createMany?: carteira_n_cedentesCreateManyCedenteInputEnvelope
+    set?: Enumerable<carteira_n_cedentesWhereUniqueInput>
+    disconnect?: Enumerable<carteira_n_cedentesWhereUniqueInput>
+    delete?: Enumerable<carteira_n_cedentesWhereUniqueInput>
+    connect?: Enumerable<carteira_n_cedentesWhereUniqueInput>
+    update?: Enumerable<carteira_n_cedentesUpdateWithWhereUniqueWithoutCedenteInput>
+    updateMany?: Enumerable<carteira_n_cedentesUpdateManyWithWhereWithoutCedenteInput>
+    deleteMany?: Enumerable<carteira_n_cedentesScalarWhereInput>
   }
 
   export type cedente_analiseUpdateManyWithoutCedente_cedenteTocedente_analiseNestedInput = {
@@ -38163,18 +33409,18 @@ export namespace Prisma {
     deleteMany?: Enumerable<cedente_n_sacadosScalarWhereInput>
   }
 
-  export type titulo_x_cedenteUpdateManyWithoutCedente_cedenteTotitulo_x_cedenteNestedInput = {
-    create?: XOR<Enumerable<titulo_x_cedenteCreateWithoutCedente_cedenteTotitulo_x_cedenteInput>, Enumerable<titulo_x_cedenteUncheckedCreateWithoutCedente_cedenteTotitulo_x_cedenteInput>>
-    connectOrCreate?: Enumerable<titulo_x_cedenteCreateOrConnectWithoutCedente_cedenteTotitulo_x_cedenteInput>
-    upsert?: Enumerable<titulo_x_cedenteUpsertWithWhereUniqueWithoutCedente_cedenteTotitulo_x_cedenteInput>
-    createMany?: titulo_x_cedenteCreateManyCedente_cedenteTotitulo_x_cedenteInputEnvelope
-    set?: Enumerable<titulo_x_cedenteWhereUniqueInput>
-    disconnect?: Enumerable<titulo_x_cedenteWhereUniqueInput>
-    delete?: Enumerable<titulo_x_cedenteWhereUniqueInput>
-    connect?: Enumerable<titulo_x_cedenteWhereUniqueInput>
-    update?: Enumerable<titulo_x_cedenteUpdateWithWhereUniqueWithoutCedente_cedenteTotitulo_x_cedenteInput>
-    updateMany?: Enumerable<titulo_x_cedenteUpdateManyWithWhereWithoutCedente_cedenteTotitulo_x_cedenteInput>
-    deleteMany?: Enumerable<titulo_x_cedenteScalarWhereInput>
+  export type carteira_n_cedentesUncheckedUpdateManyWithoutCedenteNestedInput = {
+    create?: XOR<Enumerable<carteira_n_cedentesCreateWithoutCedenteInput>, Enumerable<carteira_n_cedentesUncheckedCreateWithoutCedenteInput>>
+    connectOrCreate?: Enumerable<carteira_n_cedentesCreateOrConnectWithoutCedenteInput>
+    upsert?: Enumerable<carteira_n_cedentesUpsertWithWhereUniqueWithoutCedenteInput>
+    createMany?: carteira_n_cedentesCreateManyCedenteInputEnvelope
+    set?: Enumerable<carteira_n_cedentesWhereUniqueInput>
+    disconnect?: Enumerable<carteira_n_cedentesWhereUniqueInput>
+    delete?: Enumerable<carteira_n_cedentesWhereUniqueInput>
+    connect?: Enumerable<carteira_n_cedentesWhereUniqueInput>
+    update?: Enumerable<carteira_n_cedentesUpdateWithWhereUniqueWithoutCedenteInput>
+    updateMany?: Enumerable<carteira_n_cedentesUpdateManyWithWhereWithoutCedenteInput>
+    deleteMany?: Enumerable<carteira_n_cedentesScalarWhereInput>
   }
 
   export type cedente_analiseUncheckedUpdateManyWithoutCedente_cedenteTocedente_analiseNestedInput = {
@@ -38203,20 +33449,6 @@ export namespace Prisma {
     update?: Enumerable<cedente_n_sacadosUpdateWithWhereUniqueWithoutCedente_cedenteTocedente_n_sacadosInput>
     updateMany?: Enumerable<cedente_n_sacadosUpdateManyWithWhereWithoutCedente_cedenteTocedente_n_sacadosInput>
     deleteMany?: Enumerable<cedente_n_sacadosScalarWhereInput>
-  }
-
-  export type titulo_x_cedenteUncheckedUpdateManyWithoutCedente_cedenteTotitulo_x_cedenteNestedInput = {
-    create?: XOR<Enumerable<titulo_x_cedenteCreateWithoutCedente_cedenteTotitulo_x_cedenteInput>, Enumerable<titulo_x_cedenteUncheckedCreateWithoutCedente_cedenteTotitulo_x_cedenteInput>>
-    connectOrCreate?: Enumerable<titulo_x_cedenteCreateOrConnectWithoutCedente_cedenteTotitulo_x_cedenteInput>
-    upsert?: Enumerable<titulo_x_cedenteUpsertWithWhereUniqueWithoutCedente_cedenteTotitulo_x_cedenteInput>
-    createMany?: titulo_x_cedenteCreateManyCedente_cedenteTotitulo_x_cedenteInputEnvelope
-    set?: Enumerable<titulo_x_cedenteWhereUniqueInput>
-    disconnect?: Enumerable<titulo_x_cedenteWhereUniqueInput>
-    delete?: Enumerable<titulo_x_cedenteWhereUniqueInput>
-    connect?: Enumerable<titulo_x_cedenteWhereUniqueInput>
-    update?: Enumerable<titulo_x_cedenteUpdateWithWhereUniqueWithoutCedente_cedenteTotitulo_x_cedenteInput>
-    updateMany?: Enumerable<titulo_x_cedenteUpdateManyWithWhereWithoutCedente_cedenteTotitulo_x_cedenteInput>
-    deleteMany?: Enumerable<titulo_x_cedenteScalarWhereInput>
   }
 
   export type cedenteCreateNestedOneWithoutCedente_analiseInput = {
@@ -38265,22 +33497,6 @@ export namespace Prisma {
     delete?: boolean
     connect?: sacadoWhereUniqueInput
     update?: XOR<sacadoUpdateWithoutCedente_n_sacadosInput, sacadoUncheckedUpdateWithoutCedente_n_sacadosInput>
-  }
-
-  export type usuarioCreateNestedOneWithoutChecagemInput = {
-    create?: XOR<usuarioCreateWithoutChecagemInput, usuarioUncheckedCreateWithoutChecagemInput>
-    connectOrCreate?: usuarioCreateOrConnectWithoutChecagemInput
-    connect?: usuarioWhereUniqueInput
-  }
-
-  export type usuarioUpdateOneWithoutChecagemNestedInput = {
-    create?: XOR<usuarioCreateWithoutChecagemInput, usuarioUncheckedCreateWithoutChecagemInput>
-    connectOrCreate?: usuarioCreateOrConnectWithoutChecagemInput
-    upsert?: usuarioUpsertWithoutChecagemInput
-    disconnect?: boolean
-    delete?: boolean
-    connect?: usuarioWhereUniqueInput
-    update?: XOR<usuarioUpdateWithoutChecagemInput, usuarioUncheckedUpdateWithoutChecagemInput>
   }
 
   export type carteiraCreateNestedManyWithoutFidic_fundoInput = {
@@ -38373,12 +33589,6 @@ export namespace Prisma {
     connect?: fidic_fundoWhereUniqueInput
   }
 
-  export type usuarioCreateNestedOneWithoutFidic_fundo_x_usuarioInput = {
-    create?: XOR<usuarioCreateWithoutFidic_fundo_x_usuarioInput, usuarioUncheckedCreateWithoutFidic_fundo_x_usuarioInput>
-    connectOrCreate?: usuarioCreateOrConnectWithoutFidic_fundo_x_usuarioInput
-    connect?: usuarioWhereUniqueInput
-  }
-
   export type fidic_fundoUpdateOneRequiredWithoutFidic_fundo_x_usuarioNestedInput = {
     create?: XOR<fidic_fundoCreateWithoutFidic_fundo_x_usuarioInput, fidic_fundoUncheckedCreateWithoutFidic_fundo_x_usuarioInput>
     connectOrCreate?: fidic_fundoCreateOrConnectWithoutFidic_fundo_x_usuarioInput
@@ -38387,14 +33597,172 @@ export namespace Prisma {
     update?: XOR<fidic_fundoUpdateWithoutFidic_fundo_x_usuarioInput, fidic_fundoUncheckedUpdateWithoutFidic_fundo_x_usuarioInput>
   }
 
-  export type usuarioUpdateOneWithoutFidic_fundo_x_usuarioNestedInput = {
-    create?: XOR<usuarioCreateWithoutFidic_fundo_x_usuarioInput, usuarioUncheckedCreateWithoutFidic_fundo_x_usuarioInput>
-    connectOrCreate?: usuarioCreateOrConnectWithoutFidic_fundo_x_usuarioInput
-    upsert?: usuarioUpsertWithoutFidic_fundo_x_usuarioInput
-    disconnect?: boolean
-    delete?: boolean
-    connect?: usuarioWhereUniqueInput
-    update?: XOR<usuarioUpdateWithoutFidic_fundo_x_usuarioInput, usuarioUncheckedUpdateWithoutFidic_fundo_x_usuarioInput>
+  export type organograma_tipoCreateNestedOneWithoutOrganogramaInput = {
+    create?: XOR<organograma_tipoCreateWithoutOrganogramaInput, organograma_tipoUncheckedCreateWithoutOrganogramaInput>
+    connectOrCreate?: organograma_tipoCreateOrConnectWithoutOrganogramaInput
+    connect?: organograma_tipoWhereUniqueInput
+  }
+
+  export type organograma_x_regiao_atuacaoCreateNestedManyWithoutOrganogramaInput = {
+    create?: XOR<Enumerable<organograma_x_regiao_atuacaoCreateWithoutOrganogramaInput>, Enumerable<organograma_x_regiao_atuacaoUncheckedCreateWithoutOrganogramaInput>>
+    connectOrCreate?: Enumerable<organograma_x_regiao_atuacaoCreateOrConnectWithoutOrganogramaInput>
+    createMany?: organograma_x_regiao_atuacaoCreateManyOrganogramaInputEnvelope
+    connect?: Enumerable<organograma_x_regiao_atuacaoWhereUniqueInput>
+  }
+
+  export type organograma_x_usuarioCreateNestedManyWithoutOrganogramaInput = {
+    create?: XOR<Enumerable<organograma_x_usuarioCreateWithoutOrganogramaInput>, Enumerable<organograma_x_usuarioUncheckedCreateWithoutOrganogramaInput>>
+    connectOrCreate?: Enumerable<organograma_x_usuarioCreateOrConnectWithoutOrganogramaInput>
+    createMany?: organograma_x_usuarioCreateManyOrganogramaInputEnvelope
+    connect?: Enumerable<organograma_x_usuarioWhereUniqueInput>
+  }
+
+  export type organograma_x_regiao_atuacaoUncheckedCreateNestedManyWithoutOrganogramaInput = {
+    create?: XOR<Enumerable<organograma_x_regiao_atuacaoCreateWithoutOrganogramaInput>, Enumerable<organograma_x_regiao_atuacaoUncheckedCreateWithoutOrganogramaInput>>
+    connectOrCreate?: Enumerable<organograma_x_regiao_atuacaoCreateOrConnectWithoutOrganogramaInput>
+    createMany?: organograma_x_regiao_atuacaoCreateManyOrganogramaInputEnvelope
+    connect?: Enumerable<organograma_x_regiao_atuacaoWhereUniqueInput>
+  }
+
+  export type organograma_x_usuarioUncheckedCreateNestedManyWithoutOrganogramaInput = {
+    create?: XOR<Enumerable<organograma_x_usuarioCreateWithoutOrganogramaInput>, Enumerable<organograma_x_usuarioUncheckedCreateWithoutOrganogramaInput>>
+    connectOrCreate?: Enumerable<organograma_x_usuarioCreateOrConnectWithoutOrganogramaInput>
+    createMany?: organograma_x_usuarioCreateManyOrganogramaInputEnvelope
+    connect?: Enumerable<organograma_x_usuarioWhereUniqueInput>
+  }
+
+  export type organograma_tipoUpdateOneRequiredWithoutOrganogramaNestedInput = {
+    create?: XOR<organograma_tipoCreateWithoutOrganogramaInput, organograma_tipoUncheckedCreateWithoutOrganogramaInput>
+    connectOrCreate?: organograma_tipoCreateOrConnectWithoutOrganogramaInput
+    upsert?: organograma_tipoUpsertWithoutOrganogramaInput
+    connect?: organograma_tipoWhereUniqueInput
+    update?: XOR<organograma_tipoUpdateWithoutOrganogramaInput, organograma_tipoUncheckedUpdateWithoutOrganogramaInput>
+  }
+
+  export type organograma_x_regiao_atuacaoUpdateManyWithoutOrganogramaNestedInput = {
+    create?: XOR<Enumerable<organograma_x_regiao_atuacaoCreateWithoutOrganogramaInput>, Enumerable<organograma_x_regiao_atuacaoUncheckedCreateWithoutOrganogramaInput>>
+    connectOrCreate?: Enumerable<organograma_x_regiao_atuacaoCreateOrConnectWithoutOrganogramaInput>
+    upsert?: Enumerable<organograma_x_regiao_atuacaoUpsertWithWhereUniqueWithoutOrganogramaInput>
+    createMany?: organograma_x_regiao_atuacaoCreateManyOrganogramaInputEnvelope
+    set?: Enumerable<organograma_x_regiao_atuacaoWhereUniqueInput>
+    disconnect?: Enumerable<organograma_x_regiao_atuacaoWhereUniqueInput>
+    delete?: Enumerable<organograma_x_regiao_atuacaoWhereUniqueInput>
+    connect?: Enumerable<organograma_x_regiao_atuacaoWhereUniqueInput>
+    update?: Enumerable<organograma_x_regiao_atuacaoUpdateWithWhereUniqueWithoutOrganogramaInput>
+    updateMany?: Enumerable<organograma_x_regiao_atuacaoUpdateManyWithWhereWithoutOrganogramaInput>
+    deleteMany?: Enumerable<organograma_x_regiao_atuacaoScalarWhereInput>
+  }
+
+  export type organograma_x_usuarioUpdateManyWithoutOrganogramaNestedInput = {
+    create?: XOR<Enumerable<organograma_x_usuarioCreateWithoutOrganogramaInput>, Enumerable<organograma_x_usuarioUncheckedCreateWithoutOrganogramaInput>>
+    connectOrCreate?: Enumerable<organograma_x_usuarioCreateOrConnectWithoutOrganogramaInput>
+    upsert?: Enumerable<organograma_x_usuarioUpsertWithWhereUniqueWithoutOrganogramaInput>
+    createMany?: organograma_x_usuarioCreateManyOrganogramaInputEnvelope
+    set?: Enumerable<organograma_x_usuarioWhereUniqueInput>
+    disconnect?: Enumerable<organograma_x_usuarioWhereUniqueInput>
+    delete?: Enumerable<organograma_x_usuarioWhereUniqueInput>
+    connect?: Enumerable<organograma_x_usuarioWhereUniqueInput>
+    update?: Enumerable<organograma_x_usuarioUpdateWithWhereUniqueWithoutOrganogramaInput>
+    updateMany?: Enumerable<organograma_x_usuarioUpdateManyWithWhereWithoutOrganogramaInput>
+    deleteMany?: Enumerable<organograma_x_usuarioScalarWhereInput>
+  }
+
+  export type organograma_x_regiao_atuacaoUncheckedUpdateManyWithoutOrganogramaNestedInput = {
+    create?: XOR<Enumerable<organograma_x_regiao_atuacaoCreateWithoutOrganogramaInput>, Enumerable<organograma_x_regiao_atuacaoUncheckedCreateWithoutOrganogramaInput>>
+    connectOrCreate?: Enumerable<organograma_x_regiao_atuacaoCreateOrConnectWithoutOrganogramaInput>
+    upsert?: Enumerable<organograma_x_regiao_atuacaoUpsertWithWhereUniqueWithoutOrganogramaInput>
+    createMany?: organograma_x_regiao_atuacaoCreateManyOrganogramaInputEnvelope
+    set?: Enumerable<organograma_x_regiao_atuacaoWhereUniqueInput>
+    disconnect?: Enumerable<organograma_x_regiao_atuacaoWhereUniqueInput>
+    delete?: Enumerable<organograma_x_regiao_atuacaoWhereUniqueInput>
+    connect?: Enumerable<organograma_x_regiao_atuacaoWhereUniqueInput>
+    update?: Enumerable<organograma_x_regiao_atuacaoUpdateWithWhereUniqueWithoutOrganogramaInput>
+    updateMany?: Enumerable<organograma_x_regiao_atuacaoUpdateManyWithWhereWithoutOrganogramaInput>
+    deleteMany?: Enumerable<organograma_x_regiao_atuacaoScalarWhereInput>
+  }
+
+  export type organograma_x_usuarioUncheckedUpdateManyWithoutOrganogramaNestedInput = {
+    create?: XOR<Enumerable<organograma_x_usuarioCreateWithoutOrganogramaInput>, Enumerable<organograma_x_usuarioUncheckedCreateWithoutOrganogramaInput>>
+    connectOrCreate?: Enumerable<organograma_x_usuarioCreateOrConnectWithoutOrganogramaInput>
+    upsert?: Enumerable<organograma_x_usuarioUpsertWithWhereUniqueWithoutOrganogramaInput>
+    createMany?: organograma_x_usuarioCreateManyOrganogramaInputEnvelope
+    set?: Enumerable<organograma_x_usuarioWhereUniqueInput>
+    disconnect?: Enumerable<organograma_x_usuarioWhereUniqueInput>
+    delete?: Enumerable<organograma_x_usuarioWhereUniqueInput>
+    connect?: Enumerable<organograma_x_usuarioWhereUniqueInput>
+    update?: Enumerable<organograma_x_usuarioUpdateWithWhereUniqueWithoutOrganogramaInput>
+    updateMany?: Enumerable<organograma_x_usuarioUpdateManyWithWhereWithoutOrganogramaInput>
+    deleteMany?: Enumerable<organograma_x_usuarioScalarWhereInput>
+  }
+
+  export type organogramaCreateNestedManyWithoutOrganograma_tipoInput = {
+    create?: XOR<Enumerable<organogramaCreateWithoutOrganograma_tipoInput>, Enumerable<organogramaUncheckedCreateWithoutOrganograma_tipoInput>>
+    connectOrCreate?: Enumerable<organogramaCreateOrConnectWithoutOrganograma_tipoInput>
+    createMany?: organogramaCreateManyOrganograma_tipoInputEnvelope
+    connect?: Enumerable<organogramaWhereUniqueInput>
+  }
+
+  export type organogramaUncheckedCreateNestedManyWithoutOrganograma_tipoInput = {
+    create?: XOR<Enumerable<organogramaCreateWithoutOrganograma_tipoInput>, Enumerable<organogramaUncheckedCreateWithoutOrganograma_tipoInput>>
+    connectOrCreate?: Enumerable<organogramaCreateOrConnectWithoutOrganograma_tipoInput>
+    createMany?: organogramaCreateManyOrganograma_tipoInputEnvelope
+    connect?: Enumerable<organogramaWhereUniqueInput>
+  }
+
+  export type organogramaUpdateManyWithoutOrganograma_tipoNestedInput = {
+    create?: XOR<Enumerable<organogramaCreateWithoutOrganograma_tipoInput>, Enumerable<organogramaUncheckedCreateWithoutOrganograma_tipoInput>>
+    connectOrCreate?: Enumerable<organogramaCreateOrConnectWithoutOrganograma_tipoInput>
+    upsert?: Enumerable<organogramaUpsertWithWhereUniqueWithoutOrganograma_tipoInput>
+    createMany?: organogramaCreateManyOrganograma_tipoInputEnvelope
+    set?: Enumerable<organogramaWhereUniqueInput>
+    disconnect?: Enumerable<organogramaWhereUniqueInput>
+    delete?: Enumerable<organogramaWhereUniqueInput>
+    connect?: Enumerable<organogramaWhereUniqueInput>
+    update?: Enumerable<organogramaUpdateWithWhereUniqueWithoutOrganograma_tipoInput>
+    updateMany?: Enumerable<organogramaUpdateManyWithWhereWithoutOrganograma_tipoInput>
+    deleteMany?: Enumerable<organogramaScalarWhereInput>
+  }
+
+  export type organogramaUncheckedUpdateManyWithoutOrganograma_tipoNestedInput = {
+    create?: XOR<Enumerable<organogramaCreateWithoutOrganograma_tipoInput>, Enumerable<organogramaUncheckedCreateWithoutOrganograma_tipoInput>>
+    connectOrCreate?: Enumerable<organogramaCreateOrConnectWithoutOrganograma_tipoInput>
+    upsert?: Enumerable<organogramaUpsertWithWhereUniqueWithoutOrganograma_tipoInput>
+    createMany?: organogramaCreateManyOrganograma_tipoInputEnvelope
+    set?: Enumerable<organogramaWhereUniqueInput>
+    disconnect?: Enumerable<organogramaWhereUniqueInput>
+    delete?: Enumerable<organogramaWhereUniqueInput>
+    connect?: Enumerable<organogramaWhereUniqueInput>
+    update?: Enumerable<organogramaUpdateWithWhereUniqueWithoutOrganograma_tipoInput>
+    updateMany?: Enumerable<organogramaUpdateManyWithWhereWithoutOrganograma_tipoInput>
+    deleteMany?: Enumerable<organogramaScalarWhereInput>
+  }
+
+  export type organogramaCreateNestedOneWithoutOrganograma_x_regiao_atuacaoInput = {
+    create?: XOR<organogramaCreateWithoutOrganograma_x_regiao_atuacaoInput, organogramaUncheckedCreateWithoutOrganograma_x_regiao_atuacaoInput>
+    connectOrCreate?: organogramaCreateOrConnectWithoutOrganograma_x_regiao_atuacaoInput
+    connect?: organogramaWhereUniqueInput
+  }
+
+  export type regiao_atuacaoCreateNestedOneWithoutOrganograma_x_regiao_atuacaoInput = {
+    create?: XOR<regiao_atuacaoCreateWithoutOrganograma_x_regiao_atuacaoInput, regiao_atuacaoUncheckedCreateWithoutOrganograma_x_regiao_atuacaoInput>
+    connectOrCreate?: regiao_atuacaoCreateOrConnectWithoutOrganograma_x_regiao_atuacaoInput
+    connect?: regiao_atuacaoWhereUniqueInput
+  }
+
+  export type organogramaUpdateOneRequiredWithoutOrganograma_x_regiao_atuacaoNestedInput = {
+    create?: XOR<organogramaCreateWithoutOrganograma_x_regiao_atuacaoInput, organogramaUncheckedCreateWithoutOrganograma_x_regiao_atuacaoInput>
+    connectOrCreate?: organogramaCreateOrConnectWithoutOrganograma_x_regiao_atuacaoInput
+    upsert?: organogramaUpsertWithoutOrganograma_x_regiao_atuacaoInput
+    connect?: organogramaWhereUniqueInput
+    update?: XOR<organogramaUpdateWithoutOrganograma_x_regiao_atuacaoInput, organogramaUncheckedUpdateWithoutOrganograma_x_regiao_atuacaoInput>
+  }
+
+  export type regiao_atuacaoUpdateOneRequiredWithoutOrganograma_x_regiao_atuacaoNestedInput = {
+    create?: XOR<regiao_atuacaoCreateWithoutOrganograma_x_regiao_atuacaoInput, regiao_atuacaoUncheckedCreateWithoutOrganograma_x_regiao_atuacaoInput>
+    connectOrCreate?: regiao_atuacaoCreateOrConnectWithoutOrganograma_x_regiao_atuacaoInput
+    upsert?: regiao_atuacaoUpsertWithoutOrganograma_x_regiao_atuacaoInput
+    connect?: regiao_atuacaoWhereUniqueInput
+    update?: XOR<regiao_atuacaoUpdateWithoutOrganograma_x_regiao_atuacaoInput, regiao_atuacaoUncheckedUpdateWithoutOrganograma_x_regiao_atuacaoInput>
   }
 
   export type usuarioCreateNestedManyWithoutPessoaInput = {
@@ -38437,6 +33805,314 @@ export namespace Prisma {
     update?: Enumerable<usuarioUpdateWithWhereUniqueWithoutPessoaInput>
     updateMany?: Enumerable<usuarioUpdateManyWithWhereWithoutPessoaInput>
     deleteMany?: Enumerable<usuarioScalarWhereInput>
+  }
+
+  export type plataforma_papel_tipoCreateNestedOneWithoutPlataformaInput = {
+    create?: XOR<plataforma_papel_tipoCreateWithoutPlataformaInput, plataforma_papel_tipoUncheckedCreateWithoutPlataformaInput>
+    connectOrCreate?: plataforma_papel_tipoCreateOrConnectWithoutPlataformaInput
+    connect?: plataforma_papel_tipoWhereUniqueInput
+  }
+
+  export type plataforma_x_regiao_atuacaoCreateNestedManyWithoutPlataformaInput = {
+    create?: XOR<Enumerable<plataforma_x_regiao_atuacaoCreateWithoutPlataformaInput>, Enumerable<plataforma_x_regiao_atuacaoUncheckedCreateWithoutPlataformaInput>>
+    connectOrCreate?: Enumerable<plataforma_x_regiao_atuacaoCreateOrConnectWithoutPlataformaInput>
+    createMany?: plataforma_x_regiao_atuacaoCreateManyPlataformaInputEnvelope
+    connect?: Enumerable<plataforma_x_regiao_atuacaoWhereUniqueInput>
+  }
+
+  export type plataforma_x_usuarioCreateNestedManyWithoutPlataformaInput = {
+    create?: XOR<Enumerable<plataforma_x_usuarioCreateWithoutPlataformaInput>, Enumerable<plataforma_x_usuarioUncheckedCreateWithoutPlataformaInput>>
+    connectOrCreate?: Enumerable<plataforma_x_usuarioCreateOrConnectWithoutPlataformaInput>
+    createMany?: plataforma_x_usuarioCreateManyPlataformaInputEnvelope
+    connect?: Enumerable<plataforma_x_usuarioWhereUniqueInput>
+  }
+
+  export type plataforma_x_regiao_atuacaoUncheckedCreateNestedManyWithoutPlataformaInput = {
+    create?: XOR<Enumerable<plataforma_x_regiao_atuacaoCreateWithoutPlataformaInput>, Enumerable<plataforma_x_regiao_atuacaoUncheckedCreateWithoutPlataformaInput>>
+    connectOrCreate?: Enumerable<plataforma_x_regiao_atuacaoCreateOrConnectWithoutPlataformaInput>
+    createMany?: plataforma_x_regiao_atuacaoCreateManyPlataformaInputEnvelope
+    connect?: Enumerable<plataforma_x_regiao_atuacaoWhereUniqueInput>
+  }
+
+  export type plataforma_x_usuarioUncheckedCreateNestedManyWithoutPlataformaInput = {
+    create?: XOR<Enumerable<plataforma_x_usuarioCreateWithoutPlataformaInput>, Enumerable<plataforma_x_usuarioUncheckedCreateWithoutPlataformaInput>>
+    connectOrCreate?: Enumerable<plataforma_x_usuarioCreateOrConnectWithoutPlataformaInput>
+    createMany?: plataforma_x_usuarioCreateManyPlataformaInputEnvelope
+    connect?: Enumerable<plataforma_x_usuarioWhereUniqueInput>
+  }
+
+  export type plataforma_papel_tipoUpdateOneRequiredWithoutPlataformaNestedInput = {
+    create?: XOR<plataforma_papel_tipoCreateWithoutPlataformaInput, plataforma_papel_tipoUncheckedCreateWithoutPlataformaInput>
+    connectOrCreate?: plataforma_papel_tipoCreateOrConnectWithoutPlataformaInput
+    upsert?: plataforma_papel_tipoUpsertWithoutPlataformaInput
+    connect?: plataforma_papel_tipoWhereUniqueInput
+    update?: XOR<plataforma_papel_tipoUpdateWithoutPlataformaInput, plataforma_papel_tipoUncheckedUpdateWithoutPlataformaInput>
+  }
+
+  export type plataforma_x_regiao_atuacaoUpdateManyWithoutPlataformaNestedInput = {
+    create?: XOR<Enumerable<plataforma_x_regiao_atuacaoCreateWithoutPlataformaInput>, Enumerable<plataforma_x_regiao_atuacaoUncheckedCreateWithoutPlataformaInput>>
+    connectOrCreate?: Enumerable<plataforma_x_regiao_atuacaoCreateOrConnectWithoutPlataformaInput>
+    upsert?: Enumerable<plataforma_x_regiao_atuacaoUpsertWithWhereUniqueWithoutPlataformaInput>
+    createMany?: plataforma_x_regiao_atuacaoCreateManyPlataformaInputEnvelope
+    set?: Enumerable<plataforma_x_regiao_atuacaoWhereUniqueInput>
+    disconnect?: Enumerable<plataforma_x_regiao_atuacaoWhereUniqueInput>
+    delete?: Enumerable<plataforma_x_regiao_atuacaoWhereUniqueInput>
+    connect?: Enumerable<plataforma_x_regiao_atuacaoWhereUniqueInput>
+    update?: Enumerable<plataforma_x_regiao_atuacaoUpdateWithWhereUniqueWithoutPlataformaInput>
+    updateMany?: Enumerable<plataforma_x_regiao_atuacaoUpdateManyWithWhereWithoutPlataformaInput>
+    deleteMany?: Enumerable<plataforma_x_regiao_atuacaoScalarWhereInput>
+  }
+
+  export type plataforma_x_usuarioUpdateManyWithoutPlataformaNestedInput = {
+    create?: XOR<Enumerable<plataforma_x_usuarioCreateWithoutPlataformaInput>, Enumerable<plataforma_x_usuarioUncheckedCreateWithoutPlataformaInput>>
+    connectOrCreate?: Enumerable<plataforma_x_usuarioCreateOrConnectWithoutPlataformaInput>
+    upsert?: Enumerable<plataforma_x_usuarioUpsertWithWhereUniqueWithoutPlataformaInput>
+    createMany?: plataforma_x_usuarioCreateManyPlataformaInputEnvelope
+    set?: Enumerable<plataforma_x_usuarioWhereUniqueInput>
+    disconnect?: Enumerable<plataforma_x_usuarioWhereUniqueInput>
+    delete?: Enumerable<plataforma_x_usuarioWhereUniqueInput>
+    connect?: Enumerable<plataforma_x_usuarioWhereUniqueInput>
+    update?: Enumerable<plataforma_x_usuarioUpdateWithWhereUniqueWithoutPlataformaInput>
+    updateMany?: Enumerable<plataforma_x_usuarioUpdateManyWithWhereWithoutPlataformaInput>
+    deleteMany?: Enumerable<plataforma_x_usuarioScalarWhereInput>
+  }
+
+  export type plataforma_x_regiao_atuacaoUncheckedUpdateManyWithoutPlataformaNestedInput = {
+    create?: XOR<Enumerable<plataforma_x_regiao_atuacaoCreateWithoutPlataformaInput>, Enumerable<plataforma_x_regiao_atuacaoUncheckedCreateWithoutPlataformaInput>>
+    connectOrCreate?: Enumerable<plataforma_x_regiao_atuacaoCreateOrConnectWithoutPlataformaInput>
+    upsert?: Enumerable<plataforma_x_regiao_atuacaoUpsertWithWhereUniqueWithoutPlataformaInput>
+    createMany?: plataforma_x_regiao_atuacaoCreateManyPlataformaInputEnvelope
+    set?: Enumerable<plataforma_x_regiao_atuacaoWhereUniqueInput>
+    disconnect?: Enumerable<plataforma_x_regiao_atuacaoWhereUniqueInput>
+    delete?: Enumerable<plataforma_x_regiao_atuacaoWhereUniqueInput>
+    connect?: Enumerable<plataforma_x_regiao_atuacaoWhereUniqueInput>
+    update?: Enumerable<plataforma_x_regiao_atuacaoUpdateWithWhereUniqueWithoutPlataformaInput>
+    updateMany?: Enumerable<plataforma_x_regiao_atuacaoUpdateManyWithWhereWithoutPlataformaInput>
+    deleteMany?: Enumerable<plataforma_x_regiao_atuacaoScalarWhereInput>
+  }
+
+  export type plataforma_x_usuarioUncheckedUpdateManyWithoutPlataformaNestedInput = {
+    create?: XOR<Enumerable<plataforma_x_usuarioCreateWithoutPlataformaInput>, Enumerable<plataforma_x_usuarioUncheckedCreateWithoutPlataformaInput>>
+    connectOrCreate?: Enumerable<plataforma_x_usuarioCreateOrConnectWithoutPlataformaInput>
+    upsert?: Enumerable<plataforma_x_usuarioUpsertWithWhereUniqueWithoutPlataformaInput>
+    createMany?: plataforma_x_usuarioCreateManyPlataformaInputEnvelope
+    set?: Enumerable<plataforma_x_usuarioWhereUniqueInput>
+    disconnect?: Enumerable<plataforma_x_usuarioWhereUniqueInput>
+    delete?: Enumerable<plataforma_x_usuarioWhereUniqueInput>
+    connect?: Enumerable<plataforma_x_usuarioWhereUniqueInput>
+    update?: Enumerable<plataforma_x_usuarioUpdateWithWhereUniqueWithoutPlataformaInput>
+    updateMany?: Enumerable<plataforma_x_usuarioUpdateManyWithWhereWithoutPlataformaInput>
+    deleteMany?: Enumerable<plataforma_x_usuarioScalarWhereInput>
+  }
+
+  export type plataformaCreateNestedManyWithoutPlataforma_papel_tipoInput = {
+    create?: XOR<Enumerable<plataformaCreateWithoutPlataforma_papel_tipoInput>, Enumerable<plataformaUncheckedCreateWithoutPlataforma_papel_tipoInput>>
+    connectOrCreate?: Enumerable<plataformaCreateOrConnectWithoutPlataforma_papel_tipoInput>
+    createMany?: plataformaCreateManyPlataforma_papel_tipoInputEnvelope
+    connect?: Enumerable<plataformaWhereUniqueInput>
+  }
+
+  export type plataformaUncheckedCreateNestedManyWithoutPlataforma_papel_tipoInput = {
+    create?: XOR<Enumerable<plataformaCreateWithoutPlataforma_papel_tipoInput>, Enumerable<plataformaUncheckedCreateWithoutPlataforma_papel_tipoInput>>
+    connectOrCreate?: Enumerable<plataformaCreateOrConnectWithoutPlataforma_papel_tipoInput>
+    createMany?: plataformaCreateManyPlataforma_papel_tipoInputEnvelope
+    connect?: Enumerable<plataformaWhereUniqueInput>
+  }
+
+  export type plataformaUpdateManyWithoutPlataforma_papel_tipoNestedInput = {
+    create?: XOR<Enumerable<plataformaCreateWithoutPlataforma_papel_tipoInput>, Enumerable<plataformaUncheckedCreateWithoutPlataforma_papel_tipoInput>>
+    connectOrCreate?: Enumerable<plataformaCreateOrConnectWithoutPlataforma_papel_tipoInput>
+    upsert?: Enumerable<plataformaUpsertWithWhereUniqueWithoutPlataforma_papel_tipoInput>
+    createMany?: plataformaCreateManyPlataforma_papel_tipoInputEnvelope
+    set?: Enumerable<plataformaWhereUniqueInput>
+    disconnect?: Enumerable<plataformaWhereUniqueInput>
+    delete?: Enumerable<plataformaWhereUniqueInput>
+    connect?: Enumerable<plataformaWhereUniqueInput>
+    update?: Enumerable<plataformaUpdateWithWhereUniqueWithoutPlataforma_papel_tipoInput>
+    updateMany?: Enumerable<plataformaUpdateManyWithWhereWithoutPlataforma_papel_tipoInput>
+    deleteMany?: Enumerable<plataformaScalarWhereInput>
+  }
+
+  export type plataformaUncheckedUpdateManyWithoutPlataforma_papel_tipoNestedInput = {
+    create?: XOR<Enumerable<plataformaCreateWithoutPlataforma_papel_tipoInput>, Enumerable<plataformaUncheckedCreateWithoutPlataforma_papel_tipoInput>>
+    connectOrCreate?: Enumerable<plataformaCreateOrConnectWithoutPlataforma_papel_tipoInput>
+    upsert?: Enumerable<plataformaUpsertWithWhereUniqueWithoutPlataforma_papel_tipoInput>
+    createMany?: plataformaCreateManyPlataforma_papel_tipoInputEnvelope
+    set?: Enumerable<plataformaWhereUniqueInput>
+    disconnect?: Enumerable<plataformaWhereUniqueInput>
+    delete?: Enumerable<plataformaWhereUniqueInput>
+    connect?: Enumerable<plataformaWhereUniqueInput>
+    update?: Enumerable<plataformaUpdateWithWhereUniqueWithoutPlataforma_papel_tipoInput>
+    updateMany?: Enumerable<plataformaUpdateManyWithWhereWithoutPlataforma_papel_tipoInput>
+    deleteMany?: Enumerable<plataformaScalarWhereInput>
+  }
+
+  export type plataformaCreateNestedOneWithoutPlataforma_x_regiao_atuacaoInput = {
+    create?: XOR<plataformaCreateWithoutPlataforma_x_regiao_atuacaoInput, plataformaUncheckedCreateWithoutPlataforma_x_regiao_atuacaoInput>
+    connectOrCreate?: plataformaCreateOrConnectWithoutPlataforma_x_regiao_atuacaoInput
+    connect?: plataformaWhereUniqueInput
+  }
+
+  export type regiao_atuacaoCreateNestedOneWithoutPlataforma_x_regiao_atuacaoInput = {
+    create?: XOR<regiao_atuacaoCreateWithoutPlataforma_x_regiao_atuacaoInput, regiao_atuacaoUncheckedCreateWithoutPlataforma_x_regiao_atuacaoInput>
+    connectOrCreate?: regiao_atuacaoCreateOrConnectWithoutPlataforma_x_regiao_atuacaoInput
+    connect?: regiao_atuacaoWhereUniqueInput
+  }
+
+  export type plataformaUpdateOneRequiredWithoutPlataforma_x_regiao_atuacaoNestedInput = {
+    create?: XOR<plataformaCreateWithoutPlataforma_x_regiao_atuacaoInput, plataformaUncheckedCreateWithoutPlataforma_x_regiao_atuacaoInput>
+    connectOrCreate?: plataformaCreateOrConnectWithoutPlataforma_x_regiao_atuacaoInput
+    upsert?: plataformaUpsertWithoutPlataforma_x_regiao_atuacaoInput
+    connect?: plataformaWhereUniqueInput
+    update?: XOR<plataformaUpdateWithoutPlataforma_x_regiao_atuacaoInput, plataformaUncheckedUpdateWithoutPlataforma_x_regiao_atuacaoInput>
+  }
+
+  export type regiao_atuacaoUpdateOneRequiredWithoutPlataforma_x_regiao_atuacaoNestedInput = {
+    create?: XOR<regiao_atuacaoCreateWithoutPlataforma_x_regiao_atuacaoInput, regiao_atuacaoUncheckedCreateWithoutPlataforma_x_regiao_atuacaoInput>
+    connectOrCreate?: regiao_atuacaoCreateOrConnectWithoutPlataforma_x_regiao_atuacaoInput
+    upsert?: regiao_atuacaoUpsertWithoutPlataforma_x_regiao_atuacaoInput
+    connect?: regiao_atuacaoWhereUniqueInput
+    update?: XOR<regiao_atuacaoUpdateWithoutPlataforma_x_regiao_atuacaoInput, regiao_atuacaoUncheckedUpdateWithoutPlataforma_x_regiao_atuacaoInput>
+  }
+
+  export type regiao_atuacao_tipoCreateNestedOneWithoutRegiao_atuacaoInput = {
+    create?: XOR<regiao_atuacao_tipoCreateWithoutRegiao_atuacaoInput, regiao_atuacao_tipoUncheckedCreateWithoutRegiao_atuacaoInput>
+    connectOrCreate?: regiao_atuacao_tipoCreateOrConnectWithoutRegiao_atuacaoInput
+    connect?: regiao_atuacao_tipoWhereUniqueInput
+  }
+
+  export type organograma_x_regiao_atuacaoCreateNestedManyWithoutRegiao_atuacaoInput = {
+    create?: XOR<Enumerable<organograma_x_regiao_atuacaoCreateWithoutRegiao_atuacaoInput>, Enumerable<organograma_x_regiao_atuacaoUncheckedCreateWithoutRegiao_atuacaoInput>>
+    connectOrCreate?: Enumerable<organograma_x_regiao_atuacaoCreateOrConnectWithoutRegiao_atuacaoInput>
+    createMany?: organograma_x_regiao_atuacaoCreateManyRegiao_atuacaoInputEnvelope
+    connect?: Enumerable<organograma_x_regiao_atuacaoWhereUniqueInput>
+  }
+
+  export type plataforma_x_regiao_atuacaoCreateNestedManyWithoutRegiao_atuacaoInput = {
+    create?: XOR<Enumerable<plataforma_x_regiao_atuacaoCreateWithoutRegiao_atuacaoInput>, Enumerable<plataforma_x_regiao_atuacaoUncheckedCreateWithoutRegiao_atuacaoInput>>
+    connectOrCreate?: Enumerable<plataforma_x_regiao_atuacaoCreateOrConnectWithoutRegiao_atuacaoInput>
+    createMany?: plataforma_x_regiao_atuacaoCreateManyRegiao_atuacaoInputEnvelope
+    connect?: Enumerable<plataforma_x_regiao_atuacaoWhereUniqueInput>
+  }
+
+  export type organograma_x_regiao_atuacaoUncheckedCreateNestedManyWithoutRegiao_atuacaoInput = {
+    create?: XOR<Enumerable<organograma_x_regiao_atuacaoCreateWithoutRegiao_atuacaoInput>, Enumerable<organograma_x_regiao_atuacaoUncheckedCreateWithoutRegiao_atuacaoInput>>
+    connectOrCreate?: Enumerable<organograma_x_regiao_atuacaoCreateOrConnectWithoutRegiao_atuacaoInput>
+    createMany?: organograma_x_regiao_atuacaoCreateManyRegiao_atuacaoInputEnvelope
+    connect?: Enumerable<organograma_x_regiao_atuacaoWhereUniqueInput>
+  }
+
+  export type plataforma_x_regiao_atuacaoUncheckedCreateNestedManyWithoutRegiao_atuacaoInput = {
+    create?: XOR<Enumerable<plataforma_x_regiao_atuacaoCreateWithoutRegiao_atuacaoInput>, Enumerable<plataforma_x_regiao_atuacaoUncheckedCreateWithoutRegiao_atuacaoInput>>
+    connectOrCreate?: Enumerable<plataforma_x_regiao_atuacaoCreateOrConnectWithoutRegiao_atuacaoInput>
+    createMany?: plataforma_x_regiao_atuacaoCreateManyRegiao_atuacaoInputEnvelope
+    connect?: Enumerable<plataforma_x_regiao_atuacaoWhereUniqueInput>
+  }
+
+  export type regiao_atuacao_tipoUpdateOneRequiredWithoutRegiao_atuacaoNestedInput = {
+    create?: XOR<regiao_atuacao_tipoCreateWithoutRegiao_atuacaoInput, regiao_atuacao_tipoUncheckedCreateWithoutRegiao_atuacaoInput>
+    connectOrCreate?: regiao_atuacao_tipoCreateOrConnectWithoutRegiao_atuacaoInput
+    upsert?: regiao_atuacao_tipoUpsertWithoutRegiao_atuacaoInput
+    connect?: regiao_atuacao_tipoWhereUniqueInput
+    update?: XOR<regiao_atuacao_tipoUpdateWithoutRegiao_atuacaoInput, regiao_atuacao_tipoUncheckedUpdateWithoutRegiao_atuacaoInput>
+  }
+
+  export type organograma_x_regiao_atuacaoUpdateManyWithoutRegiao_atuacaoNestedInput = {
+    create?: XOR<Enumerable<organograma_x_regiao_atuacaoCreateWithoutRegiao_atuacaoInput>, Enumerable<organograma_x_regiao_atuacaoUncheckedCreateWithoutRegiao_atuacaoInput>>
+    connectOrCreate?: Enumerable<organograma_x_regiao_atuacaoCreateOrConnectWithoutRegiao_atuacaoInput>
+    upsert?: Enumerable<organograma_x_regiao_atuacaoUpsertWithWhereUniqueWithoutRegiao_atuacaoInput>
+    createMany?: organograma_x_regiao_atuacaoCreateManyRegiao_atuacaoInputEnvelope
+    set?: Enumerable<organograma_x_regiao_atuacaoWhereUniqueInput>
+    disconnect?: Enumerable<organograma_x_regiao_atuacaoWhereUniqueInput>
+    delete?: Enumerable<organograma_x_regiao_atuacaoWhereUniqueInput>
+    connect?: Enumerable<organograma_x_regiao_atuacaoWhereUniqueInput>
+    update?: Enumerable<organograma_x_regiao_atuacaoUpdateWithWhereUniqueWithoutRegiao_atuacaoInput>
+    updateMany?: Enumerable<organograma_x_regiao_atuacaoUpdateManyWithWhereWithoutRegiao_atuacaoInput>
+    deleteMany?: Enumerable<organograma_x_regiao_atuacaoScalarWhereInput>
+  }
+
+  export type plataforma_x_regiao_atuacaoUpdateManyWithoutRegiao_atuacaoNestedInput = {
+    create?: XOR<Enumerable<plataforma_x_regiao_atuacaoCreateWithoutRegiao_atuacaoInput>, Enumerable<plataforma_x_regiao_atuacaoUncheckedCreateWithoutRegiao_atuacaoInput>>
+    connectOrCreate?: Enumerable<plataforma_x_regiao_atuacaoCreateOrConnectWithoutRegiao_atuacaoInput>
+    upsert?: Enumerable<plataforma_x_regiao_atuacaoUpsertWithWhereUniqueWithoutRegiao_atuacaoInput>
+    createMany?: plataforma_x_regiao_atuacaoCreateManyRegiao_atuacaoInputEnvelope
+    set?: Enumerable<plataforma_x_regiao_atuacaoWhereUniqueInput>
+    disconnect?: Enumerable<plataforma_x_regiao_atuacaoWhereUniqueInput>
+    delete?: Enumerable<plataforma_x_regiao_atuacaoWhereUniqueInput>
+    connect?: Enumerable<plataforma_x_regiao_atuacaoWhereUniqueInput>
+    update?: Enumerable<plataforma_x_regiao_atuacaoUpdateWithWhereUniqueWithoutRegiao_atuacaoInput>
+    updateMany?: Enumerable<plataforma_x_regiao_atuacaoUpdateManyWithWhereWithoutRegiao_atuacaoInput>
+    deleteMany?: Enumerable<plataforma_x_regiao_atuacaoScalarWhereInput>
+  }
+
+  export type organograma_x_regiao_atuacaoUncheckedUpdateManyWithoutRegiao_atuacaoNestedInput = {
+    create?: XOR<Enumerable<organograma_x_regiao_atuacaoCreateWithoutRegiao_atuacaoInput>, Enumerable<organograma_x_regiao_atuacaoUncheckedCreateWithoutRegiao_atuacaoInput>>
+    connectOrCreate?: Enumerable<organograma_x_regiao_atuacaoCreateOrConnectWithoutRegiao_atuacaoInput>
+    upsert?: Enumerable<organograma_x_regiao_atuacaoUpsertWithWhereUniqueWithoutRegiao_atuacaoInput>
+    createMany?: organograma_x_regiao_atuacaoCreateManyRegiao_atuacaoInputEnvelope
+    set?: Enumerable<organograma_x_regiao_atuacaoWhereUniqueInput>
+    disconnect?: Enumerable<organograma_x_regiao_atuacaoWhereUniqueInput>
+    delete?: Enumerable<organograma_x_regiao_atuacaoWhereUniqueInput>
+    connect?: Enumerable<organograma_x_regiao_atuacaoWhereUniqueInput>
+    update?: Enumerable<organograma_x_regiao_atuacaoUpdateWithWhereUniqueWithoutRegiao_atuacaoInput>
+    updateMany?: Enumerable<organograma_x_regiao_atuacaoUpdateManyWithWhereWithoutRegiao_atuacaoInput>
+    deleteMany?: Enumerable<organograma_x_regiao_atuacaoScalarWhereInput>
+  }
+
+  export type plataforma_x_regiao_atuacaoUncheckedUpdateManyWithoutRegiao_atuacaoNestedInput = {
+    create?: XOR<Enumerable<plataforma_x_regiao_atuacaoCreateWithoutRegiao_atuacaoInput>, Enumerable<plataforma_x_regiao_atuacaoUncheckedCreateWithoutRegiao_atuacaoInput>>
+    connectOrCreate?: Enumerable<plataforma_x_regiao_atuacaoCreateOrConnectWithoutRegiao_atuacaoInput>
+    upsert?: Enumerable<plataforma_x_regiao_atuacaoUpsertWithWhereUniqueWithoutRegiao_atuacaoInput>
+    createMany?: plataforma_x_regiao_atuacaoCreateManyRegiao_atuacaoInputEnvelope
+    set?: Enumerable<plataforma_x_regiao_atuacaoWhereUniqueInput>
+    disconnect?: Enumerable<plataforma_x_regiao_atuacaoWhereUniqueInput>
+    delete?: Enumerable<plataforma_x_regiao_atuacaoWhereUniqueInput>
+    connect?: Enumerable<plataforma_x_regiao_atuacaoWhereUniqueInput>
+    update?: Enumerable<plataforma_x_regiao_atuacaoUpdateWithWhereUniqueWithoutRegiao_atuacaoInput>
+    updateMany?: Enumerable<plataforma_x_regiao_atuacaoUpdateManyWithWhereWithoutRegiao_atuacaoInput>
+    deleteMany?: Enumerable<plataforma_x_regiao_atuacaoScalarWhereInput>
+  }
+
+  export type regiao_atuacaoCreateNestedManyWithoutRegiao_atuacao_tipoInput = {
+    create?: XOR<Enumerable<regiao_atuacaoCreateWithoutRegiao_atuacao_tipoInput>, Enumerable<regiao_atuacaoUncheckedCreateWithoutRegiao_atuacao_tipoInput>>
+    connectOrCreate?: Enumerable<regiao_atuacaoCreateOrConnectWithoutRegiao_atuacao_tipoInput>
+    createMany?: regiao_atuacaoCreateManyRegiao_atuacao_tipoInputEnvelope
+    connect?: Enumerable<regiao_atuacaoWhereUniqueInput>
+  }
+
+  export type regiao_atuacaoUncheckedCreateNestedManyWithoutRegiao_atuacao_tipoInput = {
+    create?: XOR<Enumerable<regiao_atuacaoCreateWithoutRegiao_atuacao_tipoInput>, Enumerable<regiao_atuacaoUncheckedCreateWithoutRegiao_atuacao_tipoInput>>
+    connectOrCreate?: Enumerable<regiao_atuacaoCreateOrConnectWithoutRegiao_atuacao_tipoInput>
+    createMany?: regiao_atuacaoCreateManyRegiao_atuacao_tipoInputEnvelope
+    connect?: Enumerable<regiao_atuacaoWhereUniqueInput>
+  }
+
+  export type regiao_atuacaoUpdateManyWithoutRegiao_atuacao_tipoNestedInput = {
+    create?: XOR<Enumerable<regiao_atuacaoCreateWithoutRegiao_atuacao_tipoInput>, Enumerable<regiao_atuacaoUncheckedCreateWithoutRegiao_atuacao_tipoInput>>
+    connectOrCreate?: Enumerable<regiao_atuacaoCreateOrConnectWithoutRegiao_atuacao_tipoInput>
+    upsert?: Enumerable<regiao_atuacaoUpsertWithWhereUniqueWithoutRegiao_atuacao_tipoInput>
+    createMany?: regiao_atuacaoCreateManyRegiao_atuacao_tipoInputEnvelope
+    set?: Enumerable<regiao_atuacaoWhereUniqueInput>
+    disconnect?: Enumerable<regiao_atuacaoWhereUniqueInput>
+    delete?: Enumerable<regiao_atuacaoWhereUniqueInput>
+    connect?: Enumerable<regiao_atuacaoWhereUniqueInput>
+    update?: Enumerable<regiao_atuacaoUpdateWithWhereUniqueWithoutRegiao_atuacao_tipoInput>
+    updateMany?: Enumerable<regiao_atuacaoUpdateManyWithWhereWithoutRegiao_atuacao_tipoInput>
+    deleteMany?: Enumerable<regiao_atuacaoScalarWhereInput>
+  }
+
+  export type regiao_atuacaoUncheckedUpdateManyWithoutRegiao_atuacao_tipoNestedInput = {
+    create?: XOR<Enumerable<regiao_atuacaoCreateWithoutRegiao_atuacao_tipoInput>, Enumerable<regiao_atuacaoUncheckedCreateWithoutRegiao_atuacao_tipoInput>>
+    connectOrCreate?: Enumerable<regiao_atuacaoCreateOrConnectWithoutRegiao_atuacao_tipoInput>
+    upsert?: Enumerable<regiao_atuacaoUpsertWithWhereUniqueWithoutRegiao_atuacao_tipoInput>
+    createMany?: regiao_atuacaoCreateManyRegiao_atuacao_tipoInputEnvelope
+    set?: Enumerable<regiao_atuacaoWhereUniqueInput>
+    disconnect?: Enumerable<regiao_atuacaoWhereUniqueInput>
+    delete?: Enumerable<regiao_atuacaoWhereUniqueInput>
+    connect?: Enumerable<regiao_atuacaoWhereUniqueInput>
+    update?: Enumerable<regiao_atuacaoUpdateWithWhereUniqueWithoutRegiao_atuacao_tipoInput>
+    updateMany?: Enumerable<regiao_atuacaoUpdateManyWithWhereWithoutRegiao_atuacao_tipoInput>
+    deleteMany?: Enumerable<regiao_atuacaoScalarWhereInput>
   }
 
   export type cedente_n_sacadosCreateNestedManyWithoutSacado_cedente_n_sacadosTosacadoInput = {
@@ -38493,6 +34169,20 @@ export namespace Prisma {
     connect?: borderoWhereUniqueInput
   }
 
+  export type titulo_itensCreateNestedManyWithoutTituloInput = {
+    create?: XOR<Enumerable<titulo_itensCreateWithoutTituloInput>, Enumerable<titulo_itensUncheckedCreateWithoutTituloInput>>
+    connectOrCreate?: Enumerable<titulo_itensCreateOrConnectWithoutTituloInput>
+    createMany?: titulo_itensCreateManyTituloInputEnvelope
+    connect?: Enumerable<titulo_itensWhereUniqueInput>
+  }
+
+  export type titulo_itensUncheckedCreateNestedManyWithoutTituloInput = {
+    create?: XOR<Enumerable<titulo_itensCreateWithoutTituloInput>, Enumerable<titulo_itensUncheckedCreateWithoutTituloInput>>
+    connectOrCreate?: Enumerable<titulo_itensCreateOrConnectWithoutTituloInput>
+    createMany?: titulo_itensCreateManyTituloInputEnvelope
+    connect?: Enumerable<titulo_itensWhereUniqueInput>
+  }
+
   export type NullableFloatFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
@@ -38515,6 +34205,34 @@ export namespace Prisma {
     upsert?: borderoUpsertWithoutTituloInput
     connect?: borderoWhereUniqueInput
     update?: XOR<borderoUpdateWithoutTituloInput, borderoUncheckedUpdateWithoutTituloInput>
+  }
+
+  export type titulo_itensUpdateManyWithoutTituloNestedInput = {
+    create?: XOR<Enumerable<titulo_itensCreateWithoutTituloInput>, Enumerable<titulo_itensUncheckedCreateWithoutTituloInput>>
+    connectOrCreate?: Enumerable<titulo_itensCreateOrConnectWithoutTituloInput>
+    upsert?: Enumerable<titulo_itensUpsertWithWhereUniqueWithoutTituloInput>
+    createMany?: titulo_itensCreateManyTituloInputEnvelope
+    set?: Enumerable<titulo_itensWhereUniqueInput>
+    disconnect?: Enumerable<titulo_itensWhereUniqueInput>
+    delete?: Enumerable<titulo_itensWhereUniqueInput>
+    connect?: Enumerable<titulo_itensWhereUniqueInput>
+    update?: Enumerable<titulo_itensUpdateWithWhereUniqueWithoutTituloInput>
+    updateMany?: Enumerable<titulo_itensUpdateManyWithWhereWithoutTituloInput>
+    deleteMany?: Enumerable<titulo_itensScalarWhereInput>
+  }
+
+  export type titulo_itensUncheckedUpdateManyWithoutTituloNestedInput = {
+    create?: XOR<Enumerable<titulo_itensCreateWithoutTituloInput>, Enumerable<titulo_itensUncheckedCreateWithoutTituloInput>>
+    connectOrCreate?: Enumerable<titulo_itensCreateOrConnectWithoutTituloInput>
+    upsert?: Enumerable<titulo_itensUpsertWithWhereUniqueWithoutTituloInput>
+    createMany?: titulo_itensCreateManyTituloInputEnvelope
+    set?: Enumerable<titulo_itensWhereUniqueInput>
+    disconnect?: Enumerable<titulo_itensWhereUniqueInput>
+    delete?: Enumerable<titulo_itensWhereUniqueInput>
+    connect?: Enumerable<titulo_itensWhereUniqueInput>
+    update?: Enumerable<titulo_itensUpdateWithWhereUniqueWithoutTituloInput>
+    updateMany?: Enumerable<titulo_itensUpdateManyWithWhereWithoutTituloInput>
+    deleteMany?: Enumerable<titulo_itensScalarWhereInput>
   }
 
   export type tituloCreateNestedManyWithoutTitulo_tipoInput = {
@@ -38559,126 +34277,10 @@ export namespace Prisma {
     deleteMany?: Enumerable<tituloScalarWhereInput>
   }
 
-  export type cedenteCreateNestedOneWithoutTitulo_x_cedenteInput = {
-    create?: XOR<cedenteCreateWithoutTitulo_x_cedenteInput, cedenteUncheckedCreateWithoutTitulo_x_cedenteInput>
-    connectOrCreate?: cedenteCreateOrConnectWithoutTitulo_x_cedenteInput
-    connect?: cedenteWhereUniqueInput
-  }
-
-  export type cedenteUpdateOneRequiredWithoutTitulo_x_cedenteNestedInput = {
-    create?: XOR<cedenteCreateWithoutTitulo_x_cedenteInput, cedenteUncheckedCreateWithoutTitulo_x_cedenteInput>
-    connectOrCreate?: cedenteCreateOrConnectWithoutTitulo_x_cedenteInput
-    upsert?: cedenteUpsertWithoutTitulo_x_cedenteInput
-    connect?: cedenteWhereUniqueInput
-    update?: XOR<cedenteUpdateWithoutTitulo_x_cedenteInput, cedenteUncheckedUpdateWithoutTitulo_x_cedenteInput>
-  }
-
-  export type borderoCreateNestedOneWithoutTitulos_x_usuarioInput = {
-    create?: XOR<borderoCreateWithoutTitulos_x_usuarioInput, borderoUncheckedCreateWithoutTitulos_x_usuarioInput>
-    connectOrCreate?: borderoCreateOrConnectWithoutTitulos_x_usuarioInput
-    connect?: borderoWhereUniqueInput
-  }
-
-  export type usuarioCreateNestedOneWithoutTitulos_x_usuarioInput = {
-    create?: XOR<usuarioCreateWithoutTitulos_x_usuarioInput, usuarioUncheckedCreateWithoutTitulos_x_usuarioInput>
-    connectOrCreate?: usuarioCreateOrConnectWithoutTitulos_x_usuarioInput
-    connect?: usuarioWhereUniqueInput
-  }
-
-  export type borderoUpdateOneWithoutTitulos_x_usuarioNestedInput = {
-    create?: XOR<borderoCreateWithoutTitulos_x_usuarioInput, borderoUncheckedCreateWithoutTitulos_x_usuarioInput>
-    connectOrCreate?: borderoCreateOrConnectWithoutTitulos_x_usuarioInput
-    upsert?: borderoUpsertWithoutTitulos_x_usuarioInput
-    disconnect?: boolean
-    delete?: boolean
-    connect?: borderoWhereUniqueInput
-    update?: XOR<borderoUpdateWithoutTitulos_x_usuarioInput, borderoUncheckedUpdateWithoutTitulos_x_usuarioInput>
-  }
-
-  export type usuarioUpdateOneWithoutTitulos_x_usuarioNestedInput = {
-    create?: XOR<usuarioCreateWithoutTitulos_x_usuarioInput, usuarioUncheckedCreateWithoutTitulos_x_usuarioInput>
-    connectOrCreate?: usuarioCreateOrConnectWithoutTitulos_x_usuarioInput
-    upsert?: usuarioUpsertWithoutTitulos_x_usuarioInput
-    disconnect?: boolean
-    delete?: boolean
-    connect?: usuarioWhereUniqueInput
-    update?: XOR<usuarioUpdateWithoutTitulos_x_usuarioInput, usuarioUncheckedUpdateWithoutTitulos_x_usuarioInput>
-  }
-
-  export type auditoriaCreateNestedManyWithoutUsuario_auditoriaTousuarioInput = {
-    create?: XOR<Enumerable<auditoriaCreateWithoutUsuario_auditoriaTousuarioInput>, Enumerable<auditoriaUncheckedCreateWithoutUsuario_auditoriaTousuarioInput>>
-    connectOrCreate?: Enumerable<auditoriaCreateOrConnectWithoutUsuario_auditoriaTousuarioInput>
-    createMany?: auditoriaCreateManyUsuario_auditoriaTousuarioInputEnvelope
-    connect?: Enumerable<auditoriaWhereUniqueInput>
-  }
-
-  export type checagemCreateNestedManyWithoutUsuario_checagemTousuarioInput = {
-    create?: XOR<Enumerable<checagemCreateWithoutUsuario_checagemTousuarioInput>, Enumerable<checagemUncheckedCreateWithoutUsuario_checagemTousuarioInput>>
-    connectOrCreate?: Enumerable<checagemCreateOrConnectWithoutUsuario_checagemTousuarioInput>
-    createMany?: checagemCreateManyUsuario_checagemTousuarioInputEnvelope
-    connect?: Enumerable<checagemWhereUniqueInput>
-  }
-
-  export type fidic_fundo_x_usuarioCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput = {
-    create?: XOR<Enumerable<fidic_fundo_x_usuarioCreateWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>, Enumerable<fidic_fundo_x_usuarioUncheckedCreateWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>>
-    connectOrCreate?: Enumerable<fidic_fundo_x_usuarioCreateOrConnectWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>
-    createMany?: fidic_fundo_x_usuarioCreateManyUsuario_fidic_fundo_x_usuarioTousuarioInputEnvelope
-    connect?: Enumerable<fidic_fundo_x_usuarioWhereUniqueInput>
-  }
-
-  export type titulos_x_usuarioCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput = {
-    create?: XOR<Enumerable<titulos_x_usuarioCreateWithoutUsuario_titulos_x_usuarioTousuarioInput>, Enumerable<titulos_x_usuarioUncheckedCreateWithoutUsuario_titulos_x_usuarioTousuarioInput>>
-    connectOrCreate?: Enumerable<titulos_x_usuarioCreateOrConnectWithoutUsuario_titulos_x_usuarioTousuarioInput>
-    createMany?: titulos_x_usuarioCreateManyUsuario_titulos_x_usuarioTousuarioInputEnvelope
-    connect?: Enumerable<titulos_x_usuarioWhereUniqueInput>
-  }
-
   export type pessoaCreateNestedOneWithoutUsuarioInput = {
     create?: XOR<pessoaCreateWithoutUsuarioInput, pessoaUncheckedCreateWithoutUsuarioInput>
     connectOrCreate?: pessoaCreateOrConnectWithoutUsuarioInput
     connect?: pessoaWhereUniqueInput
-  }
-
-  export type usuario_x_perfilCreateNestedManyWithoutUsuarioInput = {
-    create?: XOR<Enumerable<usuario_x_perfilCreateWithoutUsuarioInput>, Enumerable<usuario_x_perfilUncheckedCreateWithoutUsuarioInput>>
-    connectOrCreate?: Enumerable<usuario_x_perfilCreateOrConnectWithoutUsuarioInput>
-    createMany?: usuario_x_perfilCreateManyUsuarioInputEnvelope
-    connect?: Enumerable<usuario_x_perfilWhereUniqueInput>
-  }
-
-  export type auditoriaUncheckedCreateNestedManyWithoutUsuario_auditoriaTousuarioInput = {
-    create?: XOR<Enumerable<auditoriaCreateWithoutUsuario_auditoriaTousuarioInput>, Enumerable<auditoriaUncheckedCreateWithoutUsuario_auditoriaTousuarioInput>>
-    connectOrCreate?: Enumerable<auditoriaCreateOrConnectWithoutUsuario_auditoriaTousuarioInput>
-    createMany?: auditoriaCreateManyUsuario_auditoriaTousuarioInputEnvelope
-    connect?: Enumerable<auditoriaWhereUniqueInput>
-  }
-
-  export type checagemUncheckedCreateNestedManyWithoutUsuario_checagemTousuarioInput = {
-    create?: XOR<Enumerable<checagemCreateWithoutUsuario_checagemTousuarioInput>, Enumerable<checagemUncheckedCreateWithoutUsuario_checagemTousuarioInput>>
-    connectOrCreate?: Enumerable<checagemCreateOrConnectWithoutUsuario_checagemTousuarioInput>
-    createMany?: checagemCreateManyUsuario_checagemTousuarioInputEnvelope
-    connect?: Enumerable<checagemWhereUniqueInput>
-  }
-
-  export type fidic_fundo_x_usuarioUncheckedCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput = {
-    create?: XOR<Enumerable<fidic_fundo_x_usuarioCreateWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>, Enumerable<fidic_fundo_x_usuarioUncheckedCreateWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>>
-    connectOrCreate?: Enumerable<fidic_fundo_x_usuarioCreateOrConnectWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>
-    createMany?: fidic_fundo_x_usuarioCreateManyUsuario_fidic_fundo_x_usuarioTousuarioInputEnvelope
-    connect?: Enumerable<fidic_fundo_x_usuarioWhereUniqueInput>
-  }
-
-  export type titulos_x_usuarioUncheckedCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput = {
-    create?: XOR<Enumerable<titulos_x_usuarioCreateWithoutUsuario_titulos_x_usuarioTousuarioInput>, Enumerable<titulos_x_usuarioUncheckedCreateWithoutUsuario_titulos_x_usuarioTousuarioInput>>
-    connectOrCreate?: Enumerable<titulos_x_usuarioCreateOrConnectWithoutUsuario_titulos_x_usuarioTousuarioInput>
-    createMany?: titulos_x_usuarioCreateManyUsuario_titulos_x_usuarioTousuarioInputEnvelope
-    connect?: Enumerable<titulos_x_usuarioWhereUniqueInput>
-  }
-
-  export type usuario_x_perfilUncheckedCreateNestedManyWithoutUsuarioInput = {
-    create?: XOR<Enumerable<usuario_x_perfilCreateWithoutUsuarioInput>, Enumerable<usuario_x_perfilUncheckedCreateWithoutUsuarioInput>>
-    connectOrCreate?: Enumerable<usuario_x_perfilCreateOrConnectWithoutUsuarioInput>
-    createMany?: usuario_x_perfilCreateManyUsuarioInputEnvelope
-    connect?: Enumerable<usuario_x_perfilWhereUniqueInput>
   }
 
   export type NullableBoolFieldUpdateOperationsInput = {
@@ -38689,62 +34291,6 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type auditoriaUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput = {
-    create?: XOR<Enumerable<auditoriaCreateWithoutUsuario_auditoriaTousuarioInput>, Enumerable<auditoriaUncheckedCreateWithoutUsuario_auditoriaTousuarioInput>>
-    connectOrCreate?: Enumerable<auditoriaCreateOrConnectWithoutUsuario_auditoriaTousuarioInput>
-    upsert?: Enumerable<auditoriaUpsertWithWhereUniqueWithoutUsuario_auditoriaTousuarioInput>
-    createMany?: auditoriaCreateManyUsuario_auditoriaTousuarioInputEnvelope
-    set?: Enumerable<auditoriaWhereUniqueInput>
-    disconnect?: Enumerable<auditoriaWhereUniqueInput>
-    delete?: Enumerable<auditoriaWhereUniqueInput>
-    connect?: Enumerable<auditoriaWhereUniqueInput>
-    update?: Enumerable<auditoriaUpdateWithWhereUniqueWithoutUsuario_auditoriaTousuarioInput>
-    updateMany?: Enumerable<auditoriaUpdateManyWithWhereWithoutUsuario_auditoriaTousuarioInput>
-    deleteMany?: Enumerable<auditoriaScalarWhereInput>
-  }
-
-  export type checagemUpdateManyWithoutUsuario_checagemTousuarioNestedInput = {
-    create?: XOR<Enumerable<checagemCreateWithoutUsuario_checagemTousuarioInput>, Enumerable<checagemUncheckedCreateWithoutUsuario_checagemTousuarioInput>>
-    connectOrCreate?: Enumerable<checagemCreateOrConnectWithoutUsuario_checagemTousuarioInput>
-    upsert?: Enumerable<checagemUpsertWithWhereUniqueWithoutUsuario_checagemTousuarioInput>
-    createMany?: checagemCreateManyUsuario_checagemTousuarioInputEnvelope
-    set?: Enumerable<checagemWhereUniqueInput>
-    disconnect?: Enumerable<checagemWhereUniqueInput>
-    delete?: Enumerable<checagemWhereUniqueInput>
-    connect?: Enumerable<checagemWhereUniqueInput>
-    update?: Enumerable<checagemUpdateWithWhereUniqueWithoutUsuario_checagemTousuarioInput>
-    updateMany?: Enumerable<checagemUpdateManyWithWhereWithoutUsuario_checagemTousuarioInput>
-    deleteMany?: Enumerable<checagemScalarWhereInput>
-  }
-
-  export type fidic_fundo_x_usuarioUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput = {
-    create?: XOR<Enumerable<fidic_fundo_x_usuarioCreateWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>, Enumerable<fidic_fundo_x_usuarioUncheckedCreateWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>>
-    connectOrCreate?: Enumerable<fidic_fundo_x_usuarioCreateOrConnectWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>
-    upsert?: Enumerable<fidic_fundo_x_usuarioUpsertWithWhereUniqueWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>
-    createMany?: fidic_fundo_x_usuarioCreateManyUsuario_fidic_fundo_x_usuarioTousuarioInputEnvelope
-    set?: Enumerable<fidic_fundo_x_usuarioWhereUniqueInput>
-    disconnect?: Enumerable<fidic_fundo_x_usuarioWhereUniqueInput>
-    delete?: Enumerable<fidic_fundo_x_usuarioWhereUniqueInput>
-    connect?: Enumerable<fidic_fundo_x_usuarioWhereUniqueInput>
-    update?: Enumerable<fidic_fundo_x_usuarioUpdateWithWhereUniqueWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>
-    updateMany?: Enumerable<fidic_fundo_x_usuarioUpdateManyWithWhereWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>
-    deleteMany?: Enumerable<fidic_fundo_x_usuarioScalarWhereInput>
-  }
-
-  export type titulos_x_usuarioUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput = {
-    create?: XOR<Enumerable<titulos_x_usuarioCreateWithoutUsuario_titulos_x_usuarioTousuarioInput>, Enumerable<titulos_x_usuarioUncheckedCreateWithoutUsuario_titulos_x_usuarioTousuarioInput>>
-    connectOrCreate?: Enumerable<titulos_x_usuarioCreateOrConnectWithoutUsuario_titulos_x_usuarioTousuarioInput>
-    upsert?: Enumerable<titulos_x_usuarioUpsertWithWhereUniqueWithoutUsuario_titulos_x_usuarioTousuarioInput>
-    createMany?: titulos_x_usuarioCreateManyUsuario_titulos_x_usuarioTousuarioInputEnvelope
-    set?: Enumerable<titulos_x_usuarioWhereUniqueInput>
-    disconnect?: Enumerable<titulos_x_usuarioWhereUniqueInput>
-    delete?: Enumerable<titulos_x_usuarioWhereUniqueInput>
-    connect?: Enumerable<titulos_x_usuarioWhereUniqueInput>
-    update?: Enumerable<titulos_x_usuarioUpdateWithWhereUniqueWithoutUsuario_titulos_x_usuarioTousuarioInput>
-    updateMany?: Enumerable<titulos_x_usuarioUpdateManyWithWhereWithoutUsuario_titulos_x_usuarioTousuarioInput>
-    deleteMany?: Enumerable<titulos_x_usuarioScalarWhereInput>
-  }
-
   export type pessoaUpdateOneRequiredWithoutUsuarioNestedInput = {
     create?: XOR<pessoaCreateWithoutUsuarioInput, pessoaUncheckedCreateWithoutUsuarioInput>
     connectOrCreate?: pessoaCreateOrConnectWithoutUsuarioInput
@@ -38753,158 +34299,130 @@ export namespace Prisma {
     update?: XOR<pessoaUpdateWithoutUsuarioInput, pessoaUncheckedUpdateWithoutUsuarioInput>
   }
 
-  export type usuario_x_perfilUpdateManyWithoutUsuarioNestedInput = {
-    create?: XOR<Enumerable<usuario_x_perfilCreateWithoutUsuarioInput>, Enumerable<usuario_x_perfilUncheckedCreateWithoutUsuarioInput>>
-    connectOrCreate?: Enumerable<usuario_x_perfilCreateOrConnectWithoutUsuarioInput>
-    upsert?: Enumerable<usuario_x_perfilUpsertWithWhereUniqueWithoutUsuarioInput>
-    createMany?: usuario_x_perfilCreateManyUsuarioInputEnvelope
-    set?: Enumerable<usuario_x_perfilWhereUniqueInput>
-    disconnect?: Enumerable<usuario_x_perfilWhereUniqueInput>
-    delete?: Enumerable<usuario_x_perfilWhereUniqueInput>
-    connect?: Enumerable<usuario_x_perfilWhereUniqueInput>
-    update?: Enumerable<usuario_x_perfilUpdateWithWhereUniqueWithoutUsuarioInput>
-    updateMany?: Enumerable<usuario_x_perfilUpdateManyWithWhereWithoutUsuarioInput>
-    deleteMany?: Enumerable<usuario_x_perfilScalarWhereInput>
+  export type usuario_perfilCreateNestedManyWithoutUsuario_perfil_tipoInput = {
+    create?: XOR<Enumerable<usuario_perfilCreateWithoutUsuario_perfil_tipoInput>, Enumerable<usuario_perfilUncheckedCreateWithoutUsuario_perfil_tipoInput>>
+    connectOrCreate?: Enumerable<usuario_perfilCreateOrConnectWithoutUsuario_perfil_tipoInput>
+    createMany?: usuario_perfilCreateManyUsuario_perfil_tipoInputEnvelope
+    connect?: Enumerable<usuario_perfilWhereUniqueInput>
   }
 
-  export type auditoriaUncheckedUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput = {
-    create?: XOR<Enumerable<auditoriaCreateWithoutUsuario_auditoriaTousuarioInput>, Enumerable<auditoriaUncheckedCreateWithoutUsuario_auditoriaTousuarioInput>>
-    connectOrCreate?: Enumerable<auditoriaCreateOrConnectWithoutUsuario_auditoriaTousuarioInput>
-    upsert?: Enumerable<auditoriaUpsertWithWhereUniqueWithoutUsuario_auditoriaTousuarioInput>
-    createMany?: auditoriaCreateManyUsuario_auditoriaTousuarioInputEnvelope
-    set?: Enumerable<auditoriaWhereUniqueInput>
-    disconnect?: Enumerable<auditoriaWhereUniqueInput>
-    delete?: Enumerable<auditoriaWhereUniqueInput>
-    connect?: Enumerable<auditoriaWhereUniqueInput>
-    update?: Enumerable<auditoriaUpdateWithWhereUniqueWithoutUsuario_auditoriaTousuarioInput>
-    updateMany?: Enumerable<auditoriaUpdateManyWithWhereWithoutUsuario_auditoriaTousuarioInput>
-    deleteMany?: Enumerable<auditoriaScalarWhereInput>
+  export type usuario_perfilUncheckedCreateNestedManyWithoutUsuario_perfil_tipoInput = {
+    create?: XOR<Enumerable<usuario_perfilCreateWithoutUsuario_perfil_tipoInput>, Enumerable<usuario_perfilUncheckedCreateWithoutUsuario_perfil_tipoInput>>
+    connectOrCreate?: Enumerable<usuario_perfilCreateOrConnectWithoutUsuario_perfil_tipoInput>
+    createMany?: usuario_perfilCreateManyUsuario_perfil_tipoInputEnvelope
+    connect?: Enumerable<usuario_perfilWhereUniqueInput>
   }
 
-  export type checagemUncheckedUpdateManyWithoutUsuario_checagemTousuarioNestedInput = {
-    create?: XOR<Enumerable<checagemCreateWithoutUsuario_checagemTousuarioInput>, Enumerable<checagemUncheckedCreateWithoutUsuario_checagemTousuarioInput>>
-    connectOrCreate?: Enumerable<checagemCreateOrConnectWithoutUsuario_checagemTousuarioInput>
-    upsert?: Enumerable<checagemUpsertWithWhereUniqueWithoutUsuario_checagemTousuarioInput>
-    createMany?: checagemCreateManyUsuario_checagemTousuarioInputEnvelope
-    set?: Enumerable<checagemWhereUniqueInput>
-    disconnect?: Enumerable<checagemWhereUniqueInput>
-    delete?: Enumerable<checagemWhereUniqueInput>
-    connect?: Enumerable<checagemWhereUniqueInput>
-    update?: Enumerable<checagemUpdateWithWhereUniqueWithoutUsuario_checagemTousuarioInput>
-    updateMany?: Enumerable<checagemUpdateManyWithWhereWithoutUsuario_checagemTousuarioInput>
-    deleteMany?: Enumerable<checagemScalarWhereInput>
+  export type usuario_perfilUpdateManyWithoutUsuario_perfil_tipoNestedInput = {
+    create?: XOR<Enumerable<usuario_perfilCreateWithoutUsuario_perfil_tipoInput>, Enumerable<usuario_perfilUncheckedCreateWithoutUsuario_perfil_tipoInput>>
+    connectOrCreate?: Enumerable<usuario_perfilCreateOrConnectWithoutUsuario_perfil_tipoInput>
+    upsert?: Enumerable<usuario_perfilUpsertWithWhereUniqueWithoutUsuario_perfil_tipoInput>
+    createMany?: usuario_perfilCreateManyUsuario_perfil_tipoInputEnvelope
+    set?: Enumerable<usuario_perfilWhereUniqueInput>
+    disconnect?: Enumerable<usuario_perfilWhereUniqueInput>
+    delete?: Enumerable<usuario_perfilWhereUniqueInput>
+    connect?: Enumerable<usuario_perfilWhereUniqueInput>
+    update?: Enumerable<usuario_perfilUpdateWithWhereUniqueWithoutUsuario_perfil_tipoInput>
+    updateMany?: Enumerable<usuario_perfilUpdateManyWithWhereWithoutUsuario_perfil_tipoInput>
+    deleteMany?: Enumerable<usuario_perfilScalarWhereInput>
   }
 
-  export type fidic_fundo_x_usuarioUncheckedUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput = {
-    create?: XOR<Enumerable<fidic_fundo_x_usuarioCreateWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>, Enumerable<fidic_fundo_x_usuarioUncheckedCreateWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>>
-    connectOrCreate?: Enumerable<fidic_fundo_x_usuarioCreateOrConnectWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>
-    upsert?: Enumerable<fidic_fundo_x_usuarioUpsertWithWhereUniqueWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>
-    createMany?: fidic_fundo_x_usuarioCreateManyUsuario_fidic_fundo_x_usuarioTousuarioInputEnvelope
-    set?: Enumerable<fidic_fundo_x_usuarioWhereUniqueInput>
-    disconnect?: Enumerable<fidic_fundo_x_usuarioWhereUniqueInput>
-    delete?: Enumerable<fidic_fundo_x_usuarioWhereUniqueInput>
-    connect?: Enumerable<fidic_fundo_x_usuarioWhereUniqueInput>
-    update?: Enumerable<fidic_fundo_x_usuarioUpdateWithWhereUniqueWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>
-    updateMany?: Enumerable<fidic_fundo_x_usuarioUpdateManyWithWhereWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>
-    deleteMany?: Enumerable<fidic_fundo_x_usuarioScalarWhereInput>
+  export type usuario_perfilUncheckedUpdateManyWithoutUsuario_perfil_tipoNestedInput = {
+    create?: XOR<Enumerable<usuario_perfilCreateWithoutUsuario_perfil_tipoInput>, Enumerable<usuario_perfilUncheckedCreateWithoutUsuario_perfil_tipoInput>>
+    connectOrCreate?: Enumerable<usuario_perfilCreateOrConnectWithoutUsuario_perfil_tipoInput>
+    upsert?: Enumerable<usuario_perfilUpsertWithWhereUniqueWithoutUsuario_perfil_tipoInput>
+    createMany?: usuario_perfilCreateManyUsuario_perfil_tipoInputEnvelope
+    set?: Enumerable<usuario_perfilWhereUniqueInput>
+    disconnect?: Enumerable<usuario_perfilWhereUniqueInput>
+    delete?: Enumerable<usuario_perfilWhereUniqueInput>
+    connect?: Enumerable<usuario_perfilWhereUniqueInput>
+    update?: Enumerable<usuario_perfilUpdateWithWhereUniqueWithoutUsuario_perfil_tipoInput>
+    updateMany?: Enumerable<usuario_perfilUpdateManyWithWhereWithoutUsuario_perfil_tipoInput>
+    deleteMany?: Enumerable<usuario_perfilScalarWhereInput>
   }
 
-  export type titulos_x_usuarioUncheckedUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput = {
-    create?: XOR<Enumerable<titulos_x_usuarioCreateWithoutUsuario_titulos_x_usuarioTousuarioInput>, Enumerable<titulos_x_usuarioUncheckedCreateWithoutUsuario_titulos_x_usuarioTousuarioInput>>
-    connectOrCreate?: Enumerable<titulos_x_usuarioCreateOrConnectWithoutUsuario_titulos_x_usuarioTousuarioInput>
-    upsert?: Enumerable<titulos_x_usuarioUpsertWithWhereUniqueWithoutUsuario_titulos_x_usuarioTousuarioInput>
-    createMany?: titulos_x_usuarioCreateManyUsuario_titulos_x_usuarioTousuarioInputEnvelope
-    set?: Enumerable<titulos_x_usuarioWhereUniqueInput>
-    disconnect?: Enumerable<titulos_x_usuarioWhereUniqueInput>
-    delete?: Enumerable<titulos_x_usuarioWhereUniqueInput>
-    connect?: Enumerable<titulos_x_usuarioWhereUniqueInput>
-    update?: Enumerable<titulos_x_usuarioUpdateWithWhereUniqueWithoutUsuario_titulos_x_usuarioTousuarioInput>
-    updateMany?: Enumerable<titulos_x_usuarioUpdateManyWithWhereWithoutUsuario_titulos_x_usuarioTousuarioInput>
-    deleteMany?: Enumerable<titulos_x_usuarioScalarWhereInput>
+  export type carteiraCreateNestedOneWithoutCarteira_n_cedentesInput = {
+    create?: XOR<carteiraCreateWithoutCarteira_n_cedentesInput, carteiraUncheckedCreateWithoutCarteira_n_cedentesInput>
+    connectOrCreate?: carteiraCreateOrConnectWithoutCarteira_n_cedentesInput
+    connect?: carteiraWhereUniqueInput
   }
 
-  export type usuario_x_perfilUncheckedUpdateManyWithoutUsuarioNestedInput = {
-    create?: XOR<Enumerable<usuario_x_perfilCreateWithoutUsuarioInput>, Enumerable<usuario_x_perfilUncheckedCreateWithoutUsuarioInput>>
-    connectOrCreate?: Enumerable<usuario_x_perfilCreateOrConnectWithoutUsuarioInput>
-    upsert?: Enumerable<usuario_x_perfilUpsertWithWhereUniqueWithoutUsuarioInput>
-    createMany?: usuario_x_perfilCreateManyUsuarioInputEnvelope
-    set?: Enumerable<usuario_x_perfilWhereUniqueInput>
-    disconnect?: Enumerable<usuario_x_perfilWhereUniqueInput>
-    delete?: Enumerable<usuario_x_perfilWhereUniqueInput>
-    connect?: Enumerable<usuario_x_perfilWhereUniqueInput>
-    update?: Enumerable<usuario_x_perfilUpdateWithWhereUniqueWithoutUsuarioInput>
-    updateMany?: Enumerable<usuario_x_perfilUpdateManyWithWhereWithoutUsuarioInput>
-    deleteMany?: Enumerable<usuario_x_perfilScalarWhereInput>
+  export type cedenteCreateNestedOneWithoutCarteira_n_cedentesInput = {
+    create?: XOR<cedenteCreateWithoutCarteira_n_cedentesInput, cedenteUncheckedCreateWithoutCarteira_n_cedentesInput>
+    connectOrCreate?: cedenteCreateOrConnectWithoutCarteira_n_cedentesInput
+    connect?: cedenteWhereUniqueInput
   }
 
-  export type usuario_x_perfilCreateNestedManyWithoutUsuario_perfil_tipoInput = {
-    create?: XOR<Enumerable<usuario_x_perfilCreateWithoutUsuario_perfil_tipoInput>, Enumerable<usuario_x_perfilUncheckedCreateWithoutUsuario_perfil_tipoInput>>
-    connectOrCreate?: Enumerable<usuario_x_perfilCreateOrConnectWithoutUsuario_perfil_tipoInput>
-    createMany?: usuario_x_perfilCreateManyUsuario_perfil_tipoInputEnvelope
-    connect?: Enumerable<usuario_x_perfilWhereUniqueInput>
+  export type carteiraUpdateOneRequiredWithoutCarteira_n_cedentesNestedInput = {
+    create?: XOR<carteiraCreateWithoutCarteira_n_cedentesInput, carteiraUncheckedCreateWithoutCarteira_n_cedentesInput>
+    connectOrCreate?: carteiraCreateOrConnectWithoutCarteira_n_cedentesInput
+    upsert?: carteiraUpsertWithoutCarteira_n_cedentesInput
+    connect?: carteiraWhereUniqueInput
+    update?: XOR<carteiraUpdateWithoutCarteira_n_cedentesInput, carteiraUncheckedUpdateWithoutCarteira_n_cedentesInput>
   }
 
-  export type usuario_x_perfilUncheckedCreateNestedManyWithoutUsuario_perfil_tipoInput = {
-    create?: XOR<Enumerable<usuario_x_perfilCreateWithoutUsuario_perfil_tipoInput>, Enumerable<usuario_x_perfilUncheckedCreateWithoutUsuario_perfil_tipoInput>>
-    connectOrCreate?: Enumerable<usuario_x_perfilCreateOrConnectWithoutUsuario_perfil_tipoInput>
-    createMany?: usuario_x_perfilCreateManyUsuario_perfil_tipoInputEnvelope
-    connect?: Enumerable<usuario_x_perfilWhereUniqueInput>
+  export type cedenteUpdateOneRequiredWithoutCarteira_n_cedentesNestedInput = {
+    create?: XOR<cedenteCreateWithoutCarteira_n_cedentesInput, cedenteUncheckedCreateWithoutCarteira_n_cedentesInput>
+    connectOrCreate?: cedenteCreateOrConnectWithoutCarteira_n_cedentesInput
+    upsert?: cedenteUpsertWithoutCarteira_n_cedentesInput
+    connect?: cedenteWhereUniqueInput
+    update?: XOR<cedenteUpdateWithoutCarteira_n_cedentesInput, cedenteUncheckedUpdateWithoutCarteira_n_cedentesInput>
   }
 
-  export type usuario_x_perfilUpdateManyWithoutUsuario_perfil_tipoNestedInput = {
-    create?: XOR<Enumerable<usuario_x_perfilCreateWithoutUsuario_perfil_tipoInput>, Enumerable<usuario_x_perfilUncheckedCreateWithoutUsuario_perfil_tipoInput>>
-    connectOrCreate?: Enumerable<usuario_x_perfilCreateOrConnectWithoutUsuario_perfil_tipoInput>
-    upsert?: Enumerable<usuario_x_perfilUpsertWithWhereUniqueWithoutUsuario_perfil_tipoInput>
-    createMany?: usuario_x_perfilCreateManyUsuario_perfil_tipoInputEnvelope
-    set?: Enumerable<usuario_x_perfilWhereUniqueInput>
-    disconnect?: Enumerable<usuario_x_perfilWhereUniqueInput>
-    delete?: Enumerable<usuario_x_perfilWhereUniqueInput>
-    connect?: Enumerable<usuario_x_perfilWhereUniqueInput>
-    update?: Enumerable<usuario_x_perfilUpdateWithWhereUniqueWithoutUsuario_perfil_tipoInput>
-    updateMany?: Enumerable<usuario_x_perfilUpdateManyWithWhereWithoutUsuario_perfil_tipoInput>
-    deleteMany?: Enumerable<usuario_x_perfilScalarWhereInput>
+  export type organogramaCreateNestedOneWithoutOrganograma_x_usuarioInput = {
+    create?: XOR<organogramaCreateWithoutOrganograma_x_usuarioInput, organogramaUncheckedCreateWithoutOrganograma_x_usuarioInput>
+    connectOrCreate?: organogramaCreateOrConnectWithoutOrganograma_x_usuarioInput
+    connect?: organogramaWhereUniqueInput
   }
 
-  export type usuario_x_perfilUncheckedUpdateManyWithoutUsuario_perfil_tipoNestedInput = {
-    create?: XOR<Enumerable<usuario_x_perfilCreateWithoutUsuario_perfil_tipoInput>, Enumerable<usuario_x_perfilUncheckedCreateWithoutUsuario_perfil_tipoInput>>
-    connectOrCreate?: Enumerable<usuario_x_perfilCreateOrConnectWithoutUsuario_perfil_tipoInput>
-    upsert?: Enumerable<usuario_x_perfilUpsertWithWhereUniqueWithoutUsuario_perfil_tipoInput>
-    createMany?: usuario_x_perfilCreateManyUsuario_perfil_tipoInputEnvelope
-    set?: Enumerable<usuario_x_perfilWhereUniqueInput>
-    disconnect?: Enumerable<usuario_x_perfilWhereUniqueInput>
-    delete?: Enumerable<usuario_x_perfilWhereUniqueInput>
-    connect?: Enumerable<usuario_x_perfilWhereUniqueInput>
-    update?: Enumerable<usuario_x_perfilUpdateWithWhereUniqueWithoutUsuario_perfil_tipoInput>
-    updateMany?: Enumerable<usuario_x_perfilUpdateManyWithWhereWithoutUsuario_perfil_tipoInput>
-    deleteMany?: Enumerable<usuario_x_perfilScalarWhereInput>
+  export type organogramaUpdateOneRequiredWithoutOrganograma_x_usuarioNestedInput = {
+    create?: XOR<organogramaCreateWithoutOrganograma_x_usuarioInput, organogramaUncheckedCreateWithoutOrganograma_x_usuarioInput>
+    connectOrCreate?: organogramaCreateOrConnectWithoutOrganograma_x_usuarioInput
+    upsert?: organogramaUpsertWithoutOrganograma_x_usuarioInput
+    connect?: organogramaWhereUniqueInput
+    update?: XOR<organogramaUpdateWithoutOrganograma_x_usuarioInput, organogramaUncheckedUpdateWithoutOrganograma_x_usuarioInput>
   }
 
-  export type usuarioCreateNestedOneWithoutUsuario_x_perfilInput = {
-    create?: XOR<usuarioCreateWithoutUsuario_x_perfilInput, usuarioUncheckedCreateWithoutUsuario_x_perfilInput>
-    connectOrCreate?: usuarioCreateOrConnectWithoutUsuario_x_perfilInput
-    connect?: usuarioWhereUniqueInput
+  export type plataformaCreateNestedOneWithoutPlataforma_x_usuarioInput = {
+    create?: XOR<plataformaCreateWithoutPlataforma_x_usuarioInput, plataformaUncheckedCreateWithoutPlataforma_x_usuarioInput>
+    connectOrCreate?: plataformaCreateOrConnectWithoutPlataforma_x_usuarioInput
+    connect?: plataformaWhereUniqueInput
   }
 
-  export type usuario_perfil_tipoCreateNestedOneWithoutUsuario_x_perfilInput = {
-    create?: XOR<usuario_perfil_tipoCreateWithoutUsuario_x_perfilInput, usuario_perfil_tipoUncheckedCreateWithoutUsuario_x_perfilInput>
-    connectOrCreate?: usuario_perfil_tipoCreateOrConnectWithoutUsuario_x_perfilInput
+  export type plataformaUpdateOneRequiredWithoutPlataforma_x_usuarioNestedInput = {
+    create?: XOR<plataformaCreateWithoutPlataforma_x_usuarioInput, plataformaUncheckedCreateWithoutPlataforma_x_usuarioInput>
+    connectOrCreate?: plataformaCreateOrConnectWithoutPlataforma_x_usuarioInput
+    upsert?: plataformaUpsertWithoutPlataforma_x_usuarioInput
+    connect?: plataformaWhereUniqueInput
+    update?: XOR<plataformaUpdateWithoutPlataforma_x_usuarioInput, plataformaUncheckedUpdateWithoutPlataforma_x_usuarioInput>
+  }
+
+  export type tituloCreateNestedOneWithoutTitulo_itensInput = {
+    create?: XOR<tituloCreateWithoutTitulo_itensInput, tituloUncheckedCreateWithoutTitulo_itensInput>
+    connectOrCreate?: tituloCreateOrConnectWithoutTitulo_itensInput
+    connect?: tituloWhereUniqueInput
+  }
+
+  export type tituloUpdateOneRequiredWithoutTitulo_itensNestedInput = {
+    create?: XOR<tituloCreateWithoutTitulo_itensInput, tituloUncheckedCreateWithoutTitulo_itensInput>
+    connectOrCreate?: tituloCreateOrConnectWithoutTitulo_itensInput
+    upsert?: tituloUpsertWithoutTitulo_itensInput
+    connect?: tituloWhereUniqueInput
+    update?: XOR<tituloUpdateWithoutTitulo_itensInput, tituloUncheckedUpdateWithoutTitulo_itensInput>
+  }
+
+  export type usuario_perfil_tipoCreateNestedOneWithoutUsuario_perfilInput = {
+    create?: XOR<usuario_perfil_tipoCreateWithoutUsuario_perfilInput, usuario_perfil_tipoUncheckedCreateWithoutUsuario_perfilInput>
+    connectOrCreate?: usuario_perfil_tipoCreateOrConnectWithoutUsuario_perfilInput
     connect?: usuario_perfil_tipoWhereUniqueInput
   }
 
-  export type usuarioUpdateOneRequiredWithoutUsuario_x_perfilNestedInput = {
-    create?: XOR<usuarioCreateWithoutUsuario_x_perfilInput, usuarioUncheckedCreateWithoutUsuario_x_perfilInput>
-    connectOrCreate?: usuarioCreateOrConnectWithoutUsuario_x_perfilInput
-    upsert?: usuarioUpsertWithoutUsuario_x_perfilInput
-    connect?: usuarioWhereUniqueInput
-    update?: XOR<usuarioUpdateWithoutUsuario_x_perfilInput, usuarioUncheckedUpdateWithoutUsuario_x_perfilInput>
-  }
-
-  export type usuario_perfil_tipoUpdateOneRequiredWithoutUsuario_x_perfilNestedInput = {
-    create?: XOR<usuario_perfil_tipoCreateWithoutUsuario_x_perfilInput, usuario_perfil_tipoUncheckedCreateWithoutUsuario_x_perfilInput>
-    connectOrCreate?: usuario_perfil_tipoCreateOrConnectWithoutUsuario_x_perfilInput
-    upsert?: usuario_perfil_tipoUpsertWithoutUsuario_x_perfilInput
+  export type usuario_perfil_tipoUpdateOneRequiredWithoutUsuario_perfilNestedInput = {
+    create?: XOR<usuario_perfil_tipoCreateWithoutUsuario_perfilInput, usuario_perfil_tipoUncheckedCreateWithoutUsuario_perfilInput>
+    connectOrCreate?: usuario_perfil_tipoCreateOrConnectWithoutUsuario_perfilInput
+    upsert?: usuario_perfil_tipoUpsertWithoutUsuario_perfilInput
     connect?: usuario_perfil_tipoWhereUniqueInput
-    update?: XOR<usuario_perfil_tipoUpdateWithoutUsuario_x_perfilInput, usuario_perfil_tipoUncheckedUpdateWithoutUsuario_x_perfilInput>
+    update?: XOR<usuario_perfil_tipoUpdateWithoutUsuario_perfilInput, usuario_perfil_tipoUncheckedUpdateWithoutUsuario_perfilInput>
   }
 
   export type NestedStringNullableFilter = {
@@ -39124,88 +34642,20 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter
   }
 
-  export type usuarioCreateWithoutAuditoriaInput = {
-    email: string
-    senha: string
-    status?: string | null
-    primeiro_acesso?: boolean | null
-    confirmou_cadastro?: boolean | null
-    codigo_confirma_cadastro?: string | null
-    codigo_reset_senha?: string | null
-    codigo_data_expiracao?: Date | string | null
-    created_at?: Date | string
-    updated_at?: Date | string | null
-    checagem?: checagemCreateNestedManyWithoutUsuario_checagemTousuarioInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
-    titulos_x_usuario?: titulos_x_usuarioCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput
-    pessoa: pessoaCreateNestedOneWithoutUsuarioInput
-    usuario_x_perfil?: usuario_x_perfilCreateNestedManyWithoutUsuarioInput
+  export type carteiraCreateWithoutBorderoInput = {
+    fidic_fundo: fidic_fundoCreateNestedOneWithoutCarteiraInput
+    carteira_n_cedentes?: carteira_n_cedentesCreateNestedManyWithoutCarteiraInput
   }
 
-  export type usuarioUncheckedCreateWithoutAuditoriaInput = {
+  export type carteiraUncheckedCreateWithoutBorderoInput = {
     id?: number
-    email: string
-    senha: string
-    pessoa_id: number
-    status?: string | null
-    primeiro_acesso?: boolean | null
-    confirmou_cadastro?: boolean | null
-    codigo_confirma_cadastro?: string | null
-    codigo_reset_senha?: string | null
-    codigo_data_expiracao?: Date | string | null
-    created_at?: Date | string
-    updated_at?: Date | string | null
-    checagem?: checagemUncheckedCreateNestedManyWithoutUsuario_checagemTousuarioInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
-    titulos_x_usuario?: titulos_x_usuarioUncheckedCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput
-    usuario_x_perfil?: usuario_x_perfilUncheckedCreateNestedManyWithoutUsuarioInput
+    fiduc_fundo_id: number
+    carteira_n_cedentes?: carteira_n_cedentesUncheckedCreateNestedManyWithoutCarteiraInput
   }
 
-  export type usuarioCreateOrConnectWithoutAuditoriaInput = {
-    where: usuarioWhereUniqueInput
-    create: XOR<usuarioCreateWithoutAuditoriaInput, usuarioUncheckedCreateWithoutAuditoriaInput>
-  }
-
-  export type usuarioUpsertWithoutAuditoriaInput = {
-    update: XOR<usuarioUpdateWithoutAuditoriaInput, usuarioUncheckedUpdateWithoutAuditoriaInput>
-    create: XOR<usuarioCreateWithoutAuditoriaInput, usuarioUncheckedCreateWithoutAuditoriaInput>
-  }
-
-  export type usuarioUpdateWithoutAuditoriaInput = {
-    email?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
-    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
-    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    checagem?: checagemUpdateManyWithoutUsuario_checagemTousuarioNestedInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
-    titulos_x_usuario?: titulos_x_usuarioUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
-    pessoa?: pessoaUpdateOneRequiredWithoutUsuarioNestedInput
-    usuario_x_perfil?: usuario_x_perfilUpdateManyWithoutUsuarioNestedInput
-  }
-
-  export type usuarioUncheckedUpdateWithoutAuditoriaInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    email?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
-    pessoa_id?: IntFieldUpdateOperationsInput | number
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
-    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
-    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    checagem?: checagemUncheckedUpdateManyWithoutUsuario_checagemTousuarioNestedInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
-    titulos_x_usuario?: titulos_x_usuarioUncheckedUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
-    usuario_x_perfil?: usuario_x_perfilUncheckedUpdateManyWithoutUsuarioNestedInput
+  export type carteiraCreateOrConnectWithoutBorderoInput = {
+    where: carteiraWhereUniqueInput
+    create: XOR<carteiraCreateWithoutBorderoInput, carteiraUncheckedCreateWithoutBorderoInput>
   }
 
   export type tituloCreateWithoutBorderoInput = {
@@ -39216,6 +34666,7 @@ export namespace Prisma {
     emissao?: Date | string | null
     parcela?: string | null
     titulo_tipo: titulo_tipoCreateNestedOneWithoutTituloInput
+    titulo_itens?: titulo_itensCreateNestedManyWithoutTituloInput
   }
 
   export type tituloUncheckedCreateWithoutBorderoInput = {
@@ -39227,6 +34678,7 @@ export namespace Prisma {
     numero?: string | null
     emissao?: Date | string | null
     parcela?: string | null
+    titulo_itens?: titulo_itensUncheckedCreateNestedManyWithoutTituloInput
   }
 
   export type tituloCreateOrConnectWithoutBorderoInput = {
@@ -39239,25 +34691,20 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type titulos_x_usuarioCreateWithoutBordero_borderoTotitulos_x_usuarioInput = {
-    status?: string | null
-    usuario_titulos_x_usuarioTousuario?: usuarioCreateNestedOneWithoutTitulos_x_usuarioInput
+  export type carteiraUpsertWithoutBorderoInput = {
+    update: XOR<carteiraUpdateWithoutBorderoInput, carteiraUncheckedUpdateWithoutBorderoInput>
+    create: XOR<carteiraCreateWithoutBorderoInput, carteiraUncheckedCreateWithoutBorderoInput>
   }
 
-  export type titulos_x_usuarioUncheckedCreateWithoutBordero_borderoTotitulos_x_usuarioInput = {
-    id?: number
-    usuario?: number | null
-    status?: string | null
+  export type carteiraUpdateWithoutBorderoInput = {
+    fidic_fundo?: fidic_fundoUpdateOneRequiredWithoutCarteiraNestedInput
+    carteira_n_cedentes?: carteira_n_cedentesUpdateManyWithoutCarteiraNestedInput
   }
 
-  export type titulos_x_usuarioCreateOrConnectWithoutBordero_borderoTotitulos_x_usuarioInput = {
-    where: titulos_x_usuarioWhereUniqueInput
-    create: XOR<titulos_x_usuarioCreateWithoutBordero_borderoTotitulos_x_usuarioInput, titulos_x_usuarioUncheckedCreateWithoutBordero_borderoTotitulos_x_usuarioInput>
-  }
-
-  export type titulos_x_usuarioCreateManyBordero_borderoTotitulos_x_usuarioInputEnvelope = {
-    data: Enumerable<titulos_x_usuarioCreateManyBordero_borderoTotitulos_x_usuarioInput>
-    skipDuplicates?: boolean
+  export type carteiraUncheckedUpdateWithoutBorderoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fiduc_fundo_id?: IntFieldUpdateOperationsInput | number
+    carteira_n_cedentes?: carteira_n_cedentesUncheckedUpdateManyWithoutCarteiraNestedInput
   }
 
   export type tituloUpsertWithWhereUniqueWithoutBorderoInput = {
@@ -39291,32 +34738,6 @@ export namespace Prisma {
     parcela?: StringNullableFilter | string | null
   }
 
-  export type titulos_x_usuarioUpsertWithWhereUniqueWithoutBordero_borderoTotitulos_x_usuarioInput = {
-    where: titulos_x_usuarioWhereUniqueInput
-    update: XOR<titulos_x_usuarioUpdateWithoutBordero_borderoTotitulos_x_usuarioInput, titulos_x_usuarioUncheckedUpdateWithoutBordero_borderoTotitulos_x_usuarioInput>
-    create: XOR<titulos_x_usuarioCreateWithoutBordero_borderoTotitulos_x_usuarioInput, titulos_x_usuarioUncheckedCreateWithoutBordero_borderoTotitulos_x_usuarioInput>
-  }
-
-  export type titulos_x_usuarioUpdateWithWhereUniqueWithoutBordero_borderoTotitulos_x_usuarioInput = {
-    where: titulos_x_usuarioWhereUniqueInput
-    data: XOR<titulos_x_usuarioUpdateWithoutBordero_borderoTotitulos_x_usuarioInput, titulos_x_usuarioUncheckedUpdateWithoutBordero_borderoTotitulos_x_usuarioInput>
-  }
-
-  export type titulos_x_usuarioUpdateManyWithWhereWithoutBordero_borderoTotitulos_x_usuarioInput = {
-    where: titulos_x_usuarioScalarWhereInput
-    data: XOR<titulos_x_usuarioUpdateManyMutationInput, titulos_x_usuarioUncheckedUpdateManyWithoutTitulos_x_usuarioInput>
-  }
-
-  export type titulos_x_usuarioScalarWhereInput = {
-    AND?: Enumerable<titulos_x_usuarioScalarWhereInput>
-    OR?: Enumerable<titulos_x_usuarioScalarWhereInput>
-    NOT?: Enumerable<titulos_x_usuarioScalarWhereInput>
-    id?: IntFilter | number
-    usuario?: IntNullableFilter | number | null
-    bordero?: IntNullableFilter | number | null
-    status?: StringNullableFilter | string | null
-  }
-
   export type fidic_fundoCreateWithoutCarteiraInput = {
     pessoa_id: number
     razao_social: string
@@ -39341,6 +34762,44 @@ export namespace Prisma {
     create: XOR<fidic_fundoCreateWithoutCarteiraInput, fidic_fundoUncheckedCreateWithoutCarteiraInput>
   }
 
+  export type borderoCreateWithoutCarteiraInput = {
+    titulo?: tituloCreateNestedManyWithoutBorderoInput
+  }
+
+  export type borderoUncheckedCreateWithoutCarteiraInput = {
+    id?: number
+    titulo?: tituloUncheckedCreateNestedManyWithoutBorderoInput
+  }
+
+  export type borderoCreateOrConnectWithoutCarteiraInput = {
+    where: borderoWhereUniqueInput
+    create: XOR<borderoCreateWithoutCarteiraInput, borderoUncheckedCreateWithoutCarteiraInput>
+  }
+
+  export type borderoCreateManyCarteiraInputEnvelope = {
+    data: Enumerable<borderoCreateManyCarteiraInput>
+    skipDuplicates?: boolean
+  }
+
+  export type carteira_n_cedentesCreateWithoutCarteiraInput = {
+    cedente: cedenteCreateNestedOneWithoutCarteira_n_cedentesInput
+  }
+
+  export type carteira_n_cedentesUncheckedCreateWithoutCarteiraInput = {
+    id?: number
+    cedente_id: number
+  }
+
+  export type carteira_n_cedentesCreateOrConnectWithoutCarteiraInput = {
+    where: carteira_n_cedentesWhereUniqueInput
+    create: XOR<carteira_n_cedentesCreateWithoutCarteiraInput, carteira_n_cedentesUncheckedCreateWithoutCarteiraInput>
+  }
+
+  export type carteira_n_cedentesCreateManyCarteiraInputEnvelope = {
+    data: Enumerable<carteira_n_cedentesCreateManyCarteiraInput>
+    skipDuplicates?: boolean
+  }
+
   export type fidic_fundoUpsertWithoutCarteiraInput = {
     update: XOR<fidic_fundoUpdateWithoutCarteiraInput, fidic_fundoUncheckedUpdateWithoutCarteiraInput>
     create: XOR<fidic_fundoCreateWithoutCarteiraInput, fidic_fundoUncheckedCreateWithoutCarteiraInput>
@@ -39363,6 +34822,74 @@ export namespace Prisma {
     abertura?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cnpj?: NullableStringFieldUpdateOperationsInput | string | null
     fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedUpdateManyWithoutFidic_fundoNestedInput
+  }
+
+  export type borderoUpsertWithWhereUniqueWithoutCarteiraInput = {
+    where: borderoWhereUniqueInput
+    update: XOR<borderoUpdateWithoutCarteiraInput, borderoUncheckedUpdateWithoutCarteiraInput>
+    create: XOR<borderoCreateWithoutCarteiraInput, borderoUncheckedCreateWithoutCarteiraInput>
+  }
+
+  export type borderoUpdateWithWhereUniqueWithoutCarteiraInput = {
+    where: borderoWhereUniqueInput
+    data: XOR<borderoUpdateWithoutCarteiraInput, borderoUncheckedUpdateWithoutCarteiraInput>
+  }
+
+  export type borderoUpdateManyWithWhereWithoutCarteiraInput = {
+    where: borderoScalarWhereInput
+    data: XOR<borderoUpdateManyMutationInput, borderoUncheckedUpdateManyWithoutBorderoInput>
+  }
+
+  export type borderoScalarWhereInput = {
+    AND?: Enumerable<borderoScalarWhereInput>
+    OR?: Enumerable<borderoScalarWhereInput>
+    NOT?: Enumerable<borderoScalarWhereInput>
+    id?: IntFilter | number
+    carteira_id?: IntFilter | number
+  }
+
+  export type carteira_n_cedentesUpsertWithWhereUniqueWithoutCarteiraInput = {
+    where: carteira_n_cedentesWhereUniqueInput
+    update: XOR<carteira_n_cedentesUpdateWithoutCarteiraInput, carteira_n_cedentesUncheckedUpdateWithoutCarteiraInput>
+    create: XOR<carteira_n_cedentesCreateWithoutCarteiraInput, carteira_n_cedentesUncheckedCreateWithoutCarteiraInput>
+  }
+
+  export type carteira_n_cedentesUpdateWithWhereUniqueWithoutCarteiraInput = {
+    where: carteira_n_cedentesWhereUniqueInput
+    data: XOR<carteira_n_cedentesUpdateWithoutCarteiraInput, carteira_n_cedentesUncheckedUpdateWithoutCarteiraInput>
+  }
+
+  export type carteira_n_cedentesUpdateManyWithWhereWithoutCarteiraInput = {
+    where: carteira_n_cedentesScalarWhereInput
+    data: XOR<carteira_n_cedentesUpdateManyMutationInput, carteira_n_cedentesUncheckedUpdateManyWithoutCarteira_n_cedentesInput>
+  }
+
+  export type carteira_n_cedentesScalarWhereInput = {
+    AND?: Enumerable<carteira_n_cedentesScalarWhereInput>
+    OR?: Enumerable<carteira_n_cedentesScalarWhereInput>
+    NOT?: Enumerable<carteira_n_cedentesScalarWhereInput>
+    id?: IntFilter | number
+    carteira_id?: IntFilter | number
+    cedente_id?: IntFilter | number
+  }
+
+  export type carteira_n_cedentesCreateWithoutCedenteInput = {
+    carteira: carteiraCreateNestedOneWithoutCarteira_n_cedentesInput
+  }
+
+  export type carteira_n_cedentesUncheckedCreateWithoutCedenteInput = {
+    id?: number
+    carteira_id: number
+  }
+
+  export type carteira_n_cedentesCreateOrConnectWithoutCedenteInput = {
+    where: carteira_n_cedentesWhereUniqueInput
+    create: XOR<carteira_n_cedentesCreateWithoutCedenteInput, carteira_n_cedentesUncheckedCreateWithoutCedenteInput>
+  }
+
+  export type carteira_n_cedentesCreateManyCedenteInputEnvelope = {
+    data: Enumerable<carteira_n_cedentesCreateManyCedenteInput>
+    skipDuplicates?: boolean
   }
 
   export type cedente_analiseCreateWithoutCedente_cedenteTocedente_analiseInput = {
@@ -39403,22 +34930,20 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type titulo_x_cedenteCreateWithoutCedente_cedenteTotitulo_x_cedenteInput = {
-
+  export type carteira_n_cedentesUpsertWithWhereUniqueWithoutCedenteInput = {
+    where: carteira_n_cedentesWhereUniqueInput
+    update: XOR<carteira_n_cedentesUpdateWithoutCedenteInput, carteira_n_cedentesUncheckedUpdateWithoutCedenteInput>
+    create: XOR<carteira_n_cedentesCreateWithoutCedenteInput, carteira_n_cedentesUncheckedCreateWithoutCedenteInput>
   }
 
-  export type titulo_x_cedenteUncheckedCreateWithoutCedente_cedenteTotitulo_x_cedenteInput = {
-    id?: number
+  export type carteira_n_cedentesUpdateWithWhereUniqueWithoutCedenteInput = {
+    where: carteira_n_cedentesWhereUniqueInput
+    data: XOR<carteira_n_cedentesUpdateWithoutCedenteInput, carteira_n_cedentesUncheckedUpdateWithoutCedenteInput>
   }
 
-  export type titulo_x_cedenteCreateOrConnectWithoutCedente_cedenteTotitulo_x_cedenteInput = {
-    where: titulo_x_cedenteWhereUniqueInput
-    create: XOR<titulo_x_cedenteCreateWithoutCedente_cedenteTotitulo_x_cedenteInput, titulo_x_cedenteUncheckedCreateWithoutCedente_cedenteTotitulo_x_cedenteInput>
-  }
-
-  export type titulo_x_cedenteCreateManyCedente_cedenteTotitulo_x_cedenteInputEnvelope = {
-    data: Enumerable<titulo_x_cedenteCreateManyCedente_cedenteTotitulo_x_cedenteInput>
-    skipDuplicates?: boolean
+  export type carteira_n_cedentesUpdateManyWithWhereWithoutCedenteInput = {
+    where: carteira_n_cedentesScalarWhereInput
+    data: XOR<carteira_n_cedentesUpdateManyMutationInput, carteira_n_cedentesUncheckedUpdateManyWithoutCarteira_n_cedentesInput>
   }
 
   export type cedente_analiseUpsertWithWhereUniqueWithoutCedente_cedenteTocedente_analiseInput = {
@@ -39471,30 +34996,6 @@ export namespace Prisma {
     sacado?: IntNullableFilter | number | null
   }
 
-  export type titulo_x_cedenteUpsertWithWhereUniqueWithoutCedente_cedenteTotitulo_x_cedenteInput = {
-    where: titulo_x_cedenteWhereUniqueInput
-    update: XOR<titulo_x_cedenteUpdateWithoutCedente_cedenteTotitulo_x_cedenteInput, titulo_x_cedenteUncheckedUpdateWithoutCedente_cedenteTotitulo_x_cedenteInput>
-    create: XOR<titulo_x_cedenteCreateWithoutCedente_cedenteTotitulo_x_cedenteInput, titulo_x_cedenteUncheckedCreateWithoutCedente_cedenteTotitulo_x_cedenteInput>
-  }
-
-  export type titulo_x_cedenteUpdateWithWhereUniqueWithoutCedente_cedenteTotitulo_x_cedenteInput = {
-    where: titulo_x_cedenteWhereUniqueInput
-    data: XOR<titulo_x_cedenteUpdateWithoutCedente_cedenteTotitulo_x_cedenteInput, titulo_x_cedenteUncheckedUpdateWithoutCedente_cedenteTotitulo_x_cedenteInput>
-  }
-
-  export type titulo_x_cedenteUpdateManyWithWhereWithoutCedente_cedenteTotitulo_x_cedenteInput = {
-    where: titulo_x_cedenteScalarWhereInput
-    data: XOR<titulo_x_cedenteUpdateManyMutationInput, titulo_x_cedenteUncheckedUpdateManyWithoutTitulo_x_cedenteInput>
-  }
-
-  export type titulo_x_cedenteScalarWhereInput = {
-    AND?: Enumerable<titulo_x_cedenteScalarWhereInput>
-    OR?: Enumerable<titulo_x_cedenteScalarWhereInput>
-    NOT?: Enumerable<titulo_x_cedenteScalarWhereInput>
-    id?: IntFilter | number
-    cedente?: IntFilter | number
-  }
-
   export type cedenteCreateWithoutCedente_analiseInput = {
     pessoa_id: number
     razao_social: string
@@ -39508,8 +35009,8 @@ export namespace Prisma {
     cidade?: string | null
     uf?: string | null
     telefone?: string | null
+    carteira_n_cedentes?: carteira_n_cedentesCreateNestedManyWithoutCedenteInput
     cedente_n_sacados?: cedente_n_sacadosCreateNestedManyWithoutCedente_cedenteTocedente_n_sacadosInput
-    titulo_x_cedente?: titulo_x_cedenteCreateNestedManyWithoutCedente_cedenteTotitulo_x_cedenteInput
   }
 
   export type cedenteUncheckedCreateWithoutCedente_analiseInput = {
@@ -39526,8 +35027,8 @@ export namespace Prisma {
     cidade?: string | null
     uf?: string | null
     telefone?: string | null
+    carteira_n_cedentes?: carteira_n_cedentesUncheckedCreateNestedManyWithoutCedenteInput
     cedente_n_sacados?: cedente_n_sacadosUncheckedCreateNestedManyWithoutCedente_cedenteTocedente_n_sacadosInput
-    titulo_x_cedente?: titulo_x_cedenteUncheckedCreateNestedManyWithoutCedente_cedenteTotitulo_x_cedenteInput
   }
 
   export type cedenteCreateOrConnectWithoutCedente_analiseInput = {
@@ -39553,8 +35054,8 @@ export namespace Prisma {
     cidade?: NullableStringFieldUpdateOperationsInput | string | null
     uf?: NullableStringFieldUpdateOperationsInput | string | null
     telefone?: NullableStringFieldUpdateOperationsInput | string | null
+    carteira_n_cedentes?: carteira_n_cedentesUpdateManyWithoutCedenteNestedInput
     cedente_n_sacados?: cedente_n_sacadosUpdateManyWithoutCedente_cedenteTocedente_n_sacadosNestedInput
-    titulo_x_cedente?: titulo_x_cedenteUpdateManyWithoutCedente_cedenteTotitulo_x_cedenteNestedInput
   }
 
   export type cedenteUncheckedUpdateWithoutCedente_analiseInput = {
@@ -39571,8 +35072,8 @@ export namespace Prisma {
     cidade?: NullableStringFieldUpdateOperationsInput | string | null
     uf?: NullableStringFieldUpdateOperationsInput | string | null
     telefone?: NullableStringFieldUpdateOperationsInput | string | null
+    carteira_n_cedentes?: carteira_n_cedentesUncheckedUpdateManyWithoutCedenteNestedInput
     cedente_n_sacados?: cedente_n_sacadosUncheckedUpdateManyWithoutCedente_cedenteTocedente_n_sacadosNestedInput
-    titulo_x_cedente?: titulo_x_cedenteUncheckedUpdateManyWithoutCedente_cedenteTotitulo_x_cedenteNestedInput
   }
 
   export type cedenteCreateWithoutCedente_n_sacadosInput = {
@@ -39588,8 +35089,8 @@ export namespace Prisma {
     cidade?: string | null
     uf?: string | null
     telefone?: string | null
+    carteira_n_cedentes?: carteira_n_cedentesCreateNestedManyWithoutCedenteInput
     cedente_analise?: cedente_analiseCreateNestedManyWithoutCedente_cedenteTocedente_analiseInput
-    titulo_x_cedente?: titulo_x_cedenteCreateNestedManyWithoutCedente_cedenteTotitulo_x_cedenteInput
   }
 
   export type cedenteUncheckedCreateWithoutCedente_n_sacadosInput = {
@@ -39606,8 +35107,8 @@ export namespace Prisma {
     cidade?: string | null
     uf?: string | null
     telefone?: string | null
+    carteira_n_cedentes?: carteira_n_cedentesUncheckedCreateNestedManyWithoutCedenteInput
     cedente_analise?: cedente_analiseUncheckedCreateNestedManyWithoutCedente_cedenteTocedente_analiseInput
-    titulo_x_cedente?: titulo_x_cedenteUncheckedCreateNestedManyWithoutCedente_cedenteTotitulo_x_cedenteInput
   }
 
   export type cedenteCreateOrConnectWithoutCedente_n_sacadosInput = {
@@ -39655,8 +35156,8 @@ export namespace Prisma {
     cidade?: NullableStringFieldUpdateOperationsInput | string | null
     uf?: NullableStringFieldUpdateOperationsInput | string | null
     telefone?: NullableStringFieldUpdateOperationsInput | string | null
+    carteira_n_cedentes?: carteira_n_cedentesUpdateManyWithoutCedenteNestedInput
     cedente_analise?: cedente_analiseUpdateManyWithoutCedente_cedenteTocedente_analiseNestedInput
-    titulo_x_cedente?: titulo_x_cedenteUpdateManyWithoutCedente_cedenteTotitulo_x_cedenteNestedInput
   }
 
   export type cedenteUncheckedUpdateWithoutCedente_n_sacadosInput = {
@@ -39673,8 +35174,8 @@ export namespace Prisma {
     cidade?: NullableStringFieldUpdateOperationsInput | string | null
     uf?: NullableStringFieldUpdateOperationsInput | string | null
     telefone?: NullableStringFieldUpdateOperationsInput | string | null
+    carteira_n_cedentes?: carteira_n_cedentesUncheckedUpdateManyWithoutCedenteNestedInput
     cedente_analise?: cedente_analiseUncheckedUpdateManyWithoutCedente_cedenteTocedente_analiseNestedInput
-    titulo_x_cedente?: titulo_x_cedenteUncheckedUpdateManyWithoutCedente_cedenteTotitulo_x_cedenteNestedInput
   }
 
   export type sacadoUpsertWithoutCedente_n_sacadosInput = {
@@ -39699,96 +35200,15 @@ export namespace Prisma {
     cnpj?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type usuarioCreateWithoutChecagemInput = {
-    email: string
-    senha: string
-    status?: string | null
-    primeiro_acesso?: boolean | null
-    confirmou_cadastro?: boolean | null
-    codigo_confirma_cadastro?: string | null
-    codigo_reset_senha?: string | null
-    codigo_data_expiracao?: Date | string | null
-    created_at?: Date | string
-    updated_at?: Date | string | null
-    auditoria?: auditoriaCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
-    titulos_x_usuario?: titulos_x_usuarioCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput
-    pessoa: pessoaCreateNestedOneWithoutUsuarioInput
-    usuario_x_perfil?: usuario_x_perfilCreateNestedManyWithoutUsuarioInput
-  }
-
-  export type usuarioUncheckedCreateWithoutChecagemInput = {
-    id?: number
-    email: string
-    senha: string
-    pessoa_id: number
-    status?: string | null
-    primeiro_acesso?: boolean | null
-    confirmou_cadastro?: boolean | null
-    codigo_confirma_cadastro?: string | null
-    codigo_reset_senha?: string | null
-    codigo_data_expiracao?: Date | string | null
-    created_at?: Date | string
-    updated_at?: Date | string | null
-    auditoria?: auditoriaUncheckedCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
-    titulos_x_usuario?: titulos_x_usuarioUncheckedCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput
-    usuario_x_perfil?: usuario_x_perfilUncheckedCreateNestedManyWithoutUsuarioInput
-  }
-
-  export type usuarioCreateOrConnectWithoutChecagemInput = {
-    where: usuarioWhereUniqueInput
-    create: XOR<usuarioCreateWithoutChecagemInput, usuarioUncheckedCreateWithoutChecagemInput>
-  }
-
-  export type usuarioUpsertWithoutChecagemInput = {
-    update: XOR<usuarioUpdateWithoutChecagemInput, usuarioUncheckedUpdateWithoutChecagemInput>
-    create: XOR<usuarioCreateWithoutChecagemInput, usuarioUncheckedCreateWithoutChecagemInput>
-  }
-
-  export type usuarioUpdateWithoutChecagemInput = {
-    email?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
-    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
-    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    auditoria?: auditoriaUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
-    titulos_x_usuario?: titulos_x_usuarioUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
-    pessoa?: pessoaUpdateOneRequiredWithoutUsuarioNestedInput
-    usuario_x_perfil?: usuario_x_perfilUpdateManyWithoutUsuarioNestedInput
-  }
-
-  export type usuarioUncheckedUpdateWithoutChecagemInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    email?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
-    pessoa_id?: IntFieldUpdateOperationsInput | number
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
-    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
-    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    auditoria?: auditoriaUncheckedUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
-    titulos_x_usuario?: titulos_x_usuarioUncheckedUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
-    usuario_x_perfil?: usuario_x_perfilUncheckedUpdateManyWithoutUsuarioNestedInput
-  }
-
   export type carteiraCreateWithoutFidic_fundoInput = {
-
+    bordero?: borderoCreateNestedManyWithoutCarteiraInput
+    carteira_n_cedentes?: carteira_n_cedentesCreateNestedManyWithoutCarteiraInput
   }
 
   export type carteiraUncheckedCreateWithoutFidic_fundoInput = {
     id?: number
+    bordero?: borderoUncheckedCreateNestedManyWithoutCarteiraInput
+    carteira_n_cedentes?: carteira_n_cedentesUncheckedCreateNestedManyWithoutCarteiraInput
   }
 
   export type carteiraCreateOrConnectWithoutFidic_fundoInput = {
@@ -39802,7 +35222,7 @@ export namespace Prisma {
   }
 
   export type fidic_fundo_x_usuarioCreateWithoutFidic_fundoInput = {
-    usuario_fidic_fundo_x_usuarioTousuario?: usuarioCreateNestedOneWithoutFidic_fundo_x_usuarioInput
+    usuario?: number | null
   }
 
   export type fidic_fundo_x_usuarioUncheckedCreateWithoutFidic_fundoInput = {
@@ -39893,48 +35313,6 @@ export namespace Prisma {
     create: XOR<fidic_fundoCreateWithoutFidic_fundo_x_usuarioInput, fidic_fundoUncheckedCreateWithoutFidic_fundo_x_usuarioInput>
   }
 
-  export type usuarioCreateWithoutFidic_fundo_x_usuarioInput = {
-    email: string
-    senha: string
-    status?: string | null
-    primeiro_acesso?: boolean | null
-    confirmou_cadastro?: boolean | null
-    codigo_confirma_cadastro?: string | null
-    codigo_reset_senha?: string | null
-    codigo_data_expiracao?: Date | string | null
-    created_at?: Date | string
-    updated_at?: Date | string | null
-    auditoria?: auditoriaCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
-    checagem?: checagemCreateNestedManyWithoutUsuario_checagemTousuarioInput
-    titulos_x_usuario?: titulos_x_usuarioCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput
-    pessoa: pessoaCreateNestedOneWithoutUsuarioInput
-    usuario_x_perfil?: usuario_x_perfilCreateNestedManyWithoutUsuarioInput
-  }
-
-  export type usuarioUncheckedCreateWithoutFidic_fundo_x_usuarioInput = {
-    id?: number
-    email: string
-    senha: string
-    pessoa_id: number
-    status?: string | null
-    primeiro_acesso?: boolean | null
-    confirmou_cadastro?: boolean | null
-    codigo_confirma_cadastro?: string | null
-    codigo_reset_senha?: string | null
-    codigo_data_expiracao?: Date | string | null
-    created_at?: Date | string
-    updated_at?: Date | string | null
-    auditoria?: auditoriaUncheckedCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
-    checagem?: checagemUncheckedCreateNestedManyWithoutUsuario_checagemTousuarioInput
-    titulos_x_usuario?: titulos_x_usuarioUncheckedCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput
-    usuario_x_perfil?: usuario_x_perfilUncheckedCreateNestedManyWithoutUsuarioInput
-  }
-
-  export type usuarioCreateOrConnectWithoutFidic_fundo_x_usuarioInput = {
-    where: usuarioWhereUniqueInput
-    create: XOR<usuarioCreateWithoutFidic_fundo_x_usuarioInput, usuarioUncheckedCreateWithoutFidic_fundo_x_usuarioInput>
-  }
-
   export type fidic_fundoUpsertWithoutFidic_fundo_x_usuarioInput = {
     update: XOR<fidic_fundoUpdateWithoutFidic_fundo_x_usuarioInput, fidic_fundoUncheckedUpdateWithoutFidic_fundo_x_usuarioInput>
     create: XOR<fidic_fundoCreateWithoutFidic_fundo_x_usuarioInput, fidic_fundoUncheckedCreateWithoutFidic_fundo_x_usuarioInput>
@@ -39959,46 +35337,233 @@ export namespace Prisma {
     carteira?: carteiraUncheckedUpdateManyWithoutFidic_fundoNestedInput
   }
 
-  export type usuarioUpsertWithoutFidic_fundo_x_usuarioInput = {
-    update: XOR<usuarioUpdateWithoutFidic_fundo_x_usuarioInput, usuarioUncheckedUpdateWithoutFidic_fundo_x_usuarioInput>
-    create: XOR<usuarioCreateWithoutFidic_fundo_x_usuarioInput, usuarioUncheckedCreateWithoutFidic_fundo_x_usuarioInput>
+  export type organograma_tipoCreateWithoutOrganogramaInput = {
+    nome: string
   }
 
-  export type usuarioUpdateWithoutFidic_fundo_x_usuarioInput = {
-    email?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
-    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
-    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    auditoria?: auditoriaUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
-    checagem?: checagemUpdateManyWithoutUsuario_checagemTousuarioNestedInput
-    titulos_x_usuario?: titulos_x_usuarioUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
-    pessoa?: pessoaUpdateOneRequiredWithoutUsuarioNestedInput
-    usuario_x_perfil?: usuario_x_perfilUpdateManyWithoutUsuarioNestedInput
+  export type organograma_tipoUncheckedCreateWithoutOrganogramaInput = {
+    id?: number
+    nome: string
   }
 
-  export type usuarioUncheckedUpdateWithoutFidic_fundo_x_usuarioInput = {
+  export type organograma_tipoCreateOrConnectWithoutOrganogramaInput = {
+    where: organograma_tipoWhereUniqueInput
+    create: XOR<organograma_tipoCreateWithoutOrganogramaInput, organograma_tipoUncheckedCreateWithoutOrganogramaInput>
+  }
+
+  export type organograma_x_regiao_atuacaoCreateWithoutOrganogramaInput = {
+    regiao_atuacao: regiao_atuacaoCreateNestedOneWithoutOrganograma_x_regiao_atuacaoInput
+  }
+
+  export type organograma_x_regiao_atuacaoUncheckedCreateWithoutOrganogramaInput = {
+    id?: number
+    regiao_atuacao_id: number
+  }
+
+  export type organograma_x_regiao_atuacaoCreateOrConnectWithoutOrganogramaInput = {
+    where: organograma_x_regiao_atuacaoWhereUniqueInput
+    create: XOR<organograma_x_regiao_atuacaoCreateWithoutOrganogramaInput, organograma_x_regiao_atuacaoUncheckedCreateWithoutOrganogramaInput>
+  }
+
+  export type organograma_x_regiao_atuacaoCreateManyOrganogramaInputEnvelope = {
+    data: Enumerable<organograma_x_regiao_atuacaoCreateManyOrganogramaInput>
+    skipDuplicates?: boolean
+  }
+
+  export type organograma_x_usuarioCreateWithoutOrganogramaInput = {
+    usuario_id: number
+  }
+
+  export type organograma_x_usuarioUncheckedCreateWithoutOrganogramaInput = {
+    id?: number
+    usuario_id: number
+  }
+
+  export type organograma_x_usuarioCreateOrConnectWithoutOrganogramaInput = {
+    where: organograma_x_usuarioWhereUniqueInput
+    create: XOR<organograma_x_usuarioCreateWithoutOrganogramaInput, organograma_x_usuarioUncheckedCreateWithoutOrganogramaInput>
+  }
+
+  export type organograma_x_usuarioCreateManyOrganogramaInputEnvelope = {
+    data: Enumerable<organograma_x_usuarioCreateManyOrganogramaInput>
+    skipDuplicates?: boolean
+  }
+
+  export type organograma_tipoUpsertWithoutOrganogramaInput = {
+    update: XOR<organograma_tipoUpdateWithoutOrganogramaInput, organograma_tipoUncheckedUpdateWithoutOrganogramaInput>
+    create: XOR<organograma_tipoCreateWithoutOrganogramaInput, organograma_tipoUncheckedCreateWithoutOrganogramaInput>
+  }
+
+  export type organograma_tipoUpdateWithoutOrganogramaInput = {
+    nome?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type organograma_tipoUncheckedUpdateWithoutOrganogramaInput = {
     id?: IntFieldUpdateOperationsInput | number
-    email?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
-    pessoa_id?: IntFieldUpdateOperationsInput | number
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
-    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
-    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    auditoria?: auditoriaUncheckedUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
-    checagem?: checagemUncheckedUpdateManyWithoutUsuario_checagemTousuarioNestedInput
-    titulos_x_usuario?: titulos_x_usuarioUncheckedUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
-    usuario_x_perfil?: usuario_x_perfilUncheckedUpdateManyWithoutUsuarioNestedInput
+    nome?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type organograma_x_regiao_atuacaoUpsertWithWhereUniqueWithoutOrganogramaInput = {
+    where: organograma_x_regiao_atuacaoWhereUniqueInput
+    update: XOR<organograma_x_regiao_atuacaoUpdateWithoutOrganogramaInput, organograma_x_regiao_atuacaoUncheckedUpdateWithoutOrganogramaInput>
+    create: XOR<organograma_x_regiao_atuacaoCreateWithoutOrganogramaInput, organograma_x_regiao_atuacaoUncheckedCreateWithoutOrganogramaInput>
+  }
+
+  export type organograma_x_regiao_atuacaoUpdateWithWhereUniqueWithoutOrganogramaInput = {
+    where: organograma_x_regiao_atuacaoWhereUniqueInput
+    data: XOR<organograma_x_regiao_atuacaoUpdateWithoutOrganogramaInput, organograma_x_regiao_atuacaoUncheckedUpdateWithoutOrganogramaInput>
+  }
+
+  export type organograma_x_regiao_atuacaoUpdateManyWithWhereWithoutOrganogramaInput = {
+    where: organograma_x_regiao_atuacaoScalarWhereInput
+    data: XOR<organograma_x_regiao_atuacaoUpdateManyMutationInput, organograma_x_regiao_atuacaoUncheckedUpdateManyWithoutOrganograma_x_regiao_atuacaoInput>
+  }
+
+  export type organograma_x_regiao_atuacaoScalarWhereInput = {
+    AND?: Enumerable<organograma_x_regiao_atuacaoScalarWhereInput>
+    OR?: Enumerable<organograma_x_regiao_atuacaoScalarWhereInput>
+    NOT?: Enumerable<organograma_x_regiao_atuacaoScalarWhereInput>
+    id?: IntFilter | number
+    organograma_id?: IntFilter | number
+    regiao_atuacao_id?: IntFilter | number
+  }
+
+  export type organograma_x_usuarioUpsertWithWhereUniqueWithoutOrganogramaInput = {
+    where: organograma_x_usuarioWhereUniqueInput
+    update: XOR<organograma_x_usuarioUpdateWithoutOrganogramaInput, organograma_x_usuarioUncheckedUpdateWithoutOrganogramaInput>
+    create: XOR<organograma_x_usuarioCreateWithoutOrganogramaInput, organograma_x_usuarioUncheckedCreateWithoutOrganogramaInput>
+  }
+
+  export type organograma_x_usuarioUpdateWithWhereUniqueWithoutOrganogramaInput = {
+    where: organograma_x_usuarioWhereUniqueInput
+    data: XOR<organograma_x_usuarioUpdateWithoutOrganogramaInput, organograma_x_usuarioUncheckedUpdateWithoutOrganogramaInput>
+  }
+
+  export type organograma_x_usuarioUpdateManyWithWhereWithoutOrganogramaInput = {
+    where: organograma_x_usuarioScalarWhereInput
+    data: XOR<organograma_x_usuarioUpdateManyMutationInput, organograma_x_usuarioUncheckedUpdateManyWithoutOrganograma_x_usuarioInput>
+  }
+
+  export type organograma_x_usuarioScalarWhereInput = {
+    AND?: Enumerable<organograma_x_usuarioScalarWhereInput>
+    OR?: Enumerable<organograma_x_usuarioScalarWhereInput>
+    NOT?: Enumerable<organograma_x_usuarioScalarWhereInput>
+    id?: IntFilter | number
+    organograma_id?: IntFilter | number
+    usuario_id?: IntFilter | number
+  }
+
+  export type organogramaCreateWithoutOrganograma_tipoInput = {
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoCreateNestedManyWithoutOrganogramaInput
+    organograma_x_usuario?: organograma_x_usuarioCreateNestedManyWithoutOrganogramaInput
+  }
+
+  export type organogramaUncheckedCreateWithoutOrganograma_tipoInput = {
+    id?: number
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoUncheckedCreateNestedManyWithoutOrganogramaInput
+    organograma_x_usuario?: organograma_x_usuarioUncheckedCreateNestedManyWithoutOrganogramaInput
+  }
+
+  export type organogramaCreateOrConnectWithoutOrganograma_tipoInput = {
+    where: organogramaWhereUniqueInput
+    create: XOR<organogramaCreateWithoutOrganograma_tipoInput, organogramaUncheckedCreateWithoutOrganograma_tipoInput>
+  }
+
+  export type organogramaCreateManyOrganograma_tipoInputEnvelope = {
+    data: Enumerable<organogramaCreateManyOrganograma_tipoInput>
+    skipDuplicates?: boolean
+  }
+
+  export type organogramaUpsertWithWhereUniqueWithoutOrganograma_tipoInput = {
+    where: organogramaWhereUniqueInput
+    update: XOR<organogramaUpdateWithoutOrganograma_tipoInput, organogramaUncheckedUpdateWithoutOrganograma_tipoInput>
+    create: XOR<organogramaCreateWithoutOrganograma_tipoInput, organogramaUncheckedCreateWithoutOrganograma_tipoInput>
+  }
+
+  export type organogramaUpdateWithWhereUniqueWithoutOrganograma_tipoInput = {
+    where: organogramaWhereUniqueInput
+    data: XOR<organogramaUpdateWithoutOrganograma_tipoInput, organogramaUncheckedUpdateWithoutOrganograma_tipoInput>
+  }
+
+  export type organogramaUpdateManyWithWhereWithoutOrganograma_tipoInput = {
+    where: organogramaScalarWhereInput
+    data: XOR<organogramaUpdateManyMutationInput, organogramaUncheckedUpdateManyWithoutOrganogramaInput>
+  }
+
+  export type organogramaScalarWhereInput = {
+    AND?: Enumerable<organogramaScalarWhereInput>
+    OR?: Enumerable<organogramaScalarWhereInput>
+    NOT?: Enumerable<organogramaScalarWhereInput>
+    id?: IntFilter | number
+    organograma_id?: IntFilter | number
+  }
+
+  export type organogramaCreateWithoutOrganograma_x_regiao_atuacaoInput = {
+    organograma_tipo: organograma_tipoCreateNestedOneWithoutOrganogramaInput
+    organograma_x_usuario?: organograma_x_usuarioCreateNestedManyWithoutOrganogramaInput
+  }
+
+  export type organogramaUncheckedCreateWithoutOrganograma_x_regiao_atuacaoInput = {
+    id?: number
+    organograma_id: number
+    organograma_x_usuario?: organograma_x_usuarioUncheckedCreateNestedManyWithoutOrganogramaInput
+  }
+
+  export type organogramaCreateOrConnectWithoutOrganograma_x_regiao_atuacaoInput = {
+    where: organogramaWhereUniqueInput
+    create: XOR<organogramaCreateWithoutOrganograma_x_regiao_atuacaoInput, organogramaUncheckedCreateWithoutOrganograma_x_regiao_atuacaoInput>
+  }
+
+  export type regiao_atuacaoCreateWithoutOrganograma_x_regiao_atuacaoInput = {
+    nome: string
+    regiao_atuacao_tipo: regiao_atuacao_tipoCreateNestedOneWithoutRegiao_atuacaoInput
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoCreateNestedManyWithoutRegiao_atuacaoInput
+  }
+
+  export type regiao_atuacaoUncheckedCreateWithoutOrganograma_x_regiao_atuacaoInput = {
+    id?: number
+    nome: string
+    regiao_atuacao_tipo_id: number
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoUncheckedCreateNestedManyWithoutRegiao_atuacaoInput
+  }
+
+  export type regiao_atuacaoCreateOrConnectWithoutOrganograma_x_regiao_atuacaoInput = {
+    where: regiao_atuacaoWhereUniqueInput
+    create: XOR<regiao_atuacaoCreateWithoutOrganograma_x_regiao_atuacaoInput, regiao_atuacaoUncheckedCreateWithoutOrganograma_x_regiao_atuacaoInput>
+  }
+
+  export type organogramaUpsertWithoutOrganograma_x_regiao_atuacaoInput = {
+    update: XOR<organogramaUpdateWithoutOrganograma_x_regiao_atuacaoInput, organogramaUncheckedUpdateWithoutOrganograma_x_regiao_atuacaoInput>
+    create: XOR<organogramaCreateWithoutOrganograma_x_regiao_atuacaoInput, organogramaUncheckedCreateWithoutOrganograma_x_regiao_atuacaoInput>
+  }
+
+  export type organogramaUpdateWithoutOrganograma_x_regiao_atuacaoInput = {
+    organograma_tipo?: organograma_tipoUpdateOneRequiredWithoutOrganogramaNestedInput
+    organograma_x_usuario?: organograma_x_usuarioUpdateManyWithoutOrganogramaNestedInput
+  }
+
+  export type organogramaUncheckedUpdateWithoutOrganograma_x_regiao_atuacaoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    organograma_id?: IntFieldUpdateOperationsInput | number
+    organograma_x_usuario?: organograma_x_usuarioUncheckedUpdateManyWithoutOrganogramaNestedInput
+  }
+
+  export type regiao_atuacaoUpsertWithoutOrganograma_x_regiao_atuacaoInput = {
+    update: XOR<regiao_atuacaoUpdateWithoutOrganograma_x_regiao_atuacaoInput, regiao_atuacaoUncheckedUpdateWithoutOrganograma_x_regiao_atuacaoInput>
+    create: XOR<regiao_atuacaoCreateWithoutOrganograma_x_regiao_atuacaoInput, regiao_atuacaoUncheckedCreateWithoutOrganograma_x_regiao_atuacaoInput>
+  }
+
+  export type regiao_atuacaoUpdateWithoutOrganograma_x_regiao_atuacaoInput = {
+    nome?: StringFieldUpdateOperationsInput | string
+    regiao_atuacao_tipo?: regiao_atuacao_tipoUpdateOneRequiredWithoutRegiao_atuacaoNestedInput
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoUpdateManyWithoutRegiao_atuacaoNestedInput
+  }
+
+  export type regiao_atuacaoUncheckedUpdateWithoutOrganograma_x_regiao_atuacaoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nome?: StringFieldUpdateOperationsInput | string
+    regiao_atuacao_tipo_id?: IntFieldUpdateOperationsInput | number
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoUncheckedUpdateManyWithoutRegiao_atuacaoNestedInput
   }
 
   export type usuarioCreateWithoutPessoaInput = {
@@ -40012,11 +35577,6 @@ export namespace Prisma {
     codigo_data_expiracao?: Date | string | null
     created_at?: Date | string
     updated_at?: Date | string | null
-    auditoria?: auditoriaCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
-    checagem?: checagemCreateNestedManyWithoutUsuario_checagemTousuarioInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
-    titulos_x_usuario?: titulos_x_usuarioCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput
-    usuario_x_perfil?: usuario_x_perfilCreateNestedManyWithoutUsuarioInput
   }
 
   export type usuarioUncheckedCreateWithoutPessoaInput = {
@@ -40031,11 +35591,6 @@ export namespace Prisma {
     codigo_data_expiracao?: Date | string | null
     created_at?: Date | string
     updated_at?: Date | string | null
-    auditoria?: auditoriaUncheckedCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
-    checagem?: checagemUncheckedCreateNestedManyWithoutUsuario_checagemTousuarioInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
-    titulos_x_usuario?: titulos_x_usuarioUncheckedCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput
-    usuario_x_perfil?: usuario_x_perfilUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type usuarioCreateOrConnectWithoutPessoaInput = {
@@ -40080,6 +35635,386 @@ export namespace Prisma {
     codigo_data_expiracao?: DateTimeNullableFilter | Date | string | null
     created_at?: DateTimeFilter | Date | string
     updated_at?: DateTimeNullableFilter | Date | string | null
+  }
+
+  export type plataforma_papel_tipoCreateWithoutPlataformaInput = {
+
+  }
+
+  export type plataforma_papel_tipoUncheckedCreateWithoutPlataformaInput = {
+    id?: number
+  }
+
+  export type plataforma_papel_tipoCreateOrConnectWithoutPlataformaInput = {
+    where: plataforma_papel_tipoWhereUniqueInput
+    create: XOR<plataforma_papel_tipoCreateWithoutPlataformaInput, plataforma_papel_tipoUncheckedCreateWithoutPlataformaInput>
+  }
+
+  export type plataforma_x_regiao_atuacaoCreateWithoutPlataformaInput = {
+    regiao_atuacao: regiao_atuacaoCreateNestedOneWithoutPlataforma_x_regiao_atuacaoInput
+  }
+
+  export type plataforma_x_regiao_atuacaoUncheckedCreateWithoutPlataformaInput = {
+    id?: number
+    regiao_atuacao_id: number
+  }
+
+  export type plataforma_x_regiao_atuacaoCreateOrConnectWithoutPlataformaInput = {
+    where: plataforma_x_regiao_atuacaoWhereUniqueInput
+    create: XOR<plataforma_x_regiao_atuacaoCreateWithoutPlataformaInput, plataforma_x_regiao_atuacaoUncheckedCreateWithoutPlataformaInput>
+  }
+
+  export type plataforma_x_regiao_atuacaoCreateManyPlataformaInputEnvelope = {
+    data: Enumerable<plataforma_x_regiao_atuacaoCreateManyPlataformaInput>
+    skipDuplicates?: boolean
+  }
+
+  export type plataforma_x_usuarioCreateWithoutPlataformaInput = {
+    usuario_id: number
+  }
+
+  export type plataforma_x_usuarioUncheckedCreateWithoutPlataformaInput = {
+    id?: number
+    usuario_id: number
+  }
+
+  export type plataforma_x_usuarioCreateOrConnectWithoutPlataformaInput = {
+    where: plataforma_x_usuarioWhereUniqueInput
+    create: XOR<plataforma_x_usuarioCreateWithoutPlataformaInput, plataforma_x_usuarioUncheckedCreateWithoutPlataformaInput>
+  }
+
+  export type plataforma_x_usuarioCreateManyPlataformaInputEnvelope = {
+    data: Enumerable<plataforma_x_usuarioCreateManyPlataformaInput>
+    skipDuplicates?: boolean
+  }
+
+  export type plataforma_papel_tipoUpsertWithoutPlataformaInput = {
+    update: XOR<plataforma_papel_tipoUpdateWithoutPlataformaInput, plataforma_papel_tipoUncheckedUpdateWithoutPlataformaInput>
+    create: XOR<plataforma_papel_tipoCreateWithoutPlataformaInput, plataforma_papel_tipoUncheckedCreateWithoutPlataformaInput>
+  }
+
+  export type plataforma_papel_tipoUpdateWithoutPlataformaInput = {
+
+  }
+
+  export type plataforma_papel_tipoUncheckedUpdateWithoutPlataformaInput = {
+    id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type plataforma_x_regiao_atuacaoUpsertWithWhereUniqueWithoutPlataformaInput = {
+    where: plataforma_x_regiao_atuacaoWhereUniqueInput
+    update: XOR<plataforma_x_regiao_atuacaoUpdateWithoutPlataformaInput, plataforma_x_regiao_atuacaoUncheckedUpdateWithoutPlataformaInput>
+    create: XOR<plataforma_x_regiao_atuacaoCreateWithoutPlataformaInput, plataforma_x_regiao_atuacaoUncheckedCreateWithoutPlataformaInput>
+  }
+
+  export type plataforma_x_regiao_atuacaoUpdateWithWhereUniqueWithoutPlataformaInput = {
+    where: plataforma_x_regiao_atuacaoWhereUniqueInput
+    data: XOR<plataforma_x_regiao_atuacaoUpdateWithoutPlataformaInput, plataforma_x_regiao_atuacaoUncheckedUpdateWithoutPlataformaInput>
+  }
+
+  export type plataforma_x_regiao_atuacaoUpdateManyWithWhereWithoutPlataformaInput = {
+    where: plataforma_x_regiao_atuacaoScalarWhereInput
+    data: XOR<plataforma_x_regiao_atuacaoUpdateManyMutationInput, plataforma_x_regiao_atuacaoUncheckedUpdateManyWithoutPlataforma_x_regiao_atuacaoInput>
+  }
+
+  export type plataforma_x_regiao_atuacaoScalarWhereInput = {
+    AND?: Enumerable<plataforma_x_regiao_atuacaoScalarWhereInput>
+    OR?: Enumerable<plataforma_x_regiao_atuacaoScalarWhereInput>
+    NOT?: Enumerable<plataforma_x_regiao_atuacaoScalarWhereInput>
+    id?: IntFilter | number
+    plataforma_id?: IntFilter | number
+    regiao_atuacao_id?: IntFilter | number
+  }
+
+  export type plataforma_x_usuarioUpsertWithWhereUniqueWithoutPlataformaInput = {
+    where: plataforma_x_usuarioWhereUniqueInput
+    update: XOR<plataforma_x_usuarioUpdateWithoutPlataformaInput, plataforma_x_usuarioUncheckedUpdateWithoutPlataformaInput>
+    create: XOR<plataforma_x_usuarioCreateWithoutPlataformaInput, plataforma_x_usuarioUncheckedCreateWithoutPlataformaInput>
+  }
+
+  export type plataforma_x_usuarioUpdateWithWhereUniqueWithoutPlataformaInput = {
+    where: plataforma_x_usuarioWhereUniqueInput
+    data: XOR<plataforma_x_usuarioUpdateWithoutPlataformaInput, plataforma_x_usuarioUncheckedUpdateWithoutPlataformaInput>
+  }
+
+  export type plataforma_x_usuarioUpdateManyWithWhereWithoutPlataformaInput = {
+    where: plataforma_x_usuarioScalarWhereInput
+    data: XOR<plataforma_x_usuarioUpdateManyMutationInput, plataforma_x_usuarioUncheckedUpdateManyWithoutPlataforma_x_usuarioInput>
+  }
+
+  export type plataforma_x_usuarioScalarWhereInput = {
+    AND?: Enumerable<plataforma_x_usuarioScalarWhereInput>
+    OR?: Enumerable<plataforma_x_usuarioScalarWhereInput>
+    NOT?: Enumerable<plataforma_x_usuarioScalarWhereInput>
+    id?: IntFilter | number
+    plataforma_id?: IntFilter | number
+    usuario_id?: IntFilter | number
+  }
+
+  export type plataformaCreateWithoutPlataforma_papel_tipoInput = {
+    nome?: string | null
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoCreateNestedManyWithoutPlataformaInput
+    plataforma_x_usuario?: plataforma_x_usuarioCreateNestedManyWithoutPlataformaInput
+  }
+
+  export type plataformaUncheckedCreateWithoutPlataforma_papel_tipoInput = {
+    id?: number
+    nome?: string | null
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoUncheckedCreateNestedManyWithoutPlataformaInput
+    plataforma_x_usuario?: plataforma_x_usuarioUncheckedCreateNestedManyWithoutPlataformaInput
+  }
+
+  export type plataformaCreateOrConnectWithoutPlataforma_papel_tipoInput = {
+    where: plataformaWhereUniqueInput
+    create: XOR<plataformaCreateWithoutPlataforma_papel_tipoInput, plataformaUncheckedCreateWithoutPlataforma_papel_tipoInput>
+  }
+
+  export type plataformaCreateManyPlataforma_papel_tipoInputEnvelope = {
+    data: Enumerable<plataformaCreateManyPlataforma_papel_tipoInput>
+    skipDuplicates?: boolean
+  }
+
+  export type plataformaUpsertWithWhereUniqueWithoutPlataforma_papel_tipoInput = {
+    where: plataformaWhereUniqueInput
+    update: XOR<plataformaUpdateWithoutPlataforma_papel_tipoInput, plataformaUncheckedUpdateWithoutPlataforma_papel_tipoInput>
+    create: XOR<plataformaCreateWithoutPlataforma_papel_tipoInput, plataformaUncheckedCreateWithoutPlataforma_papel_tipoInput>
+  }
+
+  export type plataformaUpdateWithWhereUniqueWithoutPlataforma_papel_tipoInput = {
+    where: plataformaWhereUniqueInput
+    data: XOR<plataformaUpdateWithoutPlataforma_papel_tipoInput, plataformaUncheckedUpdateWithoutPlataforma_papel_tipoInput>
+  }
+
+  export type plataformaUpdateManyWithWhereWithoutPlataforma_papel_tipoInput = {
+    where: plataformaScalarWhereInput
+    data: XOR<plataformaUpdateManyMutationInput, plataformaUncheckedUpdateManyWithoutPlataformaInput>
+  }
+
+  export type plataformaScalarWhereInput = {
+    AND?: Enumerable<plataformaScalarWhereInput>
+    OR?: Enumerable<plataformaScalarWhereInput>
+    NOT?: Enumerable<plataformaScalarWhereInput>
+    id?: IntFilter | number
+    nome?: StringNullableFilter | string | null
+    plataforma_papel_tipo_id?: IntFilter | number
+  }
+
+  export type plataformaCreateWithoutPlataforma_x_regiao_atuacaoInput = {
+    nome?: string | null
+    plataforma_papel_tipo: plataforma_papel_tipoCreateNestedOneWithoutPlataformaInput
+    plataforma_x_usuario?: plataforma_x_usuarioCreateNestedManyWithoutPlataformaInput
+  }
+
+  export type plataformaUncheckedCreateWithoutPlataforma_x_regiao_atuacaoInput = {
+    id?: number
+    nome?: string | null
+    plataforma_papel_tipo_id: number
+    plataforma_x_usuario?: plataforma_x_usuarioUncheckedCreateNestedManyWithoutPlataformaInput
+  }
+
+  export type plataformaCreateOrConnectWithoutPlataforma_x_regiao_atuacaoInput = {
+    where: plataformaWhereUniqueInput
+    create: XOR<plataformaCreateWithoutPlataforma_x_regiao_atuacaoInput, plataformaUncheckedCreateWithoutPlataforma_x_regiao_atuacaoInput>
+  }
+
+  export type regiao_atuacaoCreateWithoutPlataforma_x_regiao_atuacaoInput = {
+    nome: string
+    regiao_atuacao_tipo: regiao_atuacao_tipoCreateNestedOneWithoutRegiao_atuacaoInput
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoCreateNestedManyWithoutRegiao_atuacaoInput
+  }
+
+  export type regiao_atuacaoUncheckedCreateWithoutPlataforma_x_regiao_atuacaoInput = {
+    id?: number
+    nome: string
+    regiao_atuacao_tipo_id: number
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoUncheckedCreateNestedManyWithoutRegiao_atuacaoInput
+  }
+
+  export type regiao_atuacaoCreateOrConnectWithoutPlataforma_x_regiao_atuacaoInput = {
+    where: regiao_atuacaoWhereUniqueInput
+    create: XOR<regiao_atuacaoCreateWithoutPlataforma_x_regiao_atuacaoInput, regiao_atuacaoUncheckedCreateWithoutPlataforma_x_regiao_atuacaoInput>
+  }
+
+  export type plataformaUpsertWithoutPlataforma_x_regiao_atuacaoInput = {
+    update: XOR<plataformaUpdateWithoutPlataforma_x_regiao_atuacaoInput, plataformaUncheckedUpdateWithoutPlataforma_x_regiao_atuacaoInput>
+    create: XOR<plataformaCreateWithoutPlataforma_x_regiao_atuacaoInput, plataformaUncheckedCreateWithoutPlataforma_x_regiao_atuacaoInput>
+  }
+
+  export type plataformaUpdateWithoutPlataforma_x_regiao_atuacaoInput = {
+    nome?: NullableStringFieldUpdateOperationsInput | string | null
+    plataforma_papel_tipo?: plataforma_papel_tipoUpdateOneRequiredWithoutPlataformaNestedInput
+    plataforma_x_usuario?: plataforma_x_usuarioUpdateManyWithoutPlataformaNestedInput
+  }
+
+  export type plataformaUncheckedUpdateWithoutPlataforma_x_regiao_atuacaoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nome?: NullableStringFieldUpdateOperationsInput | string | null
+    plataforma_papel_tipo_id?: IntFieldUpdateOperationsInput | number
+    plataforma_x_usuario?: plataforma_x_usuarioUncheckedUpdateManyWithoutPlataformaNestedInput
+  }
+
+  export type regiao_atuacaoUpsertWithoutPlataforma_x_regiao_atuacaoInput = {
+    update: XOR<regiao_atuacaoUpdateWithoutPlataforma_x_regiao_atuacaoInput, regiao_atuacaoUncheckedUpdateWithoutPlataforma_x_regiao_atuacaoInput>
+    create: XOR<regiao_atuacaoCreateWithoutPlataforma_x_regiao_atuacaoInput, regiao_atuacaoUncheckedCreateWithoutPlataforma_x_regiao_atuacaoInput>
+  }
+
+  export type regiao_atuacaoUpdateWithoutPlataforma_x_regiao_atuacaoInput = {
+    nome?: StringFieldUpdateOperationsInput | string
+    regiao_atuacao_tipo?: regiao_atuacao_tipoUpdateOneRequiredWithoutRegiao_atuacaoNestedInput
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoUpdateManyWithoutRegiao_atuacaoNestedInput
+  }
+
+  export type regiao_atuacaoUncheckedUpdateWithoutPlataforma_x_regiao_atuacaoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nome?: StringFieldUpdateOperationsInput | string
+    regiao_atuacao_tipo_id?: IntFieldUpdateOperationsInput | number
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoUncheckedUpdateManyWithoutRegiao_atuacaoNestedInput
+  }
+
+  export type regiao_atuacao_tipoCreateWithoutRegiao_atuacaoInput = {
+    nome: string
+  }
+
+  export type regiao_atuacao_tipoUncheckedCreateWithoutRegiao_atuacaoInput = {
+    id?: number
+    nome: string
+  }
+
+  export type regiao_atuacao_tipoCreateOrConnectWithoutRegiao_atuacaoInput = {
+    where: regiao_atuacao_tipoWhereUniqueInput
+    create: XOR<regiao_atuacao_tipoCreateWithoutRegiao_atuacaoInput, regiao_atuacao_tipoUncheckedCreateWithoutRegiao_atuacaoInput>
+  }
+
+  export type organograma_x_regiao_atuacaoCreateWithoutRegiao_atuacaoInput = {
+    organograma: organogramaCreateNestedOneWithoutOrganograma_x_regiao_atuacaoInput
+  }
+
+  export type organograma_x_regiao_atuacaoUncheckedCreateWithoutRegiao_atuacaoInput = {
+    id?: number
+    organograma_id: number
+  }
+
+  export type organograma_x_regiao_atuacaoCreateOrConnectWithoutRegiao_atuacaoInput = {
+    where: organograma_x_regiao_atuacaoWhereUniqueInput
+    create: XOR<organograma_x_regiao_atuacaoCreateWithoutRegiao_atuacaoInput, organograma_x_regiao_atuacaoUncheckedCreateWithoutRegiao_atuacaoInput>
+  }
+
+  export type organograma_x_regiao_atuacaoCreateManyRegiao_atuacaoInputEnvelope = {
+    data: Enumerable<organograma_x_regiao_atuacaoCreateManyRegiao_atuacaoInput>
+    skipDuplicates?: boolean
+  }
+
+  export type plataforma_x_regiao_atuacaoCreateWithoutRegiao_atuacaoInput = {
+    plataforma: plataformaCreateNestedOneWithoutPlataforma_x_regiao_atuacaoInput
+  }
+
+  export type plataforma_x_regiao_atuacaoUncheckedCreateWithoutRegiao_atuacaoInput = {
+    id?: number
+    plataforma_id: number
+  }
+
+  export type plataforma_x_regiao_atuacaoCreateOrConnectWithoutRegiao_atuacaoInput = {
+    where: plataforma_x_regiao_atuacaoWhereUniqueInput
+    create: XOR<plataforma_x_regiao_atuacaoCreateWithoutRegiao_atuacaoInput, plataforma_x_regiao_atuacaoUncheckedCreateWithoutRegiao_atuacaoInput>
+  }
+
+  export type plataforma_x_regiao_atuacaoCreateManyRegiao_atuacaoInputEnvelope = {
+    data: Enumerable<plataforma_x_regiao_atuacaoCreateManyRegiao_atuacaoInput>
+    skipDuplicates?: boolean
+  }
+
+  export type regiao_atuacao_tipoUpsertWithoutRegiao_atuacaoInput = {
+    update: XOR<regiao_atuacao_tipoUpdateWithoutRegiao_atuacaoInput, regiao_atuacao_tipoUncheckedUpdateWithoutRegiao_atuacaoInput>
+    create: XOR<regiao_atuacao_tipoCreateWithoutRegiao_atuacaoInput, regiao_atuacao_tipoUncheckedCreateWithoutRegiao_atuacaoInput>
+  }
+
+  export type regiao_atuacao_tipoUpdateWithoutRegiao_atuacaoInput = {
+    nome?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type regiao_atuacao_tipoUncheckedUpdateWithoutRegiao_atuacaoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nome?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type organograma_x_regiao_atuacaoUpsertWithWhereUniqueWithoutRegiao_atuacaoInput = {
+    where: organograma_x_regiao_atuacaoWhereUniqueInput
+    update: XOR<organograma_x_regiao_atuacaoUpdateWithoutRegiao_atuacaoInput, organograma_x_regiao_atuacaoUncheckedUpdateWithoutRegiao_atuacaoInput>
+    create: XOR<organograma_x_regiao_atuacaoCreateWithoutRegiao_atuacaoInput, organograma_x_regiao_atuacaoUncheckedCreateWithoutRegiao_atuacaoInput>
+  }
+
+  export type organograma_x_regiao_atuacaoUpdateWithWhereUniqueWithoutRegiao_atuacaoInput = {
+    where: organograma_x_regiao_atuacaoWhereUniqueInput
+    data: XOR<organograma_x_regiao_atuacaoUpdateWithoutRegiao_atuacaoInput, organograma_x_regiao_atuacaoUncheckedUpdateWithoutRegiao_atuacaoInput>
+  }
+
+  export type organograma_x_regiao_atuacaoUpdateManyWithWhereWithoutRegiao_atuacaoInput = {
+    where: organograma_x_regiao_atuacaoScalarWhereInput
+    data: XOR<organograma_x_regiao_atuacaoUpdateManyMutationInput, organograma_x_regiao_atuacaoUncheckedUpdateManyWithoutOrganograma_x_regiao_atuacaoInput>
+  }
+
+  export type plataforma_x_regiao_atuacaoUpsertWithWhereUniqueWithoutRegiao_atuacaoInput = {
+    where: plataforma_x_regiao_atuacaoWhereUniqueInput
+    update: XOR<plataforma_x_regiao_atuacaoUpdateWithoutRegiao_atuacaoInput, plataforma_x_regiao_atuacaoUncheckedUpdateWithoutRegiao_atuacaoInput>
+    create: XOR<plataforma_x_regiao_atuacaoCreateWithoutRegiao_atuacaoInput, plataforma_x_regiao_atuacaoUncheckedCreateWithoutRegiao_atuacaoInput>
+  }
+
+  export type plataforma_x_regiao_atuacaoUpdateWithWhereUniqueWithoutRegiao_atuacaoInput = {
+    where: plataforma_x_regiao_atuacaoWhereUniqueInput
+    data: XOR<plataforma_x_regiao_atuacaoUpdateWithoutRegiao_atuacaoInput, plataforma_x_regiao_atuacaoUncheckedUpdateWithoutRegiao_atuacaoInput>
+  }
+
+  export type plataforma_x_regiao_atuacaoUpdateManyWithWhereWithoutRegiao_atuacaoInput = {
+    where: plataforma_x_regiao_atuacaoScalarWhereInput
+    data: XOR<plataforma_x_regiao_atuacaoUpdateManyMutationInput, plataforma_x_regiao_atuacaoUncheckedUpdateManyWithoutPlataforma_x_regiao_atuacaoInput>
+  }
+
+  export type regiao_atuacaoCreateWithoutRegiao_atuacao_tipoInput = {
+    nome: string
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoCreateNestedManyWithoutRegiao_atuacaoInput
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoCreateNestedManyWithoutRegiao_atuacaoInput
+  }
+
+  export type regiao_atuacaoUncheckedCreateWithoutRegiao_atuacao_tipoInput = {
+    id?: number
+    nome: string
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoUncheckedCreateNestedManyWithoutRegiao_atuacaoInput
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoUncheckedCreateNestedManyWithoutRegiao_atuacaoInput
+  }
+
+  export type regiao_atuacaoCreateOrConnectWithoutRegiao_atuacao_tipoInput = {
+    where: regiao_atuacaoWhereUniqueInput
+    create: XOR<regiao_atuacaoCreateWithoutRegiao_atuacao_tipoInput, regiao_atuacaoUncheckedCreateWithoutRegiao_atuacao_tipoInput>
+  }
+
+  export type regiao_atuacaoCreateManyRegiao_atuacao_tipoInputEnvelope = {
+    data: Enumerable<regiao_atuacaoCreateManyRegiao_atuacao_tipoInput>
+    skipDuplicates?: boolean
+  }
+
+  export type regiao_atuacaoUpsertWithWhereUniqueWithoutRegiao_atuacao_tipoInput = {
+    where: regiao_atuacaoWhereUniqueInput
+    update: XOR<regiao_atuacaoUpdateWithoutRegiao_atuacao_tipoInput, regiao_atuacaoUncheckedUpdateWithoutRegiao_atuacao_tipoInput>
+    create: XOR<regiao_atuacaoCreateWithoutRegiao_atuacao_tipoInput, regiao_atuacaoUncheckedCreateWithoutRegiao_atuacao_tipoInput>
+  }
+
+  export type regiao_atuacaoUpdateWithWhereUniqueWithoutRegiao_atuacao_tipoInput = {
+    where: regiao_atuacaoWhereUniqueInput
+    data: XOR<regiao_atuacaoUpdateWithoutRegiao_atuacao_tipoInput, regiao_atuacaoUncheckedUpdateWithoutRegiao_atuacao_tipoInput>
+  }
+
+  export type regiao_atuacaoUpdateManyWithWhereWithoutRegiao_atuacao_tipoInput = {
+    where: regiao_atuacaoScalarWhereInput
+    data: XOR<regiao_atuacaoUpdateManyMutationInput, regiao_atuacaoUncheckedUpdateManyWithoutRegiao_atuacaoInput>
+  }
+
+  export type regiao_atuacaoScalarWhereInput = {
+    AND?: Enumerable<regiao_atuacaoScalarWhereInput>
+    OR?: Enumerable<regiao_atuacaoScalarWhereInput>
+    NOT?: Enumerable<regiao_atuacaoScalarWhereInput>
+    id?: IntFilter | number
+    nome?: StringFilter | string
+    regiao_atuacao_tipo_id?: IntFilter | number
   }
 
   export type cedente_n_sacadosCreateWithoutSacado_cedente_n_sacadosTosacadoInput = {
@@ -40132,19 +36067,35 @@ export namespace Prisma {
   }
 
   export type borderoCreateWithoutTituloInput = {
-    carteira_id: number
-    titulos_x_usuario?: titulos_x_usuarioCreateNestedManyWithoutBordero_borderoTotitulos_x_usuarioInput
+    carteira: carteiraCreateNestedOneWithoutBorderoInput
   }
 
   export type borderoUncheckedCreateWithoutTituloInput = {
     id?: number
     carteira_id: number
-    titulos_x_usuario?: titulos_x_usuarioUncheckedCreateNestedManyWithoutBordero_borderoTotitulos_x_usuarioInput
   }
 
   export type borderoCreateOrConnectWithoutTituloInput = {
     where: borderoWhereUniqueInput
     create: XOR<borderoCreateWithoutTituloInput, borderoUncheckedCreateWithoutTituloInput>
+  }
+
+  export type titulo_itensCreateWithoutTituloInput = {
+
+  }
+
+  export type titulo_itensUncheckedCreateWithoutTituloInput = {
+    id?: number
+  }
+
+  export type titulo_itensCreateOrConnectWithoutTituloInput = {
+    where: titulo_itensWhereUniqueInput
+    create: XOR<titulo_itensCreateWithoutTituloInput, titulo_itensUncheckedCreateWithoutTituloInput>
+  }
+
+  export type titulo_itensCreateManyTituloInputEnvelope = {
+    data: Enumerable<titulo_itensCreateManyTituloInput>
+    skipDuplicates?: boolean
   }
 
   export type titulo_tipoUpsertWithoutTituloInput = {
@@ -40167,14 +36118,36 @@ export namespace Prisma {
   }
 
   export type borderoUpdateWithoutTituloInput = {
-    carteira_id?: IntFieldUpdateOperationsInput | number
-    titulos_x_usuario?: titulos_x_usuarioUpdateManyWithoutBordero_borderoTotitulos_x_usuarioNestedInput
+    carteira?: carteiraUpdateOneRequiredWithoutBorderoNestedInput
   }
 
   export type borderoUncheckedUpdateWithoutTituloInput = {
     id?: IntFieldUpdateOperationsInput | number
     carteira_id?: IntFieldUpdateOperationsInput | number
-    titulos_x_usuario?: titulos_x_usuarioUncheckedUpdateManyWithoutBordero_borderoTotitulos_x_usuarioNestedInput
+  }
+
+  export type titulo_itensUpsertWithWhereUniqueWithoutTituloInput = {
+    where: titulo_itensWhereUniqueInput
+    update: XOR<titulo_itensUpdateWithoutTituloInput, titulo_itensUncheckedUpdateWithoutTituloInput>
+    create: XOR<titulo_itensCreateWithoutTituloInput, titulo_itensUncheckedCreateWithoutTituloInput>
+  }
+
+  export type titulo_itensUpdateWithWhereUniqueWithoutTituloInput = {
+    where: titulo_itensWhereUniqueInput
+    data: XOR<titulo_itensUpdateWithoutTituloInput, titulo_itensUncheckedUpdateWithoutTituloInput>
+  }
+
+  export type titulo_itensUpdateManyWithWhereWithoutTituloInput = {
+    where: titulo_itensScalarWhereInput
+    data: XOR<titulo_itensUpdateManyMutationInput, titulo_itensUncheckedUpdateManyWithoutTitulo_itensInput>
+  }
+
+  export type titulo_itensScalarWhereInput = {
+    AND?: Enumerable<titulo_itensScalarWhereInput>
+    OR?: Enumerable<titulo_itensScalarWhereInput>
+    NOT?: Enumerable<titulo_itensScalarWhereInput>
+    id?: IntFilter | number
+    titulo_id?: IntFilter | number
   }
 
   export type tituloCreateWithoutTitulo_tipoInput = {
@@ -40185,6 +36158,7 @@ export namespace Prisma {
     emissao?: Date | string | null
     parcela?: string | null
     bordero: borderoCreateNestedOneWithoutTituloInput
+    titulo_itens?: titulo_itensCreateNestedManyWithoutTituloInput
   }
 
   export type tituloUncheckedCreateWithoutTitulo_tipoInput = {
@@ -40196,6 +36170,7 @@ export namespace Prisma {
     numero?: string | null
     emissao?: Date | string | null
     parcela?: string | null
+    titulo_itens?: titulo_itensUncheckedCreateNestedManyWithoutTituloInput
   }
 
   export type tituloCreateOrConnectWithoutTitulo_tipoInput = {
@@ -40224,288 +36199,6 @@ export namespace Prisma {
     data: XOR<tituloUpdateManyMutationInput, tituloUncheckedUpdateManyWithoutTituloInput>
   }
 
-  export type cedenteCreateWithoutTitulo_x_cedenteInput = {
-    pessoa_id: number
-    razao_social: string
-    nome_fantasia?: string | null
-    abertura?: Date | string | null
-    cnpj?: string | null
-    endereco?: string | null
-    numero?: string | null
-    cep?: string | null
-    bairro?: string | null
-    cidade?: string | null
-    uf?: string | null
-    telefone?: string | null
-    cedente_analise?: cedente_analiseCreateNestedManyWithoutCedente_cedenteTocedente_analiseInput
-    cedente_n_sacados?: cedente_n_sacadosCreateNestedManyWithoutCedente_cedenteTocedente_n_sacadosInput
-  }
-
-  export type cedenteUncheckedCreateWithoutTitulo_x_cedenteInput = {
-    id?: number
-    pessoa_id: number
-    razao_social: string
-    nome_fantasia?: string | null
-    abertura?: Date | string | null
-    cnpj?: string | null
-    endereco?: string | null
-    numero?: string | null
-    cep?: string | null
-    bairro?: string | null
-    cidade?: string | null
-    uf?: string | null
-    telefone?: string | null
-    cedente_analise?: cedente_analiseUncheckedCreateNestedManyWithoutCedente_cedenteTocedente_analiseInput
-    cedente_n_sacados?: cedente_n_sacadosUncheckedCreateNestedManyWithoutCedente_cedenteTocedente_n_sacadosInput
-  }
-
-  export type cedenteCreateOrConnectWithoutTitulo_x_cedenteInput = {
-    where: cedenteWhereUniqueInput
-    create: XOR<cedenteCreateWithoutTitulo_x_cedenteInput, cedenteUncheckedCreateWithoutTitulo_x_cedenteInput>
-  }
-
-  export type cedenteUpsertWithoutTitulo_x_cedenteInput = {
-    update: XOR<cedenteUpdateWithoutTitulo_x_cedenteInput, cedenteUncheckedUpdateWithoutTitulo_x_cedenteInput>
-    create: XOR<cedenteCreateWithoutTitulo_x_cedenteInput, cedenteUncheckedCreateWithoutTitulo_x_cedenteInput>
-  }
-
-  export type cedenteUpdateWithoutTitulo_x_cedenteInput = {
-    pessoa_id?: IntFieldUpdateOperationsInput | number
-    razao_social?: StringFieldUpdateOperationsInput | string
-    nome_fantasia?: NullableStringFieldUpdateOperationsInput | string | null
-    abertura?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    cnpj?: NullableStringFieldUpdateOperationsInput | string | null
-    endereco?: NullableStringFieldUpdateOperationsInput | string | null
-    numero?: NullableStringFieldUpdateOperationsInput | string | null
-    cep?: NullableStringFieldUpdateOperationsInput | string | null
-    bairro?: NullableStringFieldUpdateOperationsInput | string | null
-    cidade?: NullableStringFieldUpdateOperationsInput | string | null
-    uf?: NullableStringFieldUpdateOperationsInput | string | null
-    telefone?: NullableStringFieldUpdateOperationsInput | string | null
-    cedente_analise?: cedente_analiseUpdateManyWithoutCedente_cedenteTocedente_analiseNestedInput
-    cedente_n_sacados?: cedente_n_sacadosUpdateManyWithoutCedente_cedenteTocedente_n_sacadosNestedInput
-  }
-
-  export type cedenteUncheckedUpdateWithoutTitulo_x_cedenteInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    pessoa_id?: IntFieldUpdateOperationsInput | number
-    razao_social?: StringFieldUpdateOperationsInput | string
-    nome_fantasia?: NullableStringFieldUpdateOperationsInput | string | null
-    abertura?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    cnpj?: NullableStringFieldUpdateOperationsInput | string | null
-    endereco?: NullableStringFieldUpdateOperationsInput | string | null
-    numero?: NullableStringFieldUpdateOperationsInput | string | null
-    cep?: NullableStringFieldUpdateOperationsInput | string | null
-    bairro?: NullableStringFieldUpdateOperationsInput | string | null
-    cidade?: NullableStringFieldUpdateOperationsInput | string | null
-    uf?: NullableStringFieldUpdateOperationsInput | string | null
-    telefone?: NullableStringFieldUpdateOperationsInput | string | null
-    cedente_analise?: cedente_analiseUncheckedUpdateManyWithoutCedente_cedenteTocedente_analiseNestedInput
-    cedente_n_sacados?: cedente_n_sacadosUncheckedUpdateManyWithoutCedente_cedenteTocedente_n_sacadosNestedInput
-  }
-
-  export type borderoCreateWithoutTitulos_x_usuarioInput = {
-    carteira_id: number
-    titulo?: tituloCreateNestedManyWithoutBorderoInput
-  }
-
-  export type borderoUncheckedCreateWithoutTitulos_x_usuarioInput = {
-    id?: number
-    carteira_id: number
-    titulo?: tituloUncheckedCreateNestedManyWithoutBorderoInput
-  }
-
-  export type borderoCreateOrConnectWithoutTitulos_x_usuarioInput = {
-    where: borderoWhereUniqueInput
-    create: XOR<borderoCreateWithoutTitulos_x_usuarioInput, borderoUncheckedCreateWithoutTitulos_x_usuarioInput>
-  }
-
-  export type usuarioCreateWithoutTitulos_x_usuarioInput = {
-    email: string
-    senha: string
-    status?: string | null
-    primeiro_acesso?: boolean | null
-    confirmou_cadastro?: boolean | null
-    codigo_confirma_cadastro?: string | null
-    codigo_reset_senha?: string | null
-    codigo_data_expiracao?: Date | string | null
-    created_at?: Date | string
-    updated_at?: Date | string | null
-    auditoria?: auditoriaCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
-    checagem?: checagemCreateNestedManyWithoutUsuario_checagemTousuarioInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
-    pessoa: pessoaCreateNestedOneWithoutUsuarioInput
-    usuario_x_perfil?: usuario_x_perfilCreateNestedManyWithoutUsuarioInput
-  }
-
-  export type usuarioUncheckedCreateWithoutTitulos_x_usuarioInput = {
-    id?: number
-    email: string
-    senha: string
-    pessoa_id: number
-    status?: string | null
-    primeiro_acesso?: boolean | null
-    confirmou_cadastro?: boolean | null
-    codigo_confirma_cadastro?: string | null
-    codigo_reset_senha?: string | null
-    codigo_data_expiracao?: Date | string | null
-    created_at?: Date | string
-    updated_at?: Date | string | null
-    auditoria?: auditoriaUncheckedCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
-    checagem?: checagemUncheckedCreateNestedManyWithoutUsuario_checagemTousuarioInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
-    usuario_x_perfil?: usuario_x_perfilUncheckedCreateNestedManyWithoutUsuarioInput
-  }
-
-  export type usuarioCreateOrConnectWithoutTitulos_x_usuarioInput = {
-    where: usuarioWhereUniqueInput
-    create: XOR<usuarioCreateWithoutTitulos_x_usuarioInput, usuarioUncheckedCreateWithoutTitulos_x_usuarioInput>
-  }
-
-  export type borderoUpsertWithoutTitulos_x_usuarioInput = {
-    update: XOR<borderoUpdateWithoutTitulos_x_usuarioInput, borderoUncheckedUpdateWithoutTitulos_x_usuarioInput>
-    create: XOR<borderoCreateWithoutTitulos_x_usuarioInput, borderoUncheckedCreateWithoutTitulos_x_usuarioInput>
-  }
-
-  export type borderoUpdateWithoutTitulos_x_usuarioInput = {
-    carteira_id?: IntFieldUpdateOperationsInput | number
-    titulo?: tituloUpdateManyWithoutBorderoNestedInput
-  }
-
-  export type borderoUncheckedUpdateWithoutTitulos_x_usuarioInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    carteira_id?: IntFieldUpdateOperationsInput | number
-    titulo?: tituloUncheckedUpdateManyWithoutBorderoNestedInput
-  }
-
-  export type usuarioUpsertWithoutTitulos_x_usuarioInput = {
-    update: XOR<usuarioUpdateWithoutTitulos_x_usuarioInput, usuarioUncheckedUpdateWithoutTitulos_x_usuarioInput>
-    create: XOR<usuarioCreateWithoutTitulos_x_usuarioInput, usuarioUncheckedCreateWithoutTitulos_x_usuarioInput>
-  }
-
-  export type usuarioUpdateWithoutTitulos_x_usuarioInput = {
-    email?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
-    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
-    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    auditoria?: auditoriaUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
-    checagem?: checagemUpdateManyWithoutUsuario_checagemTousuarioNestedInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
-    pessoa?: pessoaUpdateOneRequiredWithoutUsuarioNestedInput
-    usuario_x_perfil?: usuario_x_perfilUpdateManyWithoutUsuarioNestedInput
-  }
-
-  export type usuarioUncheckedUpdateWithoutTitulos_x_usuarioInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    email?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
-    pessoa_id?: IntFieldUpdateOperationsInput | number
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
-    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
-    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    auditoria?: auditoriaUncheckedUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
-    checagem?: checagemUncheckedUpdateManyWithoutUsuario_checagemTousuarioNestedInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
-    usuario_x_perfil?: usuario_x_perfilUncheckedUpdateManyWithoutUsuarioNestedInput
-  }
-
-  export type auditoriaCreateWithoutUsuario_auditoriaTousuarioInput = {
-    action?: string | null
-    data?: Date | string | null
-    modulo?: string | null
-  }
-
-  export type auditoriaUncheckedCreateWithoutUsuario_auditoriaTousuarioInput = {
-    action?: string | null
-    data?: Date | string | null
-    modulo?: string | null
-    id?: number
-  }
-
-  export type auditoriaCreateOrConnectWithoutUsuario_auditoriaTousuarioInput = {
-    where: auditoriaWhereUniqueInput
-    create: XOR<auditoriaCreateWithoutUsuario_auditoriaTousuarioInput, auditoriaUncheckedCreateWithoutUsuario_auditoriaTousuarioInput>
-  }
-
-  export type auditoriaCreateManyUsuario_auditoriaTousuarioInputEnvelope = {
-    data: Enumerable<auditoriaCreateManyUsuario_auditoriaTousuarioInput>
-    skipDuplicates?: boolean
-  }
-
-  export type checagemCreateWithoutUsuario_checagemTousuarioInput = {
-    nf?: string | null
-    status?: string | null
-    titulos?: string | null
-  }
-
-  export type checagemUncheckedCreateWithoutUsuario_checagemTousuarioInput = {
-    id?: number
-    nf?: string | null
-    status?: string | null
-    titulos?: string | null
-  }
-
-  export type checagemCreateOrConnectWithoutUsuario_checagemTousuarioInput = {
-    where: checagemWhereUniqueInput
-    create: XOR<checagemCreateWithoutUsuario_checagemTousuarioInput, checagemUncheckedCreateWithoutUsuario_checagemTousuarioInput>
-  }
-
-  export type checagemCreateManyUsuario_checagemTousuarioInputEnvelope = {
-    data: Enumerable<checagemCreateManyUsuario_checagemTousuarioInput>
-    skipDuplicates?: boolean
-  }
-
-  export type fidic_fundo_x_usuarioCreateWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput = {
-    fidic_fundo: fidic_fundoCreateNestedOneWithoutFidic_fundo_x_usuarioInput
-  }
-
-  export type fidic_fundo_x_usuarioUncheckedCreateWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput = {
-    id?: number
-    fidic: number
-  }
-
-  export type fidic_fundo_x_usuarioCreateOrConnectWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput = {
-    where: fidic_fundo_x_usuarioWhereUniqueInput
-    create: XOR<fidic_fundo_x_usuarioCreateWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput, fidic_fundo_x_usuarioUncheckedCreateWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>
-  }
-
-  export type fidic_fundo_x_usuarioCreateManyUsuario_fidic_fundo_x_usuarioTousuarioInputEnvelope = {
-    data: Enumerable<fidic_fundo_x_usuarioCreateManyUsuario_fidic_fundo_x_usuarioTousuarioInput>
-    skipDuplicates?: boolean
-  }
-
-  export type titulos_x_usuarioCreateWithoutUsuario_titulos_x_usuarioTousuarioInput = {
-    status?: string | null
-    bordero_borderoTotitulos_x_usuario?: borderoCreateNestedOneWithoutTitulos_x_usuarioInput
-  }
-
-  export type titulos_x_usuarioUncheckedCreateWithoutUsuario_titulos_x_usuarioTousuarioInput = {
-    id?: number
-    bordero?: number | null
-    status?: string | null
-  }
-
-  export type titulos_x_usuarioCreateOrConnectWithoutUsuario_titulos_x_usuarioTousuarioInput = {
-    where: titulos_x_usuarioWhereUniqueInput
-    create: XOR<titulos_x_usuarioCreateWithoutUsuario_titulos_x_usuarioTousuarioInput, titulos_x_usuarioUncheckedCreateWithoutUsuario_titulos_x_usuarioTousuarioInput>
-  }
-
-  export type titulos_x_usuarioCreateManyUsuario_titulos_x_usuarioTousuarioInputEnvelope = {
-    data: Enumerable<titulos_x_usuarioCreateManyUsuario_titulos_x_usuarioTousuarioInput>
-    skipDuplicates?: boolean
-  }
-
   export type pessoaCreateWithoutUsuarioInput = {
     nome: string
     sobrenome: string
@@ -40528,113 +36221,6 @@ export namespace Prisma {
   export type pessoaCreateOrConnectWithoutUsuarioInput = {
     where: pessoaWhereUniqueInput
     create: XOR<pessoaCreateWithoutUsuarioInput, pessoaUncheckedCreateWithoutUsuarioInput>
-  }
-
-  export type usuario_x_perfilCreateWithoutUsuarioInput = {
-    senha: string
-    usuario_perfil_tipo: usuario_perfil_tipoCreateNestedOneWithoutUsuario_x_perfilInput
-  }
-
-  export type usuario_x_perfilUncheckedCreateWithoutUsuarioInput = {
-    id?: number
-    senha: string
-    usuario_perfil_id: number
-  }
-
-  export type usuario_x_perfilCreateOrConnectWithoutUsuarioInput = {
-    where: usuario_x_perfilWhereUniqueInput
-    create: XOR<usuario_x_perfilCreateWithoutUsuarioInput, usuario_x_perfilUncheckedCreateWithoutUsuarioInput>
-  }
-
-  export type usuario_x_perfilCreateManyUsuarioInputEnvelope = {
-    data: Enumerable<usuario_x_perfilCreateManyUsuarioInput>
-    skipDuplicates?: boolean
-  }
-
-  export type auditoriaUpsertWithWhereUniqueWithoutUsuario_auditoriaTousuarioInput = {
-    where: auditoriaWhereUniqueInput
-    update: XOR<auditoriaUpdateWithoutUsuario_auditoriaTousuarioInput, auditoriaUncheckedUpdateWithoutUsuario_auditoriaTousuarioInput>
-    create: XOR<auditoriaCreateWithoutUsuario_auditoriaTousuarioInput, auditoriaUncheckedCreateWithoutUsuario_auditoriaTousuarioInput>
-  }
-
-  export type auditoriaUpdateWithWhereUniqueWithoutUsuario_auditoriaTousuarioInput = {
-    where: auditoriaWhereUniqueInput
-    data: XOR<auditoriaUpdateWithoutUsuario_auditoriaTousuarioInput, auditoriaUncheckedUpdateWithoutUsuario_auditoriaTousuarioInput>
-  }
-
-  export type auditoriaUpdateManyWithWhereWithoutUsuario_auditoriaTousuarioInput = {
-    where: auditoriaScalarWhereInput
-    data: XOR<auditoriaUpdateManyMutationInput, auditoriaUncheckedUpdateManyWithoutAuditoriaInput>
-  }
-
-  export type auditoriaScalarWhereInput = {
-    AND?: Enumerable<auditoriaScalarWhereInput>
-    OR?: Enumerable<auditoriaScalarWhereInput>
-    NOT?: Enumerable<auditoriaScalarWhereInput>
-    action?: StringNullableFilter | string | null
-    usuario?: IntNullableFilter | number | null
-    data?: DateTimeNullableFilter | Date | string | null
-    modulo?: StringNullableFilter | string | null
-    id?: IntFilter | number
-  }
-
-  export type checagemUpsertWithWhereUniqueWithoutUsuario_checagemTousuarioInput = {
-    where: checagemWhereUniqueInput
-    update: XOR<checagemUpdateWithoutUsuario_checagemTousuarioInput, checagemUncheckedUpdateWithoutUsuario_checagemTousuarioInput>
-    create: XOR<checagemCreateWithoutUsuario_checagemTousuarioInput, checagemUncheckedCreateWithoutUsuario_checagemTousuarioInput>
-  }
-
-  export type checagemUpdateWithWhereUniqueWithoutUsuario_checagemTousuarioInput = {
-    where: checagemWhereUniqueInput
-    data: XOR<checagemUpdateWithoutUsuario_checagemTousuarioInput, checagemUncheckedUpdateWithoutUsuario_checagemTousuarioInput>
-  }
-
-  export type checagemUpdateManyWithWhereWithoutUsuario_checagemTousuarioInput = {
-    where: checagemScalarWhereInput
-    data: XOR<checagemUpdateManyMutationInput, checagemUncheckedUpdateManyWithoutChecagemInput>
-  }
-
-  export type checagemScalarWhereInput = {
-    AND?: Enumerable<checagemScalarWhereInput>
-    OR?: Enumerable<checagemScalarWhereInput>
-    NOT?: Enumerable<checagemScalarWhereInput>
-    id?: IntFilter | number
-    nf?: StringNullableFilter | string | null
-    status?: StringNullableFilter | string | null
-    usuario?: IntNullableFilter | number | null
-    titulos?: StringNullableFilter | string | null
-  }
-
-  export type fidic_fundo_x_usuarioUpsertWithWhereUniqueWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput = {
-    where: fidic_fundo_x_usuarioWhereUniqueInput
-    update: XOR<fidic_fundo_x_usuarioUpdateWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput, fidic_fundo_x_usuarioUncheckedUpdateWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>
-    create: XOR<fidic_fundo_x_usuarioCreateWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput, fidic_fundo_x_usuarioUncheckedCreateWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>
-  }
-
-  export type fidic_fundo_x_usuarioUpdateWithWhereUniqueWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput = {
-    where: fidic_fundo_x_usuarioWhereUniqueInput
-    data: XOR<fidic_fundo_x_usuarioUpdateWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput, fidic_fundo_x_usuarioUncheckedUpdateWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput>
-  }
-
-  export type fidic_fundo_x_usuarioUpdateManyWithWhereWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput = {
-    where: fidic_fundo_x_usuarioScalarWhereInput
-    data: XOR<fidic_fundo_x_usuarioUpdateManyMutationInput, fidic_fundo_x_usuarioUncheckedUpdateManyWithoutFidic_fundo_x_usuarioInput>
-  }
-
-  export type titulos_x_usuarioUpsertWithWhereUniqueWithoutUsuario_titulos_x_usuarioTousuarioInput = {
-    where: titulos_x_usuarioWhereUniqueInput
-    update: XOR<titulos_x_usuarioUpdateWithoutUsuario_titulos_x_usuarioTousuarioInput, titulos_x_usuarioUncheckedUpdateWithoutUsuario_titulos_x_usuarioTousuarioInput>
-    create: XOR<titulos_x_usuarioCreateWithoutUsuario_titulos_x_usuarioTousuarioInput, titulos_x_usuarioUncheckedCreateWithoutUsuario_titulos_x_usuarioTousuarioInput>
-  }
-
-  export type titulos_x_usuarioUpdateWithWhereUniqueWithoutUsuario_titulos_x_usuarioTousuarioInput = {
-    where: titulos_x_usuarioWhereUniqueInput
-    data: XOR<titulos_x_usuarioUpdateWithoutUsuario_titulos_x_usuarioTousuarioInput, titulos_x_usuarioUncheckedUpdateWithoutUsuario_titulos_x_usuarioTousuarioInput>
-  }
-
-  export type titulos_x_usuarioUpdateManyWithWhereWithoutUsuario_titulos_x_usuarioTousuarioInput = {
-    where: titulos_x_usuarioScalarWhereInput
-    data: XOR<titulos_x_usuarioUpdateManyMutationInput, titulos_x_usuarioUncheckedUpdateManyWithoutTitulos_x_usuarioInput>
   }
 
   export type pessoaUpsertWithoutUsuarioInput = {
@@ -40661,177 +36247,313 @@ export namespace Prisma {
     rg?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type usuario_x_perfilUpsertWithWhereUniqueWithoutUsuarioInput = {
-    where: usuario_x_perfilWhereUniqueInput
-    update: XOR<usuario_x_perfilUpdateWithoutUsuarioInput, usuario_x_perfilUncheckedUpdateWithoutUsuarioInput>
-    create: XOR<usuario_x_perfilCreateWithoutUsuarioInput, usuario_x_perfilUncheckedCreateWithoutUsuarioInput>
-  }
-
-  export type usuario_x_perfilUpdateWithWhereUniqueWithoutUsuarioInput = {
-    where: usuario_x_perfilWhereUniqueInput
-    data: XOR<usuario_x_perfilUpdateWithoutUsuarioInput, usuario_x_perfilUncheckedUpdateWithoutUsuarioInput>
-  }
-
-  export type usuario_x_perfilUpdateManyWithWhereWithoutUsuarioInput = {
-    where: usuario_x_perfilScalarWhereInput
-    data: XOR<usuario_x_perfilUpdateManyMutationInput, usuario_x_perfilUncheckedUpdateManyWithoutUsuario_x_perfilInput>
-  }
-
-  export type usuario_x_perfilScalarWhereInput = {
-    AND?: Enumerable<usuario_x_perfilScalarWhereInput>
-    OR?: Enumerable<usuario_x_perfilScalarWhereInput>
-    NOT?: Enumerable<usuario_x_perfilScalarWhereInput>
-    id?: IntFilter | number
-    senha?: StringFilter | string
-    usuario_id?: IntFilter | number
-    usuario_perfil_id?: IntFilter | number
-  }
-
-  export type usuario_x_perfilCreateWithoutUsuario_perfil_tipoInput = {
+  export type usuario_perfilCreateWithoutUsuario_perfil_tipoInput = {
     senha: string
-    usuario: usuarioCreateNestedOneWithoutUsuario_x_perfilInput
+    usuario_id: number
   }
 
-  export type usuario_x_perfilUncheckedCreateWithoutUsuario_perfil_tipoInput = {
+  export type usuario_perfilUncheckedCreateWithoutUsuario_perfil_tipoInput = {
     id?: number
     senha: string
     usuario_id: number
   }
 
-  export type usuario_x_perfilCreateOrConnectWithoutUsuario_perfil_tipoInput = {
-    where: usuario_x_perfilWhereUniqueInput
-    create: XOR<usuario_x_perfilCreateWithoutUsuario_perfil_tipoInput, usuario_x_perfilUncheckedCreateWithoutUsuario_perfil_tipoInput>
+  export type usuario_perfilCreateOrConnectWithoutUsuario_perfil_tipoInput = {
+    where: usuario_perfilWhereUniqueInput
+    create: XOR<usuario_perfilCreateWithoutUsuario_perfil_tipoInput, usuario_perfilUncheckedCreateWithoutUsuario_perfil_tipoInput>
   }
 
-  export type usuario_x_perfilCreateManyUsuario_perfil_tipoInputEnvelope = {
-    data: Enumerable<usuario_x_perfilCreateManyUsuario_perfil_tipoInput>
+  export type usuario_perfilCreateManyUsuario_perfil_tipoInputEnvelope = {
+    data: Enumerable<usuario_perfilCreateManyUsuario_perfil_tipoInput>
     skipDuplicates?: boolean
   }
 
-  export type usuario_x_perfilUpsertWithWhereUniqueWithoutUsuario_perfil_tipoInput = {
-    where: usuario_x_perfilWhereUniqueInput
-    update: XOR<usuario_x_perfilUpdateWithoutUsuario_perfil_tipoInput, usuario_x_perfilUncheckedUpdateWithoutUsuario_perfil_tipoInput>
-    create: XOR<usuario_x_perfilCreateWithoutUsuario_perfil_tipoInput, usuario_x_perfilUncheckedCreateWithoutUsuario_perfil_tipoInput>
+  export type usuario_perfilUpsertWithWhereUniqueWithoutUsuario_perfil_tipoInput = {
+    where: usuario_perfilWhereUniqueInput
+    update: XOR<usuario_perfilUpdateWithoutUsuario_perfil_tipoInput, usuario_perfilUncheckedUpdateWithoutUsuario_perfil_tipoInput>
+    create: XOR<usuario_perfilCreateWithoutUsuario_perfil_tipoInput, usuario_perfilUncheckedCreateWithoutUsuario_perfil_tipoInput>
   }
 
-  export type usuario_x_perfilUpdateWithWhereUniqueWithoutUsuario_perfil_tipoInput = {
-    where: usuario_x_perfilWhereUniqueInput
-    data: XOR<usuario_x_perfilUpdateWithoutUsuario_perfil_tipoInput, usuario_x_perfilUncheckedUpdateWithoutUsuario_perfil_tipoInput>
+  export type usuario_perfilUpdateWithWhereUniqueWithoutUsuario_perfil_tipoInput = {
+    where: usuario_perfilWhereUniqueInput
+    data: XOR<usuario_perfilUpdateWithoutUsuario_perfil_tipoInput, usuario_perfilUncheckedUpdateWithoutUsuario_perfil_tipoInput>
   }
 
-  export type usuario_x_perfilUpdateManyWithWhereWithoutUsuario_perfil_tipoInput = {
-    where: usuario_x_perfilScalarWhereInput
-    data: XOR<usuario_x_perfilUpdateManyMutationInput, usuario_x_perfilUncheckedUpdateManyWithoutUsuario_x_perfilInput>
+  export type usuario_perfilUpdateManyWithWhereWithoutUsuario_perfil_tipoInput = {
+    where: usuario_perfilScalarWhereInput
+    data: XOR<usuario_perfilUpdateManyMutationInput, usuario_perfilUncheckedUpdateManyWithoutUsuario_perfilInput>
   }
 
-  export type usuarioCreateWithoutUsuario_x_perfilInput = {
-    email: string
-    senha: string
-    status?: string | null
-    primeiro_acesso?: boolean | null
-    confirmou_cadastro?: boolean | null
-    codigo_confirma_cadastro?: string | null
-    codigo_reset_senha?: string | null
-    codigo_data_expiracao?: Date | string | null
-    created_at?: Date | string
-    updated_at?: Date | string | null
-    auditoria?: auditoriaCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
-    checagem?: checagemCreateNestedManyWithoutUsuario_checagemTousuarioInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
-    titulos_x_usuario?: titulos_x_usuarioCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput
-    pessoa: pessoaCreateNestedOneWithoutUsuarioInput
+  export type usuario_perfilScalarWhereInput = {
+    AND?: Enumerable<usuario_perfilScalarWhereInput>
+    OR?: Enumerable<usuario_perfilScalarWhereInput>
+    NOT?: Enumerable<usuario_perfilScalarWhereInput>
+    id?: IntFilter | number
+    senha?: StringFilter | string
+    usuario_id?: IntFilter | number
+    usuario_perfil_tipo_id?: IntFilter | number
   }
 
-  export type usuarioUncheckedCreateWithoutUsuario_x_perfilInput = {
+  export type carteiraCreateWithoutCarteira_n_cedentesInput = {
+    fidic_fundo: fidic_fundoCreateNestedOneWithoutCarteiraInput
+    bordero?: borderoCreateNestedManyWithoutCarteiraInput
+  }
+
+  export type carteiraUncheckedCreateWithoutCarteira_n_cedentesInput = {
     id?: number
-    email: string
-    senha: string
+    fiduc_fundo_id: number
+    bordero?: borderoUncheckedCreateNestedManyWithoutCarteiraInput
+  }
+
+  export type carteiraCreateOrConnectWithoutCarteira_n_cedentesInput = {
+    where: carteiraWhereUniqueInput
+    create: XOR<carteiraCreateWithoutCarteira_n_cedentesInput, carteiraUncheckedCreateWithoutCarteira_n_cedentesInput>
+  }
+
+  export type cedenteCreateWithoutCarteira_n_cedentesInput = {
     pessoa_id: number
-    status?: string | null
-    primeiro_acesso?: boolean | null
-    confirmou_cadastro?: boolean | null
-    codigo_confirma_cadastro?: string | null
-    codigo_reset_senha?: string | null
-    codigo_data_expiracao?: Date | string | null
-    created_at?: Date | string
-    updated_at?: Date | string | null
-    auditoria?: auditoriaUncheckedCreateNestedManyWithoutUsuario_auditoriaTousuarioInput
-    checagem?: checagemUncheckedCreateNestedManyWithoutUsuario_checagemTousuarioInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedCreateNestedManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput
-    titulos_x_usuario?: titulos_x_usuarioUncheckedCreateNestedManyWithoutUsuario_titulos_x_usuarioTousuarioInput
+    razao_social: string
+    nome_fantasia?: string | null
+    abertura?: Date | string | null
+    cnpj?: string | null
+    endereco?: string | null
+    numero?: string | null
+    cep?: string | null
+    bairro?: string | null
+    cidade?: string | null
+    uf?: string | null
+    telefone?: string | null
+    cedente_analise?: cedente_analiseCreateNestedManyWithoutCedente_cedenteTocedente_analiseInput
+    cedente_n_sacados?: cedente_n_sacadosCreateNestedManyWithoutCedente_cedenteTocedente_n_sacadosInput
   }
 
-  export type usuarioCreateOrConnectWithoutUsuario_x_perfilInput = {
-    where: usuarioWhereUniqueInput
-    create: XOR<usuarioCreateWithoutUsuario_x_perfilInput, usuarioUncheckedCreateWithoutUsuario_x_perfilInput>
+  export type cedenteUncheckedCreateWithoutCarteira_n_cedentesInput = {
+    id?: number
+    pessoa_id: number
+    razao_social: string
+    nome_fantasia?: string | null
+    abertura?: Date | string | null
+    cnpj?: string | null
+    endereco?: string | null
+    numero?: string | null
+    cep?: string | null
+    bairro?: string | null
+    cidade?: string | null
+    uf?: string | null
+    telefone?: string | null
+    cedente_analise?: cedente_analiseUncheckedCreateNestedManyWithoutCedente_cedenteTocedente_analiseInput
+    cedente_n_sacados?: cedente_n_sacadosUncheckedCreateNestedManyWithoutCedente_cedenteTocedente_n_sacadosInput
   }
 
-  export type usuario_perfil_tipoCreateWithoutUsuario_x_perfilInput = {
+  export type cedenteCreateOrConnectWithoutCarteira_n_cedentesInput = {
+    where: cedenteWhereUniqueInput
+    create: XOR<cedenteCreateWithoutCarteira_n_cedentesInput, cedenteUncheckedCreateWithoutCarteira_n_cedentesInput>
+  }
+
+  export type carteiraUpsertWithoutCarteira_n_cedentesInput = {
+    update: XOR<carteiraUpdateWithoutCarteira_n_cedentesInput, carteiraUncheckedUpdateWithoutCarteira_n_cedentesInput>
+    create: XOR<carteiraCreateWithoutCarteira_n_cedentesInput, carteiraUncheckedCreateWithoutCarteira_n_cedentesInput>
+  }
+
+  export type carteiraUpdateWithoutCarteira_n_cedentesInput = {
+    fidic_fundo?: fidic_fundoUpdateOneRequiredWithoutCarteiraNestedInput
+    bordero?: borderoUpdateManyWithoutCarteiraNestedInput
+  }
+
+  export type carteiraUncheckedUpdateWithoutCarteira_n_cedentesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fiduc_fundo_id?: IntFieldUpdateOperationsInput | number
+    bordero?: borderoUncheckedUpdateManyWithoutCarteiraNestedInput
+  }
+
+  export type cedenteUpsertWithoutCarteira_n_cedentesInput = {
+    update: XOR<cedenteUpdateWithoutCarteira_n_cedentesInput, cedenteUncheckedUpdateWithoutCarteira_n_cedentesInput>
+    create: XOR<cedenteCreateWithoutCarteira_n_cedentesInput, cedenteUncheckedCreateWithoutCarteira_n_cedentesInput>
+  }
+
+  export type cedenteUpdateWithoutCarteira_n_cedentesInput = {
+    pessoa_id?: IntFieldUpdateOperationsInput | number
+    razao_social?: StringFieldUpdateOperationsInput | string
+    nome_fantasia?: NullableStringFieldUpdateOperationsInput | string | null
+    abertura?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cnpj?: NullableStringFieldUpdateOperationsInput | string | null
+    endereco?: NullableStringFieldUpdateOperationsInput | string | null
+    numero?: NullableStringFieldUpdateOperationsInput | string | null
+    cep?: NullableStringFieldUpdateOperationsInput | string | null
+    bairro?: NullableStringFieldUpdateOperationsInput | string | null
+    cidade?: NullableStringFieldUpdateOperationsInput | string | null
+    uf?: NullableStringFieldUpdateOperationsInput | string | null
+    telefone?: NullableStringFieldUpdateOperationsInput | string | null
+    cedente_analise?: cedente_analiseUpdateManyWithoutCedente_cedenteTocedente_analiseNestedInput
+    cedente_n_sacados?: cedente_n_sacadosUpdateManyWithoutCedente_cedenteTocedente_n_sacadosNestedInput
+  }
+
+  export type cedenteUncheckedUpdateWithoutCarteira_n_cedentesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    pessoa_id?: IntFieldUpdateOperationsInput | number
+    razao_social?: StringFieldUpdateOperationsInput | string
+    nome_fantasia?: NullableStringFieldUpdateOperationsInput | string | null
+    abertura?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cnpj?: NullableStringFieldUpdateOperationsInput | string | null
+    endereco?: NullableStringFieldUpdateOperationsInput | string | null
+    numero?: NullableStringFieldUpdateOperationsInput | string | null
+    cep?: NullableStringFieldUpdateOperationsInput | string | null
+    bairro?: NullableStringFieldUpdateOperationsInput | string | null
+    cidade?: NullableStringFieldUpdateOperationsInput | string | null
+    uf?: NullableStringFieldUpdateOperationsInput | string | null
+    telefone?: NullableStringFieldUpdateOperationsInput | string | null
+    cedente_analise?: cedente_analiseUncheckedUpdateManyWithoutCedente_cedenteTocedente_analiseNestedInput
+    cedente_n_sacados?: cedente_n_sacadosUncheckedUpdateManyWithoutCedente_cedenteTocedente_n_sacadosNestedInput
+  }
+
+  export type organogramaCreateWithoutOrganograma_x_usuarioInput = {
+    organograma_tipo: organograma_tipoCreateNestedOneWithoutOrganogramaInput
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoCreateNestedManyWithoutOrganogramaInput
+  }
+
+  export type organogramaUncheckedCreateWithoutOrganograma_x_usuarioInput = {
+    id?: number
+    organograma_id: number
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoUncheckedCreateNestedManyWithoutOrganogramaInput
+  }
+
+  export type organogramaCreateOrConnectWithoutOrganograma_x_usuarioInput = {
+    where: organogramaWhereUniqueInput
+    create: XOR<organogramaCreateWithoutOrganograma_x_usuarioInput, organogramaUncheckedCreateWithoutOrganograma_x_usuarioInput>
+  }
+
+  export type organogramaUpsertWithoutOrganograma_x_usuarioInput = {
+    update: XOR<organogramaUpdateWithoutOrganograma_x_usuarioInput, organogramaUncheckedUpdateWithoutOrganograma_x_usuarioInput>
+    create: XOR<organogramaCreateWithoutOrganograma_x_usuarioInput, organogramaUncheckedCreateWithoutOrganograma_x_usuarioInput>
+  }
+
+  export type organogramaUpdateWithoutOrganograma_x_usuarioInput = {
+    organograma_tipo?: organograma_tipoUpdateOneRequiredWithoutOrganogramaNestedInput
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoUpdateManyWithoutOrganogramaNestedInput
+  }
+
+  export type organogramaUncheckedUpdateWithoutOrganograma_x_usuarioInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    organograma_id?: IntFieldUpdateOperationsInput | number
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoUncheckedUpdateManyWithoutOrganogramaNestedInput
+  }
+
+  export type plataformaCreateWithoutPlataforma_x_usuarioInput = {
+    nome?: string | null
+    plataforma_papel_tipo: plataforma_papel_tipoCreateNestedOneWithoutPlataformaInput
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoCreateNestedManyWithoutPlataformaInput
+  }
+
+  export type plataformaUncheckedCreateWithoutPlataforma_x_usuarioInput = {
+    id?: number
+    nome?: string | null
+    plataforma_papel_tipo_id: number
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoUncheckedCreateNestedManyWithoutPlataformaInput
+  }
+
+  export type plataformaCreateOrConnectWithoutPlataforma_x_usuarioInput = {
+    where: plataformaWhereUniqueInput
+    create: XOR<plataformaCreateWithoutPlataforma_x_usuarioInput, plataformaUncheckedCreateWithoutPlataforma_x_usuarioInput>
+  }
+
+  export type plataformaUpsertWithoutPlataforma_x_usuarioInput = {
+    update: XOR<plataformaUpdateWithoutPlataforma_x_usuarioInput, plataformaUncheckedUpdateWithoutPlataforma_x_usuarioInput>
+    create: XOR<plataformaCreateWithoutPlataforma_x_usuarioInput, plataformaUncheckedCreateWithoutPlataforma_x_usuarioInput>
+  }
+
+  export type plataformaUpdateWithoutPlataforma_x_usuarioInput = {
+    nome?: NullableStringFieldUpdateOperationsInput | string | null
+    plataforma_papel_tipo?: plataforma_papel_tipoUpdateOneRequiredWithoutPlataformaNestedInput
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoUpdateManyWithoutPlataformaNestedInput
+  }
+
+  export type plataformaUncheckedUpdateWithoutPlataforma_x_usuarioInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nome?: NullableStringFieldUpdateOperationsInput | string | null
+    plataforma_papel_tipo_id?: IntFieldUpdateOperationsInput | number
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoUncheckedUpdateManyWithoutPlataformaNestedInput
+  }
+
+  export type tituloCreateWithoutTitulo_itensInput = {
+    nf?: string | null
+    valor?: number | null
+    vencimento?: Date | string | null
+    numero?: string | null
+    emissao?: Date | string | null
+    parcela?: string | null
+    titulo_tipo: titulo_tipoCreateNestedOneWithoutTituloInput
+    bordero: borderoCreateNestedOneWithoutTituloInput
+  }
+
+  export type tituloUncheckedCreateWithoutTitulo_itensInput = {
+    id?: number
+    titulo_tipo_id: number
+    bordero_id: number
+    nf?: string | null
+    valor?: number | null
+    vencimento?: Date | string | null
+    numero?: string | null
+    emissao?: Date | string | null
+    parcela?: string | null
+  }
+
+  export type tituloCreateOrConnectWithoutTitulo_itensInput = {
+    where: tituloWhereUniqueInput
+    create: XOR<tituloCreateWithoutTitulo_itensInput, tituloUncheckedCreateWithoutTitulo_itensInput>
+  }
+
+  export type tituloUpsertWithoutTitulo_itensInput = {
+    update: XOR<tituloUpdateWithoutTitulo_itensInput, tituloUncheckedUpdateWithoutTitulo_itensInput>
+    create: XOR<tituloCreateWithoutTitulo_itensInput, tituloUncheckedCreateWithoutTitulo_itensInput>
+  }
+
+  export type tituloUpdateWithoutTitulo_itensInput = {
+    nf?: NullableStringFieldUpdateOperationsInput | string | null
+    valor?: NullableFloatFieldUpdateOperationsInput | number | null
+    vencimento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numero?: NullableStringFieldUpdateOperationsInput | string | null
+    emissao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    parcela?: NullableStringFieldUpdateOperationsInput | string | null
+    titulo_tipo?: titulo_tipoUpdateOneRequiredWithoutTituloNestedInput
+    bordero?: borderoUpdateOneRequiredWithoutTituloNestedInput
+  }
+
+  export type tituloUncheckedUpdateWithoutTitulo_itensInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    titulo_tipo_id?: IntFieldUpdateOperationsInput | number
+    bordero_id?: IntFieldUpdateOperationsInput | number
+    nf?: NullableStringFieldUpdateOperationsInput | string | null
+    valor?: NullableFloatFieldUpdateOperationsInput | number | null
+    vencimento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numero?: NullableStringFieldUpdateOperationsInput | string | null
+    emissao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    parcela?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type usuario_perfil_tipoCreateWithoutUsuario_perfilInput = {
     nome: string
   }
 
-  export type usuario_perfil_tipoUncheckedCreateWithoutUsuario_x_perfilInput = {
+  export type usuario_perfil_tipoUncheckedCreateWithoutUsuario_perfilInput = {
     id?: number
     nome: string
   }
 
-  export type usuario_perfil_tipoCreateOrConnectWithoutUsuario_x_perfilInput = {
+  export type usuario_perfil_tipoCreateOrConnectWithoutUsuario_perfilInput = {
     where: usuario_perfil_tipoWhereUniqueInput
-    create: XOR<usuario_perfil_tipoCreateWithoutUsuario_x_perfilInput, usuario_perfil_tipoUncheckedCreateWithoutUsuario_x_perfilInput>
+    create: XOR<usuario_perfil_tipoCreateWithoutUsuario_perfilInput, usuario_perfil_tipoUncheckedCreateWithoutUsuario_perfilInput>
   }
 
-  export type usuarioUpsertWithoutUsuario_x_perfilInput = {
-    update: XOR<usuarioUpdateWithoutUsuario_x_perfilInput, usuarioUncheckedUpdateWithoutUsuario_x_perfilInput>
-    create: XOR<usuarioCreateWithoutUsuario_x_perfilInput, usuarioUncheckedCreateWithoutUsuario_x_perfilInput>
+  export type usuario_perfil_tipoUpsertWithoutUsuario_perfilInput = {
+    update: XOR<usuario_perfil_tipoUpdateWithoutUsuario_perfilInput, usuario_perfil_tipoUncheckedUpdateWithoutUsuario_perfilInput>
+    create: XOR<usuario_perfil_tipoCreateWithoutUsuario_perfilInput, usuario_perfil_tipoUncheckedCreateWithoutUsuario_perfilInput>
   }
 
-  export type usuarioUpdateWithoutUsuario_x_perfilInput = {
-    email?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
-    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
-    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    auditoria?: auditoriaUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
-    checagem?: checagemUpdateManyWithoutUsuario_checagemTousuarioNestedInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
-    titulos_x_usuario?: titulos_x_usuarioUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
-    pessoa?: pessoaUpdateOneRequiredWithoutUsuarioNestedInput
-  }
-
-  export type usuarioUncheckedUpdateWithoutUsuario_x_perfilInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    email?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
-    pessoa_id?: IntFieldUpdateOperationsInput | number
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
-    codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
-    codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    auditoria?: auditoriaUncheckedUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
-    checagem?: checagemUncheckedUpdateManyWithoutUsuario_checagemTousuarioNestedInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
-    titulos_x_usuario?: titulos_x_usuarioUncheckedUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
-  }
-
-  export type usuario_perfil_tipoUpsertWithoutUsuario_x_perfilInput = {
-    update: XOR<usuario_perfil_tipoUpdateWithoutUsuario_x_perfilInput, usuario_perfil_tipoUncheckedUpdateWithoutUsuario_x_perfilInput>
-    create: XOR<usuario_perfil_tipoCreateWithoutUsuario_x_perfilInput, usuario_perfil_tipoUncheckedCreateWithoutUsuario_x_perfilInput>
-  }
-
-  export type usuario_perfil_tipoUpdateWithoutUsuario_x_perfilInput = {
+  export type usuario_perfil_tipoUpdateWithoutUsuario_perfilInput = {
     nome?: StringFieldUpdateOperationsInput | string
   }
 
-  export type usuario_perfil_tipoUncheckedUpdateWithoutUsuario_x_perfilInput = {
+  export type usuario_perfil_tipoUncheckedUpdateWithoutUsuario_perfilInput = {
     id?: IntFieldUpdateOperationsInput | number
     nome?: StringFieldUpdateOperationsInput | string
   }
@@ -40847,12 +36569,6 @@ export namespace Prisma {
     parcela?: string | null
   }
 
-  export type titulos_x_usuarioCreateManyBordero_borderoTotitulos_x_usuarioInput = {
-    id?: number
-    usuario?: number | null
-    status?: string | null
-  }
-
   export type tituloUpdateWithoutBorderoInput = {
     nf?: NullableStringFieldUpdateOperationsInput | string | null
     valor?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -40861,6 +36577,7 @@ export namespace Prisma {
     emissao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     parcela?: NullableStringFieldUpdateOperationsInput | string | null
     titulo_tipo?: titulo_tipoUpdateOneRequiredWithoutTituloNestedInput
+    titulo_itens?: titulo_itensUpdateManyWithoutTituloNestedInput
   }
 
   export type tituloUncheckedUpdateWithoutBorderoInput = {
@@ -40872,6 +36589,7 @@ export namespace Prisma {
     numero?: NullableStringFieldUpdateOperationsInput | string | null
     emissao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     parcela?: NullableStringFieldUpdateOperationsInput | string | null
+    titulo_itens?: titulo_itensUncheckedUpdateManyWithoutTituloNestedInput
   }
 
   export type tituloUncheckedUpdateManyWithoutTituloInput = {
@@ -40885,21 +36603,45 @@ export namespace Prisma {
     parcela?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type titulos_x_usuarioUpdateWithoutBordero_borderoTotitulos_x_usuarioInput = {
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    usuario_titulos_x_usuarioTousuario?: usuarioUpdateOneWithoutTitulos_x_usuarioNestedInput
+  export type borderoCreateManyCarteiraInput = {
+    id?: number
   }
 
-  export type titulos_x_usuarioUncheckedUpdateWithoutBordero_borderoTotitulos_x_usuarioInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    usuario?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
+  export type carteira_n_cedentesCreateManyCarteiraInput = {
+    id?: number
+    cedente_id: number
   }
 
-  export type titulos_x_usuarioUncheckedUpdateManyWithoutTitulos_x_usuarioInput = {
+  export type borderoUpdateWithoutCarteiraInput = {
+    titulo?: tituloUpdateManyWithoutBorderoNestedInput
+  }
+
+  export type borderoUncheckedUpdateWithoutCarteiraInput = {
     id?: IntFieldUpdateOperationsInput | number
-    usuario?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
+    titulo?: tituloUncheckedUpdateManyWithoutBorderoNestedInput
+  }
+
+  export type borderoUncheckedUpdateManyWithoutBorderoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type carteira_n_cedentesUpdateWithoutCarteiraInput = {
+    cedente?: cedenteUpdateOneRequiredWithoutCarteira_n_cedentesNestedInput
+  }
+
+  export type carteira_n_cedentesUncheckedUpdateWithoutCarteiraInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cedente_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type carteira_n_cedentesUncheckedUpdateManyWithoutCarteira_n_cedentesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cedente_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type carteira_n_cedentesCreateManyCedenteInput = {
+    id?: number
+    carteira_id: number
   }
 
   export type cedente_analiseCreateManyCedente_cedenteTocedente_analiseInput = {
@@ -40912,8 +36654,13 @@ export namespace Prisma {
     sacado?: number | null
   }
 
-  export type titulo_x_cedenteCreateManyCedente_cedenteTotitulo_x_cedenteInput = {
-    id?: number
+  export type carteira_n_cedentesUpdateWithoutCedenteInput = {
+    carteira?: carteiraUpdateOneRequiredWithoutCarteira_n_cedentesNestedInput
+  }
+
+  export type carteira_n_cedentesUncheckedUpdateWithoutCedenteInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    carteira_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type cedente_analiseUpdateWithoutCedente_cedenteTocedente_analiseInput = {
@@ -40944,18 +36691,6 @@ export namespace Prisma {
     sacado?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type titulo_x_cedenteUpdateWithoutCedente_cedenteTotitulo_x_cedenteInput = {
-
-  }
-
-  export type titulo_x_cedenteUncheckedUpdateWithoutCedente_cedenteTotitulo_x_cedenteInput = {
-    id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type titulo_x_cedenteUncheckedUpdateManyWithoutTitulo_x_cedenteInput = {
-    id?: IntFieldUpdateOperationsInput | number
-  }
-
   export type carteiraCreateManyFidic_fundoInput = {
     id?: number
   }
@@ -40966,11 +36701,14 @@ export namespace Prisma {
   }
 
   export type carteiraUpdateWithoutFidic_fundoInput = {
-
+    bordero?: borderoUpdateManyWithoutCarteiraNestedInput
+    carteira_n_cedentes?: carteira_n_cedentesUpdateManyWithoutCarteiraNestedInput
   }
 
   export type carteiraUncheckedUpdateWithoutFidic_fundoInput = {
     id?: IntFieldUpdateOperationsInput | number
+    bordero?: borderoUncheckedUpdateManyWithoutCarteiraNestedInput
+    carteira_n_cedentes?: carteira_n_cedentesUncheckedUpdateManyWithoutCarteiraNestedInput
   }
 
   export type carteiraUncheckedUpdateManyWithoutCarteiraInput = {
@@ -40978,7 +36716,7 @@ export namespace Prisma {
   }
 
   export type fidic_fundo_x_usuarioUpdateWithoutFidic_fundoInput = {
-    usuario_fidic_fundo_x_usuarioTousuario?: usuarioUpdateOneWithoutFidic_fundo_x_usuarioNestedInput
+    usuario?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type fidic_fundo_x_usuarioUncheckedUpdateWithoutFidic_fundoInput = {
@@ -40989,6 +36727,63 @@ export namespace Prisma {
   export type fidic_fundo_x_usuarioUncheckedUpdateManyWithoutFidic_fundo_x_usuarioInput = {
     id?: IntFieldUpdateOperationsInput | number
     usuario?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type organograma_x_regiao_atuacaoCreateManyOrganogramaInput = {
+    id?: number
+    regiao_atuacao_id: number
+  }
+
+  export type organograma_x_usuarioCreateManyOrganogramaInput = {
+    id?: number
+    usuario_id: number
+  }
+
+  export type organograma_x_regiao_atuacaoUpdateWithoutOrganogramaInput = {
+    regiao_atuacao?: regiao_atuacaoUpdateOneRequiredWithoutOrganograma_x_regiao_atuacaoNestedInput
+  }
+
+  export type organograma_x_regiao_atuacaoUncheckedUpdateWithoutOrganogramaInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    regiao_atuacao_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type organograma_x_regiao_atuacaoUncheckedUpdateManyWithoutOrganograma_x_regiao_atuacaoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    regiao_atuacao_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type organograma_x_usuarioUpdateWithoutOrganogramaInput = {
+    usuario_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type organograma_x_usuarioUncheckedUpdateWithoutOrganogramaInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuario_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type organograma_x_usuarioUncheckedUpdateManyWithoutOrganograma_x_usuarioInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuario_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type organogramaCreateManyOrganograma_tipoInput = {
+    id?: number
+  }
+
+  export type organogramaUpdateWithoutOrganograma_tipoInput = {
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoUpdateManyWithoutOrganogramaNestedInput
+    organograma_x_usuario?: organograma_x_usuarioUpdateManyWithoutOrganogramaNestedInput
+  }
+
+  export type organogramaUncheckedUpdateWithoutOrganograma_tipoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoUncheckedUpdateManyWithoutOrganogramaNestedInput
+    organograma_x_usuario?: organograma_x_usuarioUncheckedUpdateManyWithoutOrganogramaNestedInput
+  }
+
+  export type organogramaUncheckedUpdateManyWithoutOrganogramaInput = {
+    id?: IntFieldUpdateOperationsInput | number
   }
 
   export type usuarioCreateManyPessoaInput = {
@@ -41016,11 +36811,6 @@ export namespace Prisma {
     codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    auditoria?: auditoriaUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
-    checagem?: checagemUpdateManyWithoutUsuario_checagemTousuarioNestedInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
-    titulos_x_usuario?: titulos_x_usuarioUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
-    usuario_x_perfil?: usuario_x_perfilUpdateManyWithoutUsuarioNestedInput
   }
 
   export type usuarioUncheckedUpdateWithoutPessoaInput = {
@@ -41035,11 +36825,6 @@ export namespace Prisma {
     codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    auditoria?: auditoriaUncheckedUpdateManyWithoutUsuario_auditoriaTousuarioNestedInput
-    checagem?: checagemUncheckedUpdateManyWithoutUsuario_checagemTousuarioNestedInput
-    fidic_fundo_x_usuario?: fidic_fundo_x_usuarioUncheckedUpdateManyWithoutUsuario_fidic_fundo_x_usuarioTousuarioNestedInput
-    titulos_x_usuario?: titulos_x_usuarioUncheckedUpdateManyWithoutUsuario_titulos_x_usuarioTousuarioNestedInput
-    usuario_x_perfil?: usuario_x_perfilUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type usuarioUncheckedUpdateManyWithoutUsuarioInput = {
@@ -41056,6 +36841,118 @@ export namespace Prisma {
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type plataforma_x_regiao_atuacaoCreateManyPlataformaInput = {
+    id?: number
+    regiao_atuacao_id: number
+  }
+
+  export type plataforma_x_usuarioCreateManyPlataformaInput = {
+    id?: number
+    usuario_id: number
+  }
+
+  export type plataforma_x_regiao_atuacaoUpdateWithoutPlataformaInput = {
+    regiao_atuacao?: regiao_atuacaoUpdateOneRequiredWithoutPlataforma_x_regiao_atuacaoNestedInput
+  }
+
+  export type plataforma_x_regiao_atuacaoUncheckedUpdateWithoutPlataformaInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    regiao_atuacao_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type plataforma_x_regiao_atuacaoUncheckedUpdateManyWithoutPlataforma_x_regiao_atuacaoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    regiao_atuacao_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type plataforma_x_usuarioUpdateWithoutPlataformaInput = {
+    usuario_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type plataforma_x_usuarioUncheckedUpdateWithoutPlataformaInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuario_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type plataforma_x_usuarioUncheckedUpdateManyWithoutPlataforma_x_usuarioInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuario_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type plataformaCreateManyPlataforma_papel_tipoInput = {
+    id?: number
+    nome?: string | null
+  }
+
+  export type plataformaUpdateWithoutPlataforma_papel_tipoInput = {
+    nome?: NullableStringFieldUpdateOperationsInput | string | null
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoUpdateManyWithoutPlataformaNestedInput
+    plataforma_x_usuario?: plataforma_x_usuarioUpdateManyWithoutPlataformaNestedInput
+  }
+
+  export type plataformaUncheckedUpdateWithoutPlataforma_papel_tipoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nome?: NullableStringFieldUpdateOperationsInput | string | null
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoUncheckedUpdateManyWithoutPlataformaNestedInput
+    plataforma_x_usuario?: plataforma_x_usuarioUncheckedUpdateManyWithoutPlataformaNestedInput
+  }
+
+  export type plataformaUncheckedUpdateManyWithoutPlataformaInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nome?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type organograma_x_regiao_atuacaoCreateManyRegiao_atuacaoInput = {
+    id?: number
+    organograma_id: number
+  }
+
+  export type plataforma_x_regiao_atuacaoCreateManyRegiao_atuacaoInput = {
+    id?: number
+    plataforma_id: number
+  }
+
+  export type organograma_x_regiao_atuacaoUpdateWithoutRegiao_atuacaoInput = {
+    organograma?: organogramaUpdateOneRequiredWithoutOrganograma_x_regiao_atuacaoNestedInput
+  }
+
+  export type organograma_x_regiao_atuacaoUncheckedUpdateWithoutRegiao_atuacaoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    organograma_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type plataforma_x_regiao_atuacaoUpdateWithoutRegiao_atuacaoInput = {
+    plataforma?: plataformaUpdateOneRequiredWithoutPlataforma_x_regiao_atuacaoNestedInput
+  }
+
+  export type plataforma_x_regiao_atuacaoUncheckedUpdateWithoutRegiao_atuacaoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    plataforma_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type regiao_atuacaoCreateManyRegiao_atuacao_tipoInput = {
+    id?: number
+    nome: string
+  }
+
+  export type regiao_atuacaoUpdateWithoutRegiao_atuacao_tipoInput = {
+    nome?: StringFieldUpdateOperationsInput | string
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoUpdateManyWithoutRegiao_atuacaoNestedInput
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoUpdateManyWithoutRegiao_atuacaoNestedInput
+  }
+
+  export type regiao_atuacaoUncheckedUpdateWithoutRegiao_atuacao_tipoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nome?: StringFieldUpdateOperationsInput | string
+    organograma_x_regiao_atuacao?: organograma_x_regiao_atuacaoUncheckedUpdateManyWithoutRegiao_atuacaoNestedInput
+    plataforma_x_regiao_atuacao?: plataforma_x_regiao_atuacaoUncheckedUpdateManyWithoutRegiao_atuacaoNestedInput
+  }
+
+  export type regiao_atuacaoUncheckedUpdateManyWithoutRegiao_atuacaoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nome?: StringFieldUpdateOperationsInput | string
+  }
+
   export type cedente_n_sacadosCreateManySacado_cedente_n_sacadosTosacadoInput = {
     id?: number
     cedente?: number | null
@@ -41068,6 +36965,22 @@ export namespace Prisma {
   export type cedente_n_sacadosUncheckedUpdateWithoutSacado_cedente_n_sacadosTosacadoInput = {
     id?: IntFieldUpdateOperationsInput | number
     cedente?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type titulo_itensCreateManyTituloInput = {
+    id?: number
+  }
+
+  export type titulo_itensUpdateWithoutTituloInput = {
+
+  }
+
+  export type titulo_itensUncheckedUpdateWithoutTituloInput = {
+    id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type titulo_itensUncheckedUpdateManyWithoutTitulo_itensInput = {
+    id?: IntFieldUpdateOperationsInput | number
   }
 
   export type tituloCreateManyTitulo_tipoInput = {
@@ -41089,6 +37002,7 @@ export namespace Prisma {
     emissao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     parcela?: NullableStringFieldUpdateOperationsInput | string | null
     bordero?: borderoUpdateOneRequiredWithoutTituloNestedInput
+    titulo_itens?: titulo_itensUpdateManyWithoutTituloNestedInput
   }
 
   export type tituloUncheckedUpdateWithoutTitulo_tipoInput = {
@@ -41100,128 +37014,27 @@ export namespace Prisma {
     numero?: NullableStringFieldUpdateOperationsInput | string | null
     emissao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     parcela?: NullableStringFieldUpdateOperationsInput | string | null
+    titulo_itens?: titulo_itensUncheckedUpdateManyWithoutTituloNestedInput
   }
 
-  export type auditoriaCreateManyUsuario_auditoriaTousuarioInput = {
-    action?: string | null
-    data?: Date | string | null
-    modulo?: string | null
-    id?: number
-  }
-
-  export type checagemCreateManyUsuario_checagemTousuarioInput = {
-    id?: number
-    nf?: string | null
-    status?: string | null
-    titulos?: string | null
-  }
-
-  export type fidic_fundo_x_usuarioCreateManyUsuario_fidic_fundo_x_usuarioTousuarioInput = {
-    id?: number
-    fidic: number
-  }
-
-  export type titulos_x_usuarioCreateManyUsuario_titulos_x_usuarioTousuarioInput = {
-    id?: number
-    bordero?: number | null
-    status?: string | null
-  }
-
-  export type usuario_x_perfilCreateManyUsuarioInput = {
-    id?: number
-    senha: string
-    usuario_perfil_id: number
-  }
-
-  export type auditoriaUpdateWithoutUsuario_auditoriaTousuarioInput = {
-    action?: NullableStringFieldUpdateOperationsInput | string | null
-    data?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modulo?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type auditoriaUncheckedUpdateWithoutUsuario_auditoriaTousuarioInput = {
-    action?: NullableStringFieldUpdateOperationsInput | string | null
-    data?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modulo?: NullableStringFieldUpdateOperationsInput | string | null
-    id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type auditoriaUncheckedUpdateManyWithoutAuditoriaInput = {
-    action?: NullableStringFieldUpdateOperationsInput | string | null
-    data?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modulo?: NullableStringFieldUpdateOperationsInput | string | null
-    id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type checagemUpdateWithoutUsuario_checagemTousuarioInput = {
-    nf?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    titulos?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type checagemUncheckedUpdateWithoutUsuario_checagemTousuarioInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    nf?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    titulos?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type checagemUncheckedUpdateManyWithoutChecagemInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    nf?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    titulos?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type fidic_fundo_x_usuarioUpdateWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput = {
-    fidic_fundo?: fidic_fundoUpdateOneRequiredWithoutFidic_fundo_x_usuarioNestedInput
-  }
-
-  export type fidic_fundo_x_usuarioUncheckedUpdateWithoutUsuario_fidic_fundo_x_usuarioTousuarioInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    fidic?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type titulos_x_usuarioUpdateWithoutUsuario_titulos_x_usuarioTousuarioInput = {
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    bordero_borderoTotitulos_x_usuario?: borderoUpdateOneWithoutTitulos_x_usuarioNestedInput
-  }
-
-  export type titulos_x_usuarioUncheckedUpdateWithoutUsuario_titulos_x_usuarioTousuarioInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    bordero?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type usuario_x_perfilUpdateWithoutUsuarioInput = {
-    senha?: StringFieldUpdateOperationsInput | string
-    usuario_perfil_tipo?: usuario_perfil_tipoUpdateOneRequiredWithoutUsuario_x_perfilNestedInput
-  }
-
-  export type usuario_x_perfilUncheckedUpdateWithoutUsuarioInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    senha?: StringFieldUpdateOperationsInput | string
-    usuario_perfil_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type usuario_x_perfilUncheckedUpdateManyWithoutUsuario_x_perfilInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    senha?: StringFieldUpdateOperationsInput | string
-    usuario_perfil_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type usuario_x_perfilCreateManyUsuario_perfil_tipoInput = {
+  export type usuario_perfilCreateManyUsuario_perfil_tipoInput = {
     id?: number
     senha: string
     usuario_id: number
   }
 
-  export type usuario_x_perfilUpdateWithoutUsuario_perfil_tipoInput = {
+  export type usuario_perfilUpdateWithoutUsuario_perfil_tipoInput = {
     senha?: StringFieldUpdateOperationsInput | string
-    usuario?: usuarioUpdateOneRequiredWithoutUsuario_x_perfilNestedInput
+    usuario_id?: IntFieldUpdateOperationsInput | number
   }
 
-  export type usuario_x_perfilUncheckedUpdateWithoutUsuario_perfil_tipoInput = {
+  export type usuario_perfilUncheckedUpdateWithoutUsuario_perfil_tipoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    senha?: StringFieldUpdateOperationsInput | string
+    usuario_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type usuario_perfilUncheckedUpdateManyWithoutUsuario_perfilInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
     usuario_id?: IntFieldUpdateOperationsInput | number

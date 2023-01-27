@@ -30,8 +30,8 @@ model bordero {
 model carteira {
   id                  Int                   @id @default(autoincrement())
   fiduc_fundo_id      Int
-  bordero             bordero[]
   fidic_fundo         fidic_fundo           @relation(fields: [fiduc_fundo_id], references: [id], onUpdate: Restrict, map: "carteira_FK")
+  bordero             bordero[]
   carteira_n_cedentes carteira_n_cedentes[]
 
   @@index([fiduc_fundo_id], map: "carteira_FK")
@@ -176,9 +176,9 @@ model regiao_atuacao {
   id                           Int                            @id @default(autoincrement())
   nome                         String                         @db.VarChar(120)
   regiao_atuacao_tipo_id       Int
+  regiao_atuacao_tipo          regiao_atuacao_tipo            @relation(fields: [regiao_atuacao_tipo_id], references: [id], onUpdate: Restrict, map: "regiao_atuacao_FK")
   organograma_x_regiao_atuacao organograma_x_regiao_atuacao[]
   plataforma_x_regiao_atuacao  plataforma_x_regiao_atuacao[]
-  regiao_atuacao_tipo          regiao_atuacao_tipo            @relation(fields: [regiao_atuacao_tipo_id], references: [id], onUpdate: Restrict, map: "regiao_atuacao_FK")
 
   @@index([regiao_atuacao_tipo_id], map: "regiao_atuacao_FK")
 }

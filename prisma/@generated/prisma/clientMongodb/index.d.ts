@@ -361,6 +361,31 @@ export class PrismaClient<
     ? T['rejectOnNotFound']
     : false
       > {
+      /**
+       * @private
+       */
+      private fetcher;
+      /**
+       * @private
+       */
+      private readonly dmmf;
+      /**
+       * @private
+       */
+      private connectionPromise?;
+      /**
+       * @private
+       */
+      private disconnectionPromise?;
+      /**
+       * @private
+       */
+      private readonly engineConfig;
+      /**
+       * @private
+       */
+      private readonly measurePerformance;
+
     /**
    * ##  Prisma Client ʲˢ
    * 
@@ -409,7 +434,6 @@ export class PrismaClient<
    */
   $transaction<P extends PrismaPromise<any>[]>(arg: [...P]): Promise<UnwrapTuple<P>>;
 
-  $transaction<R>(fn: (prisma: Prisma.TransactionClient) => Promise<R>, options?: {maxWait?: number, timeout?: number}): Promise<R>;
 
   /**
    * Executes a raw MongoDB command and returns the result of it.
@@ -556,8 +580,8 @@ export namespace Prisma {
 
 
   /**
-   * Prisma Client JS version: 4.7.1
-   * Query Engine version: 272861e07ab64f234d3ffc4094e32bd61775599c
+   * Prisma Client JS version: 4.6.1
+   * Query Engine version: 694eea289a8462c80264df36757e4fdc129b1b32
    */
   export type PrismaVersion = {
     client: string
@@ -721,9 +745,9 @@ export namespace Prisma {
     [K in keyof T]-?: {} extends Prisma__Pick<T, K> ? never : K
   }[keyof T]
 
-  export type TruthyKeys<T> = keyof {
-    [K in keyof T as T[K] extends false | undefined | null ? never : K]: K
-  }
+  export type TruthyKeys<T> = {
+    [key in keyof T]: T[key] extends false | undefined | null ? never : key
+  }[keyof T]
 
   export type TrueKeys<T> = TruthyKeys<Prisma__Pick<T, RequiredKeys<T>>>
 
@@ -1157,11 +1181,6 @@ export namespace Prisma {
   // tested in getLogLevel.test.ts
   export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined;
 
-  /**
-   * `PrismaClient` proxy available in interactive transactions.
-   */
-  export type TransactionClient = Omit<PrismaClient, '$connect' | '$disconnect' | '$on' | '$transaction' | '$use'>
-
   export type Datasource = {
     url?: string
   }
@@ -1200,7 +1219,7 @@ export namespace Prisma {
   }
 
 
-  export type ProviderAdressesGetPayload<S extends boolean | null | undefined | ProviderAdressesArgs> =
+  export type ProviderAdressesGetPayload<S extends boolean | null | undefined | ProviderAdressesArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? ProviderAdresses :
     S extends undefined ? never :
@@ -1208,7 +1227,7 @@ export namespace Prisma {
     ? ProviderAdresses 
     : S extends { select: any } & (ProviderAdressesArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
+    [P in TrueKeys<S['select']>]:
     P extends keyof ProviderAdresses ? ProviderAdresses[P] : never
   } 
       : ProviderAdresses
@@ -1303,7 +1322,7 @@ export namespace Prisma {
   }
 
 
-  export type ProviderClientReminderConfigsServicesListGetPayload<S extends boolean | null | undefined | ProviderClientReminderConfigsServicesListArgs> =
+  export type ProviderClientReminderConfigsServicesListGetPayload<S extends boolean | null | undefined | ProviderClientReminderConfigsServicesListArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? ProviderClientReminderConfigsServicesList :
     S extends undefined ? never :
@@ -1311,7 +1330,7 @@ export namespace Prisma {
     ? ProviderClientReminderConfigsServicesList 
     : S extends { select: any } & (ProviderClientReminderConfigsServicesListArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
+    [P in TrueKeys<S['select']>]:
     P extends keyof ProviderClientReminderConfigsServicesList ? ProviderClientReminderConfigsServicesList[P] : never
   } 
       : ProviderClientReminderConfigsServicesList
@@ -1405,7 +1424,7 @@ export namespace Prisma {
   }
 
 
-  export type ProviderClientReminderConfigsTotalRemindersGetPayload<S extends boolean | null | undefined | ProviderClientReminderConfigsTotalRemindersArgs> =
+  export type ProviderClientReminderConfigsTotalRemindersGetPayload<S extends boolean | null | undefined | ProviderClientReminderConfigsTotalRemindersArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? ProviderClientReminderConfigsTotalReminders :
     S extends undefined ? never :
@@ -1413,7 +1432,7 @@ export namespace Prisma {
     ? ProviderClientReminderConfigsTotalReminders 
     : S extends { select: any } & (ProviderClientReminderConfigsTotalRemindersArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
+    [P in TrueKeys<S['select']>]:
     P extends keyof ProviderClientReminderConfigsTotalReminders ? ProviderClientReminderConfigsTotalReminders[P] : never
   } 
       : ProviderClientReminderConfigsTotalReminders
@@ -1509,7 +1528,7 @@ export namespace Prisma {
   }
 
 
-  export type ProviderClientRemindersClientGetPayload<S extends boolean | null | undefined | ProviderClientRemindersClientArgs> =
+  export type ProviderClientRemindersClientGetPayload<S extends boolean | null | undefined | ProviderClientRemindersClientArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? ProviderClientRemindersClient :
     S extends undefined ? never :
@@ -1517,7 +1536,7 @@ export namespace Prisma {
     ? ProviderClientRemindersClient 
     : S extends { select: any } & (ProviderClientRemindersClientArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
+    [P in TrueKeys<S['select']>]:
     P extends keyof ProviderClientRemindersClient ? ProviderClientRemindersClient[P] : never
   } 
       : ProviderClientRemindersClient
@@ -1612,7 +1631,7 @@ export namespace Prisma {
   }
 
 
-  export type ProviderClientRemindersDateTimeSendGetPayload<S extends boolean | null | undefined | ProviderClientRemindersDateTimeSendArgs> =
+  export type ProviderClientRemindersDateTimeSendGetPayload<S extends boolean | null | undefined | ProviderClientRemindersDateTimeSendArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? ProviderClientRemindersDateTimeSend :
     S extends undefined ? never :
@@ -1620,7 +1639,7 @@ export namespace Prisma {
     ? ProviderClientRemindersDateTimeSend 
     : S extends { select: any } & (ProviderClientRemindersDateTimeSendArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
+    [P in TrueKeys<S['select']>]:
     P extends keyof ProviderClientRemindersDateTimeSend ? ProviderClientRemindersDateTimeSend[P] : never
   } 
       : ProviderClientRemindersDateTimeSend
@@ -1715,7 +1734,7 @@ export namespace Prisma {
   }
 
 
-  export type ProviderClientRemindersProviderGetPayload<S extends boolean | null | undefined | ProviderClientRemindersProviderArgs> =
+  export type ProviderClientRemindersProviderGetPayload<S extends boolean | null | undefined | ProviderClientRemindersProviderArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? ProviderClientRemindersProvider :
     S extends undefined ? never :
@@ -1723,7 +1742,7 @@ export namespace Prisma {
     ? ProviderClientRemindersProvider 
     : S extends { select: any } & (ProviderClientRemindersProviderArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
+    [P in TrueKeys<S['select']>]:
     P extends keyof ProviderClientRemindersProvider ? ProviderClientRemindersProvider[P] : never
   } 
       : ProviderClientRemindersProvider
@@ -1818,7 +1837,7 @@ export namespace Prisma {
   }
 
 
-  export type ProviderContactsGetPayload<S extends boolean | null | undefined | ProviderContactsArgs> =
+  export type ProviderContactsGetPayload<S extends boolean | null | undefined | ProviderContactsArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? ProviderContacts :
     S extends undefined ? never :
@@ -1826,7 +1845,7 @@ export namespace Prisma {
     ? ProviderContacts 
     : S extends { select: any } & (ProviderContactsArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
+    [P in TrueKeys<S['select']>]:
     P extends keyof ProviderContacts ? ProviderContacts[P] : never
   } 
       : ProviderContacts
@@ -1942,7 +1961,7 @@ export namespace Prisma {
   }
 
 
-  export type ProviderDockOnboardingRequiredDataGetPayload<S extends boolean | null | undefined | ProviderDockOnboardingRequiredDataArgs> =
+  export type ProviderDockOnboardingRequiredDataGetPayload<S extends boolean | null | undefined | ProviderDockOnboardingRequiredDataArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? ProviderDockOnboardingRequiredData :
     S extends undefined ? never :
@@ -1950,7 +1969,7 @@ export namespace Prisma {
     ? ProviderDockOnboardingRequiredData 
     : S extends { select: any } & (ProviderDockOnboardingRequiredDataArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
+    [P in TrueKeys<S['select']>]:
     P extends keyof ProviderDockOnboardingRequiredData ? ProviderDockOnboardingRequiredData[P] : never
   } 
       : ProviderDockOnboardingRequiredData
@@ -2050,7 +2069,7 @@ export namespace Prisma {
 
   } 
 
-  export type ProviderLegalPersonGetPayload<S extends boolean | null | undefined | ProviderLegalPersonArgs> =
+  export type ProviderLegalPersonGetPayload<S extends boolean | null | undefined | ProviderLegalPersonArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? ProviderLegalPerson :
     S extends undefined ? never :
@@ -2058,8 +2077,8 @@ export namespace Prisma {
     ? ProviderLegalPerson 
     : S extends { select: any } & (ProviderLegalPersonArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'others' ? ProviderLegalPersonOthersGetPayload<S['select'][P]> :  P extends keyof ProviderLegalPerson ? ProviderLegalPerson[P] : never
+    [P in TrueKeys<S['select']>]:
+        P extends 'others' ? ProviderLegalPersonOthersGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof ProviderLegalPerson ? ProviderLegalPerson[P] : never
   } 
       : ProviderLegalPerson
 
@@ -2159,7 +2178,7 @@ export namespace Prisma {
   }
 
 
-  export type ProviderLegalPersonOthersGetPayload<S extends boolean | null | undefined | ProviderLegalPersonOthersArgs> =
+  export type ProviderLegalPersonOthersGetPayload<S extends boolean | null | undefined | ProviderLegalPersonOthersArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? ProviderLegalPersonOthers :
     S extends undefined ? never :
@@ -2167,7 +2186,7 @@ export namespace Prisma {
     ? ProviderLegalPersonOthers 
     : S extends { select: any } & (ProviderLegalPersonOthersArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
+    [P in TrueKeys<S['select']>]:
     P extends keyof ProviderLegalPersonOthers ? ProviderLegalPersonOthers[P] : never
   } 
       : ProviderLegalPersonOthers
@@ -2266,7 +2285,7 @@ export namespace Prisma {
 
   } 
 
-  export type ProviderPhysicalPersonGetPayload<S extends boolean | null | undefined | ProviderPhysicalPersonArgs> =
+  export type ProviderPhysicalPersonGetPayload<S extends boolean | null | undefined | ProviderPhysicalPersonArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? ProviderPhysicalPerson :
     S extends undefined ? never :
@@ -2274,8 +2293,8 @@ export namespace Prisma {
     ? ProviderPhysicalPerson 
     : S extends { select: any } & (ProviderPhysicalPersonArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'others' ? ProviderPhysicalPersonOthersGetPayload<S['select'][P]> :  P extends keyof ProviderPhysicalPerson ? ProviderPhysicalPerson[P] : never
+    [P in TrueKeys<S['select']>]:
+        P extends 'others' ? ProviderPhysicalPersonOthersGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof ProviderPhysicalPerson ? ProviderPhysicalPerson[P] : never
   } 
       : ProviderPhysicalPerson
 
@@ -2377,7 +2396,7 @@ export namespace Prisma {
   }
 
 
-  export type ProviderPhysicalPersonOthersGetPayload<S extends boolean | null | undefined | ProviderPhysicalPersonOthersArgs> =
+  export type ProviderPhysicalPersonOthersGetPayload<S extends boolean | null | undefined | ProviderPhysicalPersonOthersArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? ProviderPhysicalPersonOthers :
     S extends undefined ? never :
@@ -2385,7 +2404,7 @@ export namespace Prisma {
     ? ProviderPhysicalPersonOthers 
     : S extends { select: any } & (ProviderPhysicalPersonOthersArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
+    [P in TrueKeys<S['select']>]:
     P extends keyof ProviderPhysicalPersonOthers ? ProviderPhysicalPersonOthers[P] : never
   } 
       : ProviderPhysicalPersonOthers
@@ -2479,7 +2498,7 @@ export namespace Prisma {
   }
 
 
-  export type TypesAddressGetPayload<S extends boolean | null | undefined | TypesAddressArgs> =
+  export type TypesAddressGetPayload<S extends boolean | null | undefined | TypesAddressArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? TypesAddress :
     S extends undefined ? never :
@@ -2487,7 +2506,7 @@ export namespace Prisma {
     ? TypesAddress 
     : S extends { select: any } & (TypesAddressArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
+    [P in TrueKeys<S['select']>]:
     P extends keyof TypesAddress ? TypesAddress[P] : never
   } 
       : TypesAddress
@@ -2581,7 +2600,7 @@ export namespace Prisma {
   }
 
 
-  export type TypesContactGetPayload<S extends boolean | null | undefined | TypesContactArgs> =
+  export type TypesContactGetPayload<S extends boolean | null | undefined | TypesContactArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? TypesContact :
     S extends undefined ? never :
@@ -2589,7 +2608,7 @@ export namespace Prisma {
     ? TypesContact 
     : S extends { select: any } & (TypesContactArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
+    [P in TrueKeys<S['select']>]:
     P extends keyof TypesContact ? TypesContact[P] : never
   } 
       : TypesContact
@@ -2683,7 +2702,7 @@ export namespace Prisma {
   }
 
 
-  export type TypesOrderStatusGetPayload<S extends boolean | null | undefined | TypesOrderStatusArgs> =
+  export type TypesOrderStatusGetPayload<S extends boolean | null | undefined | TypesOrderStatusArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? TypesOrderStatus :
     S extends undefined ? never :
@@ -2691,7 +2710,7 @@ export namespace Prisma {
     ? TypesOrderStatus 
     : S extends { select: any } & (TypesOrderStatusArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
+    [P in TrueKeys<S['select']>]:
     P extends keyof TypesOrderStatus ? TypesOrderStatus[P] : never
   } 
       : TypesOrderStatus
@@ -2785,7 +2804,7 @@ export namespace Prisma {
   }
 
 
-  export type TypesTipoQuePrecisarGetPayload<S extends boolean | null | undefined | TypesTipoQuePrecisarArgs> =
+  export type TypesTipoQuePrecisarGetPayload<S extends boolean | null | undefined | TypesTipoQuePrecisarArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? TypesTipoQuePrecisar :
     S extends undefined ? never :
@@ -2793,7 +2812,7 @@ export namespace Prisma {
     ? TypesTipoQuePrecisar 
     : S extends { select: any } & (TypesTipoQuePrecisarArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
+    [P in TrueKeys<S['select']>]:
     P extends keyof TypesTipoQuePrecisar ? TypesTipoQuePrecisar[P] : never
   } 
       : TypesTipoQuePrecisar
@@ -2889,7 +2908,7 @@ export namespace Prisma {
   }
 
 
-  export type UserAccessMethodsGetPayload<S extends boolean | null | undefined | UserAccessMethodsArgs> =
+  export type UserAccessMethodsGetPayload<S extends boolean | null | undefined | UserAccessMethodsArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? UserAccessMethods :
     S extends undefined ? never :
@@ -2897,7 +2916,7 @@ export namespace Prisma {
     ? UserAccessMethods 
     : S extends { select: any } & (UserAccessMethodsArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
+    [P in TrueKeys<S['select']>]:
     P extends keyof UserAccessMethods ? UserAccessMethods[P] : never
   } 
       : UserAccessMethods
@@ -3135,7 +3154,7 @@ export namespace Prisma {
 
   } 
 
-  export type ProviderGetPayload<S extends boolean | null | undefined | ProviderArgs> =
+  export type ProviderGetPayload<S extends boolean | null | undefined | ProviderArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? Provider :
     S extends undefined ? never :
@@ -3143,11 +3162,11 @@ export namespace Prisma {
     ? Provider 
     : S extends { select: any } & (ProviderArgs | ProviderFindManyArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'adresses' ? Array < ProviderAdressesGetPayload<S['select'][P]>>  :
-        P extends 'contacts' ? Array < ProviderContactsGetPayload<S['select'][P]>>  :
-        P extends 'legalPerson' ? ProviderLegalPersonGetPayload<S['select'][P]> | null :
-        P extends 'physicalPerson' ? ProviderPhysicalPersonGetPayload<S['select'][P]> | null :  P extends keyof Provider ? Provider[P] : never
+    [P in TrueKeys<S['select']>]:
+        P extends 'adresses' ? Array < ProviderAdressesGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
+        P extends 'contacts' ? Array < ProviderContactsGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
+        P extends 'legalPerson' ? ProviderLegalPersonGetPayload<Exclude<S['select'], undefined | null>[P]> | null :
+        P extends 'physicalPerson' ? ProviderPhysicalPersonGetPayload<Exclude<S['select'], undefined | null>[P]> | null :  P extends keyof Provider ? Provider[P] : never
   } 
       : Provider
 
@@ -3175,22 +3194,6 @@ export namespace Prisma {
     ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Provider'> extends True ? Prisma__ProviderClient<ProviderGetPayload<T>> : Prisma__ProviderClient<ProviderGetPayload<T> | null, null>
 
     /**
-     * Find one Provider that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {ProviderFindUniqueOrThrowArgs} args - Arguments to find a Provider
-     * @example
-     * // Get one Provider
-     * const provider = await prisma.provider.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends ProviderFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, ProviderFindUniqueOrThrowArgs>
-    ): Prisma__ProviderClient<ProviderGetPayload<T>>
-
-    /**
      * Find the first Provider that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
@@ -3206,24 +3209,6 @@ export namespace Prisma {
     findFirst<T extends ProviderFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
       args?: SelectSubset<T, ProviderFindFirstArgs>
     ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Provider'> extends True ? Prisma__ProviderClient<ProviderGetPayload<T>> : Prisma__ProviderClient<ProviderGetPayload<T> | null, null>
-
-    /**
-     * Find the first Provider that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProviderFindFirstOrThrowArgs} args - Arguments to find a Provider
-     * @example
-     * // Get one Provider
-     * const provider = await prisma.provider.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends ProviderFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, ProviderFindFirstOrThrowArgs>
-    ): Prisma__ProviderClient<ProviderGetPayload<T>>
 
     /**
      * Find zero or more Providers that matches the filter.
@@ -3396,6 +3381,40 @@ export namespace Prisma {
     aggregateRaw(
       args?: ProviderAggregateRawArgs
     ): PrismaPromise<JsonObject>
+
+    /**
+     * Find one Provider that matches the filter or throw
+     * `NotFoundError` if no matches were found.
+     * @param {ProviderFindUniqueOrThrowArgs} args - Arguments to find a Provider
+     * @example
+     * // Get one Provider
+     * const provider = await prisma.provider.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends ProviderFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, ProviderFindUniqueOrThrowArgs>
+    ): Prisma__ProviderClient<ProviderGetPayload<T>>
+
+    /**
+     * Find the first Provider that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProviderFindFirstOrThrowArgs} args - Arguments to find a Provider
+     * @example
+     * // Get one Provider
+     * const provider = await prisma.provider.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends ProviderFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, ProviderFindFirstOrThrowArgs>
+    ): Prisma__ProviderClient<ProviderGetPayload<T>>
 
     /**
      * Count the number of Providers.
@@ -3617,28 +3636,6 @@ export namespace Prisma {
       
 
   /**
-   * Provider findUniqueOrThrow
-   */
-  export type ProviderFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the Provider
-     * 
-    **/
-    select?: ProviderSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: ProviderInclude | null
-    /**
-     * Filter, which Provider to fetch.
-     * 
-    **/
-    where: ProviderWhereUniqueInput
-  }
-
-
-  /**
    * Provider base type for findFirst actions
    */
   export type ProviderFindFirstArgsBase = {
@@ -3705,63 +3702,6 @@ export namespace Prisma {
     rejectOnNotFound?: RejectOnNotFound
   }
       
-
-  /**
-   * Provider findFirstOrThrow
-   */
-  export type ProviderFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the Provider
-     * 
-    **/
-    select?: ProviderSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: ProviderInclude | null
-    /**
-     * Filter, which Provider to fetch.
-     * 
-    **/
-    where?: ProviderWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Providers to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<ProviderOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Providers.
-     * 
-    **/
-    cursor?: ProviderWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Providers from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Providers.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Providers.
-     * 
-    **/
-    distinct?: Enumerable<ProviderScalarFieldEnum>
-  }
-
 
   /**
    * Provider findMany
@@ -3991,6 +3931,18 @@ export namespace Prisma {
     options?: InputJsonValue
   }
 
+
+  /**
+   * Provider: findUniqueOrThrow
+   */
+  export type ProviderFindUniqueOrThrowArgs = ProviderFindUniqueArgsBase
+      
+
+  /**
+   * Provider: findFirstOrThrow
+   */
+  export type ProviderFindFirstOrThrowArgs = ProviderFindFirstArgsBase
+      
 
   /**
    * Provider without action
@@ -4238,7 +4190,7 @@ export namespace Prisma {
 
   } 
 
-  export type ProviderClientReminderConfigsGetPayload<S extends boolean | null | undefined | ProviderClientReminderConfigsArgs> =
+  export type ProviderClientReminderConfigsGetPayload<S extends boolean | null | undefined | ProviderClientReminderConfigsArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? ProviderClientReminderConfigs :
     S extends undefined ? never :
@@ -4246,9 +4198,9 @@ export namespace Prisma {
     ? ProviderClientReminderConfigs 
     : S extends { select: any } & (ProviderClientReminderConfigsArgs | ProviderClientReminderConfigsFindManyArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'servicesList' ? Array < ProviderClientReminderConfigsServicesListGetPayload<S['select'][P]>>  :
-        P extends 'totalReminders' ? ProviderClientReminderConfigsTotalRemindersGetPayload<S['select'][P]> :  P extends keyof ProviderClientReminderConfigs ? ProviderClientReminderConfigs[P] : never
+    [P in TrueKeys<S['select']>]:
+        P extends 'servicesList' ? Array < ProviderClientReminderConfigsServicesListGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
+        P extends 'totalReminders' ? ProviderClientReminderConfigsTotalRemindersGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof ProviderClientReminderConfigs ? ProviderClientReminderConfigs[P] : never
   } 
       : ProviderClientReminderConfigs
 
@@ -4276,22 +4228,6 @@ export namespace Prisma {
     ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'ProviderClientReminderConfigs'> extends True ? Prisma__ProviderClientReminderConfigsClient<ProviderClientReminderConfigsGetPayload<T>> : Prisma__ProviderClientReminderConfigsClient<ProviderClientReminderConfigsGetPayload<T> | null, null>
 
     /**
-     * Find one ProviderClientReminderConfigs that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {ProviderClientReminderConfigsFindUniqueOrThrowArgs} args - Arguments to find a ProviderClientReminderConfigs
-     * @example
-     * // Get one ProviderClientReminderConfigs
-     * const providerClientReminderConfigs = await prisma.providerClientReminderConfigs.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends ProviderClientReminderConfigsFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, ProviderClientReminderConfigsFindUniqueOrThrowArgs>
-    ): Prisma__ProviderClientReminderConfigsClient<ProviderClientReminderConfigsGetPayload<T>>
-
-    /**
      * Find the first ProviderClientReminderConfigs that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
@@ -4307,24 +4243,6 @@ export namespace Prisma {
     findFirst<T extends ProviderClientReminderConfigsFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
       args?: SelectSubset<T, ProviderClientReminderConfigsFindFirstArgs>
     ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'ProviderClientReminderConfigs'> extends True ? Prisma__ProviderClientReminderConfigsClient<ProviderClientReminderConfigsGetPayload<T>> : Prisma__ProviderClientReminderConfigsClient<ProviderClientReminderConfigsGetPayload<T> | null, null>
-
-    /**
-     * Find the first ProviderClientReminderConfigs that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProviderClientReminderConfigsFindFirstOrThrowArgs} args - Arguments to find a ProviderClientReminderConfigs
-     * @example
-     * // Get one ProviderClientReminderConfigs
-     * const providerClientReminderConfigs = await prisma.providerClientReminderConfigs.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends ProviderClientReminderConfigsFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, ProviderClientReminderConfigsFindFirstOrThrowArgs>
-    ): Prisma__ProviderClientReminderConfigsClient<ProviderClientReminderConfigsGetPayload<T>>
 
     /**
      * Find zero or more ProviderClientReminderConfigs that matches the filter.
@@ -4497,6 +4415,40 @@ export namespace Prisma {
     aggregateRaw(
       args?: ProviderClientReminderConfigsAggregateRawArgs
     ): PrismaPromise<JsonObject>
+
+    /**
+     * Find one ProviderClientReminderConfigs that matches the filter or throw
+     * `NotFoundError` if no matches were found.
+     * @param {ProviderClientReminderConfigsFindUniqueOrThrowArgs} args - Arguments to find a ProviderClientReminderConfigs
+     * @example
+     * // Get one ProviderClientReminderConfigs
+     * const providerClientReminderConfigs = await prisma.providerClientReminderConfigs.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends ProviderClientReminderConfigsFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, ProviderClientReminderConfigsFindUniqueOrThrowArgs>
+    ): Prisma__ProviderClientReminderConfigsClient<ProviderClientReminderConfigsGetPayload<T>>
+
+    /**
+     * Find the first ProviderClientReminderConfigs that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProviderClientReminderConfigsFindFirstOrThrowArgs} args - Arguments to find a ProviderClientReminderConfigs
+     * @example
+     * // Get one ProviderClientReminderConfigs
+     * const providerClientReminderConfigs = await prisma.providerClientReminderConfigs.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends ProviderClientReminderConfigsFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, ProviderClientReminderConfigsFindFirstOrThrowArgs>
+    ): Prisma__ProviderClientReminderConfigsClient<ProviderClientReminderConfigsGetPayload<T>>
 
     /**
      * Count the number of ProviderClientReminderConfigs.
@@ -4714,28 +4666,6 @@ export namespace Prisma {
       
 
   /**
-   * ProviderClientReminderConfigs findUniqueOrThrow
-   */
-  export type ProviderClientReminderConfigsFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the ProviderClientReminderConfigs
-     * 
-    **/
-    select?: ProviderClientReminderConfigsSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: ProviderClientReminderConfigsInclude | null
-    /**
-     * Filter, which ProviderClientReminderConfigs to fetch.
-     * 
-    **/
-    where: ProviderClientReminderConfigsWhereUniqueInput
-  }
-
-
-  /**
    * ProviderClientReminderConfigs base type for findFirst actions
    */
   export type ProviderClientReminderConfigsFindFirstArgsBase = {
@@ -4802,63 +4732,6 @@ export namespace Prisma {
     rejectOnNotFound?: RejectOnNotFound
   }
       
-
-  /**
-   * ProviderClientReminderConfigs findFirstOrThrow
-   */
-  export type ProviderClientReminderConfigsFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the ProviderClientReminderConfigs
-     * 
-    **/
-    select?: ProviderClientReminderConfigsSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: ProviderClientReminderConfigsInclude | null
-    /**
-     * Filter, which ProviderClientReminderConfigs to fetch.
-     * 
-    **/
-    where?: ProviderClientReminderConfigsWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ProviderClientReminderConfigs to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<ProviderClientReminderConfigsOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for ProviderClientReminderConfigs.
-     * 
-    **/
-    cursor?: ProviderClientReminderConfigsWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ProviderClientReminderConfigs from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ProviderClientReminderConfigs.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of ProviderClientReminderConfigs.
-     * 
-    **/
-    distinct?: Enumerable<ProviderClientReminderConfigsScalarFieldEnum>
-  }
-
 
   /**
    * ProviderClientReminderConfigs findMany
@@ -5088,6 +4961,18 @@ export namespace Prisma {
     options?: InputJsonValue
   }
 
+
+  /**
+   * ProviderClientReminderConfigs: findUniqueOrThrow
+   */
+  export type ProviderClientReminderConfigsFindUniqueOrThrowArgs = ProviderClientReminderConfigsFindUniqueArgsBase
+      
+
+  /**
+   * ProviderClientReminderConfigs: findFirstOrThrow
+   */
+  export type ProviderClientReminderConfigsFindFirstOrThrowArgs = ProviderClientReminderConfigsFindFirstArgsBase
+      
 
   /**
    * ProviderClientReminderConfigs without action
@@ -5321,7 +5206,7 @@ export namespace Prisma {
   }
 
 
-  export type ProviderClientReminderOrderGetPayload<S extends boolean | null | undefined | ProviderClientReminderOrderArgs> =
+  export type ProviderClientReminderOrderGetPayload<S extends boolean | null | undefined | ProviderClientReminderOrderArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? ProviderClientReminderOrder :
     S extends undefined ? never :
@@ -5329,7 +5214,7 @@ export namespace Prisma {
     ? ProviderClientReminderOrder 
     : S extends { select: any } & (ProviderClientReminderOrderArgs | ProviderClientReminderOrderFindManyArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
+    [P in TrueKeys<S['select']>]:
     P extends keyof ProviderClientReminderOrder ? ProviderClientReminderOrder[P] : never
   } 
       : ProviderClientReminderOrder
@@ -5358,22 +5243,6 @@ export namespace Prisma {
     ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'ProviderClientReminderOrder'> extends True ? Prisma__ProviderClientReminderOrderClient<ProviderClientReminderOrderGetPayload<T>> : Prisma__ProviderClientReminderOrderClient<ProviderClientReminderOrderGetPayload<T> | null, null>
 
     /**
-     * Find one ProviderClientReminderOrder that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {ProviderClientReminderOrderFindUniqueOrThrowArgs} args - Arguments to find a ProviderClientReminderOrder
-     * @example
-     * // Get one ProviderClientReminderOrder
-     * const providerClientReminderOrder = await prisma.providerClientReminderOrder.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends ProviderClientReminderOrderFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, ProviderClientReminderOrderFindUniqueOrThrowArgs>
-    ): Prisma__ProviderClientReminderOrderClient<ProviderClientReminderOrderGetPayload<T>>
-
-    /**
      * Find the first ProviderClientReminderOrder that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
@@ -5389,24 +5258,6 @@ export namespace Prisma {
     findFirst<T extends ProviderClientReminderOrderFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
       args?: SelectSubset<T, ProviderClientReminderOrderFindFirstArgs>
     ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'ProviderClientReminderOrder'> extends True ? Prisma__ProviderClientReminderOrderClient<ProviderClientReminderOrderGetPayload<T>> : Prisma__ProviderClientReminderOrderClient<ProviderClientReminderOrderGetPayload<T> | null, null>
-
-    /**
-     * Find the first ProviderClientReminderOrder that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProviderClientReminderOrderFindFirstOrThrowArgs} args - Arguments to find a ProviderClientReminderOrder
-     * @example
-     * // Get one ProviderClientReminderOrder
-     * const providerClientReminderOrder = await prisma.providerClientReminderOrder.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends ProviderClientReminderOrderFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, ProviderClientReminderOrderFindFirstOrThrowArgs>
-    ): Prisma__ProviderClientReminderOrderClient<ProviderClientReminderOrderGetPayload<T>>
 
     /**
      * Find zero or more ProviderClientReminderOrders that matches the filter.
@@ -5579,6 +5430,40 @@ export namespace Prisma {
     aggregateRaw(
       args?: ProviderClientReminderOrderAggregateRawArgs
     ): PrismaPromise<JsonObject>
+
+    /**
+     * Find one ProviderClientReminderOrder that matches the filter or throw
+     * `NotFoundError` if no matches were found.
+     * @param {ProviderClientReminderOrderFindUniqueOrThrowArgs} args - Arguments to find a ProviderClientReminderOrder
+     * @example
+     * // Get one ProviderClientReminderOrder
+     * const providerClientReminderOrder = await prisma.providerClientReminderOrder.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends ProviderClientReminderOrderFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, ProviderClientReminderOrderFindUniqueOrThrowArgs>
+    ): Prisma__ProviderClientReminderOrderClient<ProviderClientReminderOrderGetPayload<T>>
+
+    /**
+     * Find the first ProviderClientReminderOrder that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProviderClientReminderOrderFindFirstOrThrowArgs} args - Arguments to find a ProviderClientReminderOrder
+     * @example
+     * // Get one ProviderClientReminderOrder
+     * const providerClientReminderOrder = await prisma.providerClientReminderOrder.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends ProviderClientReminderOrderFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, ProviderClientReminderOrderFindFirstOrThrowArgs>
+    ): Prisma__ProviderClientReminderOrderClient<ProviderClientReminderOrderGetPayload<T>>
 
     /**
      * Count the number of ProviderClientReminderOrders.
@@ -5788,23 +5673,6 @@ export namespace Prisma {
       
 
   /**
-   * ProviderClientReminderOrder findUniqueOrThrow
-   */
-  export type ProviderClientReminderOrderFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the ProviderClientReminderOrder
-     * 
-    **/
-    select?: ProviderClientReminderOrderSelect | null
-    /**
-     * Filter, which ProviderClientReminderOrder to fetch.
-     * 
-    **/
-    where: ProviderClientReminderOrderWhereUniqueInput
-  }
-
-
-  /**
    * ProviderClientReminderOrder base type for findFirst actions
    */
   export type ProviderClientReminderOrderFindFirstArgsBase = {
@@ -5866,58 +5734,6 @@ export namespace Prisma {
     rejectOnNotFound?: RejectOnNotFound
   }
       
-
-  /**
-   * ProviderClientReminderOrder findFirstOrThrow
-   */
-  export type ProviderClientReminderOrderFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the ProviderClientReminderOrder
-     * 
-    **/
-    select?: ProviderClientReminderOrderSelect | null
-    /**
-     * Filter, which ProviderClientReminderOrder to fetch.
-     * 
-    **/
-    where?: ProviderClientReminderOrderWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ProviderClientReminderOrders to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<ProviderClientReminderOrderOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for ProviderClientReminderOrders.
-     * 
-    **/
-    cursor?: ProviderClientReminderOrderWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ProviderClientReminderOrders from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ProviderClientReminderOrders.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of ProviderClientReminderOrders.
-     * 
-    **/
-    distinct?: Enumerable<ProviderClientReminderOrderScalarFieldEnum>
-  }
-
 
   /**
    * ProviderClientReminderOrder findMany
@@ -6124,6 +5940,18 @@ export namespace Prisma {
 
 
   /**
+   * ProviderClientReminderOrder: findUniqueOrThrow
+   */
+  export type ProviderClientReminderOrderFindUniqueOrThrowArgs = ProviderClientReminderOrderFindUniqueArgsBase
+      
+
+  /**
+   * ProviderClientReminderOrder: findFirstOrThrow
+   */
+  export type ProviderClientReminderOrderFindFirstOrThrowArgs = ProviderClientReminderOrderFindFirstArgsBase
+      
+
+  /**
    * ProviderClientReminderOrder without action
    */
   export type ProviderClientReminderOrderArgs = {
@@ -6301,7 +6129,7 @@ export namespace Prisma {
 
   } 
 
-  export type ProviderClientRemindersGetPayload<S extends boolean | null | undefined | ProviderClientRemindersArgs> =
+  export type ProviderClientRemindersGetPayload<S extends boolean | null | undefined | ProviderClientRemindersArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? ProviderClientReminders :
     S extends undefined ? never :
@@ -6309,10 +6137,10 @@ export namespace Prisma {
     ? ProviderClientReminders 
     : S extends { select: any } & (ProviderClientRemindersArgs | ProviderClientRemindersFindManyArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'client' ? ProviderClientRemindersClientGetPayload<S['select'][P]> :
-        P extends 'dateTimeSend' ? ProviderClientRemindersDateTimeSendGetPayload<S['select'][P]> :
-        P extends 'provider' ? ProviderClientRemindersProviderGetPayload<S['select'][P]> :  P extends keyof ProviderClientReminders ? ProviderClientReminders[P] : never
+    [P in TrueKeys<S['select']>]:
+        P extends 'client' ? ProviderClientRemindersClientGetPayload<Exclude<S['select'], undefined | null>[P]> :
+        P extends 'dateTimeSend' ? ProviderClientRemindersDateTimeSendGetPayload<Exclude<S['select'], undefined | null>[P]> :
+        P extends 'provider' ? ProviderClientRemindersProviderGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof ProviderClientReminders ? ProviderClientReminders[P] : never
   } 
       : ProviderClientReminders
 
@@ -6340,22 +6168,6 @@ export namespace Prisma {
     ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'ProviderClientReminders'> extends True ? Prisma__ProviderClientRemindersClient<ProviderClientRemindersGetPayload<T>> : Prisma__ProviderClientRemindersClient<ProviderClientRemindersGetPayload<T> | null, null>
 
     /**
-     * Find one ProviderClientReminders that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {ProviderClientRemindersFindUniqueOrThrowArgs} args - Arguments to find a ProviderClientReminders
-     * @example
-     * // Get one ProviderClientReminders
-     * const providerClientReminders = await prisma.providerClientReminders.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends ProviderClientRemindersFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, ProviderClientRemindersFindUniqueOrThrowArgs>
-    ): Prisma__ProviderClientRemindersClient<ProviderClientRemindersGetPayload<T>>
-
-    /**
      * Find the first ProviderClientReminders that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
@@ -6371,24 +6183,6 @@ export namespace Prisma {
     findFirst<T extends ProviderClientRemindersFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
       args?: SelectSubset<T, ProviderClientRemindersFindFirstArgs>
     ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'ProviderClientReminders'> extends True ? Prisma__ProviderClientRemindersClient<ProviderClientRemindersGetPayload<T>> : Prisma__ProviderClientRemindersClient<ProviderClientRemindersGetPayload<T> | null, null>
-
-    /**
-     * Find the first ProviderClientReminders that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProviderClientRemindersFindFirstOrThrowArgs} args - Arguments to find a ProviderClientReminders
-     * @example
-     * // Get one ProviderClientReminders
-     * const providerClientReminders = await prisma.providerClientReminders.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends ProviderClientRemindersFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, ProviderClientRemindersFindFirstOrThrowArgs>
-    ): Prisma__ProviderClientRemindersClient<ProviderClientRemindersGetPayload<T>>
 
     /**
      * Find zero or more ProviderClientReminders that matches the filter.
@@ -6561,6 +6355,40 @@ export namespace Prisma {
     aggregateRaw(
       args?: ProviderClientRemindersAggregateRawArgs
     ): PrismaPromise<JsonObject>
+
+    /**
+     * Find one ProviderClientReminders that matches the filter or throw
+     * `NotFoundError` if no matches were found.
+     * @param {ProviderClientRemindersFindUniqueOrThrowArgs} args - Arguments to find a ProviderClientReminders
+     * @example
+     * // Get one ProviderClientReminders
+     * const providerClientReminders = await prisma.providerClientReminders.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends ProviderClientRemindersFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, ProviderClientRemindersFindUniqueOrThrowArgs>
+    ): Prisma__ProviderClientRemindersClient<ProviderClientRemindersGetPayload<T>>
+
+    /**
+     * Find the first ProviderClientReminders that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProviderClientRemindersFindFirstOrThrowArgs} args - Arguments to find a ProviderClientReminders
+     * @example
+     * // Get one ProviderClientReminders
+     * const providerClientReminders = await prisma.providerClientReminders.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends ProviderClientRemindersFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, ProviderClientRemindersFindFirstOrThrowArgs>
+    ): Prisma__ProviderClientRemindersClient<ProviderClientRemindersGetPayload<T>>
 
     /**
      * Count the number of ProviderClientReminders.
@@ -6780,28 +6608,6 @@ export namespace Prisma {
       
 
   /**
-   * ProviderClientReminders findUniqueOrThrow
-   */
-  export type ProviderClientRemindersFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the ProviderClientReminders
-     * 
-    **/
-    select?: ProviderClientRemindersSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: ProviderClientRemindersInclude | null
-    /**
-     * Filter, which ProviderClientReminders to fetch.
-     * 
-    **/
-    where: ProviderClientRemindersWhereUniqueInput
-  }
-
-
-  /**
    * ProviderClientReminders base type for findFirst actions
    */
   export type ProviderClientRemindersFindFirstArgsBase = {
@@ -6868,63 +6674,6 @@ export namespace Prisma {
     rejectOnNotFound?: RejectOnNotFound
   }
       
-
-  /**
-   * ProviderClientReminders findFirstOrThrow
-   */
-  export type ProviderClientRemindersFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the ProviderClientReminders
-     * 
-    **/
-    select?: ProviderClientRemindersSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: ProviderClientRemindersInclude | null
-    /**
-     * Filter, which ProviderClientReminders to fetch.
-     * 
-    **/
-    where?: ProviderClientRemindersWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ProviderClientReminders to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<ProviderClientRemindersOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for ProviderClientReminders.
-     * 
-    **/
-    cursor?: ProviderClientRemindersWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ProviderClientReminders from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ProviderClientReminders.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of ProviderClientReminders.
-     * 
-    **/
-    distinct?: Enumerable<ProviderClientRemindersScalarFieldEnum>
-  }
-
 
   /**
    * ProviderClientReminders findMany
@@ -7156,6 +6905,18 @@ export namespace Prisma {
 
 
   /**
+   * ProviderClientReminders: findUniqueOrThrow
+   */
+  export type ProviderClientRemindersFindUniqueOrThrowArgs = ProviderClientRemindersFindUniqueArgsBase
+      
+
+  /**
+   * ProviderClientReminders: findFirstOrThrow
+   */
+  export type ProviderClientRemindersFindFirstOrThrowArgs = ProviderClientRemindersFindFirstArgsBase
+      
+
+  /**
    * ProviderClientReminders without action
    */
   export type ProviderClientRemindersArgs = {
@@ -7371,7 +7132,7 @@ export namespace Prisma {
   }
 
 
-  export type ProviderClientsGetPayload<S extends boolean | null | undefined | ProviderClientsArgs> =
+  export type ProviderClientsGetPayload<S extends boolean | null | undefined | ProviderClientsArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? ProviderClients :
     S extends undefined ? never :
@@ -7379,7 +7140,7 @@ export namespace Prisma {
     ? ProviderClients 
     : S extends { select: any } & (ProviderClientsArgs | ProviderClientsFindManyArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
+    [P in TrueKeys<S['select']>]:
     P extends keyof ProviderClients ? ProviderClients[P] : never
   } 
       : ProviderClients
@@ -7408,22 +7169,6 @@ export namespace Prisma {
     ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'ProviderClients'> extends True ? Prisma__ProviderClientsClient<ProviderClientsGetPayload<T>> : Prisma__ProviderClientsClient<ProviderClientsGetPayload<T> | null, null>
 
     /**
-     * Find one ProviderClients that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {ProviderClientsFindUniqueOrThrowArgs} args - Arguments to find a ProviderClients
-     * @example
-     * // Get one ProviderClients
-     * const providerClients = await prisma.providerClients.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends ProviderClientsFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, ProviderClientsFindUniqueOrThrowArgs>
-    ): Prisma__ProviderClientsClient<ProviderClientsGetPayload<T>>
-
-    /**
      * Find the first ProviderClients that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
@@ -7439,24 +7184,6 @@ export namespace Prisma {
     findFirst<T extends ProviderClientsFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
       args?: SelectSubset<T, ProviderClientsFindFirstArgs>
     ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'ProviderClients'> extends True ? Prisma__ProviderClientsClient<ProviderClientsGetPayload<T>> : Prisma__ProviderClientsClient<ProviderClientsGetPayload<T> | null, null>
-
-    /**
-     * Find the first ProviderClients that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProviderClientsFindFirstOrThrowArgs} args - Arguments to find a ProviderClients
-     * @example
-     * // Get one ProviderClients
-     * const providerClients = await prisma.providerClients.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends ProviderClientsFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, ProviderClientsFindFirstOrThrowArgs>
-    ): Prisma__ProviderClientsClient<ProviderClientsGetPayload<T>>
 
     /**
      * Find zero or more ProviderClients that matches the filter.
@@ -7629,6 +7356,40 @@ export namespace Prisma {
     aggregateRaw(
       args?: ProviderClientsAggregateRawArgs
     ): PrismaPromise<JsonObject>
+
+    /**
+     * Find one ProviderClients that matches the filter or throw
+     * `NotFoundError` if no matches were found.
+     * @param {ProviderClientsFindUniqueOrThrowArgs} args - Arguments to find a ProviderClients
+     * @example
+     * // Get one ProviderClients
+     * const providerClients = await prisma.providerClients.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends ProviderClientsFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, ProviderClientsFindUniqueOrThrowArgs>
+    ): Prisma__ProviderClientsClient<ProviderClientsGetPayload<T>>
+
+    /**
+     * Find the first ProviderClients that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProviderClientsFindFirstOrThrowArgs} args - Arguments to find a ProviderClients
+     * @example
+     * // Get one ProviderClients
+     * const providerClients = await prisma.providerClients.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends ProviderClientsFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, ProviderClientsFindFirstOrThrowArgs>
+    ): Prisma__ProviderClientsClient<ProviderClientsGetPayload<T>>
 
     /**
      * Count the number of ProviderClients.
@@ -7838,23 +7599,6 @@ export namespace Prisma {
       
 
   /**
-   * ProviderClients findUniqueOrThrow
-   */
-  export type ProviderClientsFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the ProviderClients
-     * 
-    **/
-    select?: ProviderClientsSelect | null
-    /**
-     * Filter, which ProviderClients to fetch.
-     * 
-    **/
-    where: ProviderClientsWhereUniqueInput
-  }
-
-
-  /**
    * ProviderClients base type for findFirst actions
    */
   export type ProviderClientsFindFirstArgsBase = {
@@ -7916,58 +7660,6 @@ export namespace Prisma {
     rejectOnNotFound?: RejectOnNotFound
   }
       
-
-  /**
-   * ProviderClients findFirstOrThrow
-   */
-  export type ProviderClientsFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the ProviderClients
-     * 
-    **/
-    select?: ProviderClientsSelect | null
-    /**
-     * Filter, which ProviderClients to fetch.
-     * 
-    **/
-    where?: ProviderClientsWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ProviderClients to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<ProviderClientsOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for ProviderClients.
-     * 
-    **/
-    cursor?: ProviderClientsWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ProviderClients from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ProviderClients.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of ProviderClients.
-     * 
-    **/
-    distinct?: Enumerable<ProviderClientsScalarFieldEnum>
-  }
-
 
   /**
    * ProviderClients findMany
@@ -8174,6 +7866,18 @@ export namespace Prisma {
 
 
   /**
+   * ProviderClients: findUniqueOrThrow
+   */
+  export type ProviderClientsFindUniqueOrThrowArgs = ProviderClientsFindUniqueArgsBase
+      
+
+  /**
+   * ProviderClients: findFirstOrThrow
+   */
+  export type ProviderClientsFindFirstOrThrowArgs = ProviderClientsFindFirstArgsBase
+      
+
+  /**
    * ProviderClients without action
    */
   export type ProviderClientsArgs = {
@@ -8373,7 +8077,7 @@ export namespace Prisma {
 
   } 
 
-  export type ProviderDockGetPayload<S extends boolean | null | undefined | ProviderDockArgs> =
+  export type ProviderDockGetPayload<S extends boolean | null | undefined | ProviderDockArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? ProviderDock :
     S extends undefined ? never :
@@ -8381,8 +8085,8 @@ export namespace Prisma {
     ? ProviderDock 
     : S extends { select: any } & (ProviderDockArgs | ProviderDockFindManyArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'onboardingRequiredData' ? ProviderDockOnboardingRequiredDataGetPayload<S['select'][P]> :  P extends keyof ProviderDock ? ProviderDock[P] : never
+    [P in TrueKeys<S['select']>]:
+        P extends 'onboardingRequiredData' ? ProviderDockOnboardingRequiredDataGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof ProviderDock ? ProviderDock[P] : never
   } 
       : ProviderDock
 
@@ -8410,22 +8114,6 @@ export namespace Prisma {
     ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'ProviderDock'> extends True ? Prisma__ProviderDockClient<ProviderDockGetPayload<T>> : Prisma__ProviderDockClient<ProviderDockGetPayload<T> | null, null>
 
     /**
-     * Find one ProviderDock that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {ProviderDockFindUniqueOrThrowArgs} args - Arguments to find a ProviderDock
-     * @example
-     * // Get one ProviderDock
-     * const providerDock = await prisma.providerDock.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends ProviderDockFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, ProviderDockFindUniqueOrThrowArgs>
-    ): Prisma__ProviderDockClient<ProviderDockGetPayload<T>>
-
-    /**
      * Find the first ProviderDock that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
@@ -8441,24 +8129,6 @@ export namespace Prisma {
     findFirst<T extends ProviderDockFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
       args?: SelectSubset<T, ProviderDockFindFirstArgs>
     ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'ProviderDock'> extends True ? Prisma__ProviderDockClient<ProviderDockGetPayload<T>> : Prisma__ProviderDockClient<ProviderDockGetPayload<T> | null, null>
-
-    /**
-     * Find the first ProviderDock that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProviderDockFindFirstOrThrowArgs} args - Arguments to find a ProviderDock
-     * @example
-     * // Get one ProviderDock
-     * const providerDock = await prisma.providerDock.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends ProviderDockFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, ProviderDockFindFirstOrThrowArgs>
-    ): Prisma__ProviderDockClient<ProviderDockGetPayload<T>>
 
     /**
      * Find zero or more ProviderDocks that matches the filter.
@@ -8631,6 +8301,40 @@ export namespace Prisma {
     aggregateRaw(
       args?: ProviderDockAggregateRawArgs
     ): PrismaPromise<JsonObject>
+
+    /**
+     * Find one ProviderDock that matches the filter or throw
+     * `NotFoundError` if no matches were found.
+     * @param {ProviderDockFindUniqueOrThrowArgs} args - Arguments to find a ProviderDock
+     * @example
+     * // Get one ProviderDock
+     * const providerDock = await prisma.providerDock.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends ProviderDockFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, ProviderDockFindUniqueOrThrowArgs>
+    ): Prisma__ProviderDockClient<ProviderDockGetPayload<T>>
+
+    /**
+     * Find the first ProviderDock that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProviderDockFindFirstOrThrowArgs} args - Arguments to find a ProviderDock
+     * @example
+     * // Get one ProviderDock
+     * const providerDock = await prisma.providerDock.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends ProviderDockFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, ProviderDockFindFirstOrThrowArgs>
+    ): Prisma__ProviderDockClient<ProviderDockGetPayload<T>>
 
     /**
      * Count the number of ProviderDocks.
@@ -8846,28 +8550,6 @@ export namespace Prisma {
       
 
   /**
-   * ProviderDock findUniqueOrThrow
-   */
-  export type ProviderDockFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the ProviderDock
-     * 
-    **/
-    select?: ProviderDockSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: ProviderDockInclude | null
-    /**
-     * Filter, which ProviderDock to fetch.
-     * 
-    **/
-    where: ProviderDockWhereUniqueInput
-  }
-
-
-  /**
    * ProviderDock base type for findFirst actions
    */
   export type ProviderDockFindFirstArgsBase = {
@@ -8934,63 +8616,6 @@ export namespace Prisma {
     rejectOnNotFound?: RejectOnNotFound
   }
       
-
-  /**
-   * ProviderDock findFirstOrThrow
-   */
-  export type ProviderDockFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the ProviderDock
-     * 
-    **/
-    select?: ProviderDockSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: ProviderDockInclude | null
-    /**
-     * Filter, which ProviderDock to fetch.
-     * 
-    **/
-    where?: ProviderDockWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ProviderDocks to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<ProviderDockOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for ProviderDocks.
-     * 
-    **/
-    cursor?: ProviderDockWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ProviderDocks from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ProviderDocks.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of ProviderDocks.
-     * 
-    **/
-    distinct?: Enumerable<ProviderDockScalarFieldEnum>
-  }
-
 
   /**
    * ProviderDock findMany
@@ -9222,6 +8847,18 @@ export namespace Prisma {
 
 
   /**
+   * ProviderDock: findUniqueOrThrow
+   */
+  export type ProviderDockFindUniqueOrThrowArgs = ProviderDockFindUniqueArgsBase
+      
+
+  /**
+   * ProviderDock: findFirstOrThrow
+   */
+  export type ProviderDockFindFirstOrThrowArgs = ProviderDockFindFirstArgsBase
+      
+
+  /**
    * ProviderDock without action
    */
   export type ProviderDockArgs = {
@@ -9447,7 +9084,7 @@ export namespace Prisma {
   }
 
 
-  export type ProviderServicesGetPayload<S extends boolean | null | undefined | ProviderServicesArgs> =
+  export type ProviderServicesGetPayload<S extends boolean | null | undefined | ProviderServicesArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? ProviderServices :
     S extends undefined ? never :
@@ -9455,7 +9092,7 @@ export namespace Prisma {
     ? ProviderServices 
     : S extends { select: any } & (ProviderServicesArgs | ProviderServicesFindManyArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
+    [P in TrueKeys<S['select']>]:
     P extends keyof ProviderServices ? ProviderServices[P] : never
   } 
       : ProviderServices
@@ -9484,22 +9121,6 @@ export namespace Prisma {
     ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'ProviderServices'> extends True ? Prisma__ProviderServicesClient<ProviderServicesGetPayload<T>> : Prisma__ProviderServicesClient<ProviderServicesGetPayload<T> | null, null>
 
     /**
-     * Find one ProviderServices that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {ProviderServicesFindUniqueOrThrowArgs} args - Arguments to find a ProviderServices
-     * @example
-     * // Get one ProviderServices
-     * const providerServices = await prisma.providerServices.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends ProviderServicesFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, ProviderServicesFindUniqueOrThrowArgs>
-    ): Prisma__ProviderServicesClient<ProviderServicesGetPayload<T>>
-
-    /**
      * Find the first ProviderServices that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
@@ -9515,24 +9136,6 @@ export namespace Prisma {
     findFirst<T extends ProviderServicesFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
       args?: SelectSubset<T, ProviderServicesFindFirstArgs>
     ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'ProviderServices'> extends True ? Prisma__ProviderServicesClient<ProviderServicesGetPayload<T>> : Prisma__ProviderServicesClient<ProviderServicesGetPayload<T> | null, null>
-
-    /**
-     * Find the first ProviderServices that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProviderServicesFindFirstOrThrowArgs} args - Arguments to find a ProviderServices
-     * @example
-     * // Get one ProviderServices
-     * const providerServices = await prisma.providerServices.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends ProviderServicesFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, ProviderServicesFindFirstOrThrowArgs>
-    ): Prisma__ProviderServicesClient<ProviderServicesGetPayload<T>>
 
     /**
      * Find zero or more ProviderServices that matches the filter.
@@ -9705,6 +9308,40 @@ export namespace Prisma {
     aggregateRaw(
       args?: ProviderServicesAggregateRawArgs
     ): PrismaPromise<JsonObject>
+
+    /**
+     * Find one ProviderServices that matches the filter or throw
+     * `NotFoundError` if no matches were found.
+     * @param {ProviderServicesFindUniqueOrThrowArgs} args - Arguments to find a ProviderServices
+     * @example
+     * // Get one ProviderServices
+     * const providerServices = await prisma.providerServices.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends ProviderServicesFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, ProviderServicesFindUniqueOrThrowArgs>
+    ): Prisma__ProviderServicesClient<ProviderServicesGetPayload<T>>
+
+    /**
+     * Find the first ProviderServices that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProviderServicesFindFirstOrThrowArgs} args - Arguments to find a ProviderServices
+     * @example
+     * // Get one ProviderServices
+     * const providerServices = await prisma.providerServices.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends ProviderServicesFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, ProviderServicesFindFirstOrThrowArgs>
+    ): Prisma__ProviderServicesClient<ProviderServicesGetPayload<T>>
 
     /**
      * Count the number of ProviderServices.
@@ -9914,23 +9551,6 @@ export namespace Prisma {
       
 
   /**
-   * ProviderServices findUniqueOrThrow
-   */
-  export type ProviderServicesFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the ProviderServices
-     * 
-    **/
-    select?: ProviderServicesSelect | null
-    /**
-     * Filter, which ProviderServices to fetch.
-     * 
-    **/
-    where: ProviderServicesWhereUniqueInput
-  }
-
-
-  /**
    * ProviderServices base type for findFirst actions
    */
   export type ProviderServicesFindFirstArgsBase = {
@@ -9992,58 +9612,6 @@ export namespace Prisma {
     rejectOnNotFound?: RejectOnNotFound
   }
       
-
-  /**
-   * ProviderServices findFirstOrThrow
-   */
-  export type ProviderServicesFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the ProviderServices
-     * 
-    **/
-    select?: ProviderServicesSelect | null
-    /**
-     * Filter, which ProviderServices to fetch.
-     * 
-    **/
-    where?: ProviderServicesWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ProviderServices to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<ProviderServicesOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for ProviderServices.
-     * 
-    **/
-    cursor?: ProviderServicesWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ProviderServices from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ProviderServices.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of ProviderServices.
-     * 
-    **/
-    distinct?: Enumerable<ProviderServicesScalarFieldEnum>
-  }
-
 
   /**
    * ProviderServices findMany
@@ -10250,6 +9818,18 @@ export namespace Prisma {
 
 
   /**
+   * ProviderServices: findUniqueOrThrow
+   */
+  export type ProviderServicesFindUniqueOrThrowArgs = ProviderServicesFindUniqueArgsBase
+      
+
+  /**
+   * ProviderServices: findFirstOrThrow
+   */
+  export type ProviderServicesFindFirstOrThrowArgs = ProviderServicesFindFirstArgsBase
+      
+
+  /**
    * ProviderServices without action
    */
   export type ProviderServicesArgs = {
@@ -10420,7 +10000,7 @@ export namespace Prisma {
 
   } 
 
-  export type TypesGetPayload<S extends boolean | null | undefined | TypesArgs> =
+  export type TypesGetPayload<S extends boolean | null | undefined | TypesArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? Types :
     S extends undefined ? never :
@@ -10428,11 +10008,11 @@ export namespace Prisma {
     ? Types 
     : S extends { select: any } & (TypesArgs | TypesFindManyArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'Tipo_que_precisar' ? Array < TypesTipoQuePrecisarGetPayload<S['select'][P]>>  :
-        P extends 'address' ? Array < TypesAddressGetPayload<S['select'][P]>>  :
-        P extends 'contact' ? Array < TypesContactGetPayload<S['select'][P]>>  :
-        P extends 'orderStatus' ? Array < TypesOrderStatusGetPayload<S['select'][P]>>  :  P extends keyof Types ? Types[P] : never
+    [P in TrueKeys<S['select']>]:
+        P extends 'Tipo_que_precisar' ? Array < TypesTipoQuePrecisarGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
+        P extends 'address' ? Array < TypesAddressGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
+        P extends 'contact' ? Array < TypesContactGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
+        P extends 'orderStatus' ? Array < TypesOrderStatusGetPayload<Exclude<S['select'], undefined | null>[P]>>  :  P extends keyof Types ? Types[P] : never
   } 
       : Types
 
@@ -10460,22 +10040,6 @@ export namespace Prisma {
     ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Types'> extends True ? Prisma__TypesClient<TypesGetPayload<T>> : Prisma__TypesClient<TypesGetPayload<T> | null, null>
 
     /**
-     * Find one Types that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {TypesFindUniqueOrThrowArgs} args - Arguments to find a Types
-     * @example
-     * // Get one Types
-     * const types = await prisma.types.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends TypesFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, TypesFindUniqueOrThrowArgs>
-    ): Prisma__TypesClient<TypesGetPayload<T>>
-
-    /**
      * Find the first Types that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
@@ -10491,24 +10055,6 @@ export namespace Prisma {
     findFirst<T extends TypesFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
       args?: SelectSubset<T, TypesFindFirstArgs>
     ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Types'> extends True ? Prisma__TypesClient<TypesGetPayload<T>> : Prisma__TypesClient<TypesGetPayload<T> | null, null>
-
-    /**
-     * Find the first Types that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TypesFindFirstOrThrowArgs} args - Arguments to find a Types
-     * @example
-     * // Get one Types
-     * const types = await prisma.types.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends TypesFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, TypesFindFirstOrThrowArgs>
-    ): Prisma__TypesClient<TypesGetPayload<T>>
 
     /**
      * Find zero or more Types that matches the filter.
@@ -10681,6 +10227,40 @@ export namespace Prisma {
     aggregateRaw(
       args?: TypesAggregateRawArgs
     ): PrismaPromise<JsonObject>
+
+    /**
+     * Find one Types that matches the filter or throw
+     * `NotFoundError` if no matches were found.
+     * @param {TypesFindUniqueOrThrowArgs} args - Arguments to find a Types
+     * @example
+     * // Get one Types
+     * const types = await prisma.types.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends TypesFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, TypesFindUniqueOrThrowArgs>
+    ): Prisma__TypesClient<TypesGetPayload<T>>
+
+    /**
+     * Find the first Types that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TypesFindFirstOrThrowArgs} args - Arguments to find a Types
+     * @example
+     * // Get one Types
+     * const types = await prisma.types.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends TypesFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, TypesFindFirstOrThrowArgs>
+    ): Prisma__TypesClient<TypesGetPayload<T>>
 
     /**
      * Count the number of Types.
@@ -10902,28 +10482,6 @@ export namespace Prisma {
       
 
   /**
-   * Types findUniqueOrThrow
-   */
-  export type TypesFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the Types
-     * 
-    **/
-    select?: TypesSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: TypesInclude | null
-    /**
-     * Filter, which Types to fetch.
-     * 
-    **/
-    where: TypesWhereUniqueInput
-  }
-
-
-  /**
    * Types base type for findFirst actions
    */
   export type TypesFindFirstArgsBase = {
@@ -10990,63 +10548,6 @@ export namespace Prisma {
     rejectOnNotFound?: RejectOnNotFound
   }
       
-
-  /**
-   * Types findFirstOrThrow
-   */
-  export type TypesFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the Types
-     * 
-    **/
-    select?: TypesSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: TypesInclude | null
-    /**
-     * Filter, which Types to fetch.
-     * 
-    **/
-    where?: TypesWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Types to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<TypesOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Types.
-     * 
-    **/
-    cursor?: TypesWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Types from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Types.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Types.
-     * 
-    **/
-    distinct?: Enumerable<TypesScalarFieldEnum>
-  }
-
 
   /**
    * Types findMany
@@ -11278,6 +10779,18 @@ export namespace Prisma {
 
 
   /**
+   * Types: findUniqueOrThrow
+   */
+  export type TypesFindUniqueOrThrowArgs = TypesFindUniqueArgsBase
+      
+
+  /**
+   * Types: findFirstOrThrow
+   */
+  export type TypesFindFirstOrThrowArgs = TypesFindFirstArgsBase
+      
+
+  /**
    * Types without action
    */
   export type TypesArgs = {
@@ -11450,7 +10963,7 @@ export namespace Prisma {
 
   } 
 
-  export type UserGetPayload<S extends boolean | null | undefined | UserArgs> =
+  export type UserGetPayload<S extends boolean | null | undefined | UserArgs, U = keyof S> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? User :
     S extends undefined ? never :
@@ -11458,8 +10971,8 @@ export namespace Prisma {
     ? User 
     : S extends { select: any } & (UserArgs | UserFindManyArgs)
       ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'accessMethods' ? Array < UserAccessMethodsGetPayload<S['select'][P]>>  :  P extends keyof User ? User[P] : never
+    [P in TrueKeys<S['select']>]:
+        P extends 'accessMethods' ? Array < UserAccessMethodsGetPayload<Exclude<S['select'], undefined | null>[P]>>  :  P extends keyof User ? User[P] : never
   } 
       : User
 
@@ -11487,22 +11000,6 @@ export namespace Prisma {
     ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'User'> extends True ? Prisma__UserClient<UserGetPayload<T>> : Prisma__UserClient<UserGetPayload<T> | null, null>
 
     /**
-     * Find one User that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
-     * @example
-     * // Get one User
-     * const user = await prisma.user.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, UserFindUniqueOrThrowArgs>
-    ): Prisma__UserClient<UserGetPayload<T>>
-
-    /**
      * Find the first User that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
@@ -11518,24 +11015,6 @@ export namespace Prisma {
     findFirst<T extends UserFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
       args?: SelectSubset<T, UserFindFirstArgs>
     ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'User'> extends True ? Prisma__UserClient<UserGetPayload<T>> : Prisma__UserClient<UserGetPayload<T> | null, null>
-
-    /**
-     * Find the first User that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
-     * @example
-     * // Get one User
-     * const user = await prisma.user.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, UserFindFirstOrThrowArgs>
-    ): Prisma__UserClient<UserGetPayload<T>>
 
     /**
      * Find zero or more Users that matches the filter.
@@ -11708,6 +11187,40 @@ export namespace Prisma {
     aggregateRaw(
       args?: UserAggregateRawArgs
     ): PrismaPromise<JsonObject>
+
+    /**
+     * Find one User that matches the filter or throw
+     * `NotFoundError` if no matches were found.
+     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, UserFindUniqueOrThrowArgs>
+    ): Prisma__UserClient<UserGetPayload<T>>
+
+    /**
+     * Find the first User that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, UserFindFirstOrThrowArgs>
+    ): Prisma__UserClient<UserGetPayload<T>>
 
     /**
      * Count the number of Users.
@@ -11923,28 +11436,6 @@ export namespace Prisma {
       
 
   /**
-   * User findUniqueOrThrow
-   */
-  export type UserFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the User
-     * 
-    **/
-    select?: UserSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: UserInclude | null
-    /**
-     * Filter, which User to fetch.
-     * 
-    **/
-    where: UserWhereUniqueInput
-  }
-
-
-  /**
    * User base type for findFirst actions
    */
   export type UserFindFirstArgsBase = {
@@ -12011,63 +11502,6 @@ export namespace Prisma {
     rejectOnNotFound?: RejectOnNotFound
   }
       
-
-  /**
-   * User findFirstOrThrow
-   */
-  export type UserFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the User
-     * 
-    **/
-    select?: UserSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: UserInclude | null
-    /**
-     * Filter, which User to fetch.
-     * 
-    **/
-    where?: UserWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Users to fetch.
-     * 
-    **/
-    orderBy?: Enumerable<UserOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Users.
-     * 
-    **/
-    cursor?: UserWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Users from the position of the cursor.
-     * 
-    **/
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Users.
-     * 
-    **/
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Users.
-     * 
-    **/
-    distinct?: Enumerable<UserScalarFieldEnum>
-  }
-
 
   /**
    * User findMany
@@ -12297,6 +11731,18 @@ export namespace Prisma {
     options?: InputJsonValue
   }
 
+
+  /**
+   * User: findUniqueOrThrow
+   */
+  export type UserFindUniqueOrThrowArgs = UserFindUniqueArgsBase
+      
+
+  /**
+   * User: findFirstOrThrow
+   */
+  export type UserFindFirstOrThrowArgs = UserFindFirstArgsBase
+      
 
   /**
    * User without action

@@ -14,11 +14,11 @@ exports.Prisma = Prisma
 
 /**
  * Prisma Client JS version: 4.6.1
- * Query Engine version: 272861e07ab64f234d3ffc4094e32bd61775599c
+ * Query Engine version: 694eea289a8462c80264df36757e4fdc129b1b32
  */
 Prisma.prismaVersion = {
   client: "4.6.1",
-  engine: "272861e07ab64f234d3ffc4094e32bd61775599c"
+  engine: "694eea289a8462c80264df36757e4fdc129b1b32"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -107,6 +107,12 @@ exports.Prisma.CarteiraScalarFieldEnum = makeEnum({
   fiduc_fundo_id: 'fiduc_fundo_id'
 });
 
+exports.Prisma.Carteira_n_cedentesScalarFieldEnum = makeEnum({
+  id: 'id',
+  carteira_id: 'carteira_id',
+  cedente_id: 'cedente_id'
+});
+
 exports.Prisma.CedenteScalarFieldEnum = makeEnum({
   id: 'id',
   pessoa_id: 'pessoa_id',
@@ -152,10 +158,6 @@ exports.Prisma.Fidic_fundoScalarFieldEnum = makeEnum({
   cnpj: 'cnpj'
 });
 
-exports.Prisma.Fidic_fundo_carteira_n_cedentesScalarFieldEnum = makeEnum({
-  id: 'id'
-});
-
 exports.Prisma.Fidic_fundo_x_usuarioScalarFieldEnum = makeEnum({
   id: 'id',
   usuario: 'usuario',
@@ -163,7 +165,8 @@ exports.Prisma.Fidic_fundo_x_usuarioScalarFieldEnum = makeEnum({
 });
 
 exports.Prisma.OrganogramaScalarFieldEnum = makeEnum({
-  id: 'id'
+  id: 'id',
+  organograma_id: 'organograma_id'
 });
 
 exports.Prisma.Organograma_tipoScalarFieldEnum = makeEnum({
@@ -171,16 +174,16 @@ exports.Prisma.Organograma_tipoScalarFieldEnum = makeEnum({
   nome: 'nome'
 });
 
-exports.Prisma.Organograma_x_regiaoScalarFieldEnum = makeEnum({
-  id: 'id',
-  organograma_id: 'organograma_id',
-  regiao_id: 'regiao_id'
-});
-
 exports.Prisma.Organograma_x_regiao_atuacaoScalarFieldEnum = makeEnum({
   id: 'id',
   organograma_id: 'organograma_id',
-  regiao_id: 'regiao_id'
+  regiao_atuacao_id: 'regiao_atuacao_id'
+});
+
+exports.Prisma.Organograma_x_usuarioScalarFieldEnum = makeEnum({
+  id: 'id',
+  organograma_id: 'organograma_id',
+  usuario_id: 'usuario_id'
 });
 
 exports.Prisma.PessoaScalarFieldEnum = makeEnum({
@@ -195,28 +198,30 @@ exports.Prisma.PessoaScalarFieldEnum = makeEnum({
 
 exports.Prisma.PlataformaScalarFieldEnum = makeEnum({
   id: 'id',
-  nome: 'nome'
-});
-
-exports.Prisma.Plataforma_n_borderosScalarFieldEnum = makeEnum({
-  id: 'id'
+  nome: 'nome',
+  plataforma_papel_tipo_id: 'plataforma_papel_tipo_id'
 });
 
 exports.Prisma.Plataforma_papel_tipoScalarFieldEnum = makeEnum({
   id: 'id'
 });
 
-exports.Prisma.Plataforma_papel_x_pessoaScalarFieldEnum = makeEnum({
-  id: 'id'
+exports.Prisma.Plataforma_x_regiao_atuacaoScalarFieldEnum = makeEnum({
+  id: 'id',
+  plataforma_id: 'plataforma_id',
+  regiao_atuacao_id: 'regiao_atuacao_id'
 });
 
-exports.Prisma.Plataforma_x_regiao_atuacaoScalarFieldEnum = makeEnum({
-  id: 'id'
+exports.Prisma.Plataforma_x_usuarioScalarFieldEnum = makeEnum({
+  id: 'id',
+  plataforma_id: 'plataforma_id',
+  usuario_id: 'usuario_id'
 });
 
 exports.Prisma.Regiao_atuacaoScalarFieldEnum = makeEnum({
   id: 'id',
-  nome: 'nome'
+  nome: 'nome',
+  regiao_atuacao_tipo_id: 'regiao_atuacao_tipo_id'
 });
 
 exports.Prisma.Regiao_atuacao_tipoScalarFieldEnum = makeEnum({
@@ -250,29 +255,14 @@ exports.Prisma.TituloScalarFieldEnum = makeEnum({
   parcela: 'parcela'
 });
 
+exports.Prisma.Titulo_itensScalarFieldEnum = makeEnum({
+  id: 'id',
+  titulo_id: 'titulo_id'
+});
+
 exports.Prisma.Titulo_tipoScalarFieldEnum = makeEnum({
   id: 'id',
   nome: 'nome'
-});
-
-exports.Prisma.Titulo_x_cedenteScalarFieldEnum = makeEnum({
-  id: 'id',
-  cedente: 'cedente'
-});
-
-exports.Prisma.Titulo_x_empresaScalarFieldEnum = makeEnum({
-  id: 'id'
-});
-
-exports.Prisma.Titulo_x_plataformaScalarFieldEnum = makeEnum({
-  id: 'id'
-});
-
-exports.Prisma.Titulos_x_usuarioScalarFieldEnum = makeEnum({
-  id: 'id',
-  usuario: 'usuario',
-  bordero: 'bordero',
-  status: 'status'
 });
 
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
@@ -297,24 +287,16 @@ exports.Prisma.UsuarioScalarFieldEnum = makeEnum({
   updated_at: 'updated_at'
 });
 
-exports.Prisma.Usuario__pessoaScalarFieldEnum = makeEnum({
-  id: 'id'
-});
-
-exports.Prisma.Usuario_n_borderosScalarFieldEnum = makeEnum({
-  id: 'id'
+exports.Prisma.Usuario_perfilScalarFieldEnum = makeEnum({
+  id: 'id',
+  senha: 'senha',
+  usuario_id: 'usuario_id',
+  usuario_perfil_tipo_id: 'usuario_perfil_tipo_id'
 });
 
 exports.Prisma.Usuario_perfil_tipoScalarFieldEnum = makeEnum({
   id: 'id',
   nome: 'nome'
-});
-
-exports.Prisma.Usuario_x_perfilScalarFieldEnum = makeEnum({
-  id: 'id',
-  senha: 'senha',
-  usuario_id: 'usuario_id',
-  usuario_perfil_id: 'usuario_perfil_id'
 });
 
 
@@ -327,32 +309,26 @@ exports.Prisma.ModelName = makeEnum({
   cedente_n_sacados: 'cedente_n_sacados',
   checagem: 'checagem',
   fidic_fundo: 'fidic_fundo',
-  fidic_fundo_carteira_n_cedentes: 'fidic_fundo_carteira_n_cedentes',
   fidic_fundo_x_usuario: 'fidic_fundo_x_usuario',
   organograma: 'organograma',
   organograma_tipo: 'organograma_tipo',
-  organograma_x_regiao: 'organograma_x_regiao',
   organograma_x_regiao_atuacao: 'organograma_x_regiao_atuacao',
   pessoa: 'pessoa',
   plataforma: 'plataforma',
-  plataforma_n_borderos: 'plataforma_n_borderos',
   plataforma_papel_tipo: 'plataforma_papel_tipo',
-  plataforma_papel_x_pessoa: 'plataforma_papel_x_pessoa',
   plataforma_x_regiao_atuacao: 'plataforma_x_regiao_atuacao',
   regiao_atuacao: 'regiao_atuacao',
   regiao_atuacao_tipo: 'regiao_atuacao_tipo',
   sacado: 'sacado',
   titulo: 'titulo',
   titulo_tipo: 'titulo_tipo',
-  titulo_x_cedente: 'titulo_x_cedente',
-  titulo_x_empresa: 'titulo_x_empresa',
-  titulo_x_plataforma: 'titulo_x_plataforma',
-  titulos_x_usuario: 'titulos_x_usuario',
   usuario: 'usuario',
-  usuario__pessoa: 'usuario__pessoa',
-  usuario_n_borderos: 'usuario_n_borderos',
   usuario_perfil_tipo: 'usuario_perfil_tipo',
-  usuario_x_perfil: 'usuario_x_perfil'
+  carteira_n_cedentes: 'carteira_n_cedentes',
+  organograma_x_usuario: 'organograma_x_usuario',
+  plataforma_x_usuario: 'plataforma_x_usuario',
+  titulo_itens: 'titulo_itens',
+  usuario_perfil: 'usuario_perfil'
 });
 
 /**
