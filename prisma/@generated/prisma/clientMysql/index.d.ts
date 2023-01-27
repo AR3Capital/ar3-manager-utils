@@ -320,7 +320,8 @@ export type usuario = {
   pessoa_id: number
   status: string | null
   primeiro_acesso: boolean | null
-  confirmou_email: boolean | null
+  confirmou_cadastro: boolean | null
+  codigo_confirma_cadastro: string | null
   codigo_reset_senha: string | null
   codigo_data_expiracao: Date | null
   created_at: Date
@@ -28682,7 +28683,8 @@ export namespace Prisma {
     pessoa_id: number | null
     status: string | null
     primeiro_acesso: boolean | null
-    confirmou_email: boolean | null
+    confirmou_cadastro: boolean | null
+    codigo_confirma_cadastro: string | null
     codigo_reset_senha: string | null
     codigo_data_expiracao: Date | null
     created_at: Date | null
@@ -28696,7 +28698,8 @@ export namespace Prisma {
     pessoa_id: number | null
     status: string | null
     primeiro_acesso: boolean | null
-    confirmou_email: boolean | null
+    confirmou_cadastro: boolean | null
+    codigo_confirma_cadastro: string | null
     codigo_reset_senha: string | null
     codigo_data_expiracao: Date | null
     created_at: Date | null
@@ -28710,7 +28713,8 @@ export namespace Prisma {
     pessoa_id: number
     status: number
     primeiro_acesso: number
-    confirmou_email: number
+    confirmou_cadastro: number
+    codigo_confirma_cadastro: number
     codigo_reset_senha: number
     codigo_data_expiracao: number
     created_at: number
@@ -28736,7 +28740,8 @@ export namespace Prisma {
     pessoa_id?: true
     status?: true
     primeiro_acesso?: true
-    confirmou_email?: true
+    confirmou_cadastro?: true
+    codigo_confirma_cadastro?: true
     codigo_reset_senha?: true
     codigo_data_expiracao?: true
     created_at?: true
@@ -28750,7 +28755,8 @@ export namespace Prisma {
     pessoa_id?: true
     status?: true
     primeiro_acesso?: true
-    confirmou_email?: true
+    confirmou_cadastro?: true
+    codigo_confirma_cadastro?: true
     codigo_reset_senha?: true
     codigo_data_expiracao?: true
     created_at?: true
@@ -28764,7 +28770,8 @@ export namespace Prisma {
     pessoa_id?: true
     status?: true
     primeiro_acesso?: true
-    confirmou_email?: true
+    confirmou_cadastro?: true
+    codigo_confirma_cadastro?: true
     codigo_reset_senha?: true
     codigo_data_expiracao?: true
     created_at?: true
@@ -28871,7 +28878,8 @@ export namespace Prisma {
     pessoa_id: number
     status: string | null
     primeiro_acesso: boolean | null
-    confirmou_email: boolean | null
+    confirmou_cadastro: boolean | null
+    codigo_confirma_cadastro: string | null
     codigo_reset_senha: string | null
     codigo_data_expiracao: Date | null
     created_at: Date
@@ -28904,7 +28912,8 @@ export namespace Prisma {
     pessoa_id?: boolean
     status?: boolean
     primeiro_acesso?: boolean
-    confirmou_email?: boolean
+    confirmou_cadastro?: boolean
+    codigo_confirma_cadastro?: boolean
     codigo_reset_senha?: boolean
     codigo_data_expiracao?: boolean
     created_at?: boolean
@@ -33637,7 +33646,8 @@ export namespace Prisma {
     pessoa_id: 'pessoa_id',
     status: 'status',
     primeiro_acesso: 'primeiro_acesso',
-    confirmou_email: 'confirmou_email',
+    confirmou_cadastro: 'confirmou_cadastro',
+    codigo_confirma_cadastro: 'codigo_confirma_cadastro',
     codigo_reset_senha: 'codigo_reset_senha',
     codigo_data_expiracao: 'codigo_data_expiracao',
     created_at: 'created_at',
@@ -34899,7 +34909,8 @@ export namespace Prisma {
     pessoa_id?: IntFilter | number
     status?: StringNullableFilter | string | null
     primeiro_acesso?: BoolNullableFilter | boolean | null
-    confirmou_email?: BoolNullableFilter | boolean | null
+    confirmou_cadastro?: BoolNullableFilter | boolean | null
+    codigo_confirma_cadastro?: StringNullableFilter | string | null
     codigo_reset_senha?: StringNullableFilter | string | null
     codigo_data_expiracao?: DateTimeNullableFilter | Date | string | null
     created_at?: DateTimeFilter | Date | string
@@ -34919,7 +34930,8 @@ export namespace Prisma {
     pessoa_id?: SortOrder
     status?: SortOrder
     primeiro_acesso?: SortOrder
-    confirmou_email?: SortOrder
+    confirmou_cadastro?: SortOrder
+    codigo_confirma_cadastro?: SortOrder
     codigo_reset_senha?: SortOrder
     codigo_data_expiracao?: SortOrder
     created_at?: SortOrder
@@ -34944,7 +34956,8 @@ export namespace Prisma {
     pessoa_id?: SortOrder
     status?: SortOrder
     primeiro_acesso?: SortOrder
-    confirmou_email?: SortOrder
+    confirmou_cadastro?: SortOrder
+    codigo_confirma_cadastro?: SortOrder
     codigo_reset_senha?: SortOrder
     codigo_data_expiracao?: SortOrder
     created_at?: SortOrder
@@ -34966,7 +34979,8 @@ export namespace Prisma {
     pessoa_id?: IntWithAggregatesFilter | number
     status?: StringNullableWithAggregatesFilter | string | null
     primeiro_acesso?: BoolNullableWithAggregatesFilter | boolean | null
-    confirmou_email?: BoolNullableWithAggregatesFilter | boolean | null
+    confirmou_cadastro?: BoolNullableWithAggregatesFilter | boolean | null
+    codigo_confirma_cadastro?: StringNullableWithAggregatesFilter | string | null
     codigo_reset_senha?: StringNullableWithAggregatesFilter | string | null
     codigo_data_expiracao?: DateTimeNullableWithAggregatesFilter | Date | string | null
     created_at?: DateTimeWithAggregatesFilter | Date | string
@@ -36359,7 +36373,8 @@ export namespace Prisma {
     senha: string
     status?: string | null
     primeiro_acesso?: boolean | null
-    confirmou_email?: boolean | null
+    confirmou_cadastro?: boolean | null
+    codigo_confirma_cadastro?: string | null
     codigo_reset_senha?: string | null
     codigo_data_expiracao?: Date | string | null
     created_at?: Date | string
@@ -36379,7 +36394,8 @@ export namespace Prisma {
     pessoa_id: number
     status?: string | null
     primeiro_acesso?: boolean | null
-    confirmou_email?: boolean | null
+    confirmou_cadastro?: boolean | null
+    codigo_confirma_cadastro?: string | null
     codigo_reset_senha?: string | null
     codigo_data_expiracao?: Date | string | null
     created_at?: Date | string
@@ -36396,7 +36412,8 @@ export namespace Prisma {
     senha?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36416,7 +36433,8 @@ export namespace Prisma {
     pessoa_id?: IntFieldUpdateOperationsInput | number
     status?: NullableStringFieldUpdateOperationsInput | string | null
     primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36435,7 +36453,8 @@ export namespace Prisma {
     pessoa_id: number
     status?: string | null
     primeiro_acesso?: boolean | null
-    confirmou_email?: boolean | null
+    confirmou_cadastro?: boolean | null
+    codigo_confirma_cadastro?: string | null
     codigo_reset_senha?: string | null
     codigo_data_expiracao?: Date | string | null
     created_at?: Date | string
@@ -36447,7 +36466,8 @@ export namespace Prisma {
     senha?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36461,7 +36481,8 @@ export namespace Prisma {
     pessoa_id?: IntFieldUpdateOperationsInput | number
     status?: NullableStringFieldUpdateOperationsInput | string | null
     primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -37759,7 +37780,8 @@ export namespace Prisma {
     pessoa_id?: SortOrder
     status?: SortOrder
     primeiro_acesso?: SortOrder
-    confirmou_email?: SortOrder
+    confirmou_cadastro?: SortOrder
+    codigo_confirma_cadastro?: SortOrder
     codigo_reset_senha?: SortOrder
     codigo_data_expiracao?: SortOrder
     created_at?: SortOrder
@@ -37778,7 +37800,8 @@ export namespace Prisma {
     pessoa_id?: SortOrder
     status?: SortOrder
     primeiro_acesso?: SortOrder
-    confirmou_email?: SortOrder
+    confirmou_cadastro?: SortOrder
+    codigo_confirma_cadastro?: SortOrder
     codigo_reset_senha?: SortOrder
     codigo_data_expiracao?: SortOrder
     created_at?: SortOrder
@@ -37792,7 +37815,8 @@ export namespace Prisma {
     pessoa_id?: SortOrder
     status?: SortOrder
     primeiro_acesso?: SortOrder
-    confirmou_email?: SortOrder
+    confirmou_cadastro?: SortOrder
+    codigo_confirma_cadastro?: SortOrder
     codigo_reset_senha?: SortOrder
     codigo_data_expiracao?: SortOrder
     created_at?: SortOrder
@@ -39105,7 +39129,8 @@ export namespace Prisma {
     senha: string
     status?: string | null
     primeiro_acesso?: boolean | null
-    confirmou_email?: boolean | null
+    confirmou_cadastro?: boolean | null
+    codigo_confirma_cadastro?: string | null
     codigo_reset_senha?: string | null
     codigo_data_expiracao?: Date | string | null
     created_at?: Date | string
@@ -39124,7 +39149,8 @@ export namespace Prisma {
     pessoa_id: number
     status?: string | null
     primeiro_acesso?: boolean | null
-    confirmou_email?: boolean | null
+    confirmou_cadastro?: boolean | null
+    codigo_confirma_cadastro?: string | null
     codigo_reset_senha?: string | null
     codigo_data_expiracao?: Date | string | null
     created_at?: Date | string
@@ -39150,7 +39176,8 @@ export namespace Prisma {
     senha?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39169,7 +39196,8 @@ export namespace Prisma {
     pessoa_id?: IntFieldUpdateOperationsInput | number
     status?: NullableStringFieldUpdateOperationsInput | string | null
     primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39676,7 +39704,8 @@ export namespace Prisma {
     senha: string
     status?: string | null
     primeiro_acesso?: boolean | null
-    confirmou_email?: boolean | null
+    confirmou_cadastro?: boolean | null
+    codigo_confirma_cadastro?: string | null
     codigo_reset_senha?: string | null
     codigo_data_expiracao?: Date | string | null
     created_at?: Date | string
@@ -39695,7 +39724,8 @@ export namespace Prisma {
     pessoa_id: number
     status?: string | null
     primeiro_acesso?: boolean | null
-    confirmou_email?: boolean | null
+    confirmou_cadastro?: boolean | null
+    codigo_confirma_cadastro?: string | null
     codigo_reset_senha?: string | null
     codigo_data_expiracao?: Date | string | null
     created_at?: Date | string
@@ -39721,7 +39751,8 @@ export namespace Prisma {
     senha?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39740,7 +39771,8 @@ export namespace Prisma {
     pessoa_id?: IntFieldUpdateOperationsInput | number
     status?: NullableStringFieldUpdateOperationsInput | string | null
     primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39866,7 +39898,8 @@ export namespace Prisma {
     senha: string
     status?: string | null
     primeiro_acesso?: boolean | null
-    confirmou_email?: boolean | null
+    confirmou_cadastro?: boolean | null
+    codigo_confirma_cadastro?: string | null
     codigo_reset_senha?: string | null
     codigo_data_expiracao?: Date | string | null
     created_at?: Date | string
@@ -39885,7 +39918,8 @@ export namespace Prisma {
     pessoa_id: number
     status?: string | null
     primeiro_acesso?: boolean | null
-    confirmou_email?: boolean | null
+    confirmou_cadastro?: boolean | null
+    codigo_confirma_cadastro?: string | null
     codigo_reset_senha?: string | null
     codigo_data_expiracao?: Date | string | null
     created_at?: Date | string
@@ -39935,7 +39969,8 @@ export namespace Prisma {
     senha?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39954,7 +39989,8 @@ export namespace Prisma {
     pessoa_id?: IntFieldUpdateOperationsInput | number
     status?: NullableStringFieldUpdateOperationsInput | string | null
     primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39970,7 +40006,8 @@ export namespace Prisma {
     senha: string
     status?: string | null
     primeiro_acesso?: boolean | null
-    confirmou_email?: boolean | null
+    confirmou_cadastro?: boolean | null
+    codigo_confirma_cadastro?: string | null
     codigo_reset_senha?: string | null
     codigo_data_expiracao?: Date | string | null
     created_at?: Date | string
@@ -39988,7 +40025,8 @@ export namespace Prisma {
     senha: string
     status?: string | null
     primeiro_acesso?: boolean | null
-    confirmou_email?: boolean | null
+    confirmou_cadastro?: boolean | null
+    codigo_confirma_cadastro?: string | null
     codigo_reset_senha?: string | null
     codigo_data_expiracao?: Date | string | null
     created_at?: Date | string
@@ -40036,7 +40074,8 @@ export namespace Prisma {
     pessoa_id?: IntFilter | number
     status?: StringNullableFilter | string | null
     primeiro_acesso?: BoolNullableFilter | boolean | null
-    confirmou_email?: BoolNullableFilter | boolean | null
+    confirmou_cadastro?: BoolNullableFilter | boolean | null
+    codigo_confirma_cadastro?: StringNullableFilter | string | null
     codigo_reset_senha?: StringNullableFilter | string | null
     codigo_data_expiracao?: DateTimeNullableFilter | Date | string | null
     created_at?: DateTimeFilter | Date | string
@@ -40286,7 +40325,8 @@ export namespace Prisma {
     senha: string
     status?: string | null
     primeiro_acesso?: boolean | null
-    confirmou_email?: boolean | null
+    confirmou_cadastro?: boolean | null
+    codigo_confirma_cadastro?: string | null
     codigo_reset_senha?: string | null
     codigo_data_expiracao?: Date | string | null
     created_at?: Date | string
@@ -40305,7 +40345,8 @@ export namespace Prisma {
     pessoa_id: number
     status?: string | null
     primeiro_acesso?: boolean | null
-    confirmou_email?: boolean | null
+    confirmou_cadastro?: boolean | null
+    codigo_confirma_cadastro?: string | null
     codigo_reset_senha?: string | null
     codigo_data_expiracao?: Date | string | null
     created_at?: Date | string
@@ -40347,7 +40388,8 @@ export namespace Prisma {
     senha?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40366,7 +40408,8 @@ export namespace Prisma {
     pessoa_id?: IntFieldUpdateOperationsInput | number
     status?: NullableStringFieldUpdateOperationsInput | string | null
     primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40686,7 +40729,8 @@ export namespace Prisma {
     senha: string
     status?: string | null
     primeiro_acesso?: boolean | null
-    confirmou_email?: boolean | null
+    confirmou_cadastro?: boolean | null
+    codigo_confirma_cadastro?: string | null
     codigo_reset_senha?: string | null
     codigo_data_expiracao?: Date | string | null
     created_at?: Date | string
@@ -40705,7 +40749,8 @@ export namespace Prisma {
     pessoa_id: number
     status?: string | null
     primeiro_acesso?: boolean | null
-    confirmou_email?: boolean | null
+    confirmou_cadastro?: boolean | null
+    codigo_confirma_cadastro?: string | null
     codigo_reset_senha?: string | null
     codigo_data_expiracao?: Date | string | null
     created_at?: Date | string
@@ -40745,7 +40790,8 @@ export namespace Prisma {
     senha?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40764,7 +40810,8 @@ export namespace Prisma {
     pessoa_id?: IntFieldUpdateOperationsInput | number
     status?: NullableStringFieldUpdateOperationsInput | string | null
     primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40950,7 +40997,8 @@ export namespace Prisma {
     senha: string
     status?: string | null
     primeiro_acesso?: boolean | null
-    confirmou_email?: boolean | null
+    confirmou_cadastro?: boolean | null
+    codigo_confirma_cadastro?: string | null
     codigo_reset_senha?: string | null
     codigo_data_expiracao?: Date | string | null
     created_at?: Date | string
@@ -40962,7 +41010,8 @@ export namespace Prisma {
     senha?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40980,7 +41029,8 @@ export namespace Prisma {
     senha?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40998,7 +41048,8 @@ export namespace Prisma {
     senha?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     primeiro_acesso?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    confirmou_email?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    confirmou_cadastro?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codigo_confirma_cadastro?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_reset_senha?: NullableStringFieldUpdateOperationsInput | string | null
     codigo_data_expiracao?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string

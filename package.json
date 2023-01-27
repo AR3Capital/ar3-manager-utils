@@ -22,7 +22,7 @@
     "prisma:pull_mdb": "prisma db pull --schema prisma/prismaMongodb/schema.prisma",
     "prisma:push_mdb": "prisma db push --schema prisma/prismaMongodb/schema.prisma",
     "npmlogin": "npm login --scope=@AR3Capital --registry=https://npm.pkg.github.com",
-    "publish_npm": "npm publish",
+    "publish_npm": "yarn prisma:generate_my && npm publish",
     "test": "node test"
   },
   "devDependencies": {

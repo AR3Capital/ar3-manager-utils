@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js prisma:generateMY
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js git add .
 
 PATH: 
-  C:\Program Files\Common Files\Oracle\Java\javapath;E:\VMware\VMware Player\bin\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Python27\;C:\Python27\Scripts;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\OpenJDK\openjdk-11.0.10_9\bin;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Users\Isaac\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\dotnet\;E:\Program Files\Amazon\AWSSAMCLI\bin\;E:\Isaac\Downloads\mongodb-database-tools-windows-x86_64-100.5.2\mongodb-database-tools-windows-x86_64-100.5.2\bin;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\nodejs\;E:\Program Files\GitHub CLI\;C:\Users\Isaac\AppData\Local\Yarn\bin;C:\Users\Isaac\AppData\Local\Microsoft\WindowsApps;E:\Isaac\Downloads\mongodb-database-tools-windows-x86_64-100.5.2\mongodb-database-tools-windows-x86_64-100.5.2\bin;C:\Users\Isaac\AppData\Roaming\npm;C:\Users\Isaac\.dotnet\tools
+  C:\Program Files\Common Files\Oracle\Java\javapath;E:\VMware\VMware Player\bin\;C:\Python27\;C:\Python27\Scripts;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\OpenJDK\openjdk-11.0.10_9\bin;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Users\Isaac\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\dotnet\;E:\Program Files\Amazon\AWSSAMCLI\bin\;E:\Isaac\Downloads\mongodb-database-tools-windows-x86_64-100.5.2\mongodb-database-tools-windows-x86_64-100.5.2\bin;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\nodejs\;E:\Program Files\GitHub CLI\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Users\Isaac\AppData\Local\Yarn\bin;C:\Users\Isaac\AppData\Local\Microsoft\WindowsApps;E:\Isaac\Downloads\mongodb-database-tools-windows-x86_64-100.5.2\mongodb-database-tools-windows-x86_64-100.5.2\bin;C:\Users\Isaac\AppData\Roaming\npm;C:\Users\Isaac\.dotnet\tools
 
 Yarn version: 
   1.22.4
@@ -14,42 +14,67 @@ Platform:
   win32 x64
 
 Trace: 
-  SyntaxError: E:\Trabalho\AR3\ar3-manager-bd-utils\package.json: Unexpected token } in JSON at position 890
-      at JSON.parse (<anonymous>)
-      at C:\Program Files (x86)\Yarn\lib\cli.js:1625:59
+  Error: Failed to replace env in config: ${NPM_TOKEN}
+      at C:\Program Files (x86)\Yarn\lib\cli.js:94791:13
+      at String.replace (<anonymous>)
+      at envReplace (C:\Program Files (x86)\Yarn\lib\cli.js:94786:16)
+      at Function.normalizeConfig (C:\Program Files (x86)\Yarn\lib\cli.js:31887:69)
+      at NpmRegistry.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:31917:34)
       at Generator.next (<anonymous>)
       at step (C:\Program Files (x86)\Yarn\lib\cli.js:310:30)
       at C:\Program Files (x86)\Yarn\lib\cli.js:321:13
 
 npm manifest: 
   {
-    "name": "ar3-manager-bd-utils",
-    "version": "1.0.0",
-    "description": "",
+    "name": "@AR3Capital/ar3-manager-utils",
+    "version": "0.0.20",
+    "description": "Repositorio do utils",
+    "author": "AR3 Devs",
+    "license": "MIT",
     "main": "index.js",
+    "files": [
+      "node_modules/ajv",
+      "prisma",
+      "src",
+      "index.js"
+    ],
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "prisma:generateMY": "npx prisma generate --schema prismaMysql/schema.prisma",
-      "prisma:format_MY": "prisma format --schema prismaMysql/schema.prisma",
-      "prisma:pull_MY": "prisma db pull --schema prismaMysql/schema.prisma",
-      "prisma:push_MY": "prisma db push --schema prismaMysql/schema.prisma",
-      "prisma:migrate_MY": "npx prisma migrate dev --schema prismaMysql/schema.prisma",
-      "prisma:generate_MDB": "prisma generate --schema prismaMongodb/schema.prisma",
-      "prisma:format_MDB": "prisma format --schema prismaMongodb/schema.prisma",
-      "prisma:pull_MDB": "prisma db pull --schema prismaMongodb/schema.prisma",
-      "prisma:push_MDB": "prisma db push --schema prismaMongodb/schema.prisma",
+      "prisma:generate_my": "prisma generate --schema prisma/prismaMysql/schema.prisma",
+      "prisma:format_my": "prisma format --schema prisma/prismaMysql/schema.prisma",
+      "prisma:pull_my": "prisma db pull --schema prisma/prismaMysql/schema.prisma",
+      "prisma:push_my": "prisma db push --schema prisma/prismaMysql/schema.prisma",
+      "prisma:migrate_my": "npx prisma migrate dev --schema prisma/prismaMysql/schema.prisma",
+      "prisma:generate_mdb": "prisma generate --schema prisma/prismaMongodb/schema.prisma",
+      "prisma:format_mdb": "prisma format --schema prisma/prismaMongodb/schema.prisma",
+      "prisma:pull_mdb": "prisma db pull --schema prisma/prismaMongodb/schema.prisma",
+      "prisma:push_mdb": "prisma db push --schema prisma/prismaMongodb/schema.prisma",
+      "npmlogin": "npm login --scope=@AR3Capital --registry=https://npm.pkg.github.com",
+      "publish_npm": "yarn prisma:generate_my && npm publish",
+      "test": "node test"
     },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
     "devDependencies": {
-      "@types/node": "^18.11.15",
-      "prisma": "^4.7.1",
-      "ts-node": "^10.9.1",
-      "typescript": "^4.9.4"
+      "ajv": "6.12.0",
+      "ajv-errors": "1.0.1",
+      "ajv-keywords": "^3.4.0",
+      "prisma": "^4.7.1"
     },
     "dependencies": {
-      "@prisma/client": "^4.6.1"
+      "@prisma/client": "^4.6.1",
+      "dotenv": "^16.0.3",
+      "express-handlebars": "^6.0.6",
+      "nodemailer": "^6.8.0",
+      "nodemailer-express-handlebars": "^6.0.0"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/AR3Capital/ar3-manager-utils.git"
+    },
+    "bugs": {
+      "url": "https://github.com/AR3Capital/ar3-manager-utils/issues"
+    },
+    "homepage": "https://github.com/AR3Capital/ar3-manager-utils#readme",
+    "publishConfig": {
+      "registry": "https://npm.pkg.github.com"
     }
   }
 
@@ -57,4 +82,205 @@ yarn manifest:
   No manifest
 
 Lockfile: 
-  No lockfile
+  # THIS IS AN AUTOGENERATED FILE. DO NOT EDIT THIS FILE DIRECTLY.
+  # yarn lockfile v1
+  
+  
+  "@prisma/client@^4.6.1":
+    version "4.6.1"
+    resolved "https://registry.npmjs.org/@prisma/client/-/client-4.6.1.tgz"
+    integrity sha512-M1+NNrMzqaOIxT7PBGcTs3IZo7d1EW/+gVQd4C4gUgWBDGgD9AcIeZnUSidgWClmpMSgVUdnVORjsWWGUameYA==
+    dependencies:
+      "@prisma/engines-version" "4.6.1-3.694eea289a8462c80264df36757e4fdc129b1b32"
+  
+  "@prisma/engines-version@4.6.1-3.694eea289a8462c80264df36757e4fdc129b1b32":
+    version "4.6.1-3.694eea289a8462c80264df36757e4fdc129b1b32"
+    resolved "https://registry.npmjs.org/@prisma/engines-version/-/engines-version-4.6.1-3.694eea289a8462c80264df36757e4fdc129b1b32.tgz"
+    integrity sha512-HUCmkXAU2jqp2O1RvNtbE+seLGLyJGEABZS/R38rZjSAafAy0WzBuHq+tbZMnD+b5OSCsTVtIPVcuvx1ySxcWQ==
+  
+  "@prisma/engines@4.7.1":
+    version "4.7.1"
+    resolved "https://registry.npmjs.org/@prisma/engines/-/engines-4.7.1.tgz"
+    integrity sha512-zWabHosTdLpXXlMefHmnouhXMoTB1+SCbUU3t4FCmdrtIOZcarPKU3Alto7gm/pZ9vHlGOXHCfVZ1G7OIrSbog==
+  
+  ajv-errors@1.0.1:
+    version "1.0.1"
+    resolved "https://registry.npmjs.org/ajv-errors/-/ajv-errors-1.0.1.tgz"
+    integrity sha512-DCRfO/4nQ+89p/RK43i8Ezd41EqdGIU4ld7nGF8OQ14oc/we5rEntLCUa7+jrn3nn83BosfwZA0wb4pon2o8iQ==
+  
+  ajv-keywords@^3.4.0:
+    version "3.5.2"
+    resolved "https://registry.npmjs.org/ajv-keywords/-/ajv-keywords-3.5.2.tgz"
+    integrity sha512-5p6WTN0DdTGVQk6VjcEju19IgaHudalcfabD7yhDGeA6bcQnmL+CpveLJq/3hvfwd1aof6L386Ougkx6RfyMIQ==
+  
+  ajv@6.12.0:
+    version "6.12.0"
+    resolved "https://registry.npmjs.org/ajv/-/ajv-6.12.0.tgz"
+    integrity sha512-D6gFiFA0RRLyUbvijN74DWAjXSFxWKaWP7mldxkVhyhAV3+SWA9HEJPHQ2c9soIeTFJqcSdFDGFgdqs1iUU2Hw==
+    dependencies:
+      fast-deep-equal "^3.1.1"
+      fast-json-stable-stringify "^2.0.0"
+      json-schema-traverse "^0.4.1"
+      uri-js "^4.2.2"
+  
+  balanced-match@^1.0.0:
+    version "1.0.2"
+    resolved "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz"
+    integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
+  
+  brace-expansion@^2.0.1:
+    version "2.0.1"
+    resolved "https://registry.npmjs.org/brace-expansion/-/brace-expansion-2.0.1.tgz"
+    integrity sha512-XnAIvQ8eM+kC6aULx6wuQiwVsnzsi9d3WxzV3FpWTGA19F621kwdbsAcFKXgKUHZWsy+mY6iL1sHTxWEFCytDA==
+    dependencies:
+      balanced-match "^1.0.0"
+  
+  dotenv@^16.0.3:
+    version "16.0.3"
+    resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.3.tgz#115aec42bac5053db3c456db30cc243a5a836a07"
+    integrity sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==
+  
+  express-handlebars@^6.0.0, express-handlebars@^6.0.6:
+    version "6.0.6"
+    resolved "https://registry.npmjs.org/express-handlebars/-/express-handlebars-6.0.6.tgz"
+    integrity sha512-E4QHYCh+9fyfdBEb8uKJ8p6HD4qq/sUSHBq83lRNlLJp2TQKEg2nFJYbVdC+M3QzaV19dODe43lgjQWVaIpbyQ==
+    dependencies:
+      glob "^8.0.2"
+      graceful-fs "^4.2.10"
+      handlebars "^4.7.7"
+  
+  fast-deep-equal@^3.1.1:
+    version "3.1.3"
+    resolved "https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz"
+    integrity sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==
+  
+  fast-json-stable-stringify@^2.0.0:
+    version "2.1.0"
+    resolved "https://registry.npmjs.org/fast-json-stable-stringify/-/fast-json-stable-stringify-2.1.0.tgz"
+    integrity sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==
+  
+  fs.realpath@^1.0.0:
+    version "1.0.0"
+    resolved "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
+    integrity sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==
+  
+  glob@^8.0.2:
+    version "8.0.3"
+    resolved "https://registry.npmjs.org/glob/-/glob-8.0.3.tgz"
+    integrity sha512-ull455NHSHI/Y1FqGaaYFaLGkNMMJbavMrEGFXG/PGrg6y7sutWHUHrz6gy6WEBH6akM1M414dWKCNs+IhKdiQ==
+    dependencies:
+      fs.realpath "^1.0.0"
+      inflight "^1.0.4"
+      inherits "2"
+      minimatch "^5.0.1"
+      once "^1.3.0"
+  
+  graceful-fs@^4.2.10:
+    version "4.2.10"
+    resolved "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.10.tgz"
+    integrity sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==
+  
+  handlebars@^4.7.7:
+    version "4.7.7"
+    resolved "https://registry.npmjs.org/handlebars/-/handlebars-4.7.7.tgz"
+    integrity sha512-aAcXm5OAfE/8IXkcZvCepKU3VzW1/39Fb5ZuqMtgI/hT8X2YgoMvBY5dLhq/cpOvw7Lk1nK/UF71aLG/ZnVYRA==
+    dependencies:
+      minimist "^1.2.5"
+      neo-async "^2.6.0"
+      source-map "^0.6.1"
+      wordwrap "^1.0.0"
+    optionalDependencies:
+      uglify-js "^3.1.4"
+  
+  inflight@^1.0.4:
+    version "1.0.6"
+    resolved "https://registry.npmjs.org/inflight/-/inflight-1.0.6.tgz"
+    integrity sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==
+    dependencies:
+      once "^1.3.0"
+      wrappy "1"
+  
+  inherits@2:
+    version "2.0.4"
+    resolved "https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz"
+    integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
+  
+  json-schema-traverse@^0.4.1:
+    version "0.4.1"
+    resolved "https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-0.4.1.tgz"
+    integrity sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==
+  
+  minimatch@^5.0.1:
+    version "5.1.2"
+    resolved "https://registry.npmjs.org/minimatch/-/minimatch-5.1.2.tgz"
+    integrity sha512-bNH9mmM9qsJ2X4r2Nat1B//1dJVcn3+iBLa3IgqJ7EbGaDNepL9QSHOxN4ng33s52VMMhhIfgCYDk3C4ZmlDAg==
+    dependencies:
+      brace-expansion "^2.0.1"
+  
+  minimist@^1.2.5:
+    version "1.2.7"
+    resolved "https://registry.npmjs.org/minimist/-/minimist-1.2.7.tgz"
+    integrity sha512-bzfL1YUZsP41gmu/qjrEk0Q6i2ix/cVeAhbCbqH9u3zYutS1cLg00qhrD0M2MVdCcx4Sc0UpP2eBWo9rotpq6g==
+  
+  neo-async@^2.6.0:
+    version "2.6.2"
+    resolved "https://registry.npmjs.org/neo-async/-/neo-async-2.6.2.tgz"
+    integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
+  
+  nodemailer-express-handlebars@^6.0.0:
+    version "6.0.0"
+    resolved "https://registry.npmjs.org/nodemailer-express-handlebars/-/nodemailer-express-handlebars-6.0.0.tgz"
+    integrity sha512-xo5nVCn2GDaE8o0ppOWVq0s3Tt5xLn+R2pDROQrZALKCoP6WsEOXrNGQwH/tYJ4vucWtWd+zdcHm734S6CSA7w==
+    dependencies:
+      express-handlebars "^6.0.0"
+  
+  nodemailer@^6.8.0:
+    version "6.8.0"
+    resolved "https://registry.npmjs.org/nodemailer/-/nodemailer-6.8.0.tgz"
+    integrity sha512-EjYvSmHzekz6VNkNd12aUqAco+bOkRe3Of5jVhltqKhEsjw/y0PYPJfp83+s9Wzh1dspYAkUW/YNQ350NATbSQ==
+  
+  once@^1.3.0:
+    version "1.4.0"
+    resolved "https://registry.npmjs.org/once/-/once-1.4.0.tgz"
+    integrity sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==
+    dependencies:
+      wrappy "1"
+  
+  prisma@^4.7.1:
+    version "4.7.1"
+    resolved "https://registry.npmjs.org/prisma/-/prisma-4.7.1.tgz"
+    integrity sha512-CCQP+m+1qZOGIZlvnL6T3ZwaU0LAleIHYFPN9tFSzjs/KL6vH9rlYbGOkTuG9Q1s6Ki5D0LJlYlW18Z9EBUpGg==
+    dependencies:
+      "@prisma/engines" "4.7.1"
+  
+  punycode@^2.1.0:
+    version "2.1.1"
+    resolved "https://registry.npmjs.org/punycode/-/punycode-2.1.1.tgz"
+    integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
+  
+  source-map@^0.6.1:
+    version "0.6.1"
+    resolved "https://registry.npmjs.org/source-map/-/source-map-0.6.1.tgz"
+    integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
+  
+  uglify-js@^3.1.4:
+    version "3.17.4"
+    resolved "https://registry.npmjs.org/uglify-js/-/uglify-js-3.17.4.tgz"
+    integrity sha512-T9q82TJI9e/C1TAxYvfb16xO120tMVFZrGA3f9/P4424DNu6ypK103y0GPFVa17yotwSyZW5iYXgjYHkGrJW/g==
+  
+  uri-js@^4.2.2:
+    version "4.4.1"
+    resolved "https://registry.npmjs.org/uri-js/-/uri-js-4.4.1.tgz"
+    integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
+    dependencies:
+      punycode "^2.1.0"
+  
+  wordwrap@^1.0.0:
+    version "1.0.0"
+    resolved "https://registry.npmjs.org/wordwrap/-/wordwrap-1.0.0.tgz"
+    integrity sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==
+  
+  wrappy@1:
+    version "1.0.2"
+    resolved "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz"
+    integrity sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==
