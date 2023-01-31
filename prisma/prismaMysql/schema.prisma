@@ -1,6 +1,7 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../@generated/prisma/clientMysql"
+  binaryTargets = ["linux-musl", "native"]
+  output = "../@generated/prisma/clientMysql"
 }
 
 datasource db {

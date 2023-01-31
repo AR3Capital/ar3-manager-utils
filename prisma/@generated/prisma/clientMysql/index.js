@@ -356,7 +356,16 @@ const config = {
     "config": {
       "engineType": "library"
     },
-    "binaryTargets": [],
+    "binaryTargets": [
+      {
+        "fromEnvVar": null,
+        "value": "linux-musl"
+      },
+      {
+        "fromEnvVar": null,
+        "value": "windows"
+      }
+    ],
     "previewFeatures": [],
     "isCustomOutput": true
   },
@@ -389,6 +398,9 @@ warnEnvConflicts({
 const PrismaClient = getPrismaClient(config)
 exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
+
+path.join(__dirname, "libquery_engine-linux-musl.so.node");
+path.join(process.cwd(), "prisma\\@generated\\prisma\\clientMysql\\libquery_engine-linux-musl.so.node")
 
 path.join(__dirname, "query_engine-windows.dll.node");
 path.join(process.cwd(), "prisma\\@generated\\prisma\\clientMysql\\query_engine-windows.dll.node")
