@@ -18,7 +18,7 @@ const validateSchema = (schema, body) => {
     const error = [];
     validateCompiled.errors.forEach(i => error.push({ message: i.message, field: i.dataPath }));
 
-    throw new Error(error);
+    throw JSON.stringify(error);
 }
 
 module.exports = {
