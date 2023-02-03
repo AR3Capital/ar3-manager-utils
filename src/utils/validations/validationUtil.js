@@ -18,10 +18,7 @@ const validateSchema = (schema, body) => {
     const error = [];
     validateCompiled.errors.forEach(i => error.push({ message: i.message, field: i.dataPath }));
 
-    throw {
-        statusCode: 400,
-        body: JSON.stringify(error)
-    };
+    throw new Error(error);
 }
 
 module.exports = {

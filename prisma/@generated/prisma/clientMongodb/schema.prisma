@@ -1,0 +1,235 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../@generated/prisma/clientMongodb"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_URL")
+}
+
+type ProviderAdresses {
+  city           String
+  complement     String
+  country        String
+  /// Multiple data types found: String: 33.3%, Boolean: 66.7% out of 3 sampled entries
+  default        Json
+  federativeUnit String
+  /// Multiple data types found: String: 33.3%, Boolean: 66.7% out of 3 sampled entries
+  mailingAddress Json
+  neighborhood   String
+  number         String
+  referencePoint String
+  street         String
+  type           String
+  zipCode        String
+}
+
+type ProviderClientReminderConfigsServicesList {
+  idService   String
+  nameService String
+  price       String
+}
+
+type ProviderClientReminderConfigsTotalReminders {
+  generated String
+  sended    String
+}
+
+type ProviderClientRemindersClient {
+  email    String
+  id       String
+  name     String
+  whatsapp String
+}
+
+type ProviderClientRemindersDateTimeSend {
+  firstAttempt  String
+  secondAttempt String
+  thirdAttempt  String
+}
+
+type ProviderClientRemindersProvider {
+  contact String
+  id      String
+  name    String
+}
+
+type ProviderContacts {
+  content String
+  /// Multiple data types found: String: 33.3%, Boolean: 66.7% out of 3 sampled entries
+  default Json
+  type    String
+}
+
+type ProviderDockOnboardingRequiredData {
+  address                  String
+  birthDate                String
+  companyName              String
+  deviceIdentification     String
+  document                 String
+  dueDate                  String
+  fatherName               String
+  federativeUnit           String
+  gender                   String
+  idBusinessSource         String
+  idNationality            String
+  idNumber                 String
+  idProduct                String
+  idProfession             String
+  identityIssuingEntity    String
+  incomeValue              String
+  isPep                    String
+  isPepSince               String
+  issuingDateIdentity      String
+  motherName               String
+  name                     String
+  phone                    String
+  printedName              String
+  termsAndConditionsTokens String
+}
+
+type ProviderLegalPerson {
+  CNPJ        String
+  companyName String
+  others      ProviderLegalPersonOthers
+  tradingName String
+}
+
+type ProviderLegalPersonOthers {
+  etc            String?
+  legalStatus    String
+  openingCompany String
+}
+
+type ProviderPhysicalPerson {
+  CPF      String
+  fullName String
+  others   ProviderPhysicalPersonOthers
+}
+
+type ProviderPhysicalPersonOthers {
+  birthDate  String
+  etc        String?
+  fatherName String?
+  gender     String
+  motherName String?
+}
+
+type TypesAddress {
+  code String
+  name String
+}
+
+type TypesContact {
+  code String
+  name String
+}
+
+type TypesOrderStatus {
+  code String
+  name String
+}
+
+type TypesTipoQuePrecisar {
+  code String
+  name String
+}
+
+type UserAccessMethods {
+  campo    String?
+  id       String?
+  password String?
+  type     String
+}
+
+model Provider {
+  id             String                  @id @default(auto()) @map("_id") @db.ObjectId
+  adresses       ProviderAdresses[]
+  contacts       ProviderContacts[]
+  hasOnboarding  Boolean
+  legalPerson    ProviderLegalPerson?
+  physicalPerson ProviderPhysicalPerson?
+}
+
+model ProviderClientReminderConfigs {
+  id                 String                                      @id @default(auto()) @map("_id") @db.ObjectId
+  amountSessions     String
+  clientId           String
+  dateTimeEnd        String
+  dateTimeStart      String
+  isTotalPriceCustom String
+  occurrenceType     String
+  providerId         String
+  reminderStatus     String
+  servicesList       ProviderClientReminderConfigsServicesList[]
+  totalPrice         String
+  totalPricePayed    String
+  totalReminders     ProviderClientReminderConfigsTotalReminders
+}
+
+model ProviderClientReminderOrder {
+  id                       String @id @default(auto()) @map("_id") @db.ObjectId
+  amount                   String
+  amountPayed              String
+  clientId                 String
+  dueDate                  String
+  generateDate             String
+  paymentDate              String
+  providerClientReminderId String
+  providerId               String
+  statusType               String
+}
+
+model ProviderClientReminders {
+  id                             String                              @id @default(auto()) @map("_id") @db.ObjectId
+  client                         ProviderClientRemindersClient
+  dateTimeSend                   ProviderClientRemindersDateTimeSend
+  provider                       ProviderClientRemindersProvider
+  providerClientOrder            String
+  providerClientReminderConfigId String
+}
+
+model ProviderClients {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  CNPJ       String
+  CPF        String
+  cellphone  String
+  email      String
+  isWhatsapp String
+  name       String
+  providerId String
+}
+
+model ProviderDock {
+  id                     String                             @id @default(auto()) @map("_id") @db.ObjectId
+  accountId              String
+  onboardingRequiredData ProviderDockOnboardingRequiredData
+  peopleId               String
+  providerId             String
+  registrationId         String
+  statusSPD              String
+}
+
+model ProviderServices {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  price      Float
+  priceType  String
+  providerId String
+}
+
+model Types {
+  id                                                                                   String                 @id @default(auto()) @map("_id") @db.ObjectId
+  Essa_tabela___apenas_sabe_o_que_significa_cada_codigo_o_tipo_usado_em_outras_tabelas String?                @map("Essa tabela é apenas sabe o que significa cada codigo o tipo usado em outras tabelas")
+  Tipo_que_precisar                                                                    TypesTipoQuePrecisar[] @map("Tipo que precisar")
+  address                                                                              TypesAddress[]
+  contact                                                                              TypesContact[]
+  orderStatus                                                                          TypesOrderStatus[]
+}
+
+model User {
+  id            String              @id @default(auto()) @map("_id") @db.ObjectId
+  accessMethods UserAccessMethods[]
+  providerId    String
+}
