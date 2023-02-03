@@ -18,7 +18,10 @@ const validateSchema = (schema, body) => {
     const error = [];
     validateCompiled.errors.forEach(i => error.push({ message: i.message, field: i.dataPath }));
 
-    throw JSON.stringify(error);
+    return {
+        hasError: validateCompiled.length > 0,
+        error
+    };
 }
 
 module.exports = {
