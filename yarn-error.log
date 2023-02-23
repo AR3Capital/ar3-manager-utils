@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js prisma:pull_harpia
 
 PATH: 
   C:\Program Files\Common Files\Oracle\Java\javapath;E:\VMware\VMware Player\bin\;C:\Python27\;C:\Python27\Scripts;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\OpenJDK\openjdk-11.0.10_9\bin;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Users\Isaac\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\dotnet\;E:\Program Files\Amazon\AWSSAMCLI\bin\;E:\Isaac\Downloads\mongodb-database-tools-windows-x86_64-100.5.2\mongodb-database-tools-windows-x86_64-100.5.2\bin;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\nodejs\;E:\Program Files\GitHub CLI\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Users\Isaac\AppData\Local\Yarn\bin;C:\Users\Isaac\AppData\Local\Microsoft\WindowsApps;E:\Isaac\Downloads\mongodb-database-tools-windows-x86_64-100.5.2\mongodb-database-tools-windows-x86_64-100.5.2\bin;C:\Users\Isaac\AppData\Roaming\npm;C:\Users\Isaac\.dotnet\tools
@@ -27,7 +27,7 @@ Trace:
 npm manifest: 
   {
     "name": "@AR3Capital/ar3-manager-utils",
-    "version": "0.0.27",
+    "version": "0.0.30",
     "description": "Repositorio do utils",
     "author": "AR3 Devs",
     "license": "MIT",
@@ -39,15 +39,23 @@ npm manifest:
       "index.js"
     ],
     "scripts": {
+      
       "prisma:generate_my": "prisma generate --schema prisma/prismaMysql/schema.prisma",
       "prisma:format_my": "prisma format --schema prisma/prismaMysql/schema.prisma",
       "prisma:pull_my": "prisma db pull --schema prisma/prismaMysql/schema.prisma",
       "prisma:push_my": "prisma db push --schema prisma/prismaMysql/schema.prisma",
       "prisma:migrate_my": "npx prisma migrate dev --schema prisma/prismaMysql/schema.prisma",
+  
+      "prisma:generate_harpia": "prisma generate --schema prisma/prismaHarpia/schema.prisma",
+      "prisma:format_harpia": "prisma format --schema prisma/prismaHarpia/schema.prisma",
+      "prisma:pull_harpia": "prisma db pull --schema prisma/prismaHarpia/schema.prisma",
+      "prisma:push_harpia": "prisma db push --schema prisma/prismaHarpia/schema.prisma",
+  
       "prisma:generate_mdb": "prisma generate --schema prisma/prismaMongodb/schema.prisma",
       "prisma:format_mdb": "prisma format --schema prisma/prismaMongodb/schema.prisma",
       "prisma:pull_mdb": "prisma db pull --schema prisma/prismaMongodb/schema.prisma",
       "prisma:push_mdb": "prisma db push --schema prisma/prismaMongodb/schema.prisma",
+      
       "npmlogin": "npm login --scope=@AR3Capital --registry=https://npm.pkg.github.com",
       "publish_npm": "yarn prisma:generate_my && npm publish",
       "test": "node test"

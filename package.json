@@ -12,18 +12,28 @@
     "index.js"
   ],
   "scripts": {
+    
     "prisma:generate_my": "prisma generate --schema prisma/prismaMysql/schema.prisma",
     "prisma:format_my": "prisma format --schema prisma/prismaMysql/schema.prisma",
     "prisma:pull_my": "prisma db pull --schema prisma/prismaMysql/schema.prisma",
     "prisma:push_my": "prisma db push --schema prisma/prismaMysql/schema.prisma",
     "prisma:migrate_my": "npx prisma migrate dev --schema prisma/prismaMysql/schema.prisma",
+
+    "prisma:generate_ss_ar3": "prisma generate --schema prisma/prismaSSAR3/schema.prisma",
+    "prisma:format_ss_ar3": "prisma format --schema prisma/prismaSSAR3/schema.prisma",
+    "prisma:pull_ss_ar3": "prisma db pull --schema prisma/prismaSSAR3/schema.prisma",
+    "prisma:push_ss_ar3": "prisma db push --schema prisma/prismaSSAR3/schema.prisma",
+
     "prisma:generate_mdb": "prisma generate --schema prisma/prismaMongodb/schema.prisma",
     "prisma:format_mdb": "prisma format --schema prisma/prismaMongodb/schema.prisma",
     "prisma:pull_mdb": "prisma db pull --schema prisma/prismaMongodb/schema.prisma",
     "prisma:push_mdb": "prisma db push --schema prisma/prismaMongodb/schema.prisma",
+    
     "npmlogin": "npm login --scope=@AR3Capital --registry=https://npm.pkg.github.com",
     "publish_npm": "yarn prisma:generate_my && npm publish",
-    "test": "node test"
+    "test": "node test",
+
+    "set-mygit": "git config user.email isaac.boratino@ar3capital.com.br && git config --global user.email isaac.boratino@ar3capital.com.br && git config user.name isaacboratinoar3 && git config --global user.name isaacboratinoar3"
   },
   "devDependencies": {
     "ajv": "6.12.0",

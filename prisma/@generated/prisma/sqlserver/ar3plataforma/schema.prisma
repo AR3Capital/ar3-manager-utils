@@ -1,0 +1,1155 @@
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../@generated/prisma/sqlserver/ar3plataforma"
+  binaryTargets = ["linux-musl", "rhel-openssl-1.0.x", "native"]
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("AR3_PLATAFORMA_DB_URL")
+}
+
+model EFMigrationsHistory {
+  MigrationId    String @id(map: "PK___EFMigrationsHistory") @db.NVarChar(150)
+  ProductVersion String @db.NVarChar(32)
+
+  @@map("__EFMigrationsHistory")
+}
+
+model CadCreditProposaIindebtedness {
+  Id                                Int                                 @id(map: "PK_CadCreditProposaIindebtedness") @default(autoincrement())
+  BaseDate                          DateTime?
+  TotalIndebtedness                 Decimal                             @db.Decimal(18, 2)
+  IdProposta                        Int?
+  BatimentoCad                      String?                             @db.NVarChar(Max)
+  CadCreditProposalIndebtednessList CadCreditProposalIndebtednessList[]
+}
+
+model CadCreditProposalBacen {
+  Id                    Int              @id(map: "PK_PropostaCreditoCadastroBacen") @default(autoincrement())
+  DataBase              DateTime
+  Valor                 Decimal          @db.Decimal(18, 4)
+  Vencer180             Decimal          @db.Decimal(18, 4)
+  Vencer360             Decimal          @db.Decimal(18, 4)
+  VencerMais360         Decimal          @db.Decimal(18, 4)
+  Vencido60             Decimal          @db.Decimal(18, 4)
+  VencidoMais60         Decimal          @db.Decimal(18, 4)
+  Renegociacoes         Boolean
+  Garantias             Boolean
+  Socio                 Boolean
+  Gerou                 String?          @db.NVarChar(300)
+  Garantia              String?          @db.NVarChar(300)
+  CreditProposalModelId Int
+  CreditProposal        CreditProposal[]
+}
+
+model CadCreditProposalIndebtednessList {
+  Id                                   Int                            @id(map: "PK_CadCreditProposalIndebtednessList") @default(autoincrement())
+  Institution                          String?                        @db.VarChar(50)
+  Limit                                Decimal                        @db.Decimal(18, 2)
+  Bank                                 Decimal                        @db.Decimal(18, 2)
+  Modalidade                           String?                        @db.NVarChar(50)
+  Garantia                             String?                        @db.NVarChar(50)
+  Avencer                              Decimal?                       @db.Decimal(18, 2)
+  Vencido                              Decimal?                       @db.Decimal(18, 2)
+  Liquidez                             Decimal?                       @db.Decimal(18, 2)
+  Discount                             Decimal?                       @db.Decimal(18, 2)
+  Fomento                              Decimal?                       @db.Decimal(18, 2)
+  Intercompany                         Decimal?                       @db.Decimal(18, 2)
+  GeneralTotal                         Decimal?                       @db.Decimal(18, 2)
+  CadCreditProposalIndebtednessModelId Int?
+  PerGarantia                          Decimal?                       @db.Decimal(18, 2)
+  SaldoDevedor                         Decimal?                       @db.Decimal(18, 2)
+  vlrPMT                               Decimal?                       @db.Decimal(18, 2)
+  QtdParcelas                          Int?
+  ParcelasVencer                       Int?
+  DiaVencParcelas                      String?                        @db.VarChar(11)
+  DtInicioContrato                     DateTime?                      @db.DateTime
+  BatimentoCadastro                    String?                        @db.VarChar(Max)
+  Vop                                  Decimal?                       @db.Decimal(18, 2)
+  CadCreditProposaIindebtedness        CadCreditProposaIindebtedness? @relation(fields: [CadCreditProposalIndebtednessModelId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CadCreditProposalIndebtednessList_CadCreditProposalIndebtednessList")
+}
+
+model CadCreditProposalRestrition {
+  Id             Int              @id(map: "PK_CadCreditProposalRestrition") @default(autoincrement())
+  Restricao      String?          @db.NVarChar(Max)
+  ProposalId     Int?
+  DataBase       DateTime?        @db.DateTime
+  CreditProposal CreditProposal[]
+}
+
+model CadCreditProposalShareholdingCompositionMainAdministrator {
+  Id                    Int             @id(map: "PK_CadCreditProposalShareholdingCompositionMainAdministrator") @default(autoincrement())
+  Name                  String?         @db.NVarChar(200)
+  CPF                   String?         @db.NVarChar(11)
+  Position              String?         @db.NVarChar(200)
+  vencprocadministrador DateTime?       @db.DateTime
+  CreditProposalModelId Int?
+  VencAta               DateTime?       @db.DateTime
+  CreditProposal        CreditProposal? @relation(fields: [CreditProposalModelId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CadCreditProposalShareholdingCompositionMainAdministrator_CreditProposal_CreditProposalModelId")
+}
+
+model CadCreditProposalShareholdingCompositionPartner {
+  Id                    Int             @id(map: "PK_CadCreditProposalShareholdingCompositionPartner") @default(autoincrement())
+  Partners              String?         @db.NVarChar(200)
+  CpfCnpj               String?         @db.NVarChar(14)
+  EntryDate             DateTime
+  ExitDate              DateTime?       @db.DateTime
+  Spouse                String?         @db.NVarChar(200)
+  SpouseCpf             String?         @db.NVarChar(11)
+  Participation         Decimal         @db.Decimal(18, 2)
+  CreditProposalModelId Int?
+  CreditProposal        CreditProposal? @relation(fields: [CreditProposalModelId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CadCreditProposalShareholdingCompositionPartner_CreditProposal_CreditProposalModelId")
+}
+
+model CadCreditProposalShareholdingCompositionRelatedCompanies {
+  Id                    Int             @id(map: "PK_CadCreditProposalShareholdingCompositionRelatedCompanies") @default(autoincrement())
+  Name                  String?         @db.NVarChar(200)
+  Cnpj                  String?         @db.NVarChar(14)
+  Activity              String?         @db.NVarChar(200)
+  Partner               String?         @db.NVarChar(200)
+  Foundation            DateTime
+  Billing               Decimal         @db.Decimal(18, 2)
+  BillingAgainst        Boolean
+  CreditProposalModelId Int?
+  inactive              Boolean?
+  CreditProposal        CreditProposal? @relation(fields: [CreditProposalModelId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CadCreditProposalShareholdingCompositionRelatedCompanies_CreditProposal_CreditProposalModelId")
+}
+
+model CadCreditProposalSummary {
+  Id             Int              @id(map: "PK_CadCreditProposalSummary") @default(autoincrement())
+  Cadastro       String?          @db.NVarChar(Max)
+  BatimentoCad   String?          @db.NVarChar(Max)
+  ProposalId     Int?
+  DataBase       DateTime?        @db.DateTime
+  CreditProposal CreditProposal[]
+}
+
+model Caixa {
+  Id    BigInt   @id(map: "PK_Caixa") @default(autoincrement())
+  Fundo Int
+  Valor Decimal  @db.Decimal(18, 4)
+  Data  DateTime @db.DateTime
+}
+
+model CanhotoTituloSeguroCredito {
+  Id           Int     @id(map: "PK__CanhotoT__3214EC07CCA7557E") @default(autoincrement())
+  NomeCanhoto  String? @db.VarChar(60)
+  GuidCanhoto  String? @db.VarChar(60)
+  NumeroTitulo String  @db.VarChar(30)
+  EHID         String  @db.VarChar(11)
+}
+
+model Cedente {
+  Id               Int                @id(map: "PK_Cedente") @default(autoincrement())
+  Nome             String?            @db.VarChar(150)
+  Cnpj             String?            @db.VarChar(20)
+  NumWBA           Int?
+  Email            String?            @db.VarChar(300)
+  Gerente          Int?
+  NomeBeneA        String?            @db.VarChar(300)
+  CPFBeneA         String?            @db.VarChar(20)
+  NomeBeneB        String?            @db.VarChar(300)
+  CPFBeneB         String?            @db.VarChar(20)
+  NomeBeneC        String?            @db.VarChar(300)
+  CPFBeneC         String?            @db.VarChar(20)
+  Ativo            Boolean?
+  Users            Users?             @relation(fields: [Gerente], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_Cedente_Users")
+  CedentePontuacao CedentePontuacao[]
+}
+
+model CedentePontuacao {
+  Id                                Int      @id(map: "PK_CedentePontuacao") @default(autoincrement())
+  Data                              DateTime @db.DateTime
+  DescricaoRetorno                  String   @db.VarChar(Max)
+  Cedente                           Int
+  Cedente_CedenteToCedentePontuacao Cedente  @relation(fields: [Cedente], references: [Id], onUpdate: NoAction, map: "FK_CedentePontuacao_Cedente")
+}
+
+model Claim {
+  Id           Int            @id(map: "PK_Claim") @default(autoincrement())
+  Name         String?        @db.NVarChar(100)
+  SubRoleClaim SubRoleClaim[]
+}
+
+model Company {
+  Id          Int     @id(map: "PK_Company") @default(autoincrement())
+  CompanyName String? @db.NVarChar(200)
+  Cnpj        String? @db.NVarChar(14)
+  Address     String? @db.NVarChar(300)
+  Complement  String? @db.NVarChar(200)
+  City        String? @db.NVarChar(Max)
+  State       String? @db.NVarChar(Max)
+  Fone        String? @db.NVarChar(11)
+  ErpId       Int
+  Users       Users[]
+}
+
+model ConsultaCTE {
+  id             Int       @id(map: "PK_ConsultaCTE") @default(autoincrement())
+  chave          String?   @db.VarChar(50)
+  ultimaconsulta DateTime? @db.DateTime
+  ntentativa     Int?
+  ativo          Boolean?
+}
+
+model CreditProposaIindebtedness {
+  Id                             Int                              @id(map: "PK_CreditProposaIindebtedness") @default(autoincrement())
+  BaseDate                       DateTime?
+  TotalIndebtedness              Decimal                          @db.Decimal(18, 2)
+  IdProposta                     Int?
+  CreditProposalIndebtednessList CreditProposalIndebtednessList[]
+}
+
+model CreditProposal {
+  Id                                                        Int                                                         @id(map: "PK_CreditProposal") @default(autoincrement())
+  Company                                                   String?                                                     @db.NVarChar(200)
+  Cnpj                                                      String?                                                     @db.NVarChar(14)
+  Address                                                   String?                                                     @db.NVarChar(300)
+  Phone                                                     String?                                                     @db.NVarChar(11)
+  Status                                                    Int
+  Foundation                                                DateTime
+  RegisterDate                                              DateTime
+  RjRequired                                                DateTime?
+  RjDefined                                                 DateTime?
+  PostalCode                                                String?                                                     @db.NVarChar(Max)
+  Contact                                                   String?                                                     @db.NVarChar(300)
+  Number                                                    Int
+  District                                                  String?                                                     @db.NVarChar(Max)
+  City                                                      String?                                                     @db.NVarChar(Max)
+  Uf                                                        String?                                                     @db.NVarChar(Max)
+  UserId                                                    Int?
+  SummaryId                                                 Int?
+  CadSummaryId                                              Int?
+  BillingId                                                 Int?
+  OperatingCycleId                                          Int?
+  CadCreditProposalBacenId                                  Int?
+  CadRestritionId                                           Int?
+  LastChange                                                DateTime?
+  Pendencias                                                String?                                                     @db.NVarChar(Max)
+  Motivos                                                   String?                                                     @db.NVarChar(Max)
+  LimiteComite                                              String?                                                     @db.NVarChar(50)
+  TrancheComite                                             String?                                                     @db.NVarChar(50)
+  MesesReavaliar                                            Int?
+  Ativo                                                     Boolean?
+  StatusContrato                                            Int?
+  GrupoEconomico                                            Boolean?
+  Banco                                                     String?                                                     @db.NChar(200)
+  Agencia                                                   String?                                                     @db.NChar(200)
+  Conta                                                     String?                                                     @db.NChar(200)
+  Email                                                     String?                                                     @db.NChar(200)
+  CadCreditProposalBacen                                    CadCreditProposalBacen?                                     @relation(fields: [CadCreditProposalBacenId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CreditProposal_CadCreditProposalBacen")
+  CadCreditProposalRestrition                               CadCreditProposalRestrition?                                @relation(fields: [CadRestritionId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CreditProposal_CadCreditProposalRestrition")
+  CadCreditProposalSummary                                  CadCreditProposalSummary?                                   @relation(fields: [CadSummaryId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CreditProposal_CadCreditProposalSummary")
+  CreditProposalBilling                                     CreditProposalBilling?                                      @relation(fields: [BillingId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CreditProposal_CreditProposalBilling_BillingId")
+  CreditProposalOperatingCycle                              CreditProposalOperatingCycle?                               @relation(fields: [OperatingCycleId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CreditProposal_CreditProposalOperatingCycle_OperatingCycleId")
+  CreditProposalSummary                                     CreditProposalSummary?                                      @relation(fields: [SummaryId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CreditProposal_CreditProposalSummary_SummaryId")
+  Users                                                     Users?                                                      @relation(fields: [UserId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CreditProposal_Users_UserId")
+  CadCreditProposalShareholdingCompositionMainAdministrator CadCreditProposalShareholdingCompositionMainAdministrator[]
+  CadCreditProposalShareholdingCompositionPartner           CadCreditProposalShareholdingCompositionPartner[]
+  CadCreditProposalShareholdingCompositionRelatedCompanies  CadCreditProposalShareholdingCompositionRelatedCompanies[]
+  CreditProposalAnexo                                       CreditProposalAnexo[]
+  CreditProposalShareholdingCompositionMainAdministrator    CreditProposalShareholdingCompositionMainAdministrator[]
+  CreditProposalShareholdingCompositionPartner              CreditProposalShareholdingCompositionPartner[]
+  CreditProposalShareholdingCompositionRelatedCompanies     CreditProposalShareholdingCompositionRelatedCompanies[]
+  Escrow                                                    Escrow[]
+  File                                                      File[]
+  MovimentacaoDaProposta                                    MovimentacaoDaProposta[]
+  PropostaCreditoFluxo                                      PropostaCreditoFluxo[]
+
+  @@index([BillingId], map: "IX_CreditProposal_BillingId")
+  @@index([OperatingCycleId], map: "IX_CreditProposal_OperatingCycleId")
+  @@index([SummaryId], map: "IX_CreditProposal_SummaryId")
+  @@index([UserId], map: "IX_CreditProposal_UserId")
+}
+
+model CreditProposalAnexo {
+  Id              Int            @id(map: "PK_CreditProposalAnexo") @default(autoincrement())
+  PropostaCredito Int
+  Descricao       String         @db.VarChar(Max)
+  FileID          Int
+  CreditProposal  CreditProposal @relation(fields: [PropostaCredito], references: [Id], onUpdate: NoAction, map: "FK_CreditProposalAnexo_CreditProposal")
+}
+
+model CreditProposalBilling {
+  Id                         Int                          @id(map: "PK_CreditProposalBilling") @default(autoincrement())
+  CashPayment                Decimal                      @db.Decimal(18, 2)
+  Duplicates                 Decimal                      @db.Decimal(18, 2)
+  Cheque                     Decimal                      @db.Decimal(18, 2)
+  AccountCredit              Decimal                      @db.Decimal(18, 2)
+  Intercompany               Decimal                      @db.Decimal(18, 2)
+  Others                     Decimal                      @db.Decimal(18, 2)
+  CreditProposal             CreditProposal[]
+  CreditProposalBillingMonth CreditProposalBillingMonth[]
+}
+
+model CreditProposalBillingMonth {
+  Id                           Int                    @id(map: "PK_CreditProposalBillingMonth") @default(autoincrement())
+  Year                         Int
+  January                      Decimal                @db.Decimal(18, 2)
+  February                     Decimal                @db.Decimal(18, 2)
+  May                          Decimal                @db.Decimal(18, 2)
+  April                        Decimal                @db.Decimal(18, 2)
+  March                        Decimal                @db.Decimal(18, 2)
+  June                         Decimal                @db.Decimal(18, 2)
+  July                         Decimal                @db.Decimal(18, 2)
+  August                       Decimal                @db.Decimal(18, 2)
+  September                    Decimal                @db.Decimal(18, 2)
+  October                      Decimal                @db.Decimal(18, 2)
+  November                     Decimal                @db.Decimal(18, 2)
+  December                     Decimal                @db.Decimal(18, 2)
+  Avarage                      Decimal                @db.Decimal(18, 2)
+  Total                        Decimal                @db.Decimal(18, 2)
+  CreditProposalBillingModelId Int?
+  CreditProposalBilling        CreditProposalBilling? @relation(fields: [CreditProposalBillingModelId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CreditProposalBillingMonth_CreditProposalBilling_CreditProposalBillingModelId")
+
+  @@index([CreditProposalBillingModelId], map: "IX_CreditProposalBillingMonth_CreditProposalBillingModelId")
+}
+
+model CreditProposalIndebtednessList {
+  Id                                Int                         @id(map: "PK_CreditProposalIndebtednessList") @default(autoincrement())
+  Institution                       String?                     @db.NVarChar(50)
+  Limit                             Decimal                     @db.Decimal(18, 2)
+  Bank                              Decimal                     @db.Decimal(18, 2)
+  Modalidade                        String?                     @db.NVarChar(50)
+  Garantia                          String?                     @db.NVarChar(50)
+  Avencer                           Decimal?                    @db.Decimal(18, 2)
+  Vencido                           Decimal?                    @db.Decimal(18, 2)
+  Comissaria                        Decimal?                    @db.Decimal(18, 2)
+  Discount                          Decimal?                    @db.Decimal(18, 2)
+  Fomento                           Decimal?                    @db.Decimal(18, 2)
+  Intercompany                      Decimal?                    @db.Decimal(18, 2)
+  GeneralTotal                      Decimal?                    @db.Decimal(18, 2)
+  CreditProposaIindebtednessModelId Int?
+  PerGarantia                       Decimal?                    @db.Decimal(18, 2)
+  SaldoDevedor                      Decimal?                    @db.Decimal(18, 2)
+  vlrPMT                            Decimal?                    @db.Decimal(18, 2)
+  QtdParcelas                       Int?
+  ParcelasVencer                    Int?
+  DiaVencParcelas                   Int?
+  DtInicioContrato                  DateTime?                   @db.DateTime
+  CreditProposaIindebtedness        CreditProposaIindebtedness? @relation(fields: [CreditProposaIindebtednessModelId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CreditProposalIndebtednessList_CreditProposaIindebtedness_CreditProposaIindebtednessModelId")
+
+  @@index([CreditProposaIindebtednessModelId], map: "IX_CreditProposalIndebtednessList_CreditProposaIindebtednessModelId")
+}
+
+model CreditProposalMsg {
+  id          Int       @id(map: "PK_CreditProposalMsg") @default(autoincrement())
+  data        DateTime? @db.DateTime
+  owner       Int?
+  usuarioalvo Int?
+  mensagem    String?   @db.VarChar(1000)
+  propostaid  Int?
+}
+
+model CreditProposalOperatingCycle {
+  Id                                      Int                                       @id(map: "PK_CreditProposalOperatingCycle") @default(autoincrement())
+  Cnae                                    String?                                   @db.NVarChar(20)
+  EmployeesNum                            String?                                   @db.NVarChar(20)
+  CurrentStockValue                       Decimal                                   @db.Decimal(18, 2)
+  IdleLevel                               Decimal                                   @db.Decimal(18, 2)
+  InventoryTurnover                       Int
+  MainActivity                            String?                                   @db.NVarChar(200)
+  PayrollValue                            Decimal                                   @db.Decimal(18, 2)
+  ProductionCapacity                      String?                                   @db.NVarChar(20)
+  PurchasingLimit                         Int
+  SalesLimit                              Int
+  ExportId                                Int?
+  ImportId                                Int?
+  CreditProposalOperatingCycleExport      CreditProposalOperatingCycleExport?       @relation(fields: [ExportId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CreditProposalOperatingCycle_CreditProposalOperatingCycleExport_ExportId")
+  CreditProposalOperatingCycleImport      CreditProposalOperatingCycleImport?       @relation(fields: [ImportId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CreditProposalOperatingCycle_CreditProposalOperatingCycleImport_ImportId")
+  CreditProposal                          CreditProposal[]
+  CreditProposalOperatingCycleCompetitors CreditProposalOperatingCycleCompetitors[]
+  CreditProposalOperatingCycleCustomers   CreditProposalOperatingCycleCustomers[]
+  CreditProposalOperatingCycleProduction  CreditProposalOperatingCycleProduction[]
+  CreditProposalOperatingCycleSuppliers   CreditProposalOperatingCycleSuppliers[]
+
+  @@index([ExportId], map: "IX_CreditProposalOperatingCycle_ExportId")
+  @@index([ImportId], map: "IX_CreditProposalOperatingCycle_ImportId")
+}
+
+model CreditProposalOperatingCycleCompetitors {
+  Id                                  Int                           @id(map: "PK_CreditProposalOperatingCycleCompetitors") @default(autoincrement())
+  Competitors                         String?                       @db.NVarChar(200)
+  Percent                             Decimal                       @db.Decimal(18, 2)
+  CreditProposalOperatingCycleModelId Int?
+  CreditProposalOperatingCycle        CreditProposalOperatingCycle? @relation(fields: [CreditProposalOperatingCycleModelId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CreditProposalOperatingCycleCompetitors_CreditProposalOperatingCycle_CreditProposalOperatingCycleModelId")
+
+  @@index([CreditProposalOperatingCycleModelId], map: "IX_CreditProposalOperatingCycleCompetitors_CreditProposalOperatingCycleModelId")
+}
+
+model CreditProposalOperatingCycleCustomers {
+  Id                                  Int                           @id(map: "PK_CreditProposalOperatingCycleCustomers") @default(autoincrement())
+  Customers                           String?                       @db.NVarChar(200)
+  Percent                             Decimal                       @db.Decimal(18, 2)
+  CreditProposalOperatingCycleModelId Int?
+  CreditProposalOperatingCycle        CreditProposalOperatingCycle? @relation(fields: [CreditProposalOperatingCycleModelId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CreditProposalOperatingCycleCustomers_CreditProposalOperatingCycle_CreditProposalOperatingCycleModelId")
+
+  @@index([CreditProposalOperatingCycleModelId], map: "IX_CreditProposalOperatingCycleCustomers_CreditProposalOperatingCycleModelId")
+}
+
+model CreditProposalOperatingCycleExport {
+  Id                           Int                            @id(map: "PK_CreditProposalOperatingCycleExport") @default(autoincrement())
+  MonthlyAverage               Decimal                        @db.Decimal(18, 2)
+  PeriodReceipt                Int
+  MainCountries                String?                        @db.NVarChar(200)
+  CreditProposalOperatingCycle CreditProposalOperatingCycle[]
+}
+
+model CreditProposalOperatingCycleImport {
+  Id                           Int                            @id(map: "PK_CreditProposalOperatingCycleImport") @default(autoincrement())
+  MonthlyAverage               Decimal                        @db.Decimal(18, 2)
+  PeriodReceipt                Int
+  MainCountries                String?                        @db.NVarChar(200)
+  CreditProposalOperatingCycle CreditProposalOperatingCycle[]
+}
+
+model CreditProposalOperatingCycleProduction {
+  Id                                  Int                           @id(map: "PK_CreditProposalOperatingCycleProduction") @default(autoincrement())
+  Production                          String?                       @db.NVarChar(200)
+  Percent                             Decimal                       @db.Decimal(18, 2)
+  CreditProposalOperatingCycleModelId Int?
+  CreditProposalOperatingCycle        CreditProposalOperatingCycle? @relation(fields: [CreditProposalOperatingCycleModelId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CreditProposalOperatingCycleProduction_CreditProposalOperatingCycle_CreditProposalOperatingCycleModelId")
+
+  @@index([CreditProposalOperatingCycleModelId], map: "IX_CreditProposalOperatingCycleProduction_CreditProposalOperatingCycleModelId")
+}
+
+model CreditProposalOperatingCycleSuppliers {
+  Id                                  Int                           @id(map: "PK_CreditProposalOperatingCycleSuppliers") @default(autoincrement())
+  Suppliers                           String?                       @db.NVarChar(200)
+  Percent                             Decimal                       @db.Decimal(18, 2)
+  CreditProposalOperatingCycleModelId Int?
+  CreditProposalOperatingCycle        CreditProposalOperatingCycle? @relation(fields: [CreditProposalOperatingCycleModelId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CreditProposalOperatingCycleSuppliers_CreditProposalOperatingCycle_CreditProposalOperatingCycleModelId")
+
+  @@index([CreditProposalOperatingCycleModelId], map: "IX_CreditProposalOperatingCycleSuppliers_CreditProposalOperatingCycleModelId")
+}
+
+model CreditProposalShareholdingCompositionMainAdministrator {
+  Id                    Int             @id(map: "PK_CreditProposalShareholdingCompositionMainAdministrator") @default(autoincrement())
+  Name                  String?         @db.NVarChar(200)
+  CPF                   String?         @db.NVarChar(11)
+  Position              String?         @db.NVarChar(200)
+  vencprocadministrador DateTime?       @db.DateTime
+  CreditProposalModelId Int?
+  VencAta               DateTime?       @db.DateTime
+  CreditProposal        CreditProposal? @relation(fields: [CreditProposalModelId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CreditProposalShareholdingCompositionMainAdministrator_CreditProposal_CreditProposalModelId")
+
+  @@index([CreditProposalModelId], map: "IX_CreditProposalShareholdingCompositionMainAdministrator_CreditProposalModelId")
+}
+
+model CreditProposalShareholdingCompositionPartner {
+  Id                    Int             @id(map: "PK_CreditProposalShareholdingCompositionPartner") @default(autoincrement())
+  Partners              String?         @db.NVarChar(200)
+  CpfCnpj               String?         @db.NVarChar(14)
+  EntryDate             DateTime
+  ExitDate              DateTime?       @db.DateTime
+  Spouse                String?         @db.NVarChar(200)
+  SpouseCpf             String?         @db.NVarChar(11)
+  Participation         Decimal         @db.Decimal(18, 2)
+  CreditProposalModelId Int?
+  CreditProposal        CreditProposal? @relation(fields: [CreditProposalModelId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CreditProposalShareholdingCompositionPartner_CreditProposal_CreditProposalModelId")
+
+  @@index([CreditProposalModelId], map: "IX_CreditProposalShareholdingCompositionPartner_CreditProposalModelId")
+}
+
+model CreditProposalShareholdingCompositionRelatedCompanies {
+  Id                    Int             @id(map: "PK_CreditProposalShareholdingCompositionRelatedCompanies") @default(autoincrement())
+  Name                  String?         @db.NVarChar(200)
+  Cnpj                  String?         @db.NVarChar(14)
+  Activity              String?         @db.NVarChar(200)
+  Partner               String?         @db.NVarChar(200)
+  Foundation            DateTime
+  Billing               Decimal         @db.Decimal(18, 2)
+  BillingAgainst        Boolean
+  CreditProposalModelId Int?
+  CreditProposal        CreditProposal? @relation(fields: [CreditProposalModelId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_CreditProposalShareholdingCompositionRelatedCompanies_CreditProposal_CreditProposalModelId")
+
+  @@index([CreditProposalModelId], map: "IX_CreditProposalShareholdingCompositionRelatedCompanies_CreditProposalModelId")
+}
+
+model CreditProposalSummary {
+  Id             Int              @id(map: "PK_CreditProposalSummary") @default(autoincrement())
+  Limit          Decimal          @db.Decimal(18, 2)
+  Tranche        Decimal          @db.Decimal(18, 2)
+  Tax            Decimal          @db.Decimal(18, 2)
+  AvarageTicket  Decimal          @db.Decimal(18, 2)
+  Indication     String?          @db.NVarChar(Max)
+  Manager        String?          @db.NVarChar(Max)
+  Superintendent String?          @db.NVarChar(Max)
+  Analyze        String?          @db.NVarChar(Max)
+  Proposal_Id    Int?
+  DataBase       DateTime?        @db.DateTime
+  CreditProposal CreditProposal[]
+}
+
+model EmailTemplates {
+  Id       BigInt  @id(map: "PK_EmailTemplates") @default(autoincrement())
+  Name     String? @db.NVarChar(Max)
+  Template String? @db.NVarChar(Max)
+}
+
+model EnviosMensais {
+  id      Int     @id(map: "PK_EnviosMensais") @default(autoincrement())
+  mes     String? @db.VarChar(2)
+  cedente String? @db.VarChar(15)
+}
+
+model Escrow {
+  Id               Int            @id(map: "PK__Escrow__3214EC07B5E3DEA3") @default(autoincrement())
+  Possui           Boolean
+  Trava            DateTime       @db.DateTime
+  IdCreditProposal Int
+  CreditProposal   CreditProposal @relation(fields: [IdCreditProposal], references: [Id], onUpdate: NoAction, map: "FK__Escrow__IdCredit__3F3159AB")
+}
+
+model EstruturaComercial {
+  Id              Int @id(map: "PK_EstruturaComercial") @default(autoincrement())
+  Superintendente Int
+  Gerente         Int
+  Assistente      Int
+}
+
+model EventLog {
+  Id          Int       @id(map: "PK_EventLog") @default(autoincrement())
+  LogLevel    String?   @db.NVarChar(100)
+  Message     String?   @db.NVarChar(Max)
+  CreatedTime DateTime?
+  JsonModel   String?   @db.NVarChar(Max)
+}
+
+model FIDC_Diario {
+  Id                             Int       @id(map: "PK__FIDC_Dia__3214EC07C3ED4C5A") @default(autoincrement())
+  Ano                            Int
+  Mes                            Int
+  Dia                            Int
+  Per_CDI                        Float?
+  Per_Rentabilidade_Sub          Decimal?  @db.Decimal(8, 5)
+  Vlr_PL_Subordinada             Decimal?  @db.Decimal(18, 2)
+  Vlr_Direitos_Creditorios       Decimal?  @db.Decimal(18, 2)
+  Vlr_PL_Asia                    Decimal?  @db.Decimal(18, 2)
+  Vlr_PDD                        Decimal?  @db.Decimal(18, 2)
+  Vlr_Vencidos_AMais_60          Decimal?  @db.Decimal(18, 2)
+  Vlr_Vencidos_30_60             Decimal?  @db.Decimal(18, 2)
+  Vlr_Vencidos_0_30              Decimal?  @db.Decimal(18, 2)
+  Vlr_AVencer                    Decimal?  @db.Decimal(18, 2)
+  Vlr_AVencer_60                 Decimal?  @db.Decimal(18, 2)
+  Vlr_Liquidez_Liquidado         Decimal?  @db.Decimal(18, 2)
+  Per_Liquidez_Liquidado         Decimal?  @db.Decimal(5, 2)
+  Vlr_Liquidez_Ate7Dias          Decimal?  @db.Decimal(18, 2)
+  Per_Liquidez_Ate7Dias          Decimal?  @db.Decimal(5, 2)
+  Vlr_Liquidez_Mais8Dias         Decimal?  @db.Decimal(18, 2)
+  Per_Liquidez_Mais8Dias         Decimal?  @db.Decimal(5, 2)
+  Vlr_Liquidez_EmAberto          Decimal?  @db.Decimal(18, 2)
+  Per_Liquidez_EmAberto          Decimal?  @db.Decimal(5, 2)
+  Vlr_Liquidez_EmAberto7Dias     Decimal?  @db.Decimal(18, 2)
+  Per_Liquidez_EmAberto7Dias     Decimal?  @db.Decimal(5, 2)
+  Vlr_Liquidez_EmAbertoMais8Dias Decimal?  @db.Decimal(18, 2)
+  Per_Liquidez_EmAbertoMais8Dias Decimal?  @db.Decimal(5, 2)
+  Vlr_Liquidez_Cartorio          Decimal?  @db.Decimal(18, 2)
+  Per_Liquidez_Cartorio          Decimal?  @db.Decimal(5, 2)
+  Vlr_Liquidez_Recompra          Decimal?  @db.Decimal(18, 2)
+  Per_Liquidez_Recompra          Decimal?  @db.Decimal(5, 2)
+  Qtd_Operacoes                  Int?
+  Qtd_Cedentes_Ativos            Int?
+  Qtd_Sacados_Aberto             Int?
+  Prz_Medio_Carteira             Decimal?  @db.Decimal(6, 2)
+  Per_Vencto_Ativos_60_PL        Decimal?  @db.Decimal(6, 2)
+  Vlr_Ativos_Cedidos             Decimal?  @db.Decimal(18, 2)
+  Per_Taxa_Ponderada             Decimal?  @db.Decimal(6, 2)
+  Vlr_Medio_Duplicata            Decimal?  @db.Decimal(18, 2)
+  Vlr_Ticket_Medio               Decimal?  @db.Decimal(18, 2)
+  Vlr_Aplicacoes                 Decimal?  @db.Decimal(18, 2)
+  Vlr_10Maiores_Cedentes         Decimal?  @db.Decimal(18, 2)
+  Vlr_5Maiores_Cedentes          Decimal?  @db.Decimal(18, 2)
+  Vlr_10Maiores_Cedentes_Mes     Decimal?  @db.Decimal(18, 2)
+  Vlr_5Maiores_Cedentes_Mes      Decimal?  @db.Decimal(18, 2)
+  Dat_Cota_Subordinada_Senior    DateTime? @db.DateTime
+  Vlr_Cota_Subordinada           Decimal?  @db.Decimal(14, 6)
+  Qtd_Cotista_Subordinada        Int?
+  Dat_Informacao_Carta           DateTime? @db.DateTime
+  Des_Observacao                 String?   @db.NVarChar(Max)
+  Vlr_Resgate                    Decimal?  @default(0, map: "DF_FIDC_Diario_Vlr_Resgate") @db.Decimal(18, 2)
+  Vlr_10Maiores_Sacados          Decimal?  @db.Decimal(18, 2)
+  Vlr_5Maiores_Sacados           Decimal?  @db.Decimal(18, 2)
+}
+
+model FIDC_Diario_Falcon {
+  Id                             Int       @id(map: "PK__FIDC_Dia__3214EC076A5FB1BA") @default(autoincrement())
+  Ano                            Int
+  Mes                            Int
+  Dia                            Int
+  Per_CDI                        Float?
+  Per_Rentabilidade_Sub          Decimal?  @db.Decimal(8, 5)
+  Vlr_PL_Subordinada             Decimal?  @db.Decimal(18, 2)
+  Vlr_Direitos_Creditorios       Decimal?  @db.Decimal(18, 2)
+  Vlr_PL_Asia                    Decimal?  @db.Decimal(18, 2)
+  Vlr_PDD                        Decimal?  @db.Decimal(18, 2)
+  Vlr_Vencidos_AMais_60          Decimal?  @db.Decimal(18, 2)
+  Vlr_Vencidos_30_60             Decimal?  @db.Decimal(18, 2)
+  Vlr_Vencidos_0_30              Decimal?  @db.Decimal(18, 2)
+  Vlr_AVencer                    Decimal?  @db.Decimal(18, 2)
+  Vlr_AVencer_60                 Decimal?  @db.Decimal(18, 2)
+  Vlr_Liquidez_Liquidado         Decimal?  @db.Decimal(18, 2)
+  Per_Liquidez_Liquidado         Decimal?  @db.Decimal(5, 2)
+  Vlr_Liquidez_Ate7Dias          Decimal?  @db.Decimal(18, 2)
+  Per_Liquidez_Ate7Dias          Decimal?  @db.Decimal(5, 2)
+  Vlr_Liquidez_Mais8Dias         Decimal?  @db.Decimal(18, 2)
+  Per_Liquidez_Mais8Dias         Decimal?  @db.Decimal(5, 2)
+  Vlr_Liquidez_EmAberto          Decimal?  @db.Decimal(18, 2)
+  Per_Liquidez_EmAberto          Decimal?  @db.Decimal(5, 2)
+  Vlr_Liquidez_EmAberto7Dias     Decimal?  @db.Decimal(18, 2)
+  Per_Liquidez_EmAberto7Dias     Decimal?  @db.Decimal(5, 2)
+  Vlr_Liquidez_EmAbertoMais8Dias Decimal?  @db.Decimal(18, 2)
+  Per_Liquidez_EmAbertoMais8Dias Decimal?  @db.Decimal(5, 2)
+  Vlr_Liquidez_Cartorio          Decimal?  @db.Decimal(18, 2)
+  Per_Liquidez_Cartorio          Decimal?  @db.Decimal(5, 2)
+  Vlr_Liquidez_Recompra          Decimal?  @db.Decimal(18, 2)
+  Per_Liquidez_Recompra          Decimal?  @db.Decimal(5, 2)
+  Qtd_Operacoes                  Int?
+  Qtd_Cedentes_Ativos            Int?
+  Qtd_Sacados_Aberto             Int?
+  Prz_Medio_Carteira             Decimal?  @db.Decimal(6, 2)
+  Per_Vencto_Ativos_60_PL        Decimal?  @db.Decimal(6, 2)
+  Vlr_Ativos_Cedidos             Decimal?  @db.Decimal(18, 2)
+  Per_Taxa_Ponderada             Decimal?  @db.Decimal(6, 2)
+  Vlr_Medio_Duplicata            Decimal?  @db.Decimal(18, 2)
+  Vlr_Ticket_Medio               Decimal?  @db.Decimal(18, 2)
+  Vlr_Aplicacoes                 Decimal?  @db.Decimal(18, 2)
+  Vlr_10Maiores_Cedentes         Decimal?  @db.Decimal(18, 2)
+  Vlr_5Maiores_Cedentes          Decimal?  @db.Decimal(18, 2)
+  Vlr_10Maiores_Cedentes_Mes     Decimal?  @db.Decimal(18, 2)
+  Vlr_5Maiores_Cedentes_Mes      Decimal?  @db.Decimal(18, 2)
+  Dat_Cota_Subordinada_Senior    DateTime? @db.DateTime
+  Vlr_Cota_Subordinada           Decimal?  @db.Decimal(14, 6)
+  Qtd_Cotista_Subordinada        Int?
+  Dat_Informacao_Carta           DateTime? @db.DateTime
+  Des_Observacao                 String?   @db.NVarChar(Max)
+  Vlr_Resgate                    Decimal?  @default(0, map: "DF_FIDC_Diario_Falcon_Vlr_Resgate") @db.Decimal(18, 2)
+  Vlr_10Maiores_Sacados          Decimal?  @db.Decimal(18, 2)
+  Vlr_5Maiores_Sacados           Decimal?  @db.Decimal(18, 2)
+}
+
+model FIDC_Diario_Senior {
+  Id                 Int      @id(map: "PK__FIDC_Dia__3214EC07948CBDB1") @default(autoincrement())
+  Ano                Int
+  Mes                Int
+  Dia                Int
+  Senior             Int
+  Vlr_PL_Senior      Decimal? @db.Decimal(18, 2)
+  Vlr_Cota_Senior    Decimal? @db.Decimal(12, 6)
+  Qtd_Cotista_Senior Int?
+  Tipo               String   @db.NVarChar(50)
+}
+
+model File {
+  Id             Int             @id(map: "PK_File") @default(autoincrement())
+  Name           String?         @db.NVarChar(150)
+  Type           String?         @db.NVarChar(Max)
+  Extension      String?         @db.NVarChar(10)
+  Identifier     String?         @db.NVarChar(150)
+  Size           BigInt
+  IdProposta     Int?
+  Data           DateTime?       @db.DateTime
+  Analise        Boolean?
+  Juridico       Boolean?
+  CategoryId     Int?
+  FileCategory   FileCategory?   @relation(fields: [CategoryId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "CategoryId")
+  CreditProposal CreditProposal? @relation(fields: [IdProposta], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_File_CreditProposal")
+  OverdueClient  OverdueClient[]
+}
+
+model FileCategory {
+  Id   Int    @id(map: "PK__FileCate__3214EC0751FBCF34") @default(autoincrement())
+  Name String @db.VarChar(150)
+  File File[]
+}
+
+model GrupoEconomico {
+  Id              Int     @id(map: "PK__GrupoEco__3214EC075C2C0B68") @default(autoincrement())
+  IdPropostaPai   Int
+  IdPropostaFilha Int
+  Ativo           Boolean
+}
+
+model HistoricoAcessoPortalInvestidor {
+  Id                      Int                      @id(map: "PK__Historic__3214EC07DC4C1C74") @default(autoincrement())
+  Registro                DateTime?                @db.DateTime
+  Acao                    String?                  @db.VarChar(120)
+  IdUsuario               Int?
+  UsuarioPortalInvestidor UsuarioPortalInvestidor? @relation(fields: [IdUsuario], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK__Historico__IdUsu__2D12A970")
+}
+
+model ItemsAnexoLTDA {
+  Id                             Int      @id(map: "PK__ItemsAne__3214EC07FACB43D6") @default(autoincrement())
+  CopiaContratoSocial            Boolean?
+  CopiaUltimaAlteracaoContratual Boolean?
+  CopiaDocumentosSocios          Boolean?
+  CertidaoDeCasamento            Boolean?
+  CopiaComprovanteDeResidencia   Boolean?
+  CopiaComprovanteEmpresa        Boolean?
+  CopiaDaprocuracao              Boolean?
+  IdProposta                     Int
+}
+
+model ItemsAnexosSA {
+  Id                           Int      @id(map: "PK__ItemsAne__3214EC076A2B5856") @default(autoincrement())
+  CopiaEstatutoSocial          Boolean?
+  CopiaAtaEleicao              Boolean?
+  CopiaDocumentos              Boolean?
+  CertidaoDeCasamento          Boolean?
+  CopiaComprovanteDeResidencia Boolean?
+  CopiaComprovanteEmpresa      Boolean?
+  CopiaProcuracao              Boolean?
+  IdProposta                   Int
+}
+
+model LancamentoLivelo {
+  id               Int       @id(map: "PK_LancamentoLivelo") @default(autoincrement())
+  data             DateTime? @db.DateTime
+  lancamentoLivelo String?   @db.VarChar(Max)
+}
+
+model MaioresCedentes {
+  Id          Int      @id(map: "PK__MaioresC__3214EC07DF456575") @default(autoincrement())
+  Ano         Int
+  Mes         Int
+  Nome        String   @db.VarChar(200)
+  Valor       Decimal  @db.Decimal(18, 2)
+  Pl          Decimal  @db.Decimal(18, 2)
+  DataCriacao DateTime @db.DateTime
+}
+
+model MaioresSacados {
+  Id          Int      @id(map: "PK__MaioresS__3214EC0709D1B40C") @default(autoincrement())
+  Ano         Int
+  Mes         Int
+  Nome        String   @db.VarChar(200)
+  Valor       Decimal  @db.Decimal(18, 2)
+  Pl          Decimal  @db.Decimal(18, 2)
+  DataCriacao DateTime @db.DateTime
+}
+
+model MovimentacaoDaProposta {
+  Id             Int            @id(map: "PK__Moviment__3214EC072BF72A0B") @default(autoincrement())
+  Data           DateTime       @db.DateTime
+  PropostaId     Int
+  UserId         Int
+  De             Int
+  Para           Int
+  CreditProposal CreditProposal @relation(fields: [PropostaId], references: [Id], onUpdate: NoAction, map: "FK__Movimenta__Propo__72E607DB")
+  Users          Users          @relation(fields: [UserId], references: [Id], onUpdate: NoAction, map: "FK__Movimenta__UserI__73DA2C14")
+}
+
+model Overdue {
+  Id                      Int                       @id(map: "PK_Overdue") @default(autoincrement())
+  ClientCode              Int
+  ClientName              String?                   @db.NVarChar(400)
+  PayerCode               Int
+  PayerName               String?                   @db.NVarChar(400)
+  Email                   String?                   @db.NVarChar(550)
+  Phone                   String?                   @db.NVarChar(20)
+  Amount                  Decimal                   @db.Decimal(18, 2)
+  DueDate                 DateTime
+  Found                   Int
+  Document                String?                   @db.NVarChar(50)
+  Status                  Int
+  Opinion                 String?
+  ForecastDate            DateTime?
+  Contact                 Int
+  Commissioner            Boolean                   @default(false, map: "DF__Overdue__Commiss__6FE99F9F")
+  EmailManager            String?                   @db.NVarChar(300)
+  Manager                 String?                   @db.NVarChar(200)
+  Invoice                 String?                   @db.NVarChar(30)
+  Assistant               String?                   @db.NVarChar(200)
+  EmailAssistant          String?                   @db.NVarChar(300)
+  EmailSuper              String?                   @db.NVarChar(300)
+  Super                   String?                   @db.NVarChar(200)
+  PrevisaoChecagem        DateTime?
+  PrevisaoComercial       DateTime?
+  ParecerChecagem         String?                   @db.NVarChar(1500)
+  ParecerComercial        String?                   @db.NVarChar(1500)
+  Situacao                Int?
+  EmailEnviado            Boolean                   @default(false, map: "DF__Overdue__EmailEn__5224328E")
+  SituacaoNegociacao      Int?
+  ParecerEmail            String?                   @db.NVarChar(1500)
+  RetornoSerasaPefin      String?                   @db.NVarChar(300)
+  DataInclusaoSerasaPefin DateTime?
+  Historico               String?                   @db.VarChar(Max)
+  Estado                  String?                   @db.VarChar(3)
+  Bordero                 Float?
+  DataEmailEnviado        DateTime?                 @db.DateTime
+  Intercompany            Boolean?
+  OverdueClientDetail     OverdueClientDetail[]
+  OverdueParecerComercial OverdueParecerComercial[]
+}
+
+model OverdueClient {
+  Id                  Int                   @id(map: "PK_OverdueClient") @default(autoincrement())
+  PayerCode           Int
+  Total               Decimal               @db.Decimal(18, 2)
+  Status              Int
+  FileId              Int?
+  File                File?                 @relation(fields: [FileId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_OverdueClient_File_FileId")
+  OverdueClientDetail OverdueClientDetail[]
+
+  @@index([FileId], map: "IX_OverdueClient_FileId")
+}
+
+model OverdueClientDetail {
+  Id              Int           @id(map: "PK_OverdueClientDetail") @default(autoincrement())
+  OverdueId       Int
+  OverdueClientId Int
+  Days            Int
+  Status          Int
+  Overdue         Overdue       @relation(fields: [OverdueId], references: [Id], onDelete: Cascade, onUpdate: NoAction, map: "FK_OverdueClientDetail_Overdue_OverdueId")
+  OverdueClient   OverdueClient @relation(fields: [OverdueClientId], references: [Id], onDelete: Cascade, onUpdate: NoAction, map: "FK_OverdueClientDetail_OverdueClient_OverdueClientId")
+
+  @@index([OverdueClientId], map: "IX_OverdueClientDetail_OverdueClientId")
+  @@index([OverdueId], map: "IX_OverdueClientDetail_OverdueId")
+}
+
+model OverdueParecerComercial {
+  Id        Int      @id(map: "PK__OverdueP__3214EC077A00441C") @default(autoincrement())
+  Data      DateTime @default(now(), map: "DF__OverduePar__Data__30E33A54") @db.DateTime
+  Parecer   String   @db.VarChar(Max)
+  OverdueId Int
+  UserId    Int
+  Overdue   Overdue  @relation(fields: [OverdueId], references: [Id], onUpdate: NoAction, map: "FK__OverduePa__Overd__31D75E8D")
+  Users     Users    @relation(fields: [UserId], references: [Id], onUpdate: NoAction, map: "FK__OverduePa__UserI__32CB82C6")
+}
+
+model ParametroRelatoUsuario {
+  Id                      Int     @id(map: "PK_ParametroRelatoUsuario") @default(autoincrement())
+  UserId                  Int
+  RiskScoring             String? @db.NVarChar(1)
+  MdRiskscoring           String? @db.NVarChar(4)
+  qdsoc                   String? @db.NVarChar(1)
+  indlimitpj              String? @db.NVarChar(1)
+  IndFaturamentoPresumido String? @db.NVarChar(1)
+  MdFaturamnetoPresumido  String? @db.NVarChar(4)
+  IquerGastoEstimado      String? @db.NVarChar(1)
+  IMDGastoEstimado        String? @db.NVarChar(4)
+  IquerIRM                String? @db.NVarChar(1)
+  IquerIndPagAMX          String? @db.NVarChar(1)
+  ImodPagAMX              String? @db.NVarChar(4)
+  IndFeatRGC              String? @db.NVarChar(1)
+  IquerSitFiscal          String? @db.NVarChar(1)
+  IquerIdentPJ            String? @db.NVarChar(1)
+  IMdIdentPj              String? @db.NVarChar(4)
+  IquerAlertEMP           String? @db.NVarChar(1)
+  IquerAlertSoc           String? @db.NVarChar(1)
+  IquerVendasCart         String? @db.NVarChar(1)
+  IquerIndRCdic           String? @db.NVarChar(1)
+  IquerEndFone            String? @db.NVarChar(1)
+  IquerIdDrcDiv           String? @db.NVarChar(1)
+  QuerAnotacaoSPC         String? @db.NVarChar(1)
+  Amount                  Int     @default(0, map: "DF__Parametro__Amoun__01142BA1")
+  Billing                 Boolean @default(false, map: "DF__Parametro__Billi__02084FDA")
+  MonthlyAmount           Int     @default(0, map: "DF__Parametro__Month__02FC7413")
+}
+
+model Parametros {
+  Id    Int    @id(map: "PK_Parametros") @default(autoincrement())
+  Nome  String @db.VarChar(50)
+  Valor String @db.VarChar(50)
+}
+
+model PlanilhaAdministradora {
+  Id                Int       @id(map: "PK_PlanilhaAdministradora") @default(autoincrement())
+  Situacao          String?   @db.NVarChar(300)
+  tipoPessoaCedente Int
+  CNPJCPF           String?   @db.NVarChar(300)
+  Cedente           String?   @db.NVarChar(800)
+  TipoPessoaSacado  Int
+  CNPJCPFSacado     String?   @db.NVarChar(300)
+  Sacado            String?   @db.NVarChar(300)
+  Ativo             Int
+  DataEmissao       DateTime
+  DataAquisicao     DateTime
+  DataVencimento    DateTime
+  NumeroBoletoBanco String?   @db.NVarChar(300)
+  NumeroTitulo      String?   @db.NVarChar(300)
+  CampoChave        String?   @db.NVarChar(300)
+  CMC7              String?   @db.NVarChar(300)
+  ValorAquisicao    Decimal   @db.Decimal(18, 2)
+  ValorNominal      Decimal   @db.Decimal(18, 2)
+  ValorPresente     Decimal   @db.Decimal(18, 2)
+  PddNota           Decimal   @db.Decimal(18, 2)
+  PddVencido        Decimal   @db.Decimal(18, 2)
+  DataPosicao       DateTime
+  DataPlanilha      DateTime  @default(dbgenerated("0001-01-01T00:00:00.0000000"), map: "DF__PlanilhaA__DataP__4F47C5E3")
+  TipoFundo         Int       @default(0, map: "DF__PlanilhaA__TipoF__503BEA1C")
+  Guid              String?   @db.NVarChar(300)
+  Nota              String?   @db.NVarChar(Max)
+  DataProrrogacao   DateTime?
+  PddEstorno        Decimal   @default(0.0, map: "DF__PlanilhaA__PddEs__6CD828CA") @db.Decimal(18, 2)
+  ValorPagamento    Decimal?  @db.Decimal(18, 2)
+  Lancamento        String?   @db.VarChar(200)
+}
+
+model PlanilhaRecompra {
+  Id                Int      @id(map: "PK__Planilha__3214EC073CE9D42D") @default(autoincrement())
+  CedenteCnpjCpf    String?  @db.VarChar(20)
+  CedenteNome       String?  @db.VarChar(300)
+  SacadoCnpjCpf     String?  @db.VarChar(20)
+  SacadoNome        String?  @db.VarChar(300)
+  IdTituloVx        Int?
+  Ativo             Int
+  DataEmissao       DateTime
+  DataAquisicao     DateTime
+  DataVencimento    DateTime
+  NumeroBoletoBanco String?  @db.VarChar(300)
+  NumeroTitulo      String?  @db.VarChar(300)
+  CampoChave        String?  @db.VarChar(300)
+  CMC7              String?  @db.VarChar(300)
+  ValorAquisicao    Decimal  @db.Decimal(18, 2)
+  ValorNominal      Decimal  @db.Decimal(18, 2)
+  ValorPresente     Decimal  @db.Decimal(18, 2)
+  PddNota           Decimal  @db.Decimal(18, 2)
+  PddVencido        Decimal  @db.Decimal(18, 2)
+  ValorPagamento    Decimal? @db.Decimal(18, 2)
+  Lancamento        String?  @db.VarChar(200)
+  DataLancamento    DateTime
+  Motivo            String?  @db.VarChar(300)
+  CodigoDeposito    Int?
+  DataPlanilha      DateTime
+  TipoFundo         Int
+}
+
+model PropostaCreditoFluxo {
+  Id                  Int             @id(map: "PK_PropostaCreditoFluxo") @default(autoincrement())
+  IdPropostaCreditoId Int?
+  UserEnvioId         Int?
+  Data                DateTime
+  Status              Int
+  CreditProposal      CreditProposal? @relation(fields: [IdPropostaCreditoId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_PropostaCreditoFluxo_CreditProposal_IdPropostaCreditoId")
+  Users               Users?          @relation(fields: [UserEnvioId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_PropostaCreditoFluxo_Users_UserEnvioId")
+
+  @@index([IdPropostaCreditoId], map: "IX_PropostaCreditoFluxo_IdPropostaCreditoId")
+  @@index([UserEnvioId], map: "IX_PropostaCreditoFluxo_UserEnvioId")
+}
+
+model Recados {
+  Id         Int      @id(map: "PK__Recados__3214EC077025F687") @default(autoincrement())
+  Recado     String   @db.VarChar(Max)
+  DataInicio DateTime @db.DateTime
+  DataFim    DateTime @db.DateTime
+  Tipo       String   @db.VarChar(50)
+  UserId     Int
+}
+
+model RelatoSegmento {
+  Codigo       Int
+  Numero       Int
+  Em           DateTime @default(now(), map: "DF__RelatoSegmen__Em__75A278F5") @db.DateTime
+  CNPJ         String?  @db.VarChar(9)
+  RazaoSocial  String?  @db.VarChar(70)
+  tipoconsulta Int
+
+  @@id([Codigo, Numero], map: "pk_RelatoSegmento", clustered: false)
+}
+
+model RelatoSegmentoLinha {
+  Codigo       Int
+  Numero       Int
+  Linha        Int
+  LinhaEditada String? @db.VarChar(79)
+  TipReg       String? @db.VarChar(1)
+  TipLinha     String? @db.VarChar(1)
+  Atributo     String? @db.VarChar(1)
+  Conjunto     Int
+  NomeBloco    String? @db.VarChar(24)
+
+  @@id([Codigo, Numero, Linha], map: "pk_RelatoSegmentoLinha", clustered: false)
+}
+
+model Role {
+  Id      Int       @id(map: "PK_Role") @default(autoincrement())
+  Name    String?   @db.NVarChar(100)
+  IconCss String?   @db.NVarChar(100)
+  SubRole SubRole[]
+}
+
+model RolePortalInvestidor {
+  IdRole                  Int                       @id(map: "PK__RolePort__B4369054A8C00818") @default(autoincrement())
+  DescriptionRole         String                    @db.VarChar(25)
+  UsuarioPortalInvestidor UsuarioPortalInvestidor[]
+}
+
+model Roles {
+  Id        Int         @id(map: "PK_Roles") @default(autoincrement())
+  Role      String?     @db.NVarChar(50)
+  UserRoles UserRoles[]
+}
+
+model SeguroCreditoDiario {
+  ID                Int      @id(map: "PK__SeguroCr__3214EC272848E95A") @default(autoincrement())
+  EHID              String   @db.VarChar(11)
+  Identificacao     String   @db.VarChar(18)
+  RazaoSocial       String   @db.VarChar(100)
+  MontantePedido    Decimal  @db.Decimal(11, 2)
+  MontanteAprovado  Decimal  @db.Decimal(11, 2)
+  DataPlanilha      DateTime
+  TotalVencido      Decimal? @db.Decimal(12, 2)
+  TotalAVencer      Decimal? @db.Decimal(12, 2)
+  MontanteExcedente Decimal? @db.Decimal(12, 2)
+}
+
+model SerproHistoryReturn {
+  Id         BigInt    @id(map: "PK__SerproHi__3214EC07B1EDEE08") @default(autoincrement())
+  IdUser     Int?
+  ChaveNfe   String    @db.VarChar(100)
+  JsonReturn String?   @db.VarChar(Max)
+  Sistema    Int
+  Error      String?   @db.VarChar(250)
+  CreatedAt  DateTime? @default(now(), map: "DF__SerproHis__Creat__0B7CAB7B") @db.DateTime
+}
+
+model StatisticsData {
+  Id        BigInt    @id(map: "PK__Statisti__3214EC07B5BA609B") @default(autoincrement())
+  Base64    String    @db.NVarChar(Max)
+  Name      String    @db.VarChar(250)
+  UserId    BigInt
+  Tipo      Int
+  CreatedAt DateTime? @default(now(), map: "DF__Statistic__Creat__3A379A64") @db.DateTime
+  DateFile  DateTime  @default(now(), map: "DF__Statistic__DateF__3E082B48") @db.DateTime
+}
+
+model StatisticsHistory {
+  Id               BigInt    @id(map: "PK__Statisti__3214EC07724135EE") @default(autoincrement())
+  StatisticsDataId BigInt
+  CreatedAt        DateTime? @default(now(), map: "DF__Statistic__Creat__3D14070F") @db.DateTime
+  Erro             String    @db.NVarChar(Max)
+  Status           Int
+}
+
+model StatusStatisticsHistory {
+  Id          Int    @id(map: "PK__StatusSt__3214EC07D32B231D") @default(autoincrement())
+  Description String @db.VarChar(250)
+  Value       Int
+}
+
+model SubRole {
+  Id           Int            @id(map: "PK_SubRole") @default(autoincrement())
+  Name         String?        @db.NVarChar(100)
+  IconCss      String?        @db.NVarChar(100)
+  RoleModelId  Int?
+  View         String?        @db.NVarChar(200)
+  Role         Role?          @relation(fields: [RoleModelId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_SubRole_Role_RoleModelId")
+  SubRoleClaim SubRoleClaim[]
+
+  @@index([RoleModelId], map: "IX_SubRole_RoleModelId")
+}
+
+model SubRoleClaim {
+  Id        Int      @id(map: "PK_SubRoleClaim") @default(autoincrement())
+  SubRoleId Int?
+  ClaimId   Int?
+  Claim     Claim?   @relation(fields: [ClaimId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_SubRoleClaim_Claim_ClaimId")
+  SubRole   SubRole? @relation(fields: [SubRoleId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_SubRoleClaim_SubRole_SubRoleId")
+
+  @@index([ClaimId], map: "IX_SubRoleClaim_ClaimId")
+  @@index([SubRoleId], map: "IX_SubRoleClaim_SubRoleId")
+}
+
+model sysdiagrams {
+  name         String @db.NVarChar(128)
+  principal_id Int
+  diagram_id   Int    @id(map: "PK__sysdiagr__C2B05B61DBBC9EEE") @default(autoincrement())
+  version      Int?
+  definition   Bytes?
+
+  @@unique([principal_id, name], map: "UK_principal_name")
+}
+
+model TabelaRelatorioEstatistica {
+  Id               Int      @id(map: "PK__TabelaRe__3214EC07385EBF02") @default(autoincrement())
+  Data             DateTime @db.DateTime
+  Ano              Int
+  Mes              Int
+  SubordinadaAtual Decimal  @db.Decimal(18, 2)
+  VariacaoAtual    Decimal  @db.Decimal(18, 2)
+  PDD_Pl           Decimal  @db.Decimal(18, 2)
+  TabelaRecompra   Decimal  @db.Decimal(18, 2)
+  Cvnp             Decimal  @db.Decimal(18, 2)
+  CincoCedentes    Decimal  @db.Decimal(18, 2)
+  CincoSacados     Decimal  @db.Decimal(18, 2)
+  VinteCedentes    Decimal  @db.Decimal(18, 2)
+  VinteSacados     Decimal  @db.Decimal(18, 2)
+}
+
+model TaxaDIDiaria {
+  Id   Int      @id(map: "PK_TaxaDIDiaria") @default(autoincrement())
+  Data DateTime @db.DateTime
+  Taxa Decimal  @db.Decimal(18, 4)
+}
+
+model UserPermission {
+  Id             Int @id(map: "PK_UserPermission") @default(autoincrement())
+  UserId         Int
+  SubRoleClaimId Int
+}
+
+model UserRoles {
+  Id     Int    @id(map: "PK_UserRoles") @default(autoincrement())
+  UserId Int?
+  RoleId Int?
+  Roles  Roles? @relation(fields: [RoleId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_UserRoles_Roles_RoleId")
+  Users  Users? @relation(fields: [UserId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_UserRoles_Users_UserId")
+
+  @@index([RoleId], map: "IX_UserRoles_RoleId")
+  @@index([UserId], map: "IX_UserRoles_UserId")
+}
+
+model Users {
+  Id                      Int                       @id(map: "PK_Users") @default(autoincrement())
+  Login                   String?                   @db.NVarChar(50)
+  Password                String?                   @db.NVarChar(Max)
+  Name                    String?                   @db.NVarChar(Max)
+  Email                   String?                   @db.NVarChar(200)
+  CPF                     String?                   @db.NVarChar(14)
+  UserType                Int
+  CompanyId               Int?
+  IdAssist                Int?                      @default(0, map: "DF__Users__IdAssist__7C1A6C5A")
+  IdSup                   Int?                      @default(0, map: "DF__Users__IdSup__7D0E9093")
+  numeroPropostas         Int?
+  codwba                  String?                   @db.VarChar(10)
+  AtualizacaoSenha        DateTime?                 @db.DateTime
+  Company                 Company?                  @relation(fields: [CompanyId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_Users_Company_CompanyId")
+  Cedente                 Cedente[]
+  CreditProposal          CreditProposal[]
+  MovimentacaoDaProposta  MovimentacaoDaProposta[]
+  OverdueParecerComercial OverdueParecerComercial[]
+  PropostaCreditoFluxo    PropostaCreditoFluxo[]
+  UserRoles               UserRoles[]
+  UsersMeta               UsersMeta[]
+
+  @@index([CompanyId], map: "IX_Users_CompanyId")
+}
+
+model UsersMeta {
+  id     Int      @id(map: "PK_UserMeta") @default(autoincrement())
+  idUser Int?
+  meta   Decimal? @db.Decimal(18, 0)
+  Users  Users?   @relation(fields: [idUser], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK_UserMeta_UserMeta")
+}
+
+model UserType {
+  Id   Int    @id(map: "PK__UserType__3214EC07C81325B5") @default(autoincrement())
+  Code Int
+  Type String @db.VarChar(50)
+}
+
+model UsuarioPortalInvestidor {
+  Id                              Int                               @id(map: "PK__UsuarioP__3214EC074898663B") @default(autoincrement())
+  Name                            String                            @db.VarChar(150)
+  UserLogin                       String?                           @db.VarChar(150)
+  Email                           String                            @unique(map: "UQ__UsuarioP__A9D10534ADDA92B0") @db.VarChar(150)
+  Password                        String                            @db.VarChar(32)
+  IdRole                          Int
+  PrimeiroAcesso                  Boolean?
+  UltimaEntrada                   DateTime?                         @db.DateTime
+  UltimaSaida                     DateTime?                         @db.DateTime
+  RolePortalInvestidor            RolePortalInvestidor              @relation(fields: [IdRole], references: [IdRole], onUpdate: NoAction, map: "FK__UsuarioPo__IdRol__1DD065E0")
+  HistoricoAcessoPortalInvestidor HistoricoAcessoPortalInvestidor[]
+}

@@ -4,5 +4,5 @@ const prismaClient = new PrismaClient()
 
   module.exports = {
     prismaClient: prismaClient,
-    prismaCLientMysql: prismaClient
+    prismaClientMongodb: prismaClient
   }
