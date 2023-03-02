@@ -22,6 +22,11 @@ const testSqlServer = async () => {
     console.table(await prismaClientSSAr3.Cedente.findMany());
 }
 
+const testHarpia = async () => {
+    const {prismaClientSSHarpia} = require('./index').ssHarpia;
+    console.table(await prismaClientSSHarpia.CadConfiguracoes.findMany());
+}
+
 const testSendMail = () => {
     const {sendEmail} = require('./src/utils/email/sendEmail.js')
 
@@ -63,6 +68,7 @@ const generateCode = () => {
     console.log('code ', code);
 }
 
+testHarpia();
 //generatePass();
 //generateCode();
 //testSqlServer();
