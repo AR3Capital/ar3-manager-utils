@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js prisma:pull_harpia
+  C:\Program Files\nodejs\node.exe E:\Program Files\Yarn\bin\yarn.js prisma:pull_ss_harpia
 
 PATH: 
-  C:\Program Files\Common Files\Oracle\Java\javapath;E:\VMware\VMware Player\bin\;C:\Python27\;C:\Python27\Scripts;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\OpenJDK\openjdk-11.0.10_9\bin;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Users\Isaac\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\dotnet\;E:\Program Files\Amazon\AWSSAMCLI\bin\;E:\Isaac\Downloads\mongodb-database-tools-windows-x86_64-100.5.2\mongodb-database-tools-windows-x86_64-100.5.2\bin;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\nodejs\;E:\Program Files\GitHub CLI\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Users\Isaac\AppData\Local\Yarn\bin;C:\Users\Isaac\AppData\Local\Microsoft\WindowsApps;E:\Isaac\Downloads\mongodb-database-tools-windows-x86_64-100.5.2\mongodb-database-tools-windows-x86_64-100.5.2\bin;C:\Users\Isaac\AppData\Roaming\npm;C:\Users\Isaac\.dotnet\tools
+  C:\Program Files\Common Files\Oracle\Java\javapath;E:\VMware\VMware Player\bin\;C:\Python27\;C:\Python27\Scripts;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Git\cmd;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\OpenJDK\openjdk-11.0.10_9\bin;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Users\Isaac\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\dotnet\;E:\Program Files\Amazon\AWSSAMCLI\bin\;E:\Isaac\Downloads\mongodb-database-tools-windows-x86_64-100.5.2\mongodb-database-tools-windows-x86_64-100.5.2\bin;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\nodejs\;E:\Program Files\GitHub CLI\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;E:\Program Files\Yarn\bin;C:\Users\Isaac\AppData\Local\Yarn\bin;C:\Users\Isaac\AppData\Local\Microsoft\WindowsApps;E:\Isaac\Downloads\mongodb-database-tools-windows-x86_64-100.5.2\mongodb-database-tools-windows-x86_64-100.5.2\bin;C:\Users\Isaac\AppData\Roaming\npm;C:\Users\Isaac\.dotnet\tools
 
 Yarn version: 
   1.22.4
@@ -15,19 +15,19 @@ Platform:
 
 Trace: 
   Error: Failed to replace env in config: ${NPM_TOKEN}
-      at C:\Program Files (x86)\Yarn\lib\cli.js:94791:13
+      at E:\Program Files\Yarn\lib\cli.js:94791:13
       at String.replace (<anonymous>)
-      at envReplace (C:\Program Files (x86)\Yarn\lib\cli.js:94786:16)
-      at Function.normalizeConfig (C:\Program Files (x86)\Yarn\lib\cli.js:31887:69)
-      at NpmRegistry.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:31917:34)
+      at envReplace (E:\Program Files\Yarn\lib\cli.js:94786:16)
+      at Function.normalizeConfig (E:\Program Files\Yarn\lib\cli.js:31887:69)
+      at NpmRegistry.<anonymous> (E:\Program Files\Yarn\lib\cli.js:31917:34)
       at Generator.next (<anonymous>)
-      at step (C:\Program Files (x86)\Yarn\lib\cli.js:310:30)
-      at C:\Program Files (x86)\Yarn\lib\cli.js:321:13
+      at step (E:\Program Files\Yarn\lib\cli.js:310:30)
+      at E:\Program Files\Yarn\lib\cli.js:321:13
 
 npm manifest: 
   {
     "name": "@AR3Capital/ar3-manager-utils",
-    "version": "0.0.30",
+    "version": "0.0.31",
     "description": "Repositorio do utils",
     "author": "AR3 Devs",
     "license": "MIT",
@@ -46,10 +46,15 @@ npm manifest:
       "prisma:push_my": "prisma db push --schema prisma/prismaMysql/schema.prisma",
       "prisma:migrate_my": "npx prisma migrate dev --schema prisma/prismaMysql/schema.prisma",
   
-      "prisma:generate_harpia": "prisma generate --schema prisma/prismaHarpia/schema.prisma",
-      "prisma:format_harpia": "prisma format --schema prisma/prismaHarpia/schema.prisma",
-      "prisma:pull_harpia": "prisma db pull --schema prisma/prismaHarpia/schema.prisma",
-      "prisma:push_harpia": "prisma db push --schema prisma/prismaHarpia/schema.prisma",
+      "prisma:generate_ss_ar3": "prisma generate --schema prisma/prismaSSAR3/schema.prisma",
+      "prisma:format_ss_ar3": "prisma format --schema prisma/prismaSSAR3/schema.prisma",
+      "prisma:pull_ss_ar3": "prisma db pull --schema prisma/prismaSSAR3/schema.prisma",
+      "prisma:push_ss_ar3": "prisma db push --schema prisma/prismaSSAR3/schema.prisma",
+  
+      "prisma:generate_ss_harpia": "prisma generate --schema prisma/prismaSSHarpia/schema.prisma",
+      "prisma:format_ss_harpia": "prisma format --schema prisma/prismaSSHarpia/schema.prisma",
+      "prisma:pull_ss_harpia": "prisma db pull --schema prisma/prismaSSHarpia/schema.prisma",
+      "prisma:push_ss_harpia": "prisma db push --schema prisma/prismaSSHarpia/schema.prisma",
   
       "prisma:generate_mdb": "prisma generate --schema prisma/prismaMongodb/schema.prisma",
       "prisma:format_mdb": "prisma format --schema prisma/prismaMongodb/schema.prisma",
@@ -58,7 +63,9 @@ npm manifest:
       
       "npmlogin": "npm login --scope=@AR3Capital --registry=https://npm.pkg.github.com",
       "publish_npm": "yarn prisma:generate_my && npm publish",
-      "test": "node test"
+      "test": "node test",
+  
+      "set-mygit": "git config user.email isaac.boratino@ar3capital.com.br && git config --global user.email isaac.boratino@ar3capital.com.br && git config user.name isaacboratinoar3 && git config --global user.name isaacboratinoar3"
     },
     "devDependencies": {
       "ajv": "6.12.0",

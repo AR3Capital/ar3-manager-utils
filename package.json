@@ -24,6 +24,11 @@
     "prisma:pull_ss_ar3": "prisma db pull --schema prisma/prismaSSAR3/schema.prisma",
     "prisma:push_ss_ar3": "prisma db push --schema prisma/prismaSSAR3/schema.prisma",
 
+    "prisma:generate_ss_harpia": "prisma generate --schema prisma/prismaSSHarpia/schema.prisma",
+    "prisma:format_ss_harpia": "prisma format --schema prisma/prismaSSHarpia/schema.prisma",
+    "prisma:pull_ss_harpia": "prisma db pull --schema prisma/prismaSSHarpia/schema.prisma",
+    "prisma:push_ss_harpia": "prisma db push --schema prisma/prismaSSHarpia/schema.prisma",
+
     "prisma:generate_mdb": "prisma generate --schema prisma/prismaMongodb/schema.prisma",
     "prisma:format_mdb": "prisma format --schema prisma/prismaMongodb/schema.prisma",
     "prisma:pull_mdb": "prisma db pull --schema prisma/prismaMongodb/schema.prisma",

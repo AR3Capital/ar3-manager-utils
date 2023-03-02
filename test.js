@@ -19,8 +19,8 @@ const test = async () => {
 
 const testSqlServer = async () => {
     const {prismaClientSSAr3} = require('./index').ssAr3;
-    console.table(await prismaClientSSAr3.Cedente.findMany());   
-  }
+    console.table(await prismaClientSSAr3.Cedente.findMany());
+}
 
 const testSendMail = () => {
     const {sendEmail} = require('./src/utils/email/sendEmail.js')
@@ -65,7 +65,7 @@ const generateCode = () => {
 
 //generatePass();
 //generateCode();
-testSqlServer();
+//testSqlServer();
 //testSendMail();
 //testMysql();
 //testMongodb();
